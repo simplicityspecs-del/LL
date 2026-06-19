@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Picks • Why We Use Substack</title>
+<meta name="description" content="Why Live Picks uses Substack for reliable fight-night pick delivery.">
+<style>
+:root {
+  --bg: #050806;
+  --surface: #0d130f;
+  --surface-2: #101610;
+  --border: #26342b;
+  --border-soft: rgba(34,255,136,0.18);
+  --text: #f2f7f3;
+  --muted: #9aa59d;
+  --green: #22ff88;
+  --red: #ff4d5f;
+  --shadow: rgba(0,0,0,0.38);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 16% 8%, rgba(34,255,136,0.08), transparent 26%),
+    radial-gradient(circle at 88% 38%, rgba(34,255,136,0.06), transparent 30%),
+    linear-gradient(180deg, var(--bg) 0%, #050705 48%, #020302 100%);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.68), transparent 68%);
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+.container { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+
+.topbar {
+  border-bottom: 1px solid var(--border);
+  background: rgba(5, 8, 6, 0.88);
+  backdrop-filter: blur(16px);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.nav {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  font-size: 1rem;
+}
+
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border-soft);
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(34,255,136,0.18), rgba(34,255,136,0.03)), #08100b;
+  box-shadow: 0 0 18px rgba(34,255,136,0.12);
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+.brand-mark img { width: 100%; height: 100%; object-fit: cover; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #b4bdb6;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.nav-links a {
+  padding: 9px 11px;
+  border: 1px solid transparent;
+}
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--green);
+  border-color: var(--border-soft);
+  background: rgba(34,255,136,0.06);
+}
+
+.subscribe-btn {
+  border: 1px solid rgba(255,255,255,0.16);
+  padding: 9px 12px;
+  color: #d7ded9;
+  background: rgba(255,255,255,0.035);
+  font-weight: 850;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.hero {
+  padding: 40px 0 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(290px, 0.82fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.hero-main,
+.hero-side { min-width: 0; }
+
+.kicker,
+.eyebrow,
+.list-label,
+.summary-badge,
+.chart-label,
+.chart-top span {
+  text-transform: uppercase;
+  font-weight: 950;
+  letter-spacing: 0.13em;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--green);
+  font-size: 0.7rem;
+  margin-bottom: 12px;
+}
+.kicker::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.55rem, 6vw, 4.6rem);
+  line-height: 0.93;
+  letter-spacing: -0.075em;
+  max-width: 560px;
+}
+
+.hero-copy {
+  margin: 16px 0 0;
+  max-width: 660px;
+  color: #aeb9b1;
+  font-size: clamp(0.96rem, 1.5vw, 1.08rem);
+}
+.hero-copy strong { color: white; }
+
+.panel,
+.hero-side {
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(16,24,17,0.97), rgba(8,12,9,0.97));
+  box-shadow: 0 18px 46px var(--shadow);
+}
+
+.hero-side {
+  padding: 18px;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(34,255,136,0.09), transparent 30%),
+    linear-gradient(180deg, rgba(16,24,17,0.96), rgba(8,12,9,0.96));
+}
+.eyebrow {
+  color: var(--green);
+  font-size: 0.66rem;
+  margin-bottom: 9px;
+}
+.hero-side h2 {
+  margin: 0 0 9px;
+  font-size: clamp(1.24rem, 2.4vw, 1.9rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+.hero-side p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.91rem;
+}
+
+.section { padding: 42px 0; }
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 22px;
+  margin-bottom: 18px;
+}
+.section-heading h2 {
+  margin: 0;
+  font-size: clamp(1.9rem, 4.6vw, 3.35rem);
+  line-height: 0.96;
+  letter-spacing: -0.07em;
+  text-transform: uppercase;
+  max-width: 580px;
+}
+.section-heading p {
+  margin: 0;
+  max-width: 480px;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.traffic-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.75fr);
+  gap: 14px;
+}
+
+.chart-card { padding: 18px; }
+.chart-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.chart-top strong {
+  color: white;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+.chart-top span {
+  color: #738078;
+  font-size: 0.62rem;
+}
+
+.chart {
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.08);
+  background:
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+    #09100b;
+  background-size: 100% 25%, 14.285% 100%;
+  padding: 12px;
+  overflow: hidden;
+}
+.chart::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 30%;
+  background: linear-gradient(to top, rgba(34,255,136,0.035), transparent);
+  pointer-events: none;
+}
+.chart-label {
+  color: #738078;
+  font-size: 0.58rem;
+  margin-bottom: 8px;
+}
+
+.line-graph {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 7.2;
+  min-height: 220px;
+  padding: 0;
+}
+.axis-y {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 30px;
+  width: 38px;
+  display: grid;
+  align-content: space-between;
+  color: #6d7a70;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-align: right;
+}
+.graph-svg {
+  position: absolute;
+  left: 48px;
+  right: 8px;
+  top: 4px;
+  bottom: 26px;
+  width: calc(100% - 56px);
+  height: calc(100% - 30px);
+  overflow: visible;
+}
+.xlabels {
+  position: absolute;
+  left: 48px;
+  right: 8px;
+  bottom: 2px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.xlabels span {
+  color: #8d9890;
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.xlabels span:last-child { color: #ffd7dc; }
+.graph-callout,
+.chart-note {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.025);
+  color: #b8c3bb;
+  font-size: 0.84rem;
+}
+.chart-note {
+  border-color: rgba(255,77,95,0.28);
+  background: linear-gradient(90deg, rgba(255,77,95,0.09), rgba(255,77,95,0.025));
+  color: #efd8dc;
+}
+.graph-callout strong,
+.chart-note strong { color: white; }
+
+.summary-card {
+  padding: 18px;
+  display: grid;
+  gap: 13px;
+  align-content: start;
+}
+.summary-point {
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.summary-point:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.summary-point strong {
+  display: block;
+  color: white;
+  font-size: 0.92rem;
+  margin-bottom: 4px;
+}
+.summary-point p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+.summary-badge {
+  display: inline-block;
+  width: fit-content;
+  padding: 6px 8px;
+  border: 1px solid var(--border-soft);
+  color: var(--green);
+  background: rgba(34,255,136,0.055);
+  font-size: 0.6rem;
+}
+
+.dual-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.list-card { padding: 18px; }
+.list-label {
+  color: #738078;
+  font-size: 0.62rem;
+  margin-bottom: 9px;
+}
+.list-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.24rem;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+.simple-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0;
+}
+.simple-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.simple-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+.simple-list strong {
+  display: block;
+  color: white;
+  margin-bottom: 3px;
+  font-size: 0.92rem;
+}
+
+.cta {
+  padding: 20px;
+  border: 1px solid var(--border-soft);
+  background: linear-gradient(90deg, rgba(34,255,136,0.11), rgba(34,255,136,0.02)), #070b08;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: center;
+}
+.cta strong {
+  display: block;
+  color: white;
+  font-size: 1.1rem;
+  letter-spacing: -0.03em;
+  margin-bottom: 5px;
+}
+.cta p {
+  margin: 0;
+  color: var(--muted);
+  max-width: 750px;
+  font-size: 0.9rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 950;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--green);
+  color: #021105;
+  border-color: var(--green);
+  box-shadow: 0 0 22px rgba(34,255,136,0.2);
+}
+
+.footer {
+  padding: 30px 0 42px;
+  border-top: 1px solid var(--border);
+  color: #858f88;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr;
+  gap: 24px;
+  align-items: center;
+}
+.footer-brand {
+  color: white;
+  font-weight: 950;
+  letter-spacing: -0.055em;
+  font-size: 1.35rem;
+}
+.footer p {
+  margin: 6px 0 0;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 750;
+}
+.disclaimer {
+  border: 1px solid var(--border);
+  padding: 12px;
+  background: rgba(255,255,255,0.02);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .hero-grid,
+  .traffic-layout,
+  .dual-grid,
+  .footer-grid,
+  .cta { grid-template-columns: 1fr; }
+  .section-heading { display: block; }
+  .section-heading p { margin-top: 10px; }
+  .cta .btn { justify-self: start; }
+}
+
+@media (max-width: 680px) {
+  .container { width: min(100% - 22px, 1080px); }
+  body { line-height: 1.38; }
+  body::before { background-size: 28px 28px; }
+
+  .nav { min-height: 52px; gap: 8px; }
+  .brand { font-size: 0.9rem; gap: 8px; }
+  .brand-mark { width: 32px; height: 32px; border-radius: 9px; }
+  .nav-links { display: none; }
+  .subscribe-btn { padding: 7px 9px; font-size: 0.7rem; }
+
+  .hero { padding: 24px 0 18px; }
+  .hero-grid { gap: 12px; }
+  .kicker { font-size: 0.6rem; margin-bottom: 9px; gap: 6px; }
+  .kicker::before { width: 6px; height: 6px; }
+  h1 { font-size: clamp(2.02rem, 12vw, 2.7rem); line-height: 0.95; letter-spacing: -0.065em; }
+  .hero-copy { margin-top: 10px; font-size: 0.86rem; max-width: none; }
+  .hero-side { padding: 13px; }
+  .eyebrow { font-size: 0.58rem; margin-bottom: 7px; }
+  .hero-side h2 { font-size: 1.2rem; margin-bottom: 7px; }
+  .hero-side p { font-size: 0.82rem; }
+
+  .section { padding: 24px 0; }
+  .section-heading { margin-bottom: 12px; }
+  .section-heading h2 { font-size: clamp(1.45rem, 8vw, 2.05rem); letter-spacing: -0.055em; }
+  .section-heading p { font-size: 0.82rem; margin-top: 8px; }
+
+  .traffic-layout,
+  .dual-grid { gap: 10px; }
+  .chart-card,
+  .summary-card,
+  .list-card { padding: 12px; }
+  .chart-top { margin-bottom: 9px; gap: 8px; }
+  .chart-top strong { font-size: 0.9rem; }
+  .chart-top span { display: none; }
+  .chart { padding: 9px; }
+  .chart-label { font-size: 0.52rem; margin-bottom: 6px; }
+
+  .line-graph { aspect-ratio: 16 / 8.8; min-height: 165px; }
+  .axis-y { left: 0; top: 6px; bottom: 24px; width: 28px; font-size: 0.48rem; }
+  .graph-svg { left: 35px; right: 2px; top: 2px; bottom: 22px; width: calc(100% - 37px); height: calc(100% - 24px); }
+  .graph-svg text { font-size: 15px; }
+  .xlabels { left: 35px; right: 2px; bottom: 0; gap: 2px; }
+  .xlabels span { font-size: 0.48rem; letter-spacing: 0.02em; }
+  .graph-callout,
+  .chart-note { margin-top: 8px; padding: 8px 9px; font-size: 0.76rem; }
+
+  .summary-card { gap: 10px; }
+  .summary-badge { font-size: 0.52rem; padding: 5px 7px; }
+  .summary-point { padding-bottom: 9px; }
+  .summary-point strong { font-size: 0.84rem; margin-bottom: 3px; }
+  .summary-point p { font-size: 0.76rem; }
+
+  .list-label { font-size: 0.55rem; margin-bottom: 7px; }
+  .list-card h3 { font-size: 1.05rem; margin-bottom: 7px; }
+  .simple-list li { padding: 8px 0; font-size: 0.78rem; }
+  .simple-list strong { font-size: 0.82rem; margin-bottom: 2px; }
+
+  .cta { padding: 13px; gap: 11px; }
+  .cta strong { font-size: 0.96rem; margin-bottom: 4px; }
+  .cta p { font-size: 0.78rem; }
+  .btn { width: 100%; min-height: 40px; font-size: 0.7rem; padding: 0 12px; }
+
+  .footer { padding: 22px 0 32px; }
+  .footer-grid { gap: 12px; }
+  .footer-brand { font-size: 1.1rem; }
+  .footer p { font-size: 0.62rem; }
+  .disclaimer { padding: 10px; font-size: 0.66rem; }
+}
+
+@media (max-width: 380px) {
+  .container { width: min(100% - 18px, 1080px); }
+  .line-graph { min-height: 150px; }
+  .graph-svg text { font-size: 13px; }
+  .xlabels span { font-size: 0.44rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="live-picks-edge-index-redesigned-v12.html" aria-label="Back to Live Picks">
+      <span class="brand-mark"><img src="lp-logo.png" alt="Live Picks logo"></span>
+      <span>Live Picks</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Site navigation">
+      <a href="live-picks-edge-index-redesigned-v12.html">Main Site</a>
+      <a class="active" href="live-picks-why-substack-clean-v5.html">Why Substack</a>
+    </nav>
+
+    <a href="https://yourname.substack.com" class="subscribe-btn">Subscribe</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-main">
+        <div class="kicker">Delivery infrastructure</div>
+        <h1>Why we use Substack.</h1>
+        <p class="hero-copy">Live Picks matters most <strong>right before the fight starts</strong>. Substack lets us send locks straight to subscriber inboxes and notifications instead of relying on refresh lists, private pages, or overloaded infrastructure.</p>
+      </div>
+
+      <aside class="hero-side">
+        <div class="eyebrow">The simple reason</div>
+        <h2>Late picks need reliable delivery.</h2>
+        <p>A normal article can load slowly. A fight-night lock cannot. Substack gives us a proven publishing, subscriber, email and notification layer for instant-demand moments.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <h2>Traffic is quiet. Then it spikes.</h2>
+        <p>Most of the week is a trickle. On fight night, attention arrives all at once. Email and app notifications reduce refresh pressure at the exact moment speed matters.</p>
+      </div>
+
+      <div class="traffic-layout">
+        <article class="panel chart-card">
+          <div class="chart-top">
+            <strong>Weekly traffic pattern</strong>
+            <span>Trickle to overload</span>
+          </div>
+
+          <div class="chart">
+            <div class="chart-label">Subscriber demand</div>
+
+            <div class="line-graph">
+              <div class="axis-y">
+                <span>80%</span>
+                <span>60%</span>
+                <span>40%</span>
+                <span>20%</span>
+                <span>0%</span>
+              </div>
+
+              <svg class="graph-svg" viewBox="0 0 760 300" preserveAspectRatio="xMidYMid meet" aria-label="Weekly traffic line graph" role="img">
+                <defs>
+                  <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(34,255,136,0.22)"/>
+                    <stop offset="85%" stop-color="rgba(34,255,136,0.02)"/>
+                    <stop offset="100%" stop-color="rgba(34,255,136,0)"/>
+                  </linearGradient>
+
+                  <linearGradient id="greenLine" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#3df08f"/>
+                    <stop offset="100%" stop-color="#22ff88"/>
+                  </linearGradient>
+
+                  <linearGradient id="redSpike" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#ffe6ea"/>
+                    <stop offset="35%" stop-color="#ff9ba5"/>
+                    <stop offset="100%" stop-color="#ff4d5f"/>
+                  </linearGradient>
+
+                  <filter id="greenGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="4" result="blur"/>
+                    <feMerge>
+                      <feMergeNode in="blur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+
+                  <filter id="redGlow" x="-70%" y="-70%" width="240%" height="240%">
+                    <feGaussianBlur stdDeviation="8" result="blur"/>
+                    <feMerge>
+                      <feMergeNode in="blur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                <path d="M40 244 L130 240 L220 236 L310 240 L400 232 L490 214 L580 62 L580 260 L40 260 Z" fill="url(#areaFill)" opacity="0.9"/>
+                <path d="M40 244 L130 240 L220 236 L310 240 L400 232 L490 214" fill="none" stroke="url(#greenLine)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" filter="url(#greenGlow)"/>
+                <path d="M490 214 L580 62" fill="none" stroke="url(#redSpike)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" filter="url(#redGlow)"/>
+
+                <g fill="#22ff88">
+                  <circle cx="40" cy="244" r="5"/>
+                  <circle cx="130" cy="240" r="5"/>
+                  <circle cx="220" cy="236" r="5"/>
+                  <circle cx="310" cy="240" r="5"/>
+                  <circle cx="400" cy="232" r="5"/>
+                  <circle cx="490" cy="214" r="6"/>
+                </g>
+
+                <g>
+                  <circle cx="580" cy="62" r="8" fill="#ff4d5f" filter="url(#redGlow)"/>
+                  <circle cx="580" cy="62" r="16" fill="none" stroke="rgba(255,77,95,0.36)" stroke-width="2"/>
+                  <circle cx="580" cy="62" r="28" fill="none" stroke="rgba(255,77,95,0.15)" stroke-width="2"/>
+                </g>
+
+                <g font-family="Inter, sans-serif" font-weight="900" font-size="14" letter-spacing="1.5">
+                  <text x="28" y="228" fill="#b8c4bd">1%</text>
+                  <text x="118" y="224" fill="#b8c4bd">2%</text>
+                  <text x="208" y="220" fill="#b8c4bd">3%</text>
+                  <text x="298" y="224" fill="#b8c4bd">2%</text>
+                  <text x="388" y="216" fill="#b8c4bd">4%</text>
+                  <text x="478" y="198" fill="#b8c4bd">9%</text>
+                  <text x="598" y="70" fill="#ffdce1">79%</text>
+                </g>
+
+                <g font-family="Inter, sans-serif" font-weight="900" font-size="15" letter-spacing="3">
+                  <text x="608" y="104" fill="#ffdce1">SURGE</text>
+                </g>
+              </svg>
+
+              <div class="xlabels">
+                <span>Mon</span>
+                <span>Tue</span>
+                <span>Wed</span>
+                <span>Thu</span>
+                <span>Fri</span>
+                <span>Sat</span>
+                <span>Fight</span>
+              </div>
+            </div>
+
+            <div class="graph-callout"><strong>Fight-night demand explodes:</strong> a quiet week becomes a sudden lock-window rush.</div>
+            <div class="chart-note"><strong>Why Substack helps:</strong> picks go through established email and notification infrastructure instead of subscribers hammering refresh.</div>
+          </div>
+        </article>
+
+        <aside class="panel summary-card">
+          <span class="summary-badge">What matters</span>
+
+          <div class="summary-point">
+            <strong>Most of the week is calm</strong>
+            <p>People read the thesis, check results, or wait for the next card.</p>
+          </div>
+
+          <div class="summary-point">
+            <strong>Fight night compresses demand</strong>
+            <p>Subscribers arrive together because the final read may not exist until the walkout.</p>
+          </div>
+
+          <div class="summary-point">
+            <strong>Delivery speed is part of the product</strong>
+            <p>A late lock needs to arrive through email and notifications, not constant refreshes.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container dual-grid">
+      <article class="panel list-card">
+        <div class="list-label">Self-hosting risk</div>
+        <h3>Looks fine until everyone arrives at once.</h3>
+        <ul class="simple-list">
+          <li><strong>Traffic bursts</strong>Fight-night surges can slow a lightweight setup at the exact moment a lock needs to go out.</li>
+          <li><strong>Refresh load</strong>Last-minute picks make users refresh more, adding pressure to private infrastructure.</li>
+          <li><strong>Too many moving parts</strong>Hosting, payments, logins and notifications become separate failure points.</li>
+        </ul>
+      </article>
+
+      <article class="panel list-card">
+        <div class="list-label">Why Substack fits</div>
+        <h3>Use proven rails and focus on the model.</h3>
+        <ul class="simple-list">
+          <li><strong>Email and notification delivery</strong>Locks go directly to subscribers instead of relying on a private page staying responsive.</li>
+          <li><strong>Established infrastructure</strong>Substack already handles subscribers, publishing, email and notifications at scale.</li>
+          <li><strong>Cleaner focus</strong>We focus on the live read and price discipline, not infrastructure firefighting.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <div>
+          <strong>Substack is not the product. The live read is.</strong>
+          <p>Substack is the delivery layer. Live Picks is the model, the timing and the decision to release only when late fight-night information justifies it.</p>
+        </div>
+        <a href="https://yourname.substack.com" class="btn btn-primary">Subscribe on Substack</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-brand">Live Picks</div>
+      <p>Fight-night predictions and premium live plays</p>
+    </div>
+    <div class="disclaimer">
+      Live Picks is an independent analytics concept and is not affiliated with, endorsed by or licensed by UFC or any sporting organisation. Betting involves risk. Wager responsibly.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
