@@ -2334,6 +2334,483 @@ h1 {
   }
 }
 
+
+/* Mobile readability expansion pass: keeps desktop unchanged, preserves styling, and makes each mobile block easier to read. */
+@media (max-width: 680px) {
+  body {
+    line-height: 1.5;
+  }
+
+  .container {
+    width: min(100% - 22px, 1180px);
+  }
+
+  .nav {
+    min-height: 58px;
+  }
+
+  .brand {
+    font-size: 1rem;
+    gap: 9px;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .login-btn {
+    min-height: 38px;
+    padding: 8px 11px;
+    font-size: 0.7rem;
+  }
+
+  .ticker-item,
+  .odds-ticker .ticker-item {
+    padding: 8px 14px;
+    font-size: 0.62rem;
+  }
+
+  .odds-ticker .ticker-market {
+    font-size: 0.5rem;
+  }
+
+  .odds-ticker .ticker-item em {
+    min-width: 38px;
+    padding: 2px 5px;
+    font-size: 0.58rem;
+  }
+
+  .hero {
+    padding: 34px 0 30px;
+  }
+
+  .hero-grid {
+    gap: 22px;
+  }
+
+  .kicker {
+    margin-bottom: 13px;
+    gap: 8px;
+    font-size: 0.72rem;
+    letter-spacing: 0.13em;
+  }
+
+  .kicker::before {
+    width: 7px;
+    height: 7px;
+  }
+
+  h1 {
+    font-size: clamp(2.55rem, 13.5vw, 3.65rem);
+    line-height: 0.9;
+    letter-spacing: -0.072em;
+  }
+
+  .hero-copy {
+    margin-top: 17px;
+    font-size: 1.02rem;
+    line-height: 1.52;
+  }
+
+  .hero-actions {
+    margin-top: 20px;
+    gap: 8px;
+  }
+
+  .btn {
+    min-height: 42px;
+    padding: 0 13px;
+    font-size: 0.68rem;
+    letter-spacing: 0.035em;
+  }
+
+  .release-panel {
+    padding: 16px;
+  }
+
+  .release-head {
+    padding: 4px 0 14px;
+  }
+
+  .release-eyebrow {
+    font-size: 0.66rem;
+  }
+
+  .release-event {
+    font-size: 1.65rem;
+  }
+
+  .release-stack {
+    gap: 12px;
+    padding-top: 14px;
+  }
+
+  .release-item {
+    grid-template-columns: 56px 1fr;
+    gap: 13px;
+    padding: 14px;
+  }
+
+  .release-num {
+    min-height: 44px;
+    font-size: 0.72rem;
+  }
+
+  .release-item strong {
+    font-size: 1rem;
+    margin-bottom: 5px;
+  }
+
+  .release-item p {
+    display: block;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: initial;
+    font-size: 0.88rem;
+    line-height: 1.43;
+  }
+
+  .section {
+    padding: 42px 0;
+  }
+
+  .section-heading {
+    margin-bottom: 20px;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(2.25rem, 12vw, 3.25rem);
+  }
+
+  .section-heading p {
+    margin-top: 12px;
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+
+  #predictions.section {
+    padding: 34px 0 42px;
+  }
+
+  #predictions .model-card {
+    min-height: calc(100svh - 74px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  #predictions .card-topline {
+    padding: 15px 16px;
+    gap: 7px;
+    font-size: 0.64rem;
+    line-height: 1.35;
+  }
+
+  #predictions .fight-board {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  #predictions .fight-title {
+    margin-bottom: 14px;
+    gap: 10px;
+  }
+
+  #predictions .fight-title h2 {
+    font-size: 1.35rem;
+    line-height: 1;
+  }
+
+  #predictions .result-chip {
+    padding: 7px 10px;
+    font-size: 0.62rem;
+  }
+
+  #predictions .matchup {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-radius: 0;
+    background: #080d0a;
+  }
+
+  #predictions .fighter-card {
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 16px;
+    padding: 22px 18px;
+    min-height: 178px;
+    align-items: center;
+  }
+
+  #predictions .fighter-card.pick {
+    border-left-width: 3px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(90deg, rgba(34,255,136,0.15), rgba(34,255,136,0.035) 74%);
+  }
+
+  #predictions .fighter-card.pick::after {
+    content: "WIN";
+    right: 14px;
+    top: 14px;
+    transform: none;
+    width: auto;
+    height: auto;
+    padding: 5px 8px;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+  }
+
+  #predictions .fighter-card.fade {
+    opacity: 0.82;
+  }
+
+  #predictions .portrait {
+    width: 92px;
+    height: 92px;
+    border-radius: 13px;
+  }
+
+  #predictions .portrait .fallback-name {
+    font-size: 2rem;
+  }
+
+  #predictions .fighter-name {
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+    line-height: 0.92;
+    margin-bottom: 11px;
+    padding-right: 44px;
+  }
+
+  #predictions .fighter-name br {
+    display: initial;
+  }
+
+  #predictions .fighter-meta {
+    gap: 6px;
+    margin-bottom: 11px;
+  }
+
+  #predictions .tag {
+    display: inline-flex;
+    padding: 5px 7px;
+    font-size: 0.6rem;
+    letter-spacing: 0.065em;
+  }
+
+  #predictions .fighter-card.pick .fighter-meta .tag.red,
+  #predictions .fighter-card.fade .fighter-meta .tag:nth-child(n+2) {
+    display: inline-flex;
+  }
+
+  #predictions .form-line {
+    display: grid;
+    gap: 7px;
+  }
+
+  #predictions .form-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.11em;
+  }
+
+  #predictions .form-dots {
+    gap: 5px;
+  }
+
+  #predictions .form-dots span {
+    width: 21px;
+    height: 6px;
+  }
+
+  #predictions .vs-block {
+    display: none;
+  }
+
+  #predictions .edge-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    margin-top: 12px;
+  }
+
+  #predictions .edge-box {
+    padding: 13px;
+    min-height: 96px;
+  }
+
+  #predictions .edge-box .label {
+    margin-bottom: 7px;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+  }
+
+  #predictions .edge-box .value {
+    font-size: 1.25rem;
+  }
+
+  #predictions .edge-box small {
+    display: block;
+    margin-top: 7px;
+    font-size: 0.72rem;
+    line-height: 1.28;
+  }
+
+  #predictions .premium-strip {
+    grid-template-columns: 1fr;
+    margin-top: 12px;
+    padding: 13px;
+    gap: 11px;
+  }
+
+  #predictions .premium-strip > div {
+    min-height: auto;
+  }
+
+  #predictions .premium-strip strong {
+    font-size: 0.86rem;
+    line-height: 1.1;
+  }
+
+  #predictions .premium-strip .subscribe-cta {
+    width: 100%;
+    min-height: 42px;
+  }
+
+  .data-strip {
+    padding: 22px 0;
+  }
+
+  .data-grid {
+    gap: 10px;
+  }
+
+  .data-card {
+    padding: 14px;
+  }
+
+  .data-card strong {
+    font-size: 1.36rem;
+  }
+
+  .data-card span {
+    font-size: 0.66rem;
+    line-height: 1.35;
+  }
+
+  .how-grid,
+  .signals-grid,
+  .thesis-manifesto,
+  .scope-list {
+    gap: 13px;
+  }
+
+  .how-card,
+  .signal-card,
+  .thesis-card,
+  .thesis-punchcard,
+  .scope-panel,
+  .panel {
+    padding: 18px;
+  }
+
+  .step,
+  .signal-status,
+  .scope-label {
+    font-size: 0.66rem;
+  }
+
+  .how-card h3,
+  .signal-card h3,
+  .scope-panel h3 {
+    font-size: 1.18rem;
+    line-height: 1.08;
+  }
+
+  .how-card p,
+  .signal-card p,
+  .scope-list li,
+  .thesis-card p {
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .signal-code {
+    width: 40px;
+    height: 40px;
+    font-size: 0.68rem;
+  }
+
+  .signal-meta span {
+    font-size: 0.64rem;
+  }
+
+  .pick-card-top {
+    padding: 10px 12px;
+    font-size: 0.62rem;
+  }
+
+  .pick-body {
+    padding: 13px;
+    gap: 8px;
+  }
+
+  .mini-fighter .mini-face {
+    width: 52px;
+    height: 52px;
+  }
+
+  .mini-fighter strong {
+    font-size: 0.74rem;
+  }
+
+  .odds {
+    font-size: 1.12rem;
+  }
+
+  .footer {
+    padding: 34px 0 44px;
+  }
+
+  .footer-brand {
+    font-size: 1.45rem;
+  }
+
+  .footer p,
+  .disclaimer {
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 430px) {
+  #predictions .model-card {
+    min-height: calc(100svh - 66px);
+  }
+
+  #predictions .fighter-card {
+    grid-template-columns: 82px minmax(0, 1fr);
+    gap: 13px;
+    padding: 18px 14px;
+    min-height: 164px;
+  }
+
+  #predictions .portrait {
+    width: 82px;
+    height: 82px;
+  }
+
+  #predictions .fighter-name {
+    font-size: clamp(1.55rem, 8.8vw, 2rem);
+    padding-right: 40px;
+  }
+
+  #predictions .edge-box small {
+    display: block;
+  }
+}
+
 </style>
 </head>
 <body>
