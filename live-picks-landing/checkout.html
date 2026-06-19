@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#050806">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="msapplication-TileColor" content="#050806">
+<meta name="color-scheme" content="dark">
 <title>Live Picks • Secure Checkout</title>
 <meta name="description" content="Subscribe to Live Picks premium fight-night analysis. 18+ only. Betting involves risk. No guaranteed outcomes.">
 <style>
@@ -22,18 +26,25 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+  min-height: 100%;
+}
 body {
   margin: 0;
   background:
     radial-gradient(circle at 18% 8%, rgba(34, 255, 136, 0.10), transparent 28%),
     radial-gradient(circle at 88% 38%, rgba(34, 255, 136, 0.08), transparent 32%),
     linear-gradient(180deg, var(--bg) 0%, #060806 44%, #020302 100%);
+  background-color: var(--bg);
   color: var(--text);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.48;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
 }
 
 body::before {
@@ -853,7 +864,7 @@ h1 {
 <body>
 <header class="topbar">
   <div class="container nav">
-    <a class="brand" href="index.html.html" aria-label="Live Picks home">
+    <a class="brand" href="index.html" aria-label="Live Picks home">
       <span class="brand-mark"><img src="lp-logo.png" alt="Live Picks logo" onerror="this.remove(); this.parentElement.textContent='LP';"></span>
       <span>Live Picks</span>
     </a>
@@ -865,7 +876,7 @@ h1 {
       <a href="#responsible-gambling">Responsible Gambling</a>
     </nav>
 
-    <a href="index.html.html" class="back-btn">← Back</a>
+    <a href="index.html" class="back-btn">← Back</a>
   </div>
 </header>
 
