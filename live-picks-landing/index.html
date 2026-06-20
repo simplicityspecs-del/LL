@@ -2968,12 +2968,6 @@ h1 {
   transform: translateY(-2px);
 }
 
-.signal-card.is-tapped {
-  transform: translateY(-5px) scale(0.992);
-  filter: brightness(1.06);
-  border-color: rgba(34,255,136,0.58);
-}
-
 .signal-card:hover .signal-code,
 .signal-card:focus-within .signal-code,
 .signal-card.is-visible .signal-code {
@@ -3137,11 +3131,6 @@ h1 {
   <section id="predictions" class="section">
     <div class="container">
       <article class="model-card">
-        <div class="card-topline">
-          <span>UFC FREEDOM 250 • THE WHITE HOUSE</span>
-          <span>Live Picks Head-to-Head Result</span>
-        </div>
-
         <div class="fight-board">
           <div class="fight-title">
             <h2>FREEDOM 250 • Main Event</h2>
@@ -3547,13 +3536,6 @@ h1 {
 
   signalCards.forEach((card) => {
     card.setAttribute('tabindex', '0');
-
-    card.addEventListener('pointerdown', () => {
-      card.classList.remove('is-tapped');
-      void card.offsetWidth;
-      card.classList.add('is-tapped');
-      window.setTimeout(() => card.classList.remove('is-tapped'), 520);
-    }, { passive: true });
   });
 
   if ('IntersectionObserver' in window) {
@@ -3561,7 +3543,7 @@ h1 {
       entries.forEach((entry) => {
         entry.target.classList.toggle('is-visible', entry.isIntersecting);
       });
-    }, { threshold: 0.42, rootMargin: '0px 0px -8% 0px' });
+    }, { threshold: 0, rootMargin: '0px' });
 
     signalCards.forEach((card) => signalObserver.observe(card));
   } else {
