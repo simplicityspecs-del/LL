@@ -218,6 +218,8 @@ img { display: block; max-width: 100%; }
   align-items: start;
 }
 
+.checkout-copy { min-width: 0; }
+
 .kicker {
   display: inline-flex;
   align-items: center;
@@ -488,6 +490,87 @@ h1 {
   font-size: 1.06rem;
   letter-spacing: -0.02em;
 }
+.wallet-primary {
+  border: 1px solid rgba(34,255,136,0.54);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(34,255,136,0.22), transparent 34%),
+    linear-gradient(180deg, rgba(34,255,136,0.09), rgba(255,255,255,0.025)),
+    #07100a;
+  box-shadow: 0 0 42px rgba(34,255,136,0.12), inset 0 0 34px rgba(34,255,136,0.035);
+  padding: 16px;
+  margin: 16px 0 14px;
+}
+.wallet-primary-head,
+.card-payment-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.wallet-kicker,
+.card-kicker {
+  display: block;
+  color: var(--green);
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.wallet-title,
+.card-payment-title {
+  display: block;
+  color: white;
+  font-size: 1.16rem;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  font-weight: 950;
+}
+.wallet-price-pill {
+  border: 1px solid var(--border-soft);
+  background: rgba(34,255,136,0.08);
+  color: var(--green);
+  padding: 7px 9px;
+  font-size: 0.66rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 950;
+  white-space: nowrap;
+}
+.wallet-primary .plan-toggle {
+  margin: 0 0 12px;
+}
+.wallet-primary .form-block {
+  margin-bottom: 12px;
+}
+.wallet-primary .wallet-button {
+  min-height: 64px;
+  font-size: 1.04rem;
+  box-shadow: 0 0 38px rgba(255,255,255,0.18), 0 0 34px rgba(34,255,136,0.18);
+}
+.wallet-primary .wallet-button:hover,
+.card-payment-box .card-button:hover {
+  transform: translateY(-1px);
+}
+.wallet-microcopy,
+.card-payment-copy {
+  margin: 10px 0 0;
+  color: #9facaa;
+  font-size: 0.75rem;
+  line-height: 1.38;
+  font-weight: 760;
+}
+.card-payment-box {
+  border: 1px solid rgba(255,255,255,0.16);
+  background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.018));
+  padding: 14px;
+  margin: 0 0 14px;
+}
+.card-payment-head { margin-bottom: 10px; }
+.card-payment-copy { color: #88948d; margin-top: 4px; }
+.card-payment-box .card-shell { margin-bottom: 12px; }
 .card-button,
 .confirm-button {
   border: 1px solid var(--green);
@@ -551,6 +634,12 @@ h1 {
   padding: 12px;
   display: grid;
   gap: 10px;
+}
+
+.terms-box--wallet {
+  margin: 0 0 12px;
+  border-color: rgba(34,255,136,0.24);
+  background: rgba(3, 6, 4, 0.58);
 }
 .check-row {
   display: grid;
@@ -790,8 +879,10 @@ h1 {
   .ticker-market { font-size: 0.45rem; }
   .ticker-item em { min-width: 34px; padding: 1px 4px; font-size: 0.52rem; }
 
-  .checkout-hero { padding: 20px 0 22px; }
+  .checkout-hero { padding: 10px 0 22px; }
   .checkout-grid { gap: 14px; }
+  .checkout-panel { order: 1; }
+  .checkout-copy { order: 2; }
   .kicker { margin-bottom: 10px; gap: 7px; font-size: 0.61rem; letter-spacing: 0.12em; }
   .kicker::before { width: 6px; height: 6px; }
   h1 { font-size: clamp(2rem, 12vw, 2.75rem); line-height: 0.93; letter-spacing: -0.065em; }
@@ -812,15 +903,25 @@ h1 {
   .checkout-title { font-size: 1.24rem; line-height: 1; }
   .secure-status { padding: 5px 7px; font-size: 0.53rem; letter-spacing: 0.08em; }
   .secure-status::before { width: 6px; height: 6px; }
+  .wallet-primary { padding: 11px; margin: 12px 0 10px; }
+  .wallet-primary-head, .card-payment-head { gap: 8px; margin-bottom: 9px; }
+  .wallet-kicker, .card-kicker { font-size: 0.5rem; letter-spacing: 0.11em; margin-bottom: 4px; }
+  .wallet-title, .card-payment-title { font-size: 0.94rem; }
+  .wallet-price-pill { padding: 5px 6px; font-size: 0.5rem; }
   .plan-toggle { gap: 6px; margin: 10px 0; }
+  .wallet-primary .plan-toggle { margin: 0 0 9px; }
   .plan-option { padding: 9px; }
   .plan-option strong { font-size: 0.74rem; margin-bottom: 3px; }
   .plan-option span { font-size: 0.55rem; letter-spacing: 0.055em; }
   .form-block { gap: 6px; margin-bottom: 10px; }
+  .wallet-primary .form-block { margin-bottom: 9px; }
   .form-label { font-size: 0.55rem; }
   .email-input { min-height: 40px; padding: 0 10px; font-size: 0.82rem; }
   .wallet-button, .card-button, .confirm-button { min-height: 42px; font-size: 0.72rem; }
+  .wallet-primary .wallet-button { min-height: 56px; font-size: 0.86rem; }
+  .wallet-microcopy, .card-payment-copy { font-size: 0.64rem; margin-top: 7px; }
   .divider { gap: 8px; margin: 9px 0; font-size: 0.52rem; }
+  .card-payment-box { padding: 10px; margin-bottom: 10px; }
   .card-cell { min-height: 36px; padding: 0 9px; font-size: 0.62rem; }
   .terms-box { padding: 10px; gap: 8px; }
   .check-row { grid-template-columns: 18px 1fr; gap: 8px; font-size: 0.68rem; }
@@ -900,7 +1001,7 @@ h1 {
 <main id="checkout">
   <section class="checkout-hero">
     <div class="container checkout-grid">
-      <div>
+      <div class="checkout-copy">
         <div class="kicker">Premium fight-night analysis</div>
         <h1>Complete your Live Picks access.</h1>
         <p class="hero-copy">Get premium <strong>fight-night analysis and timing-based reads</strong> delivered to your email. Live Picks provides independent sports analytics only. We do not accept wagers, place bets, guarantee outcomes or operate as a bookmaker.</p>
@@ -914,12 +1015,12 @@ h1 {
           <article class="benefit-card">
             <span>02</span>
             <strong>Fast checkout path</strong>
-            <p>The intended production flow is Apple Pay first, with secure card payment fallback.</p>
+            <p>Apple Pay leads the checkout flow, with card payment kept in its own fallback box.</p>
           </article>
           <article class="benefit-card">
             <span>03</span>
             <strong>Clear risk warnings</strong>
-            <p>Every subscription is tied to 18+ confirmation and no-guarantee wagering disclosure.</p>
+            <p>Choose weekly access at $9.90 or monthly access at $30.00 with clear risk disclosure.</p>
           </article>
         </div>
 
@@ -941,50 +1042,71 @@ h1 {
           <span class="secure-status">18+</span>
         </div>
 
-        <div class="plan-toggle" aria-label="Plan selector">
-          <button class="plan-option active" type="button" data-plan="Monthly" data-price="$29" data-period="month">
-            <strong>Monthly</strong>
-            <span>$29 / month</span>
-          </button>
-          <button class="plan-option" type="button" data-plan="Annual" data-price="$249" data-period="year">
-            <strong>Annual</strong>
-            <span>$249 / year</span>
-          </button>
-        </div>
+        <div class="wallet-primary" aria-label="Apple Pay checkout">
+          <div class="wallet-primary-head">
+            <div>
+              <span class="wallet-kicker">Fastest checkout path</span>
+              <strong class="wallet-title">Subscribe with Apple Pay</strong>
+            </div>
+            <span class="wallet-price-pill">Front &amp; centre</span>
+          </div>
 
-        <div class="form-block">
-          <label class="form-label" for="email">Email for access</label>
-          <input class="email-input" id="email" type="email" placeholder="you@example.com" autocomplete="email">
-        </div>
+          <div class="plan-toggle" aria-label="Plan selector">
+            <button class="plan-option active" type="button" data-plan="Weekly" data-price="$9.90" data-period="week">
+              <strong>Weekly</strong>
+              <span>$9.90 / week</span>
+            </button>
+            <button class="plan-option" type="button" data-plan="Monthly" data-price="$30.00" data-period="month">
+              <strong>Monthly</strong>
+              <span>$30.00 / month</span>
+            </button>
+          </div>
 
-        <button class="wallet-button" type="button" id="applePayButton"><span class="apple"> Pay</span> Subscribe with Apple Pay</button>
+          <div class="form-block">
+            <label class="form-label" for="email">Email for access</label>
+            <input class="email-input" id="email" type="email" placeholder="you@example.com" autocomplete="email">
+          </div>
+
+          <div class="terms-box terms-box--wallet">
+            <label class="check-row">
+              <input id="ageCheck" type="checkbox">
+              <span><strong>I am 18+</strong> and legally permitted to access this content.</span>
+            </label>
+            <label class="check-row">
+              <input id="riskCheck" type="checkbox">
+              <span>I understand Live Picks is <strong>analysis only</strong> with no guaranteed outcomes.</span>
+            </label>
+          </div>
+
+          <button class="wallet-button" type="button" id="applePayButton"><span class="apple"> Pay</span></button>
+          <p class="wallet-microcopy">Apple Pay is the primary checkout option on this page. Choose weekly or monthly, confirm the warnings, then continue.</p>
+        </div>
 
         <div class="divider">or pay by card</div>
 
-        <div class="card-shell" aria-hidden="true">
-          <div class="card-row"><div class="card-cell">Card number</div></div>
-          <div class="card-row"><div class="card-cell">MM / YY</div><div class="card-cell">CVC</div><div class="card-cell">ZIP</div></div>
-        </div>
+        <div class="card-payment-box" aria-label="Pay by card checkout">
+          <div class="card-payment-head">
+            <div>
+              <span class="card-kicker">Separate fallback box</span>
+              <strong class="card-payment-title">Pay by card</strong>
+              <p class="card-payment-copy">Card payment is intentionally separated so it does not compete with the main Apple Pay checkout.</p>
+            </div>
+          </div>
 
-        <div class="terms-box">
-          <label class="check-row">
-            <input id="ageCheck" type="checkbox">
-            <span><strong>I confirm I am 18 years or older</strong> and legally permitted to access wagering-related content in my location.</span>
-          </label>
-          <label class="check-row">
-            <input id="riskCheck" type="checkbox">
-            <span>I understand Live Picks is <strong>information and analysis only</strong>, does not guarantee profit or outcomes, and does not place or accept bets.</span>
-          </label>
+          <div class="card-shell" aria-hidden="true">
+            <div class="card-row"><div class="card-cell">Card number</div></div>
+            <div class="card-row"><div class="card-cell">MM / YY</div><div class="card-cell">CVC</div><div class="card-cell">ZIP</div></div>
+          </div>
+
+          <button class="card-button" type="button" id="cardButton">Continue with card →</button>
         </div>
 
         <div class="summary-box">
-          <div class="summary-row"><span>Plan</span><strong id="summaryPlan">Monthly</strong></div>
+          <div class="summary-row"><span>Plan</span><strong id="summaryPlan">Weekly</strong></div>
           <div class="summary-row"><span>Delivery</span><strong>Email + access handoff</strong></div>
           <div class="summary-row"><span>Service</span><strong>Fight-night analysis only</strong></div>
-          <div class="summary-row total"><span>Total today</span><strong id="summaryPrice">$29 / month</strong></div>
+          <div class="summary-row total"><span>Total today</span><strong id="summaryPrice">$9.90 / week</strong></div>
         </div>
-
-        <button class="card-button" type="button" id="cardButton">Continue to secure payment →</button>
 
         <div class="processor-state" id="processorState" role="status" aria-live="polite">
           <strong>Payment processor connection required.</strong>
