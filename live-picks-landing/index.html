@@ -4299,6 +4299,358 @@ h1 {
   }
 }
 
+
+/* Mobile readability pass: enlarge the two main prediction fight blocks without changing desktop */
+@media (max-width: 680px) {
+  #predictions.section {
+    padding: 30px 0 36px !important;
+  }
+
+  #predictions .model-card + .model-card {
+    margin-top: 16px !important;
+  }
+
+  #predictions .fight-board {
+    padding: 12px !important;
+  }
+
+  #predictions .fight-title {
+    margin: -12px -12px 10px !important;
+    padding: 12px !important;
+    gap: 8px !important;
+  }
+
+  #predictions .fight-title h2 {
+    font-size: clamp(0.76rem, 2.8vw, 0.88rem) !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.105em !important;
+  }
+
+  #predictions .result-chip {
+    padding: 5px 8px !important;
+    font-size: 0.52rem !important;
+  }
+
+  #predictions .matchup {
+    border: 1px solid var(--border) !important;
+    background: linear-gradient(180deg, rgba(8,13,10,0.98), rgba(5,8,6,0.98)) !important;
+  }
+
+  #predictions .fighter-card {
+    grid-template-columns: 74px minmax(0, 1fr) !important;
+    gap: 13px !important;
+    padding: 14px 13px !important;
+    min-height: 118px !important;
+    align-items: center !important;
+  }
+
+  #predictions .fighter-card.pick {
+    border-left-width: 3px !important;
+    background: linear-gradient(90deg, rgba(34,255,136,0.16), rgba(34,255,136,0.035) 76%) !important;
+  }
+
+  #predictions .fighter-card.pick::after {
+    content: "WIN" !important;
+    top: 12px !important;
+    right: 12px !important;
+    transform: none !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 4px 7px !important;
+    font-size: 0.5rem !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  #predictions .portrait {
+    width: 74px !important;
+    height: 74px !important;
+    border-radius: 11px !important;
+  }
+
+  #predictions .portrait .fallback-name {
+    font-size: 1.55rem !important;
+  }
+
+  #predictions .fighter-name {
+    font-size: clamp(1.28rem, 6.2vw, 1.68rem) !important;
+    line-height: 1.02 !important;
+    margin-bottom: 8px !important;
+    padding-right: 42px !important;
+    letter-spacing: -0.06em !important;
+  }
+
+  #predictions .fighter-name br {
+    display: initial !important;
+  }
+
+  #predictions .fighter-meta {
+    gap: 5px !important;
+    margin-bottom: 8px !important;
+  }
+
+  #predictions .tag {
+    display: inline-flex !important;
+    padding: 4px 6px !important;
+    font-size: 0.56rem !important;
+    line-height: 1 !important;
+    letter-spacing: 0.055em !important;
+  }
+
+  #predictions .fighter-card.pick .fighter-meta .tag.red,
+  #predictions .fighter-card.fade .fighter-meta .tag:nth-child(n+2) {
+    display: inline-flex !important;
+  }
+
+  #predictions .form-line {
+    display: grid !important;
+    gap: 6px !important;
+  }
+
+  #predictions .form-label {
+    font-size: 0.55rem !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  #predictions .form-dots {
+    gap: 5px !important;
+  }
+
+  #predictions .form-dots span {
+    width: 18px !important;
+    height: 5px !important;
+  }
+
+  #predictions .edge-grid {
+    gap: 8px !important;
+    margin-top: 10px !important;
+  }
+
+  #predictions .edge-box {
+    padding: 10px !important;
+    min-height: 88px !important;
+  }
+
+  #predictions .edge-box .label {
+    margin-bottom: 5px !important;
+    font-size: 0.52rem !important;
+  }
+
+  #predictions .edge-box .value {
+    font-size: 1.04rem !important;
+  }
+
+  #predictions .edge-box small {
+    display: block !important;
+    margin-top: 5px !important;
+    font-size: 0.58rem !important;
+    line-height: 1.25 !important;
+  }
+}
+
+@media (max-width: 430px) {
+  #predictions .fighter-card {
+    grid-template-columns: 68px minmax(0, 1fr) !important;
+    gap: 12px !important;
+    padding: 13px 12px !important;
+    min-height: 112px !important;
+  }
+
+  #predictions .portrait {
+    width: 68px !important;
+    height: 68px !important;
+  }
+
+  #predictions .fighter-name {
+    font-size: clamp(1.2rem, 7.2vw, 1.48rem) !important;
+    padding-right: 38px !important;
+  }
+
+  #predictions .tag {
+    font-size: 0.52rem !important;
+    padding: 4px 5px !important;
+  }
+
+  #predictions .form-dots span {
+    width: 16px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  #predictions .fighter-card {
+    grid-template-columns: 62px minmax(0, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  #predictions .portrait {
+    width: 62px !important;
+    height: 62px !important;
+  }
+
+  #predictions .fighter-name {
+    font-size: 1.15rem !important;
+    padding-right: 34px !important;
+  }
+}
+
+
+
+/* Post-hero model intro block */
+.model-intro-section {
+  position: relative;
+  padding: 22px 0 24px;
+  border-bottom: 1px solid var(--border);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(34,255,136,0.075), transparent 30%),
+    linear-gradient(180deg, rgba(8,13,9,0.94), rgba(4,7,5,0.98));
+}
+
+.model-intro-card {
+  position: relative;
+  overflow: hidden;
+  max-width: 980px;
+  margin: 0 auto;
+  border: 1px solid rgba(34,255,136,0.16);
+  background:
+    radial-gradient(circle at 18% 8%, rgba(34,255,136,0.075), transparent 28%),
+    linear-gradient(180deg, rgba(13,20,15,0.88), rgba(7,11,8,0.94));
+  box-shadow: 0 14px 46px rgba(0,0,0,0.28), inset 0 0 34px rgba(34,255,136,0.025);
+  padding: 22px 24px 24px;
+  text-align: center;
+}
+
+.model-intro-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(34,255,136,0.04), transparent 30%, transparent 70%, rgba(34,255,136,0.032)),
+    linear-gradient(180deg, rgba(255,255,255,0.026), transparent 45%);
+}
+
+.model-intro-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.model-intro-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--green);
+  font-size: 0.58rem;
+  font-weight: 950;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 9px;
+}
+
+.model-intro-kicker::before,
+.model-intro-kicker::after {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--border-soft);
+}
+
+.model-intro-card h2 {
+  margin: 0 auto 10px;
+  max-width: 760px;
+  color: white;
+  font-size: clamp(1.35rem, 2.85vw, 2.45rem);
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+
+.model-intro-card p {
+  margin: 0 auto;
+  max-width: 800px;
+  color: #aeb9b1;
+  font-size: clamp(0.86rem, 1.05vw, 0.96rem);
+  line-height: 1.52;
+  font-weight: 650;
+}
+
+.model-intro-card p + p {
+  margin-top: 9px;
+}
+
+.model-intro-card strong {
+  color: #f6fff8;
+}
+
+.model-intro-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.view-model-glow {
+  min-width: 152px;
+  min-height: 42px;
+  border-color: rgba(34,255,136,0.72);
+  box-shadow:
+    0 0 14px rgba(34,255,136,0.24),
+    0 0 36px rgba(34,255,136,0.12),
+    inset 0 0 14px rgba(255,255,255,0.12);
+}
+
+.view-model-glow:hover {
+  box-shadow:
+    0 0 18px rgba(34,255,136,0.34),
+    0 0 48px rgba(34,255,136,0.18),
+    inset 0 0 14px rgba(255,255,255,0.14);
+}
+
+@media (max-width: 680px) {
+  .model-intro-section {
+    padding: 14px 0 17px;
+  }
+
+  .model-intro-card {
+    padding: 16px 13px 17px;
+  }
+
+  .model-intro-kicker {
+    margin-bottom: 8px;
+    font-size: 0.5rem;
+    letter-spacing: 0.11em;
+  }
+
+  .model-intro-kicker::before,
+  .model-intro-kicker::after {
+    width: 16px;
+  }
+
+  .model-intro-card h2 {
+    font-size: clamp(1.16rem, 7.4vw, 1.68rem);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .model-intro-card p {
+    font-size: 0.75rem;
+    line-height: 1.42;
+  }
+
+  .model-intro-card p + p {
+    margin-top: 7px;
+  }
+
+  .model-intro-actions {
+    margin-top: 13px;
+  }
+
+  .view-model-glow {
+    width: auto;
+    min-width: 132px;
+    min-height: 36px;
+    padding: 0 15px;
+    font-size: 0.6rem;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -4488,6 +4840,21 @@ h1 {
       </aside>
     </div>
   </section>
+
+  <section class="model-intro-section" aria-labelledby="model-intro-title">
+    <div class="container">
+      <div class="model-intro-card">
+        <div class="model-intro-kicker">Unmeasured fight night edge</div>
+        <h2 id="model-intro-title">Fights are more than numbers and styles.</h2>
+        <p>That’s how they’re remembered, but not always how they go down. Crowd involvement, press conference mistakes, premature celebrations, body language and visible condition are rarely measured live, yet they can be strong indicators of the result.</p>
+        <p>That’s why Live Picks waits. We don’t post a pick until the model assesses the fighter’s condition on fight night and weighs the signals the market often misses.</p>
+        <div class="model-intro-actions">
+          <a class="btn btn-primary view-model-glow" href="#model">View Model</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <section id="predictions" class="section">
     <div class="container">
