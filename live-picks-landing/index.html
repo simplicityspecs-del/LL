@@ -3022,6 +3022,117 @@ h1 {
   }
 }
 
+
+/* Result card title refinement: keep one title, but restore the subtle faded header feel */
+#predictions .fight-title {
+  margin: -28px -28px 22px;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+
+#predictions .fight-title h2 {
+  margin: 0;
+  color: #9ba79e;
+  font-size: 0.74rem;
+  line-height: 1.35;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 950;
+}
+
+@media (max-width: 680px) {
+  #predictions .fight-title {
+    margin: -16px -16px 16px;
+    padding: 14px 16px;
+    gap: 9px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  #predictions .fight-title h2 {
+    color: #9ba79e;
+    font-size: 0.62rem;
+    line-height: 1.35;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+}
+
+
+/* Thesis polish pass: subtle title hierarchy + cleaner final edge card */
+.thesis-card-title {
+  margin: 0 0 14px;
+  color: #f4fff7;
+  font-size: clamp(1.15rem, 1.55vw, 1.55rem);
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+  font-weight: 950;
+}
+
+.thesis-card p strong {
+  color: white;
+  font-weight: 950;
+}
+
+.thesis-result-note {
+  color: #c5d0c9 !important;
+  font-weight: 800;
+}
+
+.thesis-live-callout {
+  position: relative;
+  border-left: 3px solid var(--green);
+  padding: 18px 0 18px 20px;
+  background:
+    linear-gradient(90deg, rgba(34,255,136,0.08), transparent 72%);
+}
+
+.thesis-live-callout span {
+  display: inline-flex;
+  margin-bottom: 9px;
+  color: var(--green);
+  font-size: 0.7rem;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.thesis-live-callout p {
+  margin: 0;
+  color: white;
+  font-size: clamp(1.35rem, 2.4vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.055em;
+  font-weight: 950;
+}
+
+.thesis-card.final p:last-of-type {
+  border-left: 0;
+  padding-left: 0;
+}
+
+@media (max-width: 680px) {
+  .thesis-card-title {
+    margin-bottom: 8px;
+    font-size: 1.02rem;
+    line-height: 1.05;
+  }
+
+  .thesis-live-callout {
+    padding: 12px 0 12px 13px;
+  }
+
+  .thesis-live-callout span {
+    margin-bottom: 6px;
+    font-size: 0.55rem;
+  }
+
+  .thesis-live-callout p {
+    font-size: 1.08rem;
+    line-height: 1.15;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3396,6 +3507,7 @@ h1 {
         <article class="thesis-manifesto">
           <section class="thesis-card wide">
             <span class="thesis-marker">01</span>
+            <h3 class="thesis-card-title">Personality moves price.</h3>
             <p>UFC is a small group of elite fighters, each with wildly different personalities and attitudes. Styles make matchups, and this is truer here than in almost any other sport. Confidence wins fights. Arrogance loses them. Ego can be the deciding factor.</p>
             <p>What makes UFC so uniquely unpredictable is that it’s only two competitors in a cage. That leaves massive room for variance. The best game plan can be shattered by bad press, awkward face off moments, negative energy, or even something as random as a viral flu.</p>
           </section>
@@ -3406,29 +3518,35 @@ h1 {
 
           <section class="thesis-card">
             <span class="thesis-marker">02</span>
+            <h3 class="thesis-card-title">Late reads matter.</h3>
             <p>Sometimes you can’t accurately read a fight until the referee claps his hands. A fighter can have every physical advantage in the world, but a humiliating moment at the press conference, a hostile walkout reception, or an electric crowd response can swing the outcome harder than any single punch.</p>
             <p>This is the manifestation of two powerful individuals colliding and sometimes it feels impossible to predict.</p>
           </section>
 
           <section class="thesis-card pressure">
             <span class="thesis-marker">03</span>
+            <h3 class="thesis-card-title">Atmosphere beats paper.</h3>
             <p>Basic stats (height, weight, reach, record, stylistic matchups) give you an edge, but attitude and atmosphere often decide more fights than all the numbers combined.</p>
             <p>Imagine having the clear advantage on paper… only to walk out to 50,000 people booing you while they pour energy into your opponent. The crowd cheers their mistakes, falls silent during your best technical moments, and boos every time you try to slow the fight down.</p>
           </section>
 
           <section class="thesis-card wide pressure">
             <span class="thesis-marker">04</span>
-            <p>That pressure is real and it influences fighters.</p>
-            <p>That’s exactly what Live Picks is built to capture.</p>
+            <h3 class="thesis-card-title">Pressure is the blind spot.</h3>
+            <p><strong>That pressure is real and it influences fighters.</strong> That’s exactly what Live Picks is built to capture.</p>
             <p>We scrape every meaningful physical data point, study fight history, current form, personality traits, crowd dynamics, and hidden blind spots. We look for the fighter who simply wants it more on that specific night because those are the ones who shock the world.</p>
           </section>
 
           <section class="thesis-card final">
             <div>
               <span class="thesis-marker">05</span>
-              <p>Running this model has delivered strong profitability, tens of thousands in results. The one catch?</p>
+              <h3 class="thesis-card-title">The edge is late.</h3>
+              <p class="thesis-result-note">Running this model has delivered strong profitability, with tens of thousands in results.</p>
             </div>
-            <p>The best edge comes from betting live, as the fight is just about to happen.</p>
+            <div class="thesis-live-callout">
+              <span>The one catch?</span>
+              <p>The best edge comes from betting live, right as the fight is about to happen.</p>
+            </div>
           </section>
         </article>
 
