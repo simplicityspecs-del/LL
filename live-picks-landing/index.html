@@ -3133,6 +3133,340 @@ h1 {
   }
 }
 
+
+/* Hero refinement: clearer messaging and more digestible live-edge story */
+.hero-copy-wrap {
+  display: grid;
+  gap: 0;
+}
+
+.hero-lead {
+  margin: 22px 0 0;
+  max-width: 760px;
+  color: #dce7e0;
+  font-size: clamp(1.18rem, 2.05vw, 1.5rem);
+  line-height: 1.46;
+  font-weight: 780;
+}
+
+.hero-lead strong,
+.hero-note strong {
+  color: #f6fff8;
+}
+
+.hero-copy {
+  margin-top: 16px;
+  max-width: 760px;
+}
+
+.hero-insight-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 26px;
+  max-width: 860px;
+}
+
+.hero-insight-card {
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(14,22,17,0.92), rgba(8,12,9,0.92));
+  padding: 16px;
+  min-height: 158px;
+}
+
+.hero-insight-label {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--green);
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.hero-insight-card strong {
+  display: block;
+  color: white;
+  font-size: 1rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 7px;
+}
+
+.hero-insight-card p {
+  margin: 0;
+  color: #98a49c;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.hero-note {
+  margin-top: 18px;
+  max-width: 720px;
+  border-left: 3px solid var(--green);
+  padding-left: 16px;
+  color: #f3fff7;
+  font-size: clamp(1rem, 1.45vw, 1.18rem);
+  line-height: 1.45;
+  font-weight: 820;
+}
+
+.hero-panel {
+  display: grid;
+  align-content: start;
+}
+
+.hero-panel .release-event {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  line-height: 0.98;
+}
+
+.hero-panel-footer {
+  margin-top: 14px;
+  padding: 16px 18px;
+  border: 1px solid var(--border-soft);
+  background: linear-gradient(90deg, rgba(34,255,136,0.1), rgba(34,255,136,0.02)), #070b08;
+}
+
+.hero-panel-footer strong {
+  display: block;
+  color: #f6fff8;
+  font-size: 0.84rem;
+  font-weight: 950;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.hero-panel-footer span {
+  color: #98a49c;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  font-weight: 700;
+}
+
+@media (max-width: 980px) {
+  .hero-insight-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .hero-lead {
+    margin-top: 14px;
+    font-size: 0.98rem;
+    line-height: 1.48;
+  }
+
+  .hero-copy {
+    margin-top: 12px;
+  }
+
+  .hero-insight-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .hero-insight-card {
+    min-height: 0;
+    padding: 13px;
+  }
+
+  .hero-insight-label {
+    margin-bottom: 7px;
+    font-size: 0.55rem;
+  }
+
+  .hero-insight-card strong {
+    font-size: 0.92rem;
+    margin-bottom: 5px;
+  }
+
+  .hero-insight-card p {
+    font-size: 0.77rem;
+    line-height: 1.42;
+  }
+
+  .hero-note {
+    margin-top: 14px;
+    padding-left: 12px;
+    font-size: 0.88rem;
+    line-height: 1.42;
+  }
+
+  .hero-panel .release-event {
+    font-size: 1.2rem;
+  }
+
+  .hero-panel-footer {
+    margin-top: 10px;
+    padding: 11px 12px;
+  }
+
+  .hero-panel-footer strong {
+    font-size: 0.66rem;
+    margin-bottom: 4px;
+  }
+
+  .hero-panel-footer span {
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+}
+
+
+/* Desktop hero balance pass: mobile stays locked, desktop gets cleaner proportions */
+@media (min-width: 981px) {
+  .hero {
+    padding: 54px 0 56px;
+  }
+
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(420px, 0.82fr);
+    gap: 54px;
+    align-items: start;
+  }
+
+  .hero-copy-wrap {
+    max-width: 780px;
+  }
+
+  .hero h1 {
+    max-width: 720px;
+    font-size: clamp(3.7rem, 5.45vw, 5.8rem);
+    line-height: 0.91;
+    letter-spacing: -0.075em;
+  }
+
+  .hero-lead {
+    max-width: 700px;
+    margin-top: 20px;
+    font-size: clamp(1.08rem, 1.35vw, 1.28rem);
+    line-height: 1.5;
+  }
+
+  .hero-copy {
+    max-width: 720px;
+    margin-top: 14px;
+    font-size: clamp(0.96rem, 1.08vw, 1.08rem);
+    line-height: 1.58;
+  }
+
+  .hero-insight-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+    max-width: 620px;
+  }
+
+  .hero-insight-card {
+    min-height: 128px;
+    padding: 14px 15px;
+  }
+
+  .hero-insight-label {
+    margin-bottom: 7px;
+    font-size: 0.55rem;
+    letter-spacing: 0.11em;
+  }
+
+  .hero-insight-card strong {
+    font-size: 0.9rem;
+    line-height: 1.12;
+    margin-bottom: 6px;
+  }
+
+  .hero-insight-card p {
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .hero-note {
+    max-width: 680px;
+    margin-top: 18px;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .hero-panel {
+    width: 100%;
+    margin-top: 70px;
+  }
+
+  .hero-panel .release-head {
+    padding-bottom: 16px;
+  }
+
+  .hero-panel .release-event {
+    font-size: clamp(1.55rem, 2.2vw, 2.15rem);
+  }
+
+  .hero-panel .release-stack {
+    gap: 10px;
+    padding-top: 14px;
+  }
+
+  .hero-panel .release-item {
+    grid-template-columns: 56px 1fr;
+    gap: 13px;
+    padding: 13px;
+  }
+
+  .hero-panel .release-num {
+    min-height: 40px;
+    font-size: 0.68rem;
+  }
+
+  .hero-panel .release-item strong {
+    font-size: 0.93rem;
+  }
+
+  .hero-panel .release-item p {
+    font-size: 0.82rem;
+    line-height: 1.42;
+  }
+
+  .hero-panel-footer {
+    margin-top: 10px;
+    padding: 13px 14px;
+  }
+
+  .hero-panel-footer strong {
+    font-size: 0.72rem;
+  }
+
+  .hero-panel-footer span {
+    font-size: 0.82rem;
+  }
+}
+
+@media (min-width: 981px) and (max-width: 1240px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(380px, 0.78fr);
+    gap: 34px;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.35rem, 5.1vw, 4.75rem);
+  }
+
+  .hero-panel {
+    margin-top: 56px;
+  }
+
+  .hero-insight-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 560px;
+  }
+
+  .hero-insight-card {
+    min-height: 118px;
+    padding: 13px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3191,49 +3525,81 @@ h1 {
 <main id="top">
   <section class="hero">
     <div class="container hero-grid">
-      <div>
+      <div class="hero-copy-wrap">
         <div class="kicker">Fight night market intelligence</div>
-        <h1>Finding holes in the bookies.</h1>
-        <p class="hero-copy">Basic stats help, but they are not the whole fight. Live Picks is built around the information bookmakers struggle to price correctly: <strong>crowd involvement, fighter condition on the night, walkout composure, press conference blunders, social sentiment and the final pressure read.</strong></p>
+        <h1>Bookies can’t price what they can’t see yet.</h1>
+        <p class="hero-lead">Most fight markets are built before the most important late data exists. Live Picks focuses on the information that only becomes visible on fight night.</p>
+        <p class="hero-copy">A fighter can look strong on paper, then walk out flat, tight, drained, distracted, injured or emotionally charged. Physical condition, movement, composure, crowd reaction, public sentiment and last minute pressure can all point toward a result. <strong>These signals are rarely priced correctly by bookmakers because they are not available when the market is first shaped.</strong></p>
+
+        <div class="hero-insight-grid" aria-label="Live Picks edge summary">
+          <article class="hero-insight-card">
+            <span class="hero-insight-label">Physical condition</span>
+            <strong>Read the fighter as he walks.</strong>
+            <p>Movement, posture, breathing, facial tension and energy levels can reveal condition before first contact.</p>
+          </article>
+          <article class="hero-insight-card">
+            <span class="hero-insight-label">Fight night pressure</span>
+            <strong>The environment changes the fighter.</strong>
+            <p>Crowd reaction, walkout energy, public sentiment and emotional control can shift performance in real time.</p>
+          </article>
+          <article class="hero-insight-card">
+            <span class="hero-insight-label">Market blind spots</span>
+            <strong>Bookmakers price the early picture.</strong>
+            <p>Late information is often missing from the market entirely, which is where the edge can appear.</p>
+          </article>
+          <article class="hero-insight-card">
+            <span class="hero-insight-label">Later lock</span>
+            <strong>More data means a cleaner read.</strong>
+            <p>Live Picks uses algorithmic models to assess condition and mental state right up until the referee claps his hands.</p>
+          </article>
+        </div>
+
+        <div class="hero-note">The later the lock, the more fight night data has been processed, which creates a more accurate pick.</div>
+
         <div class="hero-actions">
           <a class="btn btn-primary live-edge-cta" href="#predictions">View Live Edge →</a>
           <a class="btn btn-ghost" href="#model">How The Model Works</a>
         </div>
       </div>
 
-      <aside class="release-panel" aria-label="Live release protocol">
+      <aside class="release-panel hero-panel" aria-label="What Live Picks captures">
         <div class="release-head">
           <div>
-            <span class="release-eyebrow">Live release protocol</span>
-            <strong class="release-event">UFC 329</strong>
+            <span class="release-eyebrow">What Live Picks captures</span>
+            <strong class="release-event">Fight Night Signals</strong>
           </div>
-          <span class="live-status">Live</span>
+          <span class="live-status">Live data</span>
         </div>
 
         <div class="release-stack">
           <div class="release-item">
             <span class="release-num">01</span>
             <div>
-              <strong>Wait for the walkout</strong>
-              <p>We do not force a pick early. The final read comes from condition, crowd pressure and environmental factors.</p>
+              <strong>Physical condition on arrival</strong>
+              <p>How the fighter walks, breathes, holds posture, carries tension and responds to the arena.</p>
             </div>
           </div>
 
           <div class="release-item">
-            <span class="release-num">30s</span>
+            <span class="release-num">02</span>
             <div>
-              <strong>Late alerts are part of the edge</strong>
-              <p>Some plays may be sent in the final 30 seconds after all available data is in.</p>
+              <strong>Emotional and environmental pressure</strong>
+              <p>Press conference moments, face offs, public sentiment, crowd energy and visible reactions.</p>
             </div>
           </div>
 
           <div class="release-item">
-            <span class="release-num">H2H</span>
+            <span class="release-num">03</span>
             <div>
-              <strong>Winner market only</strong>
-              <p>We assess fighter versus fighter. No round picks. No method-of-victory props.</p>
+              <strong>Final model lock</strong>
+              <p>The read gets stronger as more late data arrives, which is why some alerts only come moments before the fight starts.</p>
             </div>
           </div>
+        </div>
+
+        <div class="hero-panel-footer">
+          <strong>Winner market only.</strong>
+          <span>We focus on head to head outcomes, where late information creates the clearest edge.</span>
         </div>
       </aside>
     </div>
