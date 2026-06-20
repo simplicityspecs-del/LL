@@ -4261,6 +4261,44 @@ h1 {
   }
 }
 
+
+
+/* Final requested spacing pass: fighter names + tighter section transitions */
+#predictions .fighter-name {
+  line-height: 1.03;
+  word-spacing: 0.08em;
+}
+
+#signals.section,
+.thesis-section {
+  padding-top: 44px;
+}
+
+#model.section,
+.signals-section {
+  padding-bottom: 44px;
+}
+
+@media (max-width: 680px) {
+  #predictions .fighter-name {
+    line-height: 1.08 !important;
+    word-spacing: 0.08em;
+  }
+
+  #model.section {
+    padding-bottom: 8px !important;
+  }
+
+  #signals.section {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .thesis-section {
+    padding-top: 8px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -4467,7 +4505,7 @@ h1 {
                 <span class="fallback-name">JG</span>
               </div>
               <div>
-                <h3 class="fighter-name">Justin<br>Gaethje</h3>
+                <h3 class="fighter-name">Justin <br>Gaethje</h3>
                 <div class="fighter-meta">
                   <span class="tag green">Winning Pick</span>
                   <span class="tag red">Paper Underdog</span>
@@ -4490,7 +4528,7 @@ h1 {
                 <span class="fallback-name">IT</span>
               </div>
               <div>
-                <h3 class="fighter-name">Ilia<br>Topuria</h3>
+                <h3 class="fighter-name">Ilia <br>Topuria</h3>
                 <div class="fighter-meta">
                   <span class="tag">Market Favourite</span>
                   <span class="tag">Public Side</span>
@@ -4554,7 +4592,7 @@ h1 {
                 <span class="fallback-name">BG</span>
               </div>
               <div>
-                <h3 class="fighter-name">Bobby<br>Green</h3>
+                <h3 class="fighter-name">Bobby <br>Green</h3>
                 <div class="fighter-meta">
                   <span class="tag green">Winning Pick</span>
                   <span class="tag">39 Years Old</span>
@@ -4573,11 +4611,11 @@ h1 {
 
             <section class="fighter-card fade">
               <div class="portrait">
-                <img src="zellhuber.png" alt="Zellhuber fighter portrait" onerror="this.style.display='none'; this.parentElement.classList.add('fallback');">
-                <span class="fallback-name">Z</span>
+                <img src="zellhuber.png" alt="Daniel Zellhuber fighter portrait" onerror="this.style.display='none'; this.parentElement.classList.add('fallback');">
+                <span class="fallback-name">DZ</span>
               </div>
               <div>
-                <h3 class="fighter-name">Zellhuber</h3>
+                <h3 class="fighter-name">Daniel <br>Zellhuber</h3>
                 <div class="fighter-meta">
                   <span class="tag">26 Years Old</span>
                   <span class="tag">Heavy Favourite</span>
@@ -4598,12 +4636,12 @@ h1 {
             <div class="edge-box">
               <div class="label">Paper Stats</div>
               <div class="value red">Underdog</div>
-              <small>Green came in as the underdog on paper, with Zellhuber holding the age edge at 26 to Green's 39</small>
+              <small>Green came in as the underdog on paper, with Daniel Zellhuber holding the age edge at 26 to Green's 39</small>
             </div>
             <div class="edge-box">
               <div class="label">Bookmaker Price</div>
               <div class="value">$3.90</div>
-              <small>Zellhuber was the heavy favourite on paper with a 2 inch height edge and 7 inch reach advantage</small>
+              <small>Daniel Zellhuber was the heavy favourite on paper with a 2 inch height edge and 7 inch reach advantage</small>
             </div>
             <div class="edge-box">
               <div class="label">Fight Night Read</div>
@@ -4613,7 +4651,7 @@ h1 {
             <div class="edge-box">
               <div class="label">Outcome</div>
               <div class="value green">Model Hit</div>
-              <small>Green won despite Zellhuber's age, height, reach and market advantages</small>
+              <small>Green won despite Daniel Zellhuber's age, height, reach and market advantages</small>
             </div>
           </div>
         </div>
@@ -4886,7 +4924,7 @@ h1 {
           <div class="pick-body">
             <div class="mini-fighter winner"><div class="mini-face"><img src="green.png" alt="Green" onerror="this.style.display='none'"></div><strong>Green</strong></div>
             <div class="odds">$3.90</div>
-            <div class="mini-fighter"><div class="mini-face"><img src="zellhuber.png" alt="Zellhuber" onerror="this.style.display='none'"></div><strong>Zellhuber</strong></div>
+            <div class="mini-fighter"><div class="mini-face"><img src="zellhuber.png" alt="Daniel Zellhuber" onerror="this.style.display='none'"></div><strong>Daniel Zellhuber</strong></div>
           </div>
         </article>
 
