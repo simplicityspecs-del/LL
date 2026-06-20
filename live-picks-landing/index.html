@@ -2811,6 +2811,223 @@ h1 {
   }
 }
 
+
+/* Requested mobile fixes: anchor offset and two-button hero layout */
+#model {
+  scroll-margin-top: 112px;
+}
+
+.live-edge-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  animation: liveEdgeBreath 2.6s ease-in-out infinite;
+}
+
+.live-edge-cta::after {
+  content: "";
+  position: absolute;
+  inset: -75%;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.18) 18%, rgba(255,255,255,0) 44%);
+  opacity: 0;
+  transform: scale(0.16);
+  pointer-events: none;
+  animation: liveEdgeRipple 2.6s ease-out infinite;
+}
+
+@keyframes liveEdgeBreath {
+  0%, 100% { box-shadow: 0 0 24px rgba(34,255,136,0.22); }
+  50% { box-shadow: 0 0 38px rgba(34,255,136,0.42); }
+}
+
+@keyframes liveEdgeRipple {
+  0% { opacity: 0; transform: scale(0.16); }
+  15% { opacity: 0.28; }
+  70% { opacity: 0; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-edge-cta,
+  .live-edge-cta::after {
+    animation: none;
+  }
+}
+
+@media (max-width: 680px) {
+  #model {
+    scroll-margin-top: 124px;
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr);
+    gap: 8px;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .hero-actions .btn:nth-child(1) {
+    grid-column: 1;
+  }
+
+  .hero-actions .btn:nth-child(2) {
+    grid-column: 2;
+    padding-inline: 10px;
+    font-size: clamp(0.58rem, 2.55vw, 0.66rem);
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions .btn {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+
+/* Live Signals / Priced Late interactive card pass */
+.signals-section {
+  scroll-margin-top: 112px;
+}
+
+.signal-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transform: translateY(0) scale(1);
+  transition:
+    transform 0.28s ease,
+    border-color 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.28s ease;
+  will-change: transform;
+}
+
+.signal-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(1.02);
+  background:
+    radial-gradient(circle at 84% 12%, rgba(34,255,136,0.11), transparent 32%),
+    linear-gradient(180deg, rgba(18,30,21,0.98), rgba(7,12,9,0.98));
+  transition:
+    opacity 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.signal-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.signal-code,
+.signal-status {
+  transition:
+    box-shadow 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+    text-shadow 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.signal-card:hover,
+.signal-card:focus-within,
+.signal-card.is-visible {
+  border-color: rgba(34,255,136,0.44);
+  box-shadow:
+    0 18px 46px rgba(0,0,0,0.38),
+    0 0 30px rgba(34,255,136,0.12),
+    inset 0 0 34px rgba(34,255,136,0.04);
+}
+
+.signal-card:hover::before,
+.signal-card:focus-within::before,
+.signal-card.is-visible::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.signal-card:hover,
+.signal-card:focus-within {
+  transform: translateY(-7px) scale(1.012);
+}
+
+.signal-card.is-visible {
+  transform: translateY(-2px);
+}
+
+.signal-card.is-tapped {
+  transform: translateY(-5px) scale(0.992);
+  filter: brightness(1.06);
+  border-color: rgba(34,255,136,0.58);
+}
+
+.signal-card:hover .signal-code,
+.signal-card:focus-within .signal-code,
+.signal-card.is-visible .signal-code {
+  box-shadow: 0 0 22px rgba(34,255,136,0.2), inset 0 0 18px rgba(34,255,136,0.06);
+}
+
+.signal-card:hover .signal-status,
+.signal-card:focus-within .signal-status,
+.signal-card.is-visible .signal-status {
+  text-shadow: 0 0 14px rgba(34,255,136,0.34);
+}
+
+.signal-card.is-visible .signal-code {
+  animation: signalCodePulse 2.4s ease-in-out infinite;
+}
+
+
+@keyframes signalCodePulse {
+  0%, 100% { border-color: var(--border-soft); }
+  50% { border-color: rgba(34,255,136,0.56); }
+}
+
+@media (hover: none) {
+  .signal-card.is-visible {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 680px) {
+  .signals-section {
+    scroll-margin-top: 96px;
+  }
+
+  .signal-card:hover {
+    transform: none;
+  }
+
+  .signal-card.is-visible {
+    transform: translateY(-3px);
+    box-shadow:
+      0 12px 30px rgba(0,0,0,0.34),
+      0 0 22px rgba(34,255,136,0.11),
+      inset 0 0 24px rgba(34,255,136,0.035);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signal-card,
+  .signal-card.is-visible .signal-code {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2874,9 +3091,8 @@ h1 {
         <h1>Finding holes in the bookies.</h1>
         <p class="hero-copy">Basic stats help, but they are not the whole fight. Live Picks is built around the information bookmakers struggle to price correctly: <strong>crowd involvement, fighter condition on the night, walkout composure, press conference blunders, social sentiment and the final pressure read.</strong></p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#predictions">View Live Edge →</a>
+          <a class="btn btn-primary live-edge-cta" href="#predictions">View Live Edge →</a>
           <a class="btn btn-ghost" href="#model">How The Model Works</a>
-          <a class="btn btn-ghost" href="live-picks-why-substack-clean.html">Why Substack</a>
         </div>
       </div>
 
@@ -2884,7 +3100,7 @@ h1 {
         <div class="release-head">
           <div>
             <span class="release-eyebrow">Live release protocol</span>
-            <strong class="release-event">UFC 329</strong>
+            <strong class="release-event">UFC</strong>
           </div>
           <span class="live-status">Live</span>
         </div>
@@ -2928,7 +3144,7 @@ h1 {
 
         <div class="fight-board">
           <div class="fight-title">
-            <h2>UFC 329 • Main Event</h2>
+            <h2>FREEDOM 250 • Main Event</h2>
             <span class="result-chip">Final</span>
           </div>
 
@@ -3080,66 +3296,7 @@ h1 {
     </div>
   </section>
 
-  <section class="section thesis-section">
-    <div class="container">
-      <div class="section-heading thesis-heading">
-        <h2>The thesis.</h2>
-      </div>
-
-      <div class="thesis-layout">
-        <article class="thesis-manifesto">
-          <section class="thesis-card wide">
-            <span class="thesis-marker">01</span>
-            <p>UFC is a small group of elite fighters, each with wildly different personalities and attitudes. Styles make matchups, and this is truer here than in almost any other sport. Confidence wins fights. Arrogance loses them. Ego can be the deciding factor.</p>
-            <p>What makes UFC so uniquely unpredictable is that it’s only two competitors in a cage. That leaves massive room for variance. The best game plan can be shattered by bad press, awkward face off moments, negative energy, or even something as random as a viral flu.</p>
-          </section>
-
-          <section class="thesis-punchcard">
-            <p>The fight must go on.</p>
-          </section>
-
-          <section class="thesis-card">
-            <span class="thesis-marker">02</span>
-            <p>Sometimes you can’t accurately read a fight until the referee claps his hands. A fighter can have every physical advantage in the world, but a humiliating moment at the press conference, a hostile walkout reception, or an electric crowd response can swing the outcome harder than any single punch.</p>
-            <p>This is the manifestation of two powerful individuals colliding and sometimes it feels impossible to predict.</p>
-          </section>
-
-          <section class="thesis-card pressure">
-            <span class="thesis-marker">03</span>
-            <p>Basic stats (height, weight, reach, record, stylistic matchups) give you an edge, but attitude and atmosphere often decide more fights than all the numbers combined.</p>
-            <p>Imagine having the clear advantage on paper… only to walk out to 50,000 people booing you while they pour energy into your opponent. The crowd cheers their mistakes, falls silent during your best technical moments, and boos every time you try to slow the fight down.</p>
-          </section>
-
-          <section class="thesis-card wide pressure">
-            <span class="thesis-marker">04</span>
-            <p>That pressure is real and it influences fighters.</p>
-            <p>That’s exactly what Live Picks is built to capture.</p>
-            <p>We scrape every meaningful physical data point, study fight history, current form, personality traits, crowd dynamics, and hidden blind spots. We look for the fighter who simply wants it more on that specific night because those are the ones who shock the world.</p>
-          </section>
-
-          <section class="thesis-card final">
-            <div>
-              <span class="thesis-marker">05</span>
-              <p>Running this model has delivered strong profitability, tens of thousands in results. The one catch?</p>
-            </div>
-            <p>The best edge comes from betting live, as the fight is just about to happen.</p>
-          </section>
-        </article>
-
-        <aside class="scope-panel thesis-rules">
-          <div class="scope-label">Live Picks rules</div>
-          <h3>Only release a pick when the late read is real.</h3>
-          <ul class="scope-list">
-            <li><strong>Head-to-head only</strong>We only assess which fighter is most likely to win the matchup overall.</li>
-            <li><strong>No method or round props</strong>Those markets are too noisy and too difficult to quantify with confidence.</li>
-            <li><strong>Late confirmation matters</strong>Some plays are not fit to release until the final minutes, or even the final 30 seconds before the fight starts.</li>
-          </ul>
-        </aside>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" aria-label="Fight-night target signals">
+  <section id="signals" class="section signals-section" aria-label="Fight-night target signals">
     <div class="container">
       <div class="section-heading">
         <h2>Live signals.<br>Priced late.</h2>
@@ -3240,6 +3397,65 @@ h1 {
     </div>
   </section>
 
+  <section class="section thesis-section">
+    <div class="container">
+      <div class="section-heading thesis-heading">
+        <h2>The thesis.</h2>
+      </div>
+
+      <div class="thesis-layout">
+        <article class="thesis-manifesto">
+          <section class="thesis-card wide">
+            <span class="thesis-marker">01</span>
+            <p>UFC is a small group of elite fighters, each with wildly different personalities and attitudes. Styles make matchups, and this is truer here than in almost any other sport. Confidence wins fights. Arrogance loses them. Ego can be the deciding factor.</p>
+            <p>What makes UFC so uniquely unpredictable is that it’s only two competitors in a cage. That leaves massive room for variance. The best game plan can be shattered by bad press, awkward face off moments, negative energy, or even something as random as a viral flu.</p>
+          </section>
+
+          <section class="thesis-punchcard">
+            <p>The fight must go on.</p>
+          </section>
+
+          <section class="thesis-card">
+            <span class="thesis-marker">02</span>
+            <p>Sometimes you can’t accurately read a fight until the referee claps his hands. A fighter can have every physical advantage in the world, but a humiliating moment at the press conference, a hostile walkout reception, or an electric crowd response can swing the outcome harder than any single punch.</p>
+            <p>This is the manifestation of two powerful individuals colliding and sometimes it feels impossible to predict.</p>
+          </section>
+
+          <section class="thesis-card pressure">
+            <span class="thesis-marker">03</span>
+            <p>Basic stats (height, weight, reach, record, stylistic matchups) give you an edge, but attitude and atmosphere often decide more fights than all the numbers combined.</p>
+            <p>Imagine having the clear advantage on paper… only to walk out to 50,000 people booing you while they pour energy into your opponent. The crowd cheers their mistakes, falls silent during your best technical moments, and boos every time you try to slow the fight down.</p>
+          </section>
+
+          <section class="thesis-card wide pressure">
+            <span class="thesis-marker">04</span>
+            <p>That pressure is real and it influences fighters.</p>
+            <p>That’s exactly what Live Picks is built to capture.</p>
+            <p>We scrape every meaningful physical data point, study fight history, current form, personality traits, crowd dynamics, and hidden blind spots. We look for the fighter who simply wants it more on that specific night because those are the ones who shock the world.</p>
+          </section>
+
+          <section class="thesis-card final">
+            <div>
+              <span class="thesis-marker">05</span>
+              <p>Running this model has delivered strong profitability, tens of thousands in results. The one catch?</p>
+            </div>
+            <p>The best edge comes from betting live, as the fight is just about to happen.</p>
+          </section>
+        </article>
+
+        <aside class="scope-panel thesis-rules">
+          <div class="scope-label">Live Picks rules</div>
+          <h3>Only release a pick when the late read is real.</h3>
+          <ul class="scope-list">
+            <li><strong>Head-to-head only</strong>We only assess which fighter is most likely to win the matchup overall.</li>
+            <li><strong>No method or round props</strong>Those markets are too noisy and too difficult to quantify with confidence.</li>
+            <li><strong>Late confirmation matters</strong>Some plays are not fit to release until the final minutes, or even the final 30 seconds before the fight starts.</li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
   <section id="proof" class="section">
     <div class="container">
       <div class="section-heading">
@@ -3249,7 +3465,7 @@ h1 {
 
       <div class="picks-grid">
         <article class="pick-card">
-          <div class="pick-card-top">UFC 329 • Main Event</div>
+          <div class="pick-card-top">FREEDOM 250 • Main Event</div>
           <div class="pick-body">
             <div class="mini-fighter winner"><div class="mini-face"><img src="justin.png" alt="Justin Gaethje"></div><strong>Gaethje</strong></div>
             <div class="odds">$4.40</div>
@@ -3323,6 +3539,34 @@ h1 {
     ticker.addEventListener('pointercancel', resume, { passive: true });
     ticker.addEventListener('pointerleave', resume, { passive: true });
   });
+</script>
+
+
+<script>
+  const signalCards = document.querySelectorAll('.signal-card');
+
+  signalCards.forEach((card) => {
+    card.setAttribute('tabindex', '0');
+
+    card.addEventListener('pointerdown', () => {
+      card.classList.remove('is-tapped');
+      void card.offsetWidth;
+      card.classList.add('is-tapped');
+      window.setTimeout(() => card.classList.remove('is-tapped'), 520);
+    }, { passive: true });
+  });
+
+  if ('IntersectionObserver' in window) {
+    const signalObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.42, rootMargin: '0px 0px -8% 0px' });
+
+    signalCards.forEach((card) => signalObserver.observe(card));
+  } else {
+    signalCards.forEach((card) => card.classList.add('is-visible'));
+  }
 </script>
 
 </body>
