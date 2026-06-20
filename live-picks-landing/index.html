@@ -4494,8 +4494,9 @@ h1 {
 
 
 
-/* Post-hero model intro block */
+/* Post-hero model intro block: mobile only */
 .model-intro-section {
+  display: none;
   position: relative;
   padding: 22px 0 24px;
   border-bottom: 1px solid var(--border);
@@ -4605,6 +4606,7 @@ h1 {
 
 @media (max-width: 680px) {
   .model-intro-section {
+    display: block;
     padding: 14px 0 17px;
   }
 
