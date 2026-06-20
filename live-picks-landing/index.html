@@ -2312,7 +2312,7 @@ h1 {
 
 /* Ticker interaction refinement: slower scroll + pause on hover/touch */
 .odds-ticker .ticker-track {
-  animation-duration: 32s;
+  animation-duration: 40s;
 }
 
 .edge-ticker:hover .ticker-track,
@@ -2330,7 +2330,7 @@ h1 {
 
 @media (max-width: 680px) {
   .odds-ticker .ticker-track {
-    animation-duration: 26s;
+    animation-duration: 34s;
   }
 }
 
@@ -2894,7 +2894,7 @@ h1 {
 }
 
 
-/* Live Signals / Priced Late interactive card pass */
+/* Live Signals / Priced Late static card pass */
 .signals-section {
   scroll-margin-top: 112px;
 }
@@ -2903,13 +2903,14 @@ h1 {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  transform: translateY(0) scale(1);
-  transition:
-    transform 0.28s ease,
-    border-color 1.15s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 1.2s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.28s ease;
-  will-change: transform;
+  border-color: rgba(34,255,136,0.24);
+  background:
+    radial-gradient(circle at 84% 12%, rgba(34,255,136,0.09), transparent 34%),
+    linear-gradient(180deg, rgba(16,24,17,0.98), rgba(8,12,9,0.98));
+  box-shadow:
+    0 18px 46px rgba(0,0,0,0.34),
+    0 0 28px rgba(34,255,136,0.10),
+    inset 0 0 26px rgba(34,255,136,0.035);
 }
 
 .signal-card::before {
@@ -2918,14 +2919,7 @@ h1 {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0;
-  transform: scale(1.02);
-  background:
-    radial-gradient(circle at 84% 12%, rgba(34,255,136,0.11), transparent 32%),
-    linear-gradient(180deg, rgba(18,30,21,0.98), rgba(7,12,9,0.98));
-  transition:
-    opacity 1.25s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+  background: linear-gradient(90deg, rgba(34,255,136,0.03), transparent 46%);
 }
 
 .signal-card > * {
@@ -2933,67 +2927,20 @@ h1 {
   z-index: 2;
 }
 
-.signal-code,
+.signal-code {
+  box-shadow: 0 0 18px rgba(34,255,136,0.14), inset 0 0 14px rgba(34,255,136,0.05);
+}
+
 .signal-status {
-  transition:
-    box-shadow 1.15s cubic-bezier(0.22, 1, 0.36, 1),
-    text-shadow 1.15s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 1.15s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+  text-shadow: 0 0 10px rgba(34,255,136,0.16);
 }
 
-.signal-card:hover,
-.signal-card:focus-within,
-.signal-card.is-visible {
-  border-color: rgba(34,255,136,0.44);
+.signal-card.featured {
+  border-color: rgba(34,255,136,0.34);
   box-shadow:
-    0 18px 46px rgba(0,0,0,0.38),
-    0 0 30px rgba(34,255,136,0.12),
-    inset 0 0 34px rgba(34,255,136,0.04);
-}
-
-.signal-card:hover::before,
-.signal-card:focus-within::before,
-.signal-card.is-visible::before {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.signal-card:hover,
-.signal-card:focus-within {
-  transform: translateY(-7px) scale(1.012);
-}
-
-.signal-card.is-visible {
-  transform: translateY(-2px);
-}
-
-.signal-card:hover .signal-code,
-.signal-card:focus-within .signal-code,
-.signal-card.is-visible .signal-code {
-  box-shadow: 0 0 22px rgba(34,255,136,0.2), inset 0 0 18px rgba(34,255,136,0.06);
-}
-
-.signal-card:hover .signal-status,
-.signal-card:focus-within .signal-status,
-.signal-card.is-visible .signal-status {
-  text-shadow: 0 0 14px rgba(34,255,136,0.34);
-}
-
-.signal-card.is-visible .signal-code {
-  animation: signalCodePulse 2.4s ease-in-out infinite;
-}
-
-
-@keyframes signalCodePulse {
-  0%, 100% { border-color: var(--border-soft); }
-  50% { border-color: rgba(34,255,136,0.56); }
-}
-
-@media (hover: none) {
-  .signal-card.is-visible {
-    transform: translateY(-4px);
-  }
+    0 18px 46px rgba(0,0,0,0.36),
+    0 0 34px rgba(34,255,136,0.14),
+    inset 0 0 30px rgba(34,255,136,0.05);
 }
 
 @media (max-width: 680px) {
@@ -3001,27 +2948,14 @@ h1 {
     scroll-margin-top: 96px;
   }
 
-  .signal-card:hover {
-    transform: none;
-  }
-
-  .signal-card.is-visible {
-    transform: translateY(-3px);
-    box-shadow:
-      0 12px 30px rgba(0,0,0,0.34),
-      0 0 22px rgba(34,255,136,0.11),
-      inset 0 0 24px rgba(34,255,136,0.035);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
   .signal-card,
-  .signal-card.is-visible .signal-code {
-    animation: none !important;
-    transition: none !important;
+  .signal-card.featured {
+    box-shadow:
+      0 12px 30px rgba(0,0,0,0.32),
+      0 0 22px rgba(34,255,136,0.11),
+      inset 0 0 22px rgba(34,255,136,0.04);
   }
 }
-
 
 /* Result card title refinement: keep one title, but restore the subtle faded header feel */
 #predictions .fight-title {
@@ -3467,25 +3401,887 @@ h1 {
   }
 }
 
+
+/* Mobile-only condensed landing hero: reduces word density while preserving desktop. */
+.mobile-hero-condensed {
+  display: none;
+}
+
+@media (max-width: 680px) {
+  .odds-ticker {
+    display: block;
+  }
+
+  .hero {
+    padding: 18px 0 18px;
+  }
+
+  .hero-grid {
+    display: block;
+  }
+
+  .hero .kicker {
+    margin-bottom: 9px;
+  }
+
+  .hero-copy-wrap > h1,
+  .hero-copy-wrap > .hero-lead,
+  .hero-copy-wrap > .hero-copy,
+  .hero-copy-wrap > .hero-insight-grid,
+  .hero-copy-wrap > .hero-note,
+  .hero-copy-wrap > .hero-actions,
+  .hero-panel {
+    display: none !important;
+  }
+
+  .mobile-hero-condensed {
+    display: block;
+  }
+
+  .mobile-hero-title {
+    margin: 0 0 10px;
+    color: #f8fff9;
+    font-size: clamp(1.92rem, 9.4vw, 2.68rem);
+    line-height: 0.98;
+    letter-spacing: -0.064em;
+    font-weight: 950;
+    text-wrap: balance;
+  }
+
+  .mobile-hero-thesis {
+    margin: 0;
+    max-width: 36rem;
+    color: #9ea9a2;
+    font-size: clamp(0.78rem, 3.35vw, 0.88rem);
+    line-height: 1.58;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+
+  .mobile-hero-thesis strong {
+    display: block;
+    margin-top: 8px;
+    color: #aeb8b1;
+    font-weight: 400;
+  }
+
+  .mobile-fighter-infographic {
+    display: block;
+    margin-top: 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: linear-gradient(180deg, rgba(12,18,14,0.96), rgba(7,10,8,0.98));
+    box-shadow: 0 12px 34px rgba(0,0,0,0.24);
+    overflow: hidden;
+  }
+
+  .mobile-infographic-head {
+    padding: 11px 12px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: linear-gradient(90deg, rgba(34,255,136,0.05), transparent 58%);
+  }
+
+  .mobile-infographic-kicker {
+    display: inline-block;
+    margin-bottom: 5px;
+    color: var(--green);
+    font-size: 0.52rem;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .mobile-infographic-head strong {
+    display: block;
+    color: #edf5ef;
+    font-size: 0.84rem;
+    line-height: 1.34;
+    letter-spacing: -0.015em;
+    font-weight: 700;
+  }
+
+  .mobile-infographic-compare {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .mobile-fighter-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(16,24,17,0.96), rgba(7,10,8,0.98));
+    min-height: 126px;
+    padding: 12px 12px 12px 108px;
+    display: grid;
+    align-content: center;
+    gap: 5px;
+  }
+
+  .mobile-fighter-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 24% 38%, rgba(34,255,136,0.14), transparent 32%);
+  }
+
+  .reality-side {
+    border-color: rgba(255,77,95,0.34);
+    background:
+      radial-gradient(circle at 22% 38%, rgba(255,77,95,0.18), transparent 34%),
+      linear-gradient(180deg, rgba(24,14,15,0.96), rgba(8,8,8,0.98));
+  }
+
+  .mobile-figure-wrap {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    width: 74px;
+    height: 86px;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .mobile-figure-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+  }
+
+  .figure-paper-icon {
+    width: auto;
+    max-width: none;
+    height: 114%;
+    transform: translateY(8px);
+  }
+
+  .mobile-figure {
+    position: relative;
+    width: 46px;
+    height: 72px;
+  }
+
+  .mobile-figure span {
+    position: absolute;
+    display: block;
+  }
+
+  .figure-head {
+    top: 0;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    border: 2px solid var(--green);
+    background: rgba(34,255,136,0.16);
+    box-shadow: 0 0 18px rgba(34,255,136,0.18);
+  }
+
+  .figure-torso {
+    top: 22px;
+    left: 50%;
+    width: 24px;
+    height: 28px;
+    border-radius: 16px 16px 8px 8px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, rgba(34,255,136,0.92), rgba(34,255,136,0.18));
+    border: 1px solid rgba(34,255,136,0.52);
+  }
+
+  .figure-arm,
+  .figure-leg {
+    width: 8px;
+    border-radius: 999px;
+    background: rgba(34,255,136,0.72);
+  }
+
+  .figure-arm.left {
+    top: 25px;
+    left: 5px;
+    height: 28px;
+    transform: rotate(19deg);
+  }
+
+  .figure-arm.right {
+    top: 25px;
+    right: 5px;
+    height: 28px;
+    transform: rotate(-19deg);
+  }
+
+  .figure-leg.left {
+    top: 46px;
+    left: 16px;
+    height: 24px;
+    transform: rotate(7deg);
+  }
+
+  .figure-leg.right {
+    top: 46px;
+    right: 16px;
+    height: 24px;
+    transform: rotate(-7deg);
+  }
+
+  .tired-figure {
+    transform: rotate(-7deg) translateY(2px);
+    opacity: 0.88;
+    filter: saturate(0.62);
+  }
+
+  .tired-figure .figure-head {
+    border-color: rgba(255,77,95,0.86);
+    background: rgba(255,77,95,0.12);
+    box-shadow: 0 0 16px rgba(255,77,95,0.18);
+  }
+
+  .tired-figure .figure-torso,
+  .tired-figure .figure-arm,
+  .tired-figure .figure-leg {
+    background: linear-gradient(180deg, rgba(255,77,95,0.72), rgba(255,77,95,0.12));
+    border-color: rgba(255,77,95,0.38);
+  }
+
+  .tired-figure .figure-arm.left {
+    transform: rotate(38deg);
+  }
+
+  .tired-figure .figure-arm.right {
+    transform: rotate(6deg);
+  }
+
+  .fatigue-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,77,95,0.92);
+    box-shadow: 0 0 12px rgba(255,77,95,0.42);
+  }
+
+  .dot-one {
+    top: 11px;
+    right: 3px;
+  }
+
+  .dot-two {
+    top: 23px;
+    right: -2px;
+    opacity: 0.72;
+  }
+
+  .mobile-fighter-label {
+    position: relative;
+    z-index: 1;
+    color: var(--green);
+    font-size: 0.52rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .mobile-fighter-label.danger {
+    color: #ff8e9a;
+  }
+
+  .mobile-fighter-card strong {
+    position: relative;
+    z-index: 1;
+    color: white;
+    font-size: 0.98rem;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+  }
+
+  .mobile-fighter-tags {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .mobile-fighter-tags span {
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.03);
+    color: #b3beb7;
+    padding: 4px 6px;
+    font-size: 0.48rem;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .mobile-infographic-shift {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 6px;
+    align-items: center;
+    padding: 6px 8px;
+    border: 1px dashed rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.015);
+    color: #7f8b84;
+    text-align: center;
+    font-size: 0.48rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .mobile-infographic-shift strong {
+    color: var(--green);
+    font-size: 0.88rem;
+    line-height: 1;
+  }
+
+  .mobile-hero-actions {
+    display: none;
+  }
+
+  .mobile-hero-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobile-fighter-card {
+    padding-left: 94px;
+  }
+
+  .mobile-figure-wrap {
+    width: 66px;
+    height: 76px;
+  }
+
+  .figure-paper-icon {
+    height: 116%;
+    transform: translateY(8px);
+  }
+
+  .mobile-hero-actions {
+    display: none;
+  }
+}
+
+/* Mobile guided flow CTAs: hero -> example -> model -> subscribe */
+.mobile-flow-cta {
+  display: none;
+}
+
+@media (max-width: 680px) {
+  .mobile-flow-cta {
+    display: block;
+    margin: 12px 0 0;
+  }
+
+  .mobile-flow-cta .btn {
+    width: 100%;
+    min-height: 40px;
+  }
+
+  #predictions .premium-strip {
+    display: none;
+  }
+}
+
+/* Mobile vertical tightening pass: compact guided flow, smaller example card, less blank space */
+@media (max-width: 680px) {
+  .hero {
+    padding: 14px 0 12px !important;
+  }
+
+  .mobile-hero-title {
+    margin-bottom: 8px;
+  }
+
+  .mobile-hero-thesis {
+    line-height: 1.5;
+  }
+
+  .mobile-fighter-infographic {
+    margin-top: 10px;
+  }
+
+  .mobile-infographic-head {
+    padding: 9px 10px 8px;
+  }
+
+  .mobile-infographic-compare {
+    gap: 6px;
+    padding: 8px;
+  }
+
+  .mobile-fighter-card {
+    min-height: 108px;
+    padding: 10px 10px 10px 96px;
+    gap: 4px;
+  }
+
+  .mobile-figure-wrap {
+    left: 10px;
+    width: 64px;
+    height: 76px;
+  }
+
+  .mobile-fighter-card strong {
+    font-size: 0.92rem;
+  }
+
+  .mobile-fighter-tags {
+    gap: 4px;
+    margin-top: 3px;
+  }
+
+  .mobile-fighter-tags span {
+    padding: 3px 5px;
+    font-size: 0.45rem;
+  }
+
+  .mobile-infographic-shift {
+    padding: 5px 7px;
+  }
+
+  .section {
+    padding: 20px 0 !important;
+  }
+
+  .section-heading {
+    margin-bottom: 10px !important;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(1.55rem, 8.8vw, 2.15rem) !important;
+    line-height: 0.98;
+  }
+
+  .section-heading p {
+    margin-top: 7px;
+    font-size: 0.78rem;
+    line-height: 1.38;
+  }
+
+  #predictions.section {
+    padding: 16px 0 14px !important;
+  }
+
+  #predictions .model-card {
+    min-height: 0 !important;
+    display: block !important;
+    box-shadow: 0 12px 34px rgba(0,0,0,0.34);
+  }
+
+  #predictions .fight-board {
+    display: block !important;
+    padding: 10px !important;
+  }
+
+  #predictions .fight-title {
+    margin: -10px -10px 8px !important;
+    padding: 10px !important;
+    gap: 7px !important;
+  }
+
+  #predictions .fight-title h2 {
+    font-size: 0.72rem !important;
+    line-height: 1.22 !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  #predictions .result-chip {
+    padding: 4px 7px !important;
+    font-size: 0.48rem !important;
+  }
+
+  #predictions .matchup {
+    flex: initial !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  #predictions .fighter-card {
+    grid-template-columns: 56px minmax(0, 1fr) !important;
+    gap: 10px !important;
+    padding: 10px !important;
+    min-height: 86px !important;
+  }
+
+  #predictions .fighter-card.pick::after {
+    right: 8px !important;
+    top: 8px !important;
+    padding: 3px 5px !important;
+    font-size: 0.45rem !important;
+  }
+
+  #predictions .portrait {
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 9px !important;
+  }
+
+  #predictions .portrait .fallback-name {
+    font-size: 1.25rem !important;
+  }
+
+  #predictions .fighter-name {
+    font-size: 1.06rem !important;
+    line-height: 0.98 !important;
+    margin-bottom: 5px !important;
+    padding-right: 28px !important;
+  }
+
+  #predictions .fighter-name br {
+    display: none !important;
+  }
+
+  #predictions .fighter-meta {
+    gap: 4px !important;
+    margin-bottom: 5px !important;
+  }
+
+  #predictions .tag {
+    padding: 3px 5px !important;
+    font-size: 0.48rem !important;
+    letter-spacing: 0.05em !important;
+  }
+
+  #predictions .form-line {
+    gap: 4px !important;
+  }
+
+  #predictions .form-label {
+    font-size: 0.48rem !important;
+  }
+
+  #predictions .form-dots {
+    gap: 4px !important;
+  }
+
+  #predictions .form-dots span {
+    width: 13px !important;
+    height: 4px !important;
+  }
+
+  #predictions .edge-grid {
+    gap: 6px !important;
+    margin-top: 8px !important;
+  }
+
+  #predictions .edge-box {
+    padding: 8px !important;
+    min-height: 78px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+  }
+
+  #predictions .edge-box .label {
+    margin-bottom: 4px !important;
+    font-size: 0.48rem !important;
+  }
+
+  #predictions .edge-box .value {
+    font-size: 0.88rem !important;
+  }
+
+  #predictions .edge-box small {
+    display: block !important;
+    margin-top: 4px !important;
+    font-size: 0.5rem !important;
+    line-height: 1.28 !important;
+    color: #7f8c85 !important;
+    font-weight: 650 !important;
+  }
+
+  .mobile-flow-cta {
+    margin-top: 8px !important;
+  }
+
+  .mobile-flow-cta .btn {
+    min-height: 36px !important;
+  }
+
+  .data-strip {
+    padding: 12px 0 !important;
+  }
+
+  .data-grid {
+    gap: 6px !important;
+  }
+
+  .data-card {
+    padding: 9px !important;
+  }
+
+  .data-card strong {
+    font-size: 1rem !important;
+  }
+
+  .data-card span {
+    font-size: 0.52rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .how-grid,
+  .signals-grid,
+  .thesis-layout,
+  .thesis-manifesto,
+  .scope-list,
+  .picks-grid {
+    gap: 8px !important;
+  }
+
+  .how-card,
+  .signal-card,
+  .thesis-card,
+  .thesis-punchcard,
+  .scope-panel,
+  .panel {
+    padding: 12px !important;
+  }
+
+  .how-card h3,
+  .signal-card h3,
+  .thesis-card-title {
+    margin-bottom: 5px !important;
+  }
+
+  .how-card p,
+  .signal-card p,
+  .thesis-card p,
+  .scope-list li {
+    font-size: 0.74rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .infographic {
+    margin-top: 8px !important;
+    min-height: 78px !important;
+    padding: 9px !important;
+  }
+
+  .condition-panel {
+    gap: 6px !important;
+  }
+
+  .condition-row {
+    grid-template-columns: 68px 1fr 28px !important;
+    gap: 6px !important;
+    font-size: 0.52rem !important;
+  }
+
+  .support-card,
+  .compliance-card {
+    padding: 12px !important;
+  }
+
+  .footer {
+    padding: 18px 0 24px !important;
+  }
+}
+
+
+/* Header cleanup: text-only brand and dual actions */
+.brand-text-only {
+  gap: 0;
+}
+
+.brand-text-only .brand-mark {
+  display: none !important;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.secondary-btn {
+  background: transparent;
+  color: var(--text);
+}
+
+@media (max-width: 680px) {
+  .brand-text-only {
+    font-size: 1.02rem;
+    letter-spacing: -0.04em;
+  }
+
+  .top-actions {
+    gap: 6px;
+  }
+
+  .top-actions .login-btn {
+    padding: 9px 10px;
+    font-size: 0.58rem;
+    white-space: nowrap;
+  }
+}
+
+
+/* Top bar height reduction */
+.topbar {
+  backdrop-filter: blur(12px);
+}
+
+.nav {
+  min-height: 58px !important;
+  gap: 12px !important;
+}
+
+.brand.brand-text-only {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.top-actions {
+  gap: 8px;
+}
+
+.login-btn {
+  min-height: 34px;
+  padding: 8px 11px;
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+@media (max-width: 680px) {
+  .topbar {
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .nav {
+    min-height: 42px !important;
+    gap: 6px !important;
+  }
+
+  .brand.brand-text-only {
+    font-size: 0.92rem !important;
+    line-height: 1;
+  }
+
+  .top-actions {
+    gap: 4px !important;
+  }
+
+  .top-actions .login-btn,
+  .login-btn {
+    min-height: 28px !important;
+    padding: 6px 8px !important;
+    font-size: 0.54rem !important;
+    line-height: 1 !important;
+    border-width: 1px;
+  }
+}
+
+
+/* Desktop header alignment: compact buttons, centered group, logo stays left */
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (min-width: 681px) {
+  .topbar .nav {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: clamp(20px, 2vw, 32px) !important;
+    min-height: 56px !important;
+  }
+
+  .topbar .brand.brand-text-only {
+    justify-self: start;
+    white-space: nowrap;
+    font-size: 0.98rem;
+  }
+
+  .topbar .header-buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .topbar .header-buttons .nav-links,
+  .topbar .header-buttons .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .topbar .header-buttons .nav-links a,
+  .topbar .header-buttons .top-actions .login-btn {
+    flex: 0 0 clamp(142px, 10.5vw, 168px);
+    width: clamp(142px, 10.5vw, 168px);
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 12px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.025);
+    color: #d7ded9;
+    line-height: 1;
+    white-space: nowrap;
+    font-size: 0.78rem;
+  }
+
+  .topbar .header-buttons .nav-links a:hover,
+  .topbar .header-buttons .nav-links a.active,
+  .topbar .header-buttons .top-actions .login-btn:hover {
+    border-color: var(--border-soft);
+    background: rgba(34, 255, 136, 0.06);
+    color: var(--green);
+  }
+
+  .topbar .header-buttons .top-actions .login-btn:not(.secondary-btn) {
+    border-color: rgba(34,255,136,0.35);
+    background: rgba(34,255,136,0.075);
+  }
+}
+
+@media (max-width: 680px) {
+  .header-buttons {
+    display: block;
+  }
+}
+
 </style>
 </head>
 <body>
 
 <header class="topbar">
   <div class="container nav">
-    <a class="brand" href="#top" aria-label="Live Picks home">
-      <span class="brand-mark"><img src="lp-logo.png" alt="Live Picks logo"></span>
+    <a class="brand brand-text-only" href="#top" aria-label="Live Picks home">
       <span>Live Picks</span>
     </a>
 
-    <nav class="nav-links" aria-label="Main navigation">
-      <a class="active" href="#predictions">Predictions</a>
-      <a href="#model">Model</a>
-      <a href="live-picks-why-substack-clean.html">Why Substack</a>
-      <a href="#proof">Past Wins</a>
-    </nav>
+    <div class="header-buttons">
+      <nav class="nav-links" aria-label="Main navigation">
+        <a class="active" href="#predictions">Predictions</a>
+        <a href="#model">Model</a>
+      </nav>
 
-    <a href="https://yourname.substack.com" class="login-btn">Login</a>
+      <div class="top-actions">
+        <a href="https://yourname.substack.com" class="login-btn secondary-btn">Free Newsletter</a>
+        <a href="https://yourname.substack.com" class="login-btn">Premium Login</a>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -3527,6 +4323,56 @@ h1 {
     <div class="container hero-grid">
       <div class="hero-copy-wrap">
         <div class="kicker">Fight night market intelligence</div>
+        <div class="mobile-hero-condensed" aria-label="Condensed Live Picks thesis">
+          <h2 class="mobile-hero-title">Bookies can’t price what they can’t see yet.</h2>
+          <p class="mobile-hero-thesis">A fighter can look strong on paper, but fight night can tell a different story. They might walk out flat, tight, drained, distracted, carrying an injury or reacting emotionally to the moment. Physical condition, movement, composure, crowd reaction, public sentiment and late pressure all matter. <strong>These signals are hard to price early because most of them are not visible when the market first forms.</strong></p>
+
+          <div class="mobile-fighter-infographic" aria-label="On paper versus fight night reality infographic">
+            <div class="mobile-infographic-head">
+              <span class="mobile-infographic-kicker">Visual thesis</span>
+              <strong>What the market sees vs what fight night reveals</strong>
+            </div>
+
+            <div class="mobile-infographic-compare">
+              <div class="mobile-fighter-card paper-side">
+                <div class="mobile-figure-wrap">
+                  <img src="on-paper-fighter.png" alt="On paper fighter icon" class="figure-paper-icon">
+                </div>
+                <span class="mobile-fighter-label">On paper</span>
+                <strong>Looks excellent</strong>
+                <div class="mobile-fighter-tags">
+                  <span>Clean record</span>
+                  <span>Strong camp</span>
+                  <span>Market favourite</span>
+                  <span>Physical Advantages</span>
+                </div>
+              </div>
+
+              <div class="mobile-infographic-shift">
+                <span>Market set early</span>
+                <strong>→</strong>
+                <span>Reality appears late</span>
+              </div>
+
+              <div class="mobile-fighter-card reality-side">
+                <div class="mobile-figure-wrap">
+                  <img src="fight-night-fighter.png" alt="Fight night fighter icon">
+                </div>
+                <span class="mobile-fighter-label danger">Fight night</span>
+                <strong>Looks compromised</strong>
+                <div class="mobile-fighter-tags">
+                  <span>Bad Reception</span>
+                  <span>Humiliated</span>
+                  <span>dehydrated</span>
+                  <span>sick</span>
+                  <span>impaired</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
         <h1>Bookies can’t price what they can’t see yet.</h1>
         <p class="hero-lead">Most fight markets are built before the most important late data exists. Live Picks focuses on the information that only becomes visible on fight night.</p>
         <p class="hero-copy">A fighter can look strong on paper, then walk out flat, tight, drained, distracted, injured or emotionally charged. Physical condition, movement, composure, crowd reaction, public sentiment and last minute pressure can all point toward a result. <strong>These signals are rarely priced correctly by bookmakers because they are not available when the market is first shaped.</strong></p>
@@ -3692,6 +4538,86 @@ h1 {
           </div>
         </div>
       </article>
+
+
+      <article class="model-card">
+        <div class="fight-board">
+          <div class="fight-title">
+            <h2>UFC Fight Night: Moreno vs. Kavanagh</h2>
+            <span class="result-chip">Final</span>
+          </div>
+
+          <div class="matchup">
+            <section class="fighter-card pick">
+              <div class="portrait">
+                <img src="green.png" alt="Bobby Green fighter portrait" onerror="this.style.display='none'; this.parentElement.classList.add('fallback');">
+                <span class="fallback-name">BG</span>
+              </div>
+              <div>
+                <h3 class="fighter-name">Bobby<br>Green</h3>
+                <div class="fighter-meta">
+                  <span class="tag green">Winning Pick</span>
+                  <span class="tag">39 Years Old</span>
+                  <span class="tag red">UNDERDOG</span>
+                </div>
+                <div class="form-line">
+                  <div class="form-label">Past Five</div>
+                  <div class="form-dots" aria-label="Two wins and three losses">
+                    <span class="loss"></span><span class="win"></span><span class="loss"></span><span class="loss"></span><span class="win"></span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <div class="vs-block"><div>VS</div></div>
+
+            <section class="fighter-card fade">
+              <div class="portrait">
+                <img src="zellhuber.png" alt="Zellhuber fighter portrait" onerror="this.style.display='none'; this.parentElement.classList.add('fallback');">
+                <span class="fallback-name">Z</span>
+              </div>
+              <div>
+                <h3 class="fighter-name">Zellhuber</h3>
+                <div class="fighter-meta">
+                  <span class="tag">26 Years Old</span>
+                  <span class="tag">Heavy Favourite</span>
+                  <span class="tag">+2 in Height</span>
+                  <span class="tag">+7 in Reach</span>
+                </div>
+                <div class="form-line">
+                  <div class="form-label">Past Five</div>
+                  <div class="form-dots" aria-label="Three wins and two losses">
+                    <span class="win"></span><span class="win"></span><span class="win"></span><span class="loss"></span><span class="loss"></span>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div class="edge-grid">
+            <div class="edge-box">
+              <div class="label">Paper Stats</div>
+              <div class="value red">Underdog</div>
+              <small>Green came in as the underdog on paper, with Zellhuber holding the age edge at 26 to Green's 39</small>
+            </div>
+            <div class="edge-box">
+              <div class="label">Bookmaker Price</div>
+              <div class="value">$3.90</div>
+              <small>Zellhuber was the heavy favourite on paper with a 2 inch height edge and 7 inch reach advantage</small>
+            </div>
+            <div class="edge-box">
+              <div class="label">Fight Night Read</div>
+              <div class="value green">Locked</div>
+              <small>Even with the paper disadvantages, Green rated as the stronger fight-night side after the late read</small>
+            </div>
+            <div class="edge-box">
+              <div class="label">Outcome</div>
+              <div class="value green">Model Hit</div>
+              <small>Green won despite Zellhuber's age, height, reach and market advantages</small>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -3765,98 +4691,98 @@ h1 {
   <section id="signals" class="section signals-section" aria-label="Fight-night target signals">
     <div class="container">
       <div class="section-heading">
-        <h2>Live signals.<br>Priced late.</h2>
-        <p>These are the fight-night variables Live Picks is built to capture. They are not clean box-score stats. They are pressure signals, atmosphere shifts and market blind spots that often appear too late for a bookmaker price to fully adjust.</p>
+        <h2>LIVE DATA</h2>
+        <p>Live Picks focuses on the details that only become visible once the fighter is in the building, under the lights, and reacting to the moment. These are the signals that can make the real fight look different from the paper matchup.</p>
       </div>
 
       <div class="signals-grid">
         <article class="signal-card featured">
           <div>
             <div class="signal-top">
-              <span class="signal-code">CR</span>
-              <span class="signal-status">Atmosphere</span>
-            </div>
-            <h3>Crowd reception</h3>
-            <p>Tracks walkout reaction, boo-to-cheer imbalance, home-region bias and whether the arena is feeding one fighter while draining the other.</p>
-          </div>
-          <div class="signal-meta">
-            <span>Thesis link <strong>pressure swing</strong></span>
-            <span>Used for <strong>late confidence read</strong></span>
-          </div>
-        </article>
-
-        <article class="signal-card">
-          <div>
-            <div class="signal-top">
-              <span class="signal-code">FC</span>
+              <span class="signal-code">PC</span>
               <span class="signal-status">Condition</span>
             </div>
-            <h3>Fighter condition</h3>
-            <p>Reads hydration look, breathing, posture, eye contact, pacing and composure once the fighter is under the lights.</p>
+            <h3>Physical condition on arrival</h3>
+            <p>We look for signs of dehydration, illness, fatigue, stiffness, injury masking, facial tension and whether the fighter looks sharp or physically impaired before the fight begins.</p>
           </div>
           <div class="signal-meta">
-            <span>Thesis link <strong>fight-night reality</strong></span>
-            <span>Used for <strong>final confirmation</strong></span>
-          </div>
-        </article>
-
-        <article class="signal-card">
-          <div>
-            <div class="signal-top">
-              <span class="signal-code">MP</span>
-              <span class="signal-status">Media</span>
-            </div>
-            <h3>Pressure moments</h3>
-            <p>Captures awkward press conference moments, visible ego reactions, public embarrassment and signs a fighter is carrying the wrong emotion.</p>
-          </div>
-          <div class="signal-meta">
-            <span>Thesis link <strong>ego and arrogance</strong></span>
-            <span>Used for <strong>mental edge</strong></span>
-          </div>
-        </article>
-
-        <article class="signal-card">
-          <div>
-            <div class="signal-top">
-              <span class="signal-code">SN</span>
-              <span class="signal-status">Narrative</span>
-            </div>
-            <h3>Social sentiment</h3>
-            <p>Separates useful late information from hype, viral clips, rumours and public overreaction that can drag the market into a bad price.</p>
-          </div>
-          <div class="signal-meta">
-            <span>Thesis link <strong>public distortion</strong></span>
-            <span>Used for <strong>price context</strong></span>
+            <span>Thesis link <strong>paper vs reality</strong></span>
+            <span>Used for <strong>condition read</strong></span>
           </div>
         </article>
 
         <article class="signal-card featured">
           <div>
             <div class="signal-top">
-              <span class="signal-code">ML</span>
-              <span class="signal-status">Market</span>
+              <span class="signal-code">MV</span>
+              <span class="signal-status">Movement</span>
             </div>
-            <h3>Bookmaker lag</h3>
-            <p>Compares live read against the available head-to-head price to find moments where the book has not caught up to the actual fight-night picture.</p>
+            <h3>Movement before contact</h3>
+            <p>Walkout pace, balance, looseness, bounce, posture, breathing rhythm and guarded movement can show whether the fighter is relaxed, tight, drained or carrying something.</p>
           </div>
           <div class="signal-meta">
-            <span>Thesis link <strong>holes in the bookies</strong></span>
-            <span>Used for <strong>entry decision</strong></span>
+            <span>Thesis link <strong>body tells</strong></span>
+            <span>Used for <strong>read confirmation</strong></span>
           </div>
         </article>
 
-        <article class="signal-card">
+        <article class="signal-card featured">
           <div>
             <div class="signal-top">
-              <span class="signal-code">H2H</span>
-              <span class="signal-status">Scope</span>
+              <span class="signal-code">EM</span>
+              <span class="signal-status">Composure</span>
             </div>
-            <h3>Winner market only</h3>
-            <p>Live Picks only assesses fighter versus fighter. No round selections and no method-of-victory props because those markets are far harder to quantify reliably.</p>
+            <h3>Emotional state under pressure</h3>
+            <p>We watch for nerves, anger, humiliation, over-excitement, distraction, bad eye contact and whether the fighter looks composed or emotionally hijacked by the moment.</p>
           </div>
           <div class="signal-meta">
-            <span>Thesis link <strong>variance control</strong></span>
-            <span>Used for <strong>pick discipline</strong></span>
+            <span>Thesis link <strong>mental state</strong></span>
+            <span>Used for <strong>confidence read</strong></span>
+          </div>
+        </article>
+
+        <article class="signal-card featured">
+          <div>
+            <div class="signal-top">
+              <span class="signal-code">AR</span>
+              <span class="signal-status">Reception</span>
+            </div>
+            <h3>How the arena receives them</h3>
+            <p>A bad reception, heavy boos, silence, hostile crowd energy or a huge reaction for the opponent can shift the emotional environment before the first exchange.</p>
+          </div>
+          <div class="signal-meta">
+            <span>Thesis link <strong>environment</strong></span>
+            <span>Used for <strong>pressure rating</strong></span>
+          </div>
+        </article>
+
+        <article class="signal-card featured">
+          <div>
+            <div class="signal-top">
+              <span class="signal-code">PR</span>
+              <span class="signal-status">Pressure</span>
+            </div>
+            <h3>Late public and media pressure</h3>
+            <p>Face-off moments, public embarrassment, viral narratives, weight-cut concern, rumours and expectation can create pressure that is not reflected in the early market.</p>
+          </div>
+          <div class="signal-meta">
+            <span>Thesis link <strong>late pressure</strong></span>
+            <span>Used for <strong>context check</strong></span>
+          </div>
+        </article>
+
+        <article class="signal-card featured">
+          <div>
+            <div class="signal-top">
+              <span class="signal-code">MK</span>
+              <span class="signal-status">Market</span>
+            </div>
+            <h3>When the price still reflects paper</h3>
+            <p>We compare the live read against the bookmaker price to see whether the market is still leaning on record, age, reach, hype or physical advantages while missing the fight-night reality.</p>
+          </div>
+          <div class="signal-meta">
+            <span>Thesis link <strong>bookmaker lag</strong></span>
+            <span>Used for <strong>edge decision</strong></span>
           </div>
         </article>
       </div>
@@ -4014,26 +4940,6 @@ h1 {
   });
 </script>
 
-
-<script>
-  const signalCards = document.querySelectorAll('.signal-card');
-
-  signalCards.forEach((card) => {
-    card.setAttribute('tabindex', '0');
-  });
-
-  if ('IntersectionObserver' in window) {
-    const signalObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        entry.target.classList.toggle('is-visible', entry.isIntersecting);
-      });
-    }, { threshold: 0, rootMargin: '0px' });
-
-    signalCards.forEach((card) => signalObserver.observe(card));
-  } else {
-    signalCards.forEach((card) => card.classList.add('is-visible'));
-  }
-</script>
 
 </body>
 </html>
