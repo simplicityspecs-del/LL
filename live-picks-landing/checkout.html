@@ -1406,8 +1406,23 @@ h1 {
         return;
       }
 
+      const finalizeResponse = await fetch('/api/finalize-subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subscriptionId: subscriptionData.subscriptionId
+        })
+      });
+
+      const finalizeData = await finalizeResponse.json();
+
+      if (!finalizeResponse.ok || !finalizeData.ok) {
+        throw new Error(finalizeData.error || 'Payment completed, but subscriber access could not be finalized.');
+      }
+
       saveDemoAccess();
-      showProcessorState('Payment complete. Premium login created.', 'Redirecting you to Premium Login now.');
+
+      showProcessorState('Payment complete. Premium access activated.', 'Your subscriber record is now active. Redirecting you to Premium Login.');
       window.setTimeout(() => {
         window.location.href = 'portal.html';
       }, 900);
