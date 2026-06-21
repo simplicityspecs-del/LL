@@ -1001,6 +1001,33 @@ h1 {
   .footer p, .disclaimer { font-size: 0.68rem; line-height: 1.4; }
   .disclaimer { padding: 11px; }
 }
+
+
+.express-checkout-element {
+  min-height: 55px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.02);
+}
+.express-checkout-element.is-hidden { display: none; }
+.wallet-fallback-button {
+  display: none;
+  margin-top: 10px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+  color: #f6fff8;
+  box-shadow: none;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+}
+.wallet-fallback-button.is-visible { display: inline-flex; }
+.plan-option[disabled] {
+  opacity: 0.48;
+  cursor: not-allowed;
+  filter: grayscale(0.2);
+}
+.plan-option[disabled]:hover { transform: none; }
+
 </style>
 <script src="https://js.stripe.com/v3/"></script>
 </head>
@@ -1049,17 +1076,17 @@ h1 {
           <article class="benefit-card">
             <span>01</span>
             <strong>Email and password access</strong>
-            <p>Your email and password create the demo premium login used by the subscriber portal.</p>
+            <p>Your email and password are saved after a successful on-site Stripe payment for the demo portal.</p>
           </article>
           <article class="benefit-card">
             <span>02</span>
             <strong>Fast checkout path</strong>
-            <p>Apple Pay leads the checkout flow, with card payment kept in its own fallback box.</p>
+            <p>Stripe Express Checkout renders the real Apple Pay button directly on this page.</p>
           </article>
           <article class="benefit-card">
             <span>03</span>
             <strong>Clear risk warnings</strong>
-            <p>Choose weekly access at $9.90 or monthly access at $30.00 with clear risk disclosure.</p>
+            <p>Weekly access is wired to your Stripe subscription price with clear risk disclosure.</p>
           </article>
         </div>
 
@@ -1095,9 +1122,9 @@ h1 {
               <strong>Weekly</strong>
               <span>$9.90 / week</span>
             </button>
-            <button class="plan-option" type="button" data-plan="Monthly" data-price="$30.00" data-period="month">
+            <button class="plan-option" type="button" data-plan="Monthly" data-price="$30.00" data-period="month" disabled aria-disabled="true">
               <strong>Monthly</strong>
-              <span>$30.00 / month</span>
+              <span>Coming soon</span>
             </button>
           </div>
 
@@ -1126,8 +1153,9 @@ h1 {
             </label>
           </div>
 
-          <button class="wallet-button" type="button" id="applePayButton"><span class="apple"> Pay</span></button>
-          <p class="wallet-microcopy">Apple Pay is the primary checkout option on this page. Choose weekly or monthly, confirm the warnings, then continue.</p>
+          <div id="express-checkout-element" class="express-checkout-element" aria-label="Stripe Express Checkout"></div>
+          <button class="wallet-button wallet-fallback-button" type="button" id="stripeFallbackButton">Open hosted checkout fallback →</button>
+          <p class="wallet-microcopy">Apple Pay now runs through Stripe Express Checkout on this page. Select weekly, confirm the warnings, then complete payment in your wallet.</p>
         </div>
 
         <div class="divider">or pay by card</div>
@@ -1137,7 +1165,7 @@ h1 {
             <div>
               <span class="card-kicker">Separate fallback box</span>
               <strong class="card-payment-title">Pay by card</strong>
-              <p class="card-payment-copy">Card payment is intentionally separated so it does not compete with the main Apple Pay checkout.</p>
+              <p class="card-payment-copy">Card checkout stays as a hosted fallback while Apple Pay runs on-page.</p>
             </div>
           </div>
 
@@ -1146,7 +1174,7 @@ h1 {
             <div class="card-row"><div class="card-cell">MM / YY</div><div class="card-cell">CVC</div><div class="card-cell">ZIP</div></div>
           </div>
 
-          <button class="card-button" type="button" id="cardButton">Continue with card →</button>
+          <button class="card-button" type="button" id="cardButton">Hosted card checkout →</button>
         </div>
 
         <div class="summary-box">
@@ -1229,6 +1257,10 @@ h1 {
 </footer>
 
 <script>
+  const STRIPE_FALLBACK_LINK = 'https://buy.stripe.com/00w5kC0UR0FAcuOf27fMA00';
+  const STRIPE_WEEKLY_AMOUNT_CENTS = 990;
+  const STRIPE_CURRENCY = 'aud';
+
   const planButtons = document.querySelectorAll('.plan-option');
   const summaryPlan = document.getElementById('summaryPlan');
   const summaryPrice = document.getElementById('summaryPrice');
@@ -1237,7 +1269,37 @@ h1 {
   const passwordInput = document.getElementById('accessPassword');
   const ageCheck = document.getElementById('ageCheck');
   const riskCheck = document.getElementById('riskCheck');
-  const paymentButtons = [document.getElementById('applePayButton'), document.getElementById('cardButton')];
+  const cardButton = document.getElementById('cardButton');
+  const stripeFallbackButton = document.getElementById('stripeFallbackButton');
+  const expressCheckoutNode = document.getElementById('express-checkout-element');
+
+  let stripe;
+  let elements;
+  let expressCheckoutElement;
+
+  function showProcessorState(title, message) {
+    processorState.classList.add('is-visible');
+    processorState.querySelector('strong').textContent = title;
+    processorState.querySelector('p').textContent = message;
+  }
+
+  function hideProcessorState() {
+    processorState.classList.remove('is-visible');
+  }
+
+  function showFallbackButton() {
+    stripeFallbackButton.classList.add('is-visible');
+  }
+
+  function hideFallbackButton() {
+    stripeFallbackButton.classList.remove('is-visible');
+  }
+
+  function flagInput(input) {
+    input.focus();
+    input.style.borderColor = 'rgba(255,77,95,0.62)';
+    window.setTimeout(() => input.style.borderColor = '', 900);
+  }
 
   function hashCredential(value) {
     let hash = 2166136261;
@@ -1248,1261 +1310,206 @@ h1 {
     return (hash >>> 0).toString(16);
   }
 
-  planButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      planButtons.forEach((item) => item.classList.remove('active'));
-      button.classList.add('active');
-      summaryPlan.textContent = button.dataset.plan;
-      summaryPrice.textContent = `${button.dataset.price} / ${button.dataset.period}`;
-    });
-  });
-
-  function requestProcessorConnection() {
+  function validateAccessForm() {
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
 
-    function flagInput(input) {
-      input.focus();
-      input.style.borderColor = 'rgba(255,77,95,0.62)';
-      window.setTimeout(() => input.style.borderColor = '', 900);
-    }
-
     if (!email || !email.includes('@')) {
       flagInput(emailInput);
-      return;
+      showProcessorState('Enter a valid email first.', 'Your email is needed for the Stripe customer record and premium access handoff.');
+      return false;
     }
+
     if (!password) {
       flagInput(passwordInput);
-      return;
+      showProcessorState('Create a password first.', 'This password is used for the current demo Premium Login flow after payment succeeds.');
+      return false;
     }
+
     if (!ageCheck.checked || !riskCheck.checked) {
       const firstUnchecked = !ageCheck.checked ? ageCheck : riskCheck;
       firstUnchecked.focus();
-      processorState.classList.add('is-visible');
-      processorState.querySelector('strong').textContent = 'Confirm the access warnings first.';
-      processorState.querySelector('p').textContent = 'You must confirm the 18+ and no-guarantee disclosures before continuing.';
-      return;
+      showProcessorState('Confirm the access warnings first.', 'You must confirm the 18+ and no-guarantee disclosures before continuing.');
+      return false;
     }
-    try {
-      const normalizedEmail = email.toLowerCase();
-      const subscriber = {
-        email,
-        passwordHash: hashCredential(`${normalizedEmail}:${password}`),
-        plan: summaryPlan.textContent,
-        price: summaryPrice.textContent,
-        createdAt: new Date().toISOString()
-      };
-      localStorage.setItem('livePicksSubscriber', JSON.stringify(subscriber));
-    } catch (error) {
-      processorState.classList.add('is-visible');
-      processorState.querySelector('strong').textContent = 'Could not save this login on this device.';
-      processorState.querySelector('p').textContent = 'Check browser storage settings, then try again.';
-      return;
-    }
-    processorState.classList.add('is-visible');
-    processorState.querySelector('strong').textContent = 'Premium login created.';
-    processorState.querySelector('p').textContent = `Demo access has been saved for ${email}. Use Premium Login with this email and password to open the subscriber feed.`;
+
+    return true;
   }
 
-  paymentButtons.forEach((button) => button.addEventListener('click', requestProcessorConnection));
-
-  document.querySelectorAll('.edge-ticker').forEach((ticker) => {
-    const pause = () => ticker.classList.add('is-paused');
-    const resume = () => ticker.classList.remove('is-paused');
-    ticker.addEventListener('pointerdown', pause, { passive: true });
-    ticker.addEventListener('pointerup', resume, { passive: true });
-    ticker.addEventListener('pointercancel', resume, { passive: true });
-    ticker.addEventListener('pointerleave', resume, { passive: true });
-  });
-</script>
-</body>
-</html>    radial-gradient(circle at 18% 8%, rgba(34, 255, 136, 0.10), transparent 28%),
-    radial-gradient(circle at 88% 38%, rgba(34, 255, 136, 0.08), transparent 32%),
-    linear-gradient(180deg, var(--bg) 0%, #060806 44%, #020302 100%);
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.48;
-  -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
-  min-height: 100dvh;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 42px 42px;
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.72), transparent 72%);
-}
-
-a { color: inherit; text-decoration: none; }
-button, input { font: inherit; }
-img { display: block; max-width: 100%; }
-.container { width: min(1180px, calc(100% - 38px)); margin: 0 auto; position: relative; }
-
-.topbar {
-  border-bottom: 1px solid var(--border);
-  background: rgba(5, 8, 6, 0.86);
-  backdrop-filter: blur(18px);
-  position: sticky;
-  top: 0;
-  z-index: 20;
-}
-
-.nav {
-  min-height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  font-size: 1.1rem;
-}
-
-.brand-mark {
-  width: 46px;
-  height: 46px;
-  border: 1px solid var(--border-soft);
-  border-radius: 13px;
-  display: grid;
-  place-items: center;
-  background:
-    linear-gradient(135deg, rgba(34,255,136,0.22), rgba(34,255,136,0.03)),
-    #08100b;
-  box-shadow: 0 0 25px rgba(34, 255, 136, 0.16);
-  overflow: hidden;
-  color: var(--green);
-  font-weight: 950;
-  letter-spacing: -0.06em;
-}
-
-.brand-mark img { width: 100%; height: 100%; object-fit: cover; }
-.brand span:last-child { color: #f8fff9; }
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #b4bdb6;
-  font-size: 0.84rem;
-  font-weight: 750;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-
-.nav-links a {
-  padding: 12px 14px;
-  border: 1px solid transparent;
-}
-
-.nav-links a:hover,
-.nav-links a.active {
-  color: var(--green);
-  border-color: var(--border-soft);
-  background: rgba(34, 255, 136, 0.06);
-}
-
-.back-btn {
-  border: 1px solid rgba(255,255,255,0.16);
-  padding: 12px 16px;
-  color: #d7ded9;
-  background: rgba(255,255,255,0.035);
-  font-weight: 800;
-  font-size: 0.86rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: 0.2s ease;
-}
-.back-btn:hover { border-color: var(--green); color: var(--green); transform: translateY(-1px); }
-
-.edge-ticker {
-  border-bottom: 1px solid rgba(34,255,136,0.16);
-  overflow: hidden;
-  background: linear-gradient(180deg, #07100a, #030604);
-  white-space: nowrap;
-  cursor: default;
-  user-select: none;
-}
-
-.ticker-track {
-  display: inline-flex;
-  align-items: center;
-  animation: ticker 34s linear infinite;
-  will-change: transform;
-}
-
-.edge-ticker:hover .ticker-track,
-.edge-ticker:active .ticker-track,
-.edge-ticker:focus-within .ticker-track,
-.edge-ticker.is-paused .ticker-track { animation-play-state: paused; }
-
-.ticker-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 18px;
-  border-right: 1px solid rgba(255,255,255,0.075);
-  color: #c5cec8;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  font-size: 0.72rem;
-  font-weight: 850;
-  letter-spacing: 0.045em;
-  text-transform: uppercase;
-}
-.ticker-market { color: #657269; font-size: 0.56rem; font-weight: 950; letter-spacing: 0.08em; }
-.ticker-item strong { color: #f6fff8; font-weight: 950; }
-.ticker-item em {
-  min-width: 42px;
-  text-align: center;
-  color: var(--green);
-  font-style: normal;
-  font-weight: 950;
-  padding: 2px 6px;
-  border: 1px solid var(--border-soft);
-  background: rgba(34,255,136,0.065);
-  box-shadow: inset 0 0 14px rgba(34,255,136,0.03), 0 0 12px rgba(34,255,136,0.08);
-}
-.ticker-item em.warn {
-  color: #ffe66d;
-  border-color: rgba(255,230,109,0.42);
-  background: rgba(255,230,109,0.08);
-}
-.ticker-item em.red {
-  color: var(--red);
-  border-color: rgba(255,77,95,0.42);
-  background: rgba(255,77,95,0.08);
-}
-@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-.checkout-hero {
-  padding: 48px 0 44px;
-  border-bottom: 1px solid var(--border);
-}
-
-.checkout-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(390px, 0.72fr);
-  gap: 22px;
-  align-items: start;
-}
-
-.checkout-copy { min-width: 0; }
-
-.kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--green);
-  font-size: 0.78rem;
-  font-weight: 950;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  margin-bottom: 18px;
-}
-.kicker::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--green);
-  box-shadow: 0 0 16px var(--green);
-}
-
-h1 {
-  margin: 0;
-  max-width: 820px;
-  font-size: clamp(3rem, 6.8vw, 6.2rem);
-  line-height: 0.88;
-  letter-spacing: -0.08em;
-  text-wrap: balance;
-}
-
-.hero-copy {
-  margin: 24px 0 0;
-  max-width: 700px;
-  color: #aeb9b1;
-  font-size: clamp(1.02rem, 1.55vw, 1.22rem);
-}
-.hero-copy strong { color: #f2fff6; }
-
-.checkout-benefits {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 24px;
-}
-
-.benefit-card,
-.info-card,
-.compliance-card,
-.support-card {
-  border: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(16,24,17,0.96), rgba(8,12,9,0.96));
-}
-
-.benefit-card {
-  padding: 14px;
-  min-height: 124px;
-}
-.benefit-card span,
-.marker {
-  display: inline-grid;
-  place-items: center;
-  min-width: 36px;
-  height: 28px;
-  border: 1px solid var(--border-soft);
-  color: var(--green);
-  background: rgba(34,255,136,0.055);
-  font-size: 0.66rem;
-  font-weight: 950;
-  letter-spacing: 0.12em;
-  margin-bottom: 12px;
-}
-.benefit-card strong {
-  display: block;
-  color: white;
-  font-size: 0.98rem;
-  letter-spacing: -0.025em;
-  line-height: 1.08;
-  margin-bottom: 6px;
-}
-.benefit-card p {
-  margin: 0;
-  color: #92a098;
-  font-size: 0.84rem;
-  line-height: 1.42;
-  font-weight: 700;
-}
-
-.compliance-message {
-  margin-top: 16px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 12px;
-  align-items: start;
-  border: 1px solid rgba(255,255,255,0.86);
-  background: #f6fff8;
-  color: #061009;
-  padding: 13px 14px;
-  box-shadow: 0 14px 36px rgba(0,0,0,0.28);
-}
-.compliance-message .badge {
-  display: inline-grid;
-  place-items: center;
-  min-width: 38px;
-  height: 30px;
-  background: #061009;
-  color: #f6fff8;
-  font-size: 0.68rem;
-  font-weight: 950;
-  letter-spacing: 0.08em;
-}
-.compliance-message strong {
-  display: block;
-  color: #061009;
-  font-size: 1rem;
-  line-height: 1.15;
-  margin-bottom: 4px;
-}
-.compliance-message p {
-  margin: 0;
-  color: #18241d;
-  font-size: 0.82rem;
-  line-height: 1.4;
-  font-weight: 780;
-}
-
-.checkout-panel {
-  border: 1px solid var(--border);
-  background:
-    radial-gradient(circle at 82% 12%, rgba(255,77,95,0.10), transparent 24%),
-    radial-gradient(circle at 16% 88%, rgba(34,255,136,0.12), transparent 32%),
-    rgba(13, 19, 15, 0.84);
-  box-shadow: 0 22px 70px var(--shadow);
-  padding: 18px;
-  position: sticky;
-  top: 96px;
-}
-
-.checkout-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 6px 2px 16px;
-  border-bottom: 1px solid var(--border);
-}
-.eyebrow {
-  display: block;
-  color: var(--faint);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-weight: 950;
-  margin-bottom: 6px;
-}
-.checkout-title {
-  display: block;
-  color: white;
-  font-size: clamp(1.55rem, 2.4vw, 2.1rem);
-  line-height: 0.95;
-  letter-spacing: -0.055em;
-  font-weight: 950;
-  text-transform: uppercase;
-}
-.secure-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid rgba(34,255,136,0.36);
-  color: var(--green);
-  padding: 7px 10px;
-  background: rgba(34,255,136,0.065);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 950;
-  white-space: nowrap;
-}
-.secure-status::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--green);
-  box-shadow: 0 0 12px rgba(34,255,136,0.9);
-}
-
-.plan-toggle {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin: 16px 0 14px;
-}
-.plan-option {
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.025);
-  color: #dfe7e2;
-  padding: 12px;
-  cursor: pointer;
-  text-align: left;
-  transition: 0.16s ease;
-}
-.plan-option strong {
-  display: block;
-  font-size: 0.88rem;
-  letter-spacing: -0.02em;
-  margin-bottom: 5px;
-}
-.plan-option span {
-  display: block;
-  color: #89958d;
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-}
-.plan-option.active {
-  border-color: var(--border-soft);
-  background: rgba(34,255,136,0.075);
-  box-shadow: inset 0 0 28px rgba(34,255,136,0.035);
-}
-.plan-option.active strong { color: var(--green); }
-
-.form-block {
-  display: grid;
-  gap: 9px;
-  margin-bottom: 14px;
-}
-.form-label {
-  color: var(--faint);
-  font-size: 0.68rem;
-  font-weight: 950;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-.email-input {
-  width: 100%;
-  min-height: 48px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: #080d0a;
-  color: white;
-  padding: 0 14px;
-  outline: none;
-  font-weight: 750;
-}
-.email-input::placeholder { color: #58645d; }
-.email-input:focus { border-color: var(--border-soft); box-shadow: 0 0 0 3px rgba(34,255,136,0.05); }
-
-.wallet-button,
-.card-button,
-.confirm-button {
-  width: 100%;
-  min-height: 50px;
-  border: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  cursor: pointer;
-  font-weight: 950;
-  letter-spacing: 0.035em;
-  transition: 0.14s ease;
-}
-.wallet-button {
-  background: #f6fff8;
-  color: #030604;
-  font-size: 0.9rem;
-}
-.wallet-button .apple {
-  font-size: 1.06rem;
-  letter-spacing: -0.02em;
-}
-.wallet-primary {
-  border: 1px solid rgba(34,255,136,0.54);
-  background:
-    radial-gradient(circle at 50% 0%, rgba(34,255,136,0.22), transparent 34%),
-    linear-gradient(180deg, rgba(34,255,136,0.09), rgba(255,255,255,0.025)),
-    #07100a;
-  box-shadow: 0 0 42px rgba(34,255,136,0.12), inset 0 0 34px rgba(34,255,136,0.035);
-  padding: 16px;
-  margin: 16px 0 14px;
-}
-.wallet-primary-head,
-.card-payment-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-.wallet-kicker,
-.card-kicker {
-  display: block;
-  color: var(--green);
-  font-size: 0.62rem;
-  font-weight: 950;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-.wallet-title,
-.card-payment-title {
-  display: block;
-  color: white;
-  font-size: 1.16rem;
-  line-height: 0.98;
-  letter-spacing: -0.045em;
-  font-weight: 950;
-}
-.wallet-price-pill {
-  border: 1px solid var(--border-soft);
-  background: rgba(34,255,136,0.08);
-  color: var(--green);
-  padding: 7px 9px;
-  font-size: 0.66rem;
-  line-height: 1;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 950;
-  white-space: nowrap;
-}
-.wallet-primary .plan-toggle {
-  margin: 0 0 12px;
-}
-.wallet-primary .form-block {
-  margin-bottom: 12px;
-}
-.wallet-primary .wallet-button {
-  min-height: 64px;
-  font-size: 1.04rem;
-  box-shadow: 0 0 38px rgba(255,255,255,0.18), 0 0 34px rgba(34,255,136,0.18);
-}
-.wallet-primary .wallet-button:hover,
-.card-payment-box .card-button:hover {
-  transform: translateY(-1px);
-}
-.wallet-microcopy,
-.card-payment-copy {
-  margin: 10px 0 0;
-  color: #9facaa;
-  font-size: 0.75rem;
-  line-height: 1.38;
-  font-weight: 760;
-}
-.card-payment-box {
-  border: 1px solid rgba(255,255,255,0.16);
-  background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.018));
-  padding: 14px;
-  margin: 0 0 14px;
-}
-.card-payment-head { margin-bottom: 10px; }
-.card-payment-copy { color: #88948d; margin-top: 4px; }
-.card-payment-box .card-shell { margin-bottom: 12px; }
-.card-button,
-.confirm-button {
-  border: 1px solid var(--green);
-  background: var(--green);
-  color: #021105;
-  box-shadow: 0 0 28px rgba(34,255,136,0.25);
-  text-transform: uppercase;
-  font-size: 0.82rem;
-}
-.card-button[disabled] {
-  opacity: 0.56;
-  cursor: not-allowed;
-  filter: grayscale(0.15);
-}
-.wallet-button:active,
-.card-button:active,
-.confirm-button:active { transform: translateY(1px) scale(0.985); }
-
-.divider {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 10px;
-  color: #657269;
-  font-size: 0.64rem;
-  font-weight: 950;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin: 13px 0;
-}
-.divider::before,
-.divider::after { content: ""; height: 1px; background: rgba(255,255,255,0.08); }
-
-.card-shell {
-  border: 1px solid rgba(255,255,255,0.1);
-  background: #080d0a;
-  margin-bottom: 14px;
-}
-.card-row {
-  display: grid;
-  grid-template-columns: 1fr 0.6fr 0.5fr;
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-.card-row:first-child { border-top: 0; grid-template-columns: 1fr; }
-.card-cell {
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  color: #6c7971;
-  font-size: 0.78rem;
-  font-weight: 850;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-.card-cell + .card-cell { border-left: 1px solid rgba(255,255,255,0.08); }
-
-.terms-box {
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.025);
-  padding: 12px;
-  display: grid;
-  gap: 10px;
-}
-
-.terms-box--wallet {
-  margin: 0 0 12px;
-  border-color: rgba(34,255,136,0.24);
-  background: rgba(3, 6, 4, 0.58);
-}
-.check-row {
-  display: grid;
-  grid-template-columns: 20px 1fr;
-  gap: 9px;
-  align-items: start;
-  color: #a8b4ad;
-  font-size: 0.78rem;
-  line-height: 1.4;
-  font-weight: 720;
-}
-.check-row input {
-  width: 18px;
-  height: 18px;
-  margin: 1px 0 0;
-  accent-color: var(--green);
-}
-.check-row strong { color: #f4fff7; }
-.check-row a { color: var(--green); text-decoration: underline; text-decoration-color: rgba(34,255,136,0.35); }
-
-.summary-box {
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.025);
-  padding: 13px 14px;
-  margin: 14px 0;
-  display: grid;
-  gap: 8px;
-}
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  color: #9da8a1;
-  font-size: 0.85rem;
-  font-weight: 760;
-}
-.summary-row strong { color: white; text-align: right; }
-.summary-row.total {
-  padding-top: 9px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  color: white;
-  font-size: 1rem;
-  font-weight: 950;
-}
-.summary-row.total strong { color: var(--green); }
-
-.checkout-note {
-  margin: 12px 0 0;
-  color: #7f8b84;
-  font-size: 0.76rem;
-  line-height: 1.42;
-}
-.checkout-note strong { color: #dce8e0; }
-
-.processor-state {
-  display: none;
-  border: 1px solid rgba(255,230,109,0.34);
-  background: linear-gradient(90deg, rgba(255,230,109,0.10), rgba(255,230,109,0.025)), #070b08;
-  padding: 14px;
-  margin-top: 12px;
-}
-.processor-state.is-visible { display: block; }
-.processor-state strong {
-  display: block;
-  color: white;
-  font-size: 1rem;
-  letter-spacing: -0.025em;
-  margin-bottom: 6px;
-}
-.processor-state p { margin: 0; color: #c2b97a; font-size: 0.82rem; }
-
-.safer-box {
-  margin-top: 14px;
-  border: 1px solid rgba(255,255,255,0.86);
-  background: #fff;
-  color: #050806;
-  padding: 12px;
-}
-.safer-box strong {
-  display: block;
-  font-size: 0.96rem;
-  margin-bottom: 4px;
-  color: #050806;
-}
-.safer-box p {
-  margin: 0;
-  color: #111;
-  font-size: 0.78rem;
-  line-height: 1.36;
-  font-weight: 760;
-}
-.safer-box a { text-decoration: underline; }
-
-.protocol-strip {
-  padding: 26px 0 30px;
-}
-.protocol-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-}
-.protocol-card {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  padding: 18px;
-}
-.protocol-card strong {
-  display: block;
-  color: white;
-  font-size: 1.55rem;
-  letter-spacing: -0.055em;
-  line-height: 1;
-  margin-bottom: 8px;
-}
-.protocol-card span {
-  color: #8d9890;
-  font-size: 0.76rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.compliance-section {
-  padding: 22px 0 58px;
-}
-.compliance-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(310px, 0.92fr);
-  gap: 18px;
-  align-items: stretch;
-}
-.compliance-card,
-.support-card {
-  padding: 22px;
-}
-.section-label {
-  color: var(--green);
-  font-size: 0.72rem;
-  font-weight: 950;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-.compliance-card h2,
-.support-card h2 {
-  margin: 0 0 14px;
-  color: white;
-  font-size: clamp(1.5rem, 3vw, 2.3rem);
-  line-height: 0.98;
-  letter-spacing: -0.055em;
-}
-.warning-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 10px;
-}
-.warning-list li {
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.02);
-  padding: 12px 14px;
-  color: #a3ada6;
-  font-size: 0.9rem;
-  line-height: 1.45;
-}
-.warning-list strong { color: white; display: block; margin-bottom: 3px; }
-.support-grid {
-  display: grid;
-  gap: 10px;
-}
-.support-link {
-  display: grid;
-  grid-template-columns: 42px 1fr;
-  gap: 12px;
-  align-items: center;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.02);
-  padding: 12px;
-}
-.support-link span:first-child {
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--border-soft);
-  color: var(--green);
-  background: rgba(34,255,136,0.055);
-  font-size: 0.72rem;
-  font-weight: 950;
-}
-.support-link strong { display: block; color: white; line-height: 1.1; margin-bottom: 4px; }
-.support-link span:last-child { color: #98a39c; font-size: 0.84rem; line-height: 1.35; }
-
-.footer {
-  padding: 34px 0 44px;
-  border-top: 1px solid var(--border);
-  color: #858f88;
-}
-.footer-grid {
-  display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
-  gap: 34px;
-  align-items: center;
-}
-.footer-brand { color: white; font-weight: 950; letter-spacing: -0.055em; font-size: 1.6rem; }
-.footer p { margin: 8px 0 0; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 750; }
-.disclaimer {
-  border: 1px solid var(--border);
-  padding: 14px;
-  background: rgba(255,255,255,0.02);
-  font-size: 0.78rem;
-  line-height: 1.45;
-}
-
-@media (max-width: 980px) {
-  .checkout-grid,
-  .footer-grid,
-  .compliance-layout { grid-template-columns: 1fr; }
-  .checkout-panel { position: static; }
-  .checkout-benefits { grid-template-columns: 1fr; }
-  .protocol-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-@media (max-width: 680px) {
-  body { line-height: 1.42; }
-  body::before { background-size: 30px 30px; opacity: 0.55; }
-  .container { width: min(100% - 16px, 1180px); }
-  .topbar { backdrop-filter: blur(12px); }
-  .nav { min-height: 46px; gap: 8px; }
-  .brand { gap: 7px; font-size: 0.88rem; font-weight: 850; }
-  .brand-mark { width: 28px; height: 28px; border-radius: 8px; font-size: 0.58rem; }
-  .nav-links { display: none; }
-  .back-btn { padding: 6px 8px; font-size: 0.6rem; letter-spacing: 0.03em; gap: 4px; white-space: nowrap; }
-  .ticker-track { animation-duration: 27s; }
-  .ticker-item { gap: 5px; padding: 5px 10px; font-size: 0.54rem; letter-spacing: 0.035em; }
-  .ticker-market { font-size: 0.45rem; }
-  .ticker-item em { min-width: 34px; padding: 1px 4px; font-size: 0.52rem; }
-
-  .checkout-hero { padding: 10px 0 22px; }
-  .checkout-grid { gap: 14px; }
-  .checkout-panel { order: 1; }
-  .checkout-copy { order: 2; }
-  .kicker { margin-bottom: 10px; gap: 7px; font-size: 0.61rem; letter-spacing: 0.12em; }
-  .kicker::before { width: 6px; height: 6px; }
-  h1 { font-size: clamp(2rem, 12vw, 2.75rem); line-height: 0.93; letter-spacing: -0.065em; }
-  .hero-copy { margin-top: 13px; font-size: 0.86rem; line-height: 1.42; }
-  .checkout-benefits { gap: 8px; margin-top: 14px; }
-  .benefit-card { padding: 10px; min-height: 0; }
-  .benefit-card span, .marker { min-width: 30px; height: 24px; margin-bottom: 8px; font-size: 0.52rem; }
-  .benefit-card strong { font-size: 0.84rem; margin-bottom: 4px; }
-  .benefit-card p { font-size: 0.72rem; line-height: 1.35; }
-  .compliance-message { margin-top: 10px; grid-template-columns: 32px 1fr; gap: 9px; padding: 10px; }
-  .compliance-message .badge { min-width: 32px; height: 26px; font-size: 0.58rem; }
-  .compliance-message strong { font-size: 0.86rem; }
-  .compliance-message p { font-size: 0.7rem; }
-
-  .checkout-panel { padding: 11px; box-shadow: 0 14px 42px var(--shadow); }
-  .checkout-head { padding: 2px 0 10px; gap: 10px; }
-  .eyebrow { font-size: 0.57rem; margin-bottom: 4px; }
-  .checkout-title { font-size: 1.24rem; line-height: 1; }
-  .secure-status { padding: 5px 7px; font-size: 0.53rem; letter-spacing: 0.08em; }
-  .secure-status::before { width: 6px; height: 6px; }
-  .wallet-primary { padding: 11px; margin: 12px 0 10px; }
-  .wallet-primary-head, .card-payment-head { gap: 8px; margin-bottom: 9px; }
-  .wallet-kicker, .card-kicker { font-size: 0.5rem; letter-spacing: 0.11em; margin-bottom: 4px; }
-  .wallet-title, .card-payment-title { font-size: 0.94rem; }
-  .wallet-price-pill { padding: 5px 6px; font-size: 0.5rem; }
-  .plan-toggle { gap: 6px; margin: 10px 0; }
-  .wallet-primary .plan-toggle { margin: 0 0 9px; }
-  .plan-option { padding: 9px; }
-  .plan-option strong { font-size: 0.74rem; margin-bottom: 3px; }
-  .plan-option span { font-size: 0.55rem; letter-spacing: 0.055em; }
-  .form-block { gap: 6px; margin-bottom: 10px; }
-  .wallet-primary .form-block { margin-bottom: 9px; }
-  .form-label { font-size: 0.55rem; }
-  .email-input { min-height: 40px; padding: 0 10px; font-size: 0.82rem; }
-  .wallet-button, .card-button, .confirm-button { min-height: 42px; font-size: 0.72rem; }
-  .wallet-primary .wallet-button { min-height: 56px; font-size: 0.86rem; }
-  .wallet-microcopy, .card-payment-copy { font-size: 0.64rem; margin-top: 7px; }
-  .divider { gap: 8px; margin: 9px 0; font-size: 0.52rem; }
-  .card-payment-box { padding: 10px; margin-bottom: 10px; }
-  .card-cell { min-height: 36px; padding: 0 9px; font-size: 0.62rem; }
-  .terms-box { padding: 10px; gap: 8px; }
-  .check-row { grid-template-columns: 18px 1fr; gap: 8px; font-size: 0.68rem; }
-  .check-row input { width: 16px; height: 16px; }
-  .summary-box { padding: 10px; margin: 10px 0; gap: 6px; }
-  .summary-row { font-size: 0.74rem; }
-  .summary-row.total { font-size: 0.86rem; padding-top: 7px; }
-  .checkout-note { font-size: 0.66rem; margin-top: 8px; }
-  .processor-state { padding: 11px; margin-top: 9px; }
-  .processor-state strong { font-size: 0.88rem; margin-bottom: 4px; }
-  .processor-state p { font-size: 0.7rem; }
-  .safer-box { padding: 10px; margin-top: 10px; }
-  .safer-box strong { font-size: 0.82rem; }
-  .safer-box p { font-size: 0.68rem; }
-
-  .protocol-strip { padding: 14px 0 24px; }
-  .protocol-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
-  .protocol-card { padding: 9px; }
-  .protocol-card strong { font-size: 1.08rem; margin-bottom: 5px; }
-  .protocol-card span { font-size: 0.53rem; line-height: 1.25; display: block; }
-  .compliance-section { padding: 12px 0 32px; }
-  .compliance-layout { gap: 10px; }
-  .compliance-card, .support-card { padding: 14px; }
-  .section-label { font-size: 0.56rem; margin-bottom: 8px; }
-  .compliance-card h2, .support-card h2 { font-size: 1.18rem; margin-bottom: 10px; }
-  .warning-list { gap: 7px; }
-  .warning-list li { padding: 9px 10px; font-size: 0.72rem; line-height: 1.34; }
-  .support-grid { gap: 7px; }
-  .support-link { grid-template-columns: 34px 1fr; gap: 9px; padding: 9px; }
-  .support-link span:first-child { width: 34px; height: 34px; font-size: 0.58rem; }
-  .support-link strong { font-size: 0.82rem; }
-  .support-link span:last-child { font-size: 0.7rem; }
-  .footer { padding: 26px 0 34px; }
-  .footer-grid { gap: 14px; }
-  .footer-brand { font-size: 1.25rem; }
-  .footer p, .disclaimer { font-size: 0.68rem; line-height: 1.4; }
-  .disclaimer { padding: 11px; }
-}
-</style>
-</head>
-<body>
-<header class="topbar">
-  <div class="container nav">
-    <a class="brand" href="index.html" aria-label="Live Picks home">
-      <span class="brand-mark"><img src="lp-logo.png" alt="Live Picks logo" onerror="this.remove(); this.parentElement.textContent='LP';"></span>
-      <span>Live Picks</span>
-    </a>
-
-    <nav class="nav-links" aria-label="Checkout navigation">
-      <a href="index.html#predictions">Predictions</a>
-      <a href="index.html#model">Model</a>
-      <a class="active" href="#checkout">Checkout</a>
-      <a href="#responsible-gambling">Responsible Gambling</a>
-    </nav>
-
-    <a href="index.html" class="back-btn">← Back</a>
-  </div>
-</header>
-
-<div class="edge-ticker" aria-label="Responsible access ticker">
-  <div class="ticker-track">
-    <div class="ticker-item"><span class="ticker-market">ACCESS</span><strong>18+ only</strong><em class="warn">AGE</em></div>
-    <div class="ticker-item"><span class="ticker-market">RISK</span><strong>No guaranteed outcomes</strong><em class="red">RISK</em></div>
-    <div class="ticker-item"><span class="ticker-market">SERVICE</span><strong>Information only</strong><em>INFO</em></div>
-    <div class="ticker-item"><span class="ticker-market">WAGERING</span><strong>We do not place bets</strong><em>NO BETS</em></div>
-    <div class="ticker-item"><span class="ticker-market">SUPPORT</span><strong>1800 858 858</strong><em class="warn">HELP</em></div>
-    <div class="ticker-item"><span class="ticker-market">BETSTOP</span><strong>Self-exclusion available</strong><em>TOOLS</em></div>
-    <div class="ticker-item"><span class="ticker-market">ACCESS</span><strong>18+ only</strong><em class="warn">AGE</em></div>
-    <div class="ticker-item"><span class="ticker-market">RISK</span><strong>No guaranteed outcomes</strong><em class="red">RISK</em></div>
-    <div class="ticker-item"><span class="ticker-market">SERVICE</span><strong>Information only</strong><em>INFO</em></div>
-    <div class="ticker-item"><span class="ticker-market">WAGERING</span><strong>We do not place bets</strong><em>NO BETS</em></div>
-    <div class="ticker-item"><span class="ticker-market">SUPPORT</span><strong>1800 858 858</strong><em class="warn">HELP</em></div>
-    <div class="ticker-item"><span class="ticker-market">BETSTOP</span><strong>Self-exclusion available</strong><em>TOOLS</em></div>
-  </div>
-</div>
-
-<main id="checkout">
-  <section class="checkout-hero">
-    <div class="container checkout-grid">
-      <div class="checkout-copy">
-        <div class="kicker">Premium fight-night analysis</div>
-        <h1>Complete your Live Picks access.</h1>
-        <p class="hero-copy">Get premium <strong>fight-night analysis and timing-based reads</strong> delivered to your email. Live Picks provides independent sports analytics only. We do not accept wagers, place bets, guarantee outcomes or operate as a bookmaker.</p>
-
-        <div class="checkout-benefits">
-          <article class="benefit-card">
-            <span>01</span>
-            <strong>Email-first access</strong>
-            <p>Your email is used for payment receipts, delivery alerts and access instructions.</p>
-          </article>
-          <article class="benefit-card">
-            <span>02</span>
-            <strong>Fast checkout path</strong>
-            <p>Apple Pay leads the checkout flow, with card payment kept in its own fallback box.</p>
-          </article>
-          <article class="benefit-card">
-            <span>03</span>
-            <strong>Clear risk warnings</strong>
-            <p>Choose weekly access at $9.90 or monthly access at $30.00 with clear risk disclosure.</p>
-          </article>
-        </div>
-
-        <div class="compliance-message" role="note" aria-label="Gambling warning">
-          <span class="badge">18+</span>
-          <div>
-            <strong>Chances are you’re about to lose.</strong>
-            <p>For free and confidential support call 1800 858 858 or visit gamblinghelponline.org.au. Only subscribe if you are 18+ and legally permitted to access wagering-related content in your location.</p>
-          </div>
-        </div>
-      </div>
-
-      <aside class="checkout-panel" aria-label="Checkout form">
-        <div class="checkout-head">
-          <div>
-            <span class="eyebrow">Secure checkout</span>
-            <strong class="checkout-title">Live Picks Premium</strong>
-          </div>
-          <span class="secure-status">18+</span>
-        </div>
-
-        <div class="wallet-primary" aria-label="Apple Pay checkout">
-          <div class="wallet-primary-head">
-            <div>
-              <span class="wallet-kicker">Fastest checkout path</span>
-              <strong class="wallet-title">Subscribe with Apple Pay</strong>
-            </div>
-            <span class="wallet-price-pill">Front &amp; centre</span>
-          </div>
-
-          <div class="plan-toggle" aria-label="Plan selector">
-            <button class="plan-option active" type="button" data-plan="Weekly" data-price="$9.90" data-period="week">
-              <strong>Weekly</strong>
-              <span>$9.90 / week</span>
-            </button>
-            <button class="plan-option" type="button" data-plan="Monthly" data-price="$30.00" data-period="month">
-              <strong>Monthly</strong>
-              <span>$30.00 / month</span>
-            </button>
-          </div>
-
-          <div class="form-block">
-            <label class="form-label" for="email">Email for access</label>
-            <input class="email-input" id="email" type="email" placeholder="you@example.com" autocomplete="email">
-          </div>
-
-          <div class="terms-box terms-box--wallet">
-            <label class="check-row">
-              <input id="ageCheck" type="checkbox">
-              <span><strong>I am 18+</strong> and legally permitted to access this content.</span>
-            </label>
-            <label class="check-row">
-              <input id="riskCheck" type="checkbox">
-              <span>I understand Live Picks is <strong>analysis only</strong> with no guaranteed outcomes.</span>
-            </label>
-          </div>
-
-          <button class="wallet-button" type="button" id="applePayButton"><span class="apple"> Pay</span></button>
-          <p class="wallet-microcopy">Apple Pay is the primary checkout option on this page. Choose weekly or monthly, confirm the warnings, then continue.</p>
-        </div>
-
-        <div class="divider">or pay by card</div>
-
-        <div class="card-payment-box" aria-label="Pay by card checkout">
-          <div class="card-payment-head">
-            <div>
-              <span class="card-kicker">Separate fallback box</span>
-              <strong class="card-payment-title">Pay by card</strong>
-              <p class="card-payment-copy">Card payment is intentionally separated so it does not compete with the main Apple Pay checkout.</p>
-            </div>
-          </div>
-
-          <div class="card-shell" aria-hidden="true">
-            <div class="card-row"><div class="card-cell">Card number</div></div>
-            <div class="card-row"><div class="card-cell">MM / YY</div><div class="card-cell">CVC</div><div class="card-cell">ZIP</div></div>
-          </div>
-
-          <button class="card-button" type="button" id="cardButton">Continue with card →</button>
-        </div>
-
-        <div class="summary-box">
-          <div class="summary-row"><span>Plan</span><strong id="summaryPlan">Weekly</strong></div>
-          <div class="summary-row"><span>Delivery</span><strong>Email + access handoff</strong></div>
-          <div class="summary-row"><span>Service</span><strong>Fight-night analysis only</strong></div>
-          <div class="summary-row total"><span>Total today</span><strong id="summaryPrice">$9.90 / week</strong></div>
-        </div>
-
-        <div class="processor-state" id="processorState" role="status" aria-live="polite">
-          <strong>Payment processor connection required.</strong>
-          <p>This front-end is ready for Stripe or another approved provider. Connect live payment processing before accepting subscriptions.</p>
-        </div>
-
-        <div class="safer-box">
-          <strong>What are you really gambling with?</strong>
-          <p>For free and confidential support call <a href="tel:1800858858">1800 858 858</a> or visit <a href="https://www.gamblinghelponline.org.au/">gamblinghelponline.org.au</a>.</p>
-        </div>
-
-        <p class="checkout-note"><strong>No card details are stored by Live Picks.</strong> Final card and wallet handling should be completed through an approved payment provider. Cancel anytime before renewal.</p>
-      </aside>
-    </div>
-  </section>
-
-  <section class="protocol-strip" aria-label="Subscription protections">
-    <div class="container protocol-grid">
-      <div class="protocol-card"><strong>18+</strong><span>Access is restricted to adults only</span></div>
-      <div class="protocol-card"><strong>0</strong><span>No guaranteed wins or returns</span></div>
-      <div class="protocol-card"><strong>NO</strong><span>No bets accepted or placed by Live Picks</span></div>
-      <div class="protocol-card"><strong>24/7</strong><span>Gambling support available in Australia</span></div>
-    </div>
-  </section>
-
-  <section class="compliance-section" id="responsible-gambling">
-    <div class="container compliance-layout">
-      <article class="compliance-card">
-        <div class="section-label">Important wagering warnings</div>
-        <h2>Subscribe for analysis, not certainty.</h2>
-        <ul class="warning-list">
-          <li><strong>Betting involves risk.</strong> You may lose money. Never wager more than you can afford to lose.</li>
-          <li><strong>No result is guaranteed.</strong> Live Picks does not promise profit, returns, strike rate, income or betting success.</li>
-          <li><strong>Information only.</strong> Content is general sports analysis and entertainment. It is not financial advice, personal advice or a recommendation tailored to your circumstances.</li>
-          <li><strong>No wagering service.</strong> Live Picks does not accept bets, facilitate bets, hold customer funds, publish bookmaker odds for in-play bets, or operate as a bookmaker.</li>
-          <li><strong>Do not subscribe if gambling is causing harm.</strong> If you are self-excluded, underage, experiencing gambling harm or trying to stop gambling, do not use this service.</li>
-        </ul>
-      </article>
-
-      <aside class="support-card">
-        <div class="section-label">Safer gambling support</div>
-        <h2>Help and exclusion tools.</h2>
-        <div class="support-grid">
-          <a class="support-link" href="tel:1800858858">
-            <span>CALL</span>
-            <span><strong>National Gambling Helpline</strong>1800 858 858 — free, confidential support 24 hours a day.</span>
-          </a>
-          <a class="support-link" href="https://www.gamblinghelponline.org.au/">
-            <span>WEB</span>
-            <span><strong>Gambling Help Online</strong>Online counselling, live chat, email support and self-help resources.</span>
-          </a>
-          <a class="support-link" href="https://www.betstop.gov.au/">
-            <span>STOP</span>
-            <span><strong>BetStop</strong>Australia’s National Self-Exclusion Register for licensed online and phone wagering services.</span>
-          </a>
-        </div>
-      </aside>
-    </div>
-  </section>
-</main>
-
-<footer class="footer">
-  <div class="container footer-grid">
-    <div>
-      <div class="footer-brand">Live Picks</div>
-      <p>Premium fight-night analysis • 18+ only</p>
-    </div>
-    <div class="disclaimer">
-      Live Picks is an independent analytics and commentary service. It is not affiliated with, endorsed by or licensed by UFC or any sporting organisation. Live Picks does not operate as a bookmaker, does not accept wagers, does not place wagers for customers, and does not guarantee outcomes, profits or returns. Betting involves risk. Chances are you’re about to lose. For free and confidential support call 1800 858 858 or visit gamblinghelponline.org.au.
-    </div>
-  </div>
-</footer>
-
-<script>
-  const planButtons = document.querySelectorAll('.plan-option');
-  const summaryPlan = document.getElementById('summaryPlan');
-  const summaryPrice = document.getElementById('summaryPrice');
-  const processorState = document.getElementById('processorState');
-  const emailInput = document.getElementById('email');
-  const ageCheck = document.getElementById('ageCheck');
-  const riskCheck = document.getElementById('riskCheck');
-  const paymentButtons = [document.getElementById('applePayButton'), document.getElementById('cardButton')];
+  function saveDemoAccess() {
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+    const normalizedEmail = email.toLowerCase();
+    const subscriber = {
+      email,
+      passwordHash: hashCredential(`${normalizedEmail}:${password}`),
+      plan: summaryPlan.textContent,
+      price: summaryPrice.textContent,
+      createdAt: new Date().toISOString()
+    };
+    localStorage.setItem('livePicksSubscriber', JSON.stringify(subscriber));
+  }
 
   planButtons.forEach((button) => {
     button.addEventListener('click', () => {
+      if (button.disabled) {
+        showProcessorState('Monthly is not connected yet.', 'Add STRIPE_PRICE_MONTHLY later if you want the monthly plan to work on-site. Weekly is connected now.');
+        return;
+      }
       planButtons.forEach((item) => item.classList.remove('active'));
       button.classList.add('active');
       summaryPlan.textContent = button.dataset.plan;
       summaryPrice.textContent = `${button.dataset.price} / ${button.dataset.period}`;
+      hideProcessorState();
     });
   });
 
-  function requestProcessorConnection() {
-    const email = emailInput.value.trim();
-    if (!email) {
-      emailInput.focus();
-      emailInput.style.borderColor = 'rgba(255,77,95,0.62)';
-      window.setTimeout(() => emailInput.style.borderColor = '', 900);
-      return;
+  async function handleExpressConfirm() {
+    if (!validateAccessForm()) return;
+
+    try {
+      showProcessorState('Opening secure Stripe payment.', 'Confirm the payment in Apple Pay or the wallet option shown by Stripe.');
+
+      const { error: submitError } = await elements.submit();
+      if (submitError) {
+        showProcessorState('Payment details need attention.', submitError.message || 'Please check your wallet details and try again.');
+        return;
+      }
+
+      const response = await fetch('/api/create-subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: emailInput.value.trim(),
+          plan: 'weekly'
+        })
+      });
+
+      const subscriptionData = await response.json();
+      if (!response.ok || subscriptionData.error || !subscriptionData.clientSecret) {
+        throw new Error(subscriptionData.error || 'The subscription could not be created.');
+      }
+
+      const { error } = await stripe.confirmPayment({
+        elements,
+        clientSecret: subscriptionData.clientSecret,
+        confirmParams: {
+          return_url: `${window.location.origin}/portal.html`
+        },
+        redirect: 'if_required'
+      });
+
+      if (error) {
+        showProcessorState('Payment was not completed.', error.message || 'Please try again or use the hosted checkout fallback.');
+        showFallbackButton();
+        return;
+      }
+
+      saveDemoAccess();
+      showProcessorState('Payment complete. Premium login created.', 'Redirecting you to Premium Login now.');
+      window.setTimeout(() => {
+        window.location.href = 'portal.html';
+      }, 900);
+    } catch (error) {
+      showProcessorState('Stripe checkout error.', error.message || 'Use the hosted checkout fallback while this is being checked.');
+      showFallbackButton();
     }
-    if (!ageCheck.checked || !riskCheck.checked) {
-      const firstUnchecked = !ageCheck.checked ? ageCheck : riskCheck;
-      firstUnchecked.focus();
-      processorState.classList.add('is-visible');
-      processorState.querySelector('strong').textContent = 'Confirm the access warnings first.';
-      processorState.querySelector('p').textContent = 'You must confirm the 18+ and no-guarantee disclosures before continuing.';
-      return;
-    }
-    processorState.classList.add('is-visible');
-    processorState.querySelector('strong').textContent = 'Payment processor connection required.';
-    processorState.querySelector('p').textContent = `The checkout front-end is ready for ${email}. Connect Stripe or another approved provider before accepting live subscriptions.`;
   }
 
-  paymentButtons.forEach((button) => button.addEventListener('click', requestProcessorConnection));
+  function openHostedCheckoutFallback() {
+    if (!validateAccessForm()) return;
+    window.location.href = STRIPE_FALLBACK_LINK;
+  }
+
+  async function initialiseStripeExpressCheckout() {
+    if (!window.Stripe) {
+      showProcessorState('Stripe.js did not load.', 'Check your internet connection or use the hosted checkout fallback.');
+      expressCheckoutNode.classList.add('is-hidden');
+      showFallbackButton();
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/config');
+      const config = await response.json();
+
+      if (!response.ok || !config.publishableKey) {
+        throw new Error('Missing STRIPE_PUBLISHABLE_KEY from /api/config.');
+      }
+
+      stripe = Stripe(config.publishableKey);
+      elements = stripe.elements({
+        mode: 'subscription',
+        amount: STRIPE_WEEKLY_AMOUNT_CENTS,
+        currency: STRIPE_CURRENCY,
+        paymentMethodTypes: ['card', 'link'],
+        appearance: {
+          theme: 'night',
+          variables: {
+            colorPrimary: '#22ff88',
+            colorBackground: '#07100a',
+            colorText: '#f2f7f3',
+            colorDanger: '#ff4d5f',
+            borderRadius: '10px',
+            fontFamily: 'Inter, system-ui, sans-serif'
+          }
+        }
+      });
+
+      expressCheckoutElement = elements.create('expressCheckout', {
+        emailRequired: true,
+        buttonHeight: 55,
+        business: {
+          name: 'Live Picks'
+        },
+        lineItems: [
+          {
+            name: 'Live Picks Premium Weekly',
+            amount: STRIPE_WEEKLY_AMOUNT_CENTS
+          }
+        ],
+        paymentMethods: {
+          applePay: 'always',
+          googlePay: 'auto',
+          link: 'auto'
+        },
+        paymentMethodOrder: ['applePay', 'googlePay', 'link'],
+        buttonTheme: {
+          applePay: 'black',
+          googlePay: 'black'
+        },
+        layout: {
+          maxColumns: 1,
+          maxRows: 0,
+          overflow: 'auto'
+        }
+      });
+
+      expressCheckoutNode.style.visibility = 'hidden';
+      expressCheckoutElement.mount('#express-checkout-element');
+
+      expressCheckoutElement.on('availablepaymentmethodschange', ({ paymentMethods }) => {
+        if (paymentMethods) {
+          expressCheckoutNode.style.visibility = 'initial';
+          hideFallbackButton();
+          hideProcessorState();
+        } else {
+          expressCheckoutNode.classList.add('is-hidden');
+          showFallbackButton();
+          showProcessorState('Apple Pay is not available on this device.', 'Use Safari with Apple Pay set up, or use the hosted checkout fallback.');
+        }
+      });
+
+      expressCheckoutElement.on('confirm', handleExpressConfirm);
+    } catch (error) {
+      expressCheckoutNode.classList.add('is-hidden');
+      showFallbackButton();
+      showProcessorState('Stripe Express Checkout could not start.', error.message || 'Check your Vercel environment variables and API files.');
+    }
+  }
+
+  cardButton.addEventListener('click', openHostedCheckoutFallback);
+  stripeFallbackButton.addEventListener('click', openHostedCheckoutFallback);
 
   document.querySelectorAll('.edge-ticker').forEach((ticker) => {
     const pause = () => ticker.classList.add('is-paused');
@@ -2512,6 +1519,8 @@ h1 {
     ticker.addEventListener('pointercancel', resume, { passive: true });
     ticker.addEventListener('pointerleave', resume, { passive: true });
   });
+
+  initialiseStripeExpressCheckout();
 </script>
 </body>
 </html>
