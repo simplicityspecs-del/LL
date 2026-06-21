@@ -60,19 +60,27 @@ export default async function handler(req, res) {
       payment_settings: {
         save_default_payment_method: "on_subscription"
       },
-      expand: ["latest_invoice.payment_intent"]
+      billing_mode: {
+        type: "flexible"
+      },
+      expand: ["latest_invoice.confirmation_secret"]
     });
 
-    const paymentIntent = subscription.latest_invoice?.payment_intent;
+    const clientSecret = subscription.latest_invoice?.confirmation_secret?.client_secret;
 
-    if (!paymentIntent?.client_secret) {
+    if (!clientSecret) {
       return res.status(500).json({
-        error: "Stripe did not return a payment intent client secret."
+        error: "Stripe did not return an invoice confirmation secret.",
+        subscriptionId: subscription.id,
+        subscriptionStatus: subscription.status,
+        latestInvoiceId: typeof subscription.latest_invoice === "string"
+          ? subscription.latest_invoice
+          : subscription.latest_invoice?.id || null
       });
     }
 
     return res.status(200).json({
-      clientSecret: paymentIntent.client_secret,
+      clientSecret,
       subscriptionId: subscription.id
     });
   } catch (error) {
