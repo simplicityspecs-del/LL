@@ -4212,7 +4212,7 @@ h1 {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 12px;
   }
 
@@ -4239,6 +4239,7 @@ h1 {
     line-height: 1;
     white-space: nowrap;
     font-size: 0.78rem;
+    text-transform: none;
   }
 
   .topbar .header-buttons .nav-links a:hover,
@@ -4258,6 +4259,24 @@ h1 {
 @media (max-width: 680px) {
   .header-buttons {
     display: block;
+  }
+
+  .topbar .header-buttons .nav-links {
+    display: none !important;
+  }
+
+  .topbar .header-buttons .top-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px !important;
+    width: 100%;
+  }
+
+  .topbar .header-buttons .top-actions .newsletter-btn,
+  .topbar .header-buttons .top-actions .premium-login-link {
+    display: inline-flex !important;
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -4664,14 +4683,9 @@ h1 {
     </a>
 
     <div class="header-buttons">
-      <nav class="nav-links" aria-label="Main navigation">
-        <a class="active" href="#predictions">Predictions</a>
-        <a href="#model">Model</a>
-      </nav>
-
       <div class="top-actions">
-        <a href="newsletter.html" class="login-btn secondary-btn">Free Newsletter</a>
-        <a href="https://yourname.substack.com" class="login-btn">Premium Login</a>
+        <a href="newsletter.html" class="login-btn secondary-btn newsletter-btn">Free Newsletter</a>
+        <a href="portal.html" class="login-btn premium-login-link">Premium Login</a>
       </div>
     </div>
   </div>
@@ -4795,8 +4809,7 @@ h1 {
         <div class="hero-note">The later the lock, the more fight night data has been processed, which creates a more accurate pick.</div>
 
         <div class="hero-actions">
-          <a class="btn btn-primary live-edge-cta" href="#predictions">View Live Edge →</a>
-          <a class="btn btn-ghost" href="#model">How The Model Works</a>
+          <a class="btn btn-ghost" href="#model">How the model works</a>
         </div>
       </div>
 
@@ -5333,7 +5346,6 @@ h1 {
     });
   });
 </script>
-
 
 <script>
   document.querySelectorAll('.edge-ticker').forEach((ticker) => {
