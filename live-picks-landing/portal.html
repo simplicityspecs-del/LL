@@ -878,7 +878,7 @@ body.is-logged-in .portal-hero { border-bottom-color: rgba(34,255,136,0.2); }
         </form>
 
         <div class="inline-state" id="loginState" role="status" aria-live="polite"></div>
-        <p class="login-note">Demo front-end: login validates the screen flow and redirects to the feed. Connect your auth provider before relying on protected subscriber access.</p>
+        <p class="login-note">Login now checks your Supabase account and active subscriber status before opening the premium feed.</p>
 
         <div class="create-access">
           <span>Not subscribed yet?</span>
@@ -909,65 +909,70 @@ body.is-logged-in .portal-hero { border-bottom-color: rgba(34,255,136,0.2); }
   const rememberInput = document.getElementById('remember');
   const loginState = document.getElementById('loginState');
 
-  function redirectToFeed(email) {
-    if (rememberInput.checked) {
-      localStorage.setItem('livePicksPortalEmail', email);
-    } else {
-      sessionStorage.setItem('livePicksPortalEmail', email);
-    }
+  function showLoginState(message) {
     loginState.classList.add('is-visible');
-    loginState.textContent = 'Access accepted. Opening your premium feed...';
+    loginState.textContent = message;
+  }
+
+  function redirectToFeed(email) {
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (rememberInput.checked) {
+      localStorage.setItem('livePicksPortalEmail', normalizedEmail);
+    } else {
+      sessionStorage.setItem('livePicksPortalEmail', normalizedEmail);
+    }
+
+    sessionStorage.setItem('livePicksPortalEmail', normalizedEmail);
+    showLoginState('Access accepted. Opening your premium feed...');
     window.location.href = 'premium-feed.html';
   }
 
-  function getSavedSubscriber() {
-    try {
-      return JSON.parse(localStorage.getItem('livePicksSubscriber') || 'null');
-    } catch (error) {
-      return null;
-    }
-  }
-
-  function hashCredential(value) {
-    let hash = 2166136261;
-    for (let index = 0; index < value.length; index += 1) {
-      hash ^= value.charCodeAt(index);
-      hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
-    }
-    return (hash >>> 0).toString(16);
-  }
-
-  loginForm.addEventListener('submit', (event) => {
+  loginForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const email = emailInput.value.trim();
+
+    const email = emailInput.value.trim().toLowerCase();
     const password = passwordInput.value.trim();
+
     if (!email || !email.includes('@')) {
       emailInput.focus();
-      loginState.classList.add('is-visible');
-      loginState.textContent = 'Enter the subscriber email used at checkout.';
+      showLoginState('Enter the subscriber email used at checkout.');
       return;
     }
+
     if (!password) {
       passwordInput.focus();
-      loginState.classList.add('is-visible');
-      loginState.textContent = 'Enter a password to continue.';
+      showLoginState('Enter your password to continue.');
       return;
     }
 
-    const subscriber = getSavedSubscriber();
-    const storedEmail = subscriber && typeof subscriber.email === 'string' ? subscriber.email.trim().toLowerCase() : '';
-    const storedPasswordHash = subscriber && typeof subscriber.passwordHash === 'string' ? subscriber.passwordHash : '';
-    const storedPassword = subscriber && typeof subscriber.password === 'string' ? subscriber.password : '';
-    const submittedPasswordHash = hashCredential(`${email.toLowerCase()}:${password}`);
-    const passwordMatches = storedPasswordHash ? storedPasswordHash === submittedPasswordHash : storedPassword === password;
+    const submitButton = loginForm.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
 
-    if (!subscriber || storedEmail !== email.toLowerCase() || !passwordMatches) {
-      loginState.classList.add('is-visible');
-      loginState.textContent = 'No matching subscriber login found. Subscribe first or check your email and password.';
-      return;
+    try {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Checking access...';
+      showLoginState('Checking subscriber access...');
+
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.ok) {
+        throw new Error(data.error || 'Login failed.');
+      }
+
+      redirectToFeed(data.email || email);
+    } catch (error) {
+      showLoginState(error.message || 'Login failed. Please check your email and password.');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
     }
-
-    redirectToFeed(email);
   });
 
   document.querySelectorAll('.edge-ticker').forEach((ticker) => {
@@ -978,7 +983,6 @@ body.is-logged-in .portal-hero { border-bottom-color: rgba(34,255,136,0.2); }
     ticker.addEventListener('pointercancel', resume, { passive: true });
     ticker.addEventListener('pointerleave', resume, { passive: true });
   });
-
 </script>
 </body>
 </html>
