@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#050806">
+  <meta name="color-scheme" content="dark">
+  <title>Free Newsletter • Live Picks</title>
+  <meta name="description" content="Join the Live Picks free newsletter for fight-night updates and model notes.">
+  <style>
+    :root {
+      --bg: #050806;
+      --surface: #0d130f;
+      --border: #26342b;
+      --border-soft: rgba(34, 255, 136, 0.18);
+      --text: #f2f7f3;
+      --muted: #a7b2aa;
+      --faint: #617066;
+      --green: #22ff88;
+      --red: #ff4d5f;
+      --shadow: rgba(0, 0, 0, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0;
+      background:
+        radial-gradient(circle at 18% 8%, rgba(34, 255, 136, 0.11), transparent 30%),
+        radial-gradient(circle at 82% 72%, rgba(34, 255, 136, 0.08), transparent 34%),
+        linear-gradient(180deg, #050806 0%, #060806 48%, #020302 100%);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.72), transparent 72%);
+    }
+
+    a { color: inherit; }
+
+    .container {
+      width: min(100% - 32px, 980px);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      border-bottom: 1px solid var(--border);
+      background: rgba(5, 8, 6, 0.86);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: 950;
+      letter-spacing: -0.04em;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.025);
+      color: #d7ded9;
+      font-size: 0.72rem;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    .nav-link:hover {
+      border-color: var(--border-soft);
+      background: rgba(34, 255, 136, 0.06);
+      color: var(--green);
+    }
+
+    .page {
+      min-height: calc(100dvh - 56px);
+      display: grid;
+      place-items: center;
+      padding: 58px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .signup-card {
+      width: min(100%, 680px);
+      border: 1px solid var(--border);
+      background:
+        radial-gradient(circle at 88% 12%, rgba(255,77,95,0.10), transparent 24%),
+        radial-gradient(circle at 12% 88%, rgba(34,255,136,0.12), transparent 32%),
+        linear-gradient(180deg, rgba(17,26,20,0.96), rgba(8,12,9,0.96));
+      box-shadow: 0 24px 72px var(--shadow);
+      padding: clamp(24px, 5vw, 42px);
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--green);
+      font-size: 0.74rem;
+      font-weight: 950;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 16px var(--green);
+    }
+
+    h1 {
+      margin: 0;
+      color: white;
+      font-size: clamp(2.6rem, 8vw, 5.4rem);
+      line-height: 0.9;
+      letter-spacing: -0.075em;
+      text-transform: uppercase;
+      text-wrap: balance;
+    }
+
+    .copy {
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: clamp(0.98rem, 2vw, 1.18rem);
+      line-height: 1.6;
+      max-width: 560px;
+    }
+
+    .form {
+      display: grid;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+    }
+
+    label {
+      display: block;
+      color: var(--faint);
+      font-size: 0.7rem;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      min-height: 52px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 0;
+      background: rgba(255,255,255,0.035);
+      color: white;
+      padding: 0 15px;
+      font: inherit;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    input[type="email"]:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(34,255,136,0.12);
+    }
+
+    input::placeholder { color: #738078; }
+
+    .btn {
+      min-height: 52px;
+      border: 1px solid var(--green);
+      background: var(--green);
+      color: #021105;
+      padding: 0 22px;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 950;
+      cursor: pointer;
+      box-shadow: 0 0 28px rgba(34,255,136,0.25);
+      white-space: nowrap;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:disabled { opacity: 0.58; cursor: wait; transform: none; }
+
+    .fine-print {
+      margin: 4px 0 0;
+      color: #7f8b84;
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .message {
+      min-height: 22px;
+      margin: 2px 0 0;
+      color: var(--green);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .message.error { color: #ffd9de; }
+
+    .hp-field {
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @media (max-width: 620px) {
+      .container { width: min(100% - 20px, 980px); }
+      .nav { min-height: 46px; }
+      .brand { font-size: 0.92rem; }
+      .nav-link { min-height: 30px; padding: 0 10px; font-size: 0.58rem; }
+      .page { padding: 26px 0; align-items: start; }
+      .signup-card { padding: 20px; }
+      .kicker { margin-bottom: 12px; font-size: 0.6rem; }
+      h1 { font-size: clamp(2.1rem, 13vw, 3.1rem); }
+      .copy { margin-top: 14px; font-size: 0.88rem; line-height: 1.48; }
+      .field-row { grid-template-columns: 1fr; }
+      .btn { width: 100%; min-height: 44px; }
+      input[type="email"] { min-height: 44px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="index.html">Live Picks</a>
+      <a class="nav-link" href="index.html#predictions">Back to model</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="container">
+      <div class="signup-card">
+        <div class="kicker">Free fight-night updates</div>
+        <h1>Get the free newsletter.</h1>
+        <p class="copy">Type your email below for updates, model notes and fight-night reminders before premium live picks are released.</p>
+
+        <form class="form" id="newsletterForm" action="/api/subscribe" method="POST" novalidate>
+          <input type="hidden" name="source" value="free-newsletter-page">
+          <div class="hp-field" aria-hidden="true">
+            <label for="company">Company</label>
+            <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div>
+            <label for="email">Type your email here for updates</label>
+            <div class="field-row">
+              <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+              <button class="btn" type="submit">Join Free</button>
+            </div>
+          </div>
+
+          <p class="fine-print">No spam. Just Live Picks updates. You can remove yourself from the list any time.</p>
+          <p class="message" id="formMessage" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('newsletterForm');
+    const message = document.getElementById('formMessage');
+    const button = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      message.textContent = '';
+      message.classList.remove('error');
+
+      if (!form.email.value.trim()) {
+        message.textContent = 'Add your email first.';
+        message.classList.add('error');
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = 'Joining...';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form)))
+        });
+
+        if (!response.ok) {
+          throw new Error('Signup failed');
+        }
+
+        const email = encodeURIComponent(form.email.value.trim());
+        window.location.href = `thank-you.html?email=${email}`;
+      } catch (error) {
+        message.textContent = 'Could not save that email yet. Check your Vercel webhook setup and try again.';
+        message.classList.add('error');
+        button.disabled = false;
+        button.textContent = 'Join Free';
+      }
+    });
+  </script>
+</body>
+</html>
