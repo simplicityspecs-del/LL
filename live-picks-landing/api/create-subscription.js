@@ -59,3 +59,28 @@ export default async function handler(req, res) {
     });
   }
 }
+        save_default_payment_method: "on_subscription"
+      },
+      expand: ["latest_invoice.confirmation_secret", "latest_invoice.payment_intent"]
+    });
+
+    const invoice = subscription.latest_invoice;
+    const clientSecret =
+      invoice?.confirmation_secret?.client_secret ||
+      invoice?.payment_intent?.client_secret;
+
+    if (!clientSecret) {
+      return res.status(500).json({ error: "Could not create payment confirmation secret" });
+    }
+
+    return res.status(200).json({
+      clientSecret,
+      subscriptionId: subscription.id,
+      customerId: customer.id
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message
+    });
+  }
+}
