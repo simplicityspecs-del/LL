@@ -872,13 +872,13 @@ body.is-logged-in .portal-hero { border-bottom-color: rgba(34,255,136,0.2); }
           </div>
           <div class="login-row">
             <label class="check-row"><input type="checkbox" id="remember"> <span>Keep me signed in</span></label>
-            <a class="text-link" href="mailto:support@livepicks.example?subject=Live%20Picks%20password%20reset">Reset access</a>
+            <a class="text-link" href="#reset-password" id="resetAccessLink">Reset access</a>
           </div>
           <button class="btn btn-primary" type="submit">Log in to feed</button>
         </form>
 
         <div class="inline-state" id="loginState" role="status" aria-live="polite"></div>
-        <p class="login-note">Login now checks your Supabase account and active subscriber status before opening the premium feed.</p>
+        <p class="login-note">Login checks Supabase account access. Use Reset access to receive a secure password reset email.</p>
 
         <div class="create-access">
           <span>Not subscribed yet?</span>
@@ -908,6 +908,7 @@ body.is-logged-in .portal-hero { border-bottom-color: rgba(34,255,136,0.2); }
   const passwordInput = document.getElementById('password');
   const rememberInput = document.getElementById('remember');
   const loginState = document.getElementById('loginState');
+  const resetAccessLink = document.getElementById('resetAccessLink');
 
   function showLoginState(message) {
     loginState.classList.add('is-visible');
@@ -927,6 +928,45 @@ body.is-logged-in .portal-hero { border-bottom-color: rgba(34,255,136,0.2); }
     showLoginState('Access accepted. Opening your premium feed...');
     window.location.href = 'premium-feed.html';
   }
+
+  resetAccessLink.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    const email = emailInput.value.trim().toLowerCase();
+
+    if (!email || !email.includes('@')) {
+      emailInput.focus();
+      showLoginState('Enter your subscriber email first, then tap Reset access.');
+      return;
+    }
+
+    const originalText = resetAccessLink.textContent;
+
+    try {
+      resetAccessLink.textContent = 'Sending reset...';
+      resetAccessLink.style.pointerEvents = 'none';
+      showLoginState('Sending password reset email...');
+
+      const response = await fetch('/api/request-password-reset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.ok) {
+        throw new Error(data.error || 'Could not send password reset email.');
+      }
+
+      showLoginState('Password reset email sent. Check your inbox, then open the reset link.');
+    } catch (error) {
+      showLoginState(error.message || 'Could not send password reset email.');
+    } finally {
+      resetAccessLink.textContent = originalText;
+      resetAccessLink.style.pointerEvents = '';
+    }
+  });
 
   loginForm.addEventListener('submit', async (event) => {
     event.preventDefault();
