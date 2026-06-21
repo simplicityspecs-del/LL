@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#050806">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="msapplication-TileColor" content="#050806">
+<meta name="color-scheme" content="dark">
+<title>Live Picks - Premium Feed</title>
+<meta name="description" content="Premium Live Picks subscriber feed with upcoming fight-night release windows.">
+<style>
+:root {
+  --bg: #050806;
+  --surface: #0d130f;
+  --border: #26342b;
+  --border-soft: rgba(34, 255, 136, 0.18);
+  --text: #f2f7f3;
+  --muted: #9aa59d;
+  --green: #22ff88;
+  --red: #ff4d5f;
+  --warning: #ffe66d;
+  --shadow: rgba(0, 0, 0, 0.45);
+}
+
+* { box-sizing: border-box; }
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+  min-height: 100%;
+}
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 18% 6%, rgba(34, 255, 136, 0.12), transparent 28%),
+    radial-gradient(circle at 84% 30%, rgba(34, 255, 136, 0.08), transparent 34%),
+    linear-gradient(180deg, var(--bg) 0%, #060806 46%, #020302 100%);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.48;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.74), transparent 72%);
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+img { display: block; max-width: 100%; }
+.container { width: min(1180px, calc(100% - 38px)); margin: 0 auto; position: relative; }
+
+.topbar {
+  border-bottom: 1px solid var(--border);
+  background: rgba(5, 8, 6, 0.88);
+  backdrop-filter: blur(18px);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.nav {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  font-size: 1.1rem;
+}
+.brand-mark {
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--border-soft);
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(135deg, rgba(34,255,136,0.22), rgba(34,255,136,0.03)),
+    #08100b;
+  box-shadow: 0 0 25px rgba(34, 255, 136, 0.16);
+  overflow: hidden;
+  color: var(--green);
+  font-weight: 950;
+}
+.brand-mark img { width: 100%; height: 100%; object-fit: cover; }
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.top-button {
+  min-height: 36px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.04);
+  color: #d7ded9;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  transition: 0.18s ease;
+  white-space: nowrap;
+}
+.top-button:hover {
+  border-color: rgba(34,255,136,0.42);
+  color: var(--green);
+  transform: translateY(-1px);
+}
+.top-button.primary {
+  border-color: rgba(34,255,136,0.54);
+  color: #071008;
+  background: linear-gradient(180deg, #22ff88, #17c967);
+  box-shadow: 0 0 20px rgba(34,255,136,0.16);
+}
+.top-button.primary:hover { color: #071008; filter: brightness(1.04); }
+
+@media (min-width: 981px) {
+  .topbar .nav {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .topbar .top-actions {
+    justify-self: end;
+  }
+
+  .topbar .top-button {
+    width: clamp(116px, 9vw, 150px);
+    font-size: 0.78rem;
+    border-color: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.025);
+  }
+
+  .topbar .top-button.primary {
+    width: clamp(190px, 15vw, 230px);
+    border-color: rgba(34,255,136,0.54);
+    background: linear-gradient(180deg, #22ff88, #17c967);
+  }
+}
+
+.edge-ticker {
+  border-bottom: 1px solid rgba(34,255,136,0.16);
+  overflow: hidden;
+  background: linear-gradient(180deg, #07100a, #030604);
+  white-space: nowrap;
+  user-select: none;
+}
+.ticker-track {
+  display: inline-flex;
+  align-items: center;
+  animation: ticker 34s linear infinite;
+  will-change: transform;
+}
+.edge-ticker:hover .ticker-track,
+.edge-ticker:active .ticker-track,
+.edge-ticker:focus-within .ticker-track,
+.edge-ticker.is-paused .ticker-track { animation-play-state: paused; }
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-right: 1px solid rgba(255,255,255,0.075);
+  color: #c5cec8;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+.ticker-market { color: #657269; font-size: 0.56rem; font-weight: 950; letter-spacing: 0.08em; }
+.ticker-item strong { color: #f6fff8; font-weight: 950; }
+.ticker-item em {
+  min-width: 42px;
+  text-align: center;
+  color: var(--green);
+  font-style: normal;
+  font-weight: 950;
+  padding: 2px 6px;
+  border: 1px solid var(--border-soft);
+  background: rgba(34,255,136,0.065);
+}
+.ticker-item em.warn {
+  color: var(--warning);
+  border-color: rgba(255,230,109,0.42);
+  background: rgba(255,230,109,0.08);
+}
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+.feed-hero {
+  padding: 42px 0 22px;
+}
+.feed-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(330px, 0.42fr);
+  gap: 22px;
+  align-items: end;
+}
+.eyebrow {
+  display: block;
+  color: var(--green);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+h1 {
+  margin: 0;
+  max-width: 860px;
+  font-size: clamp(3rem, 6.7vw, 6.35rem);
+  line-height: 0.88;
+  letter-spacing: -0.08em;
+  text-wrap: balance;
+}
+.hero-copy {
+  margin: 22px 0 0;
+  max-width: 760px;
+  color: #aeb9b1;
+  font-size: clamp(1.02rem, 1.55vw, 1.22rem);
+}
+.hero-copy strong { color: #f2fff6; }
+.session-card {
+  border: 1px solid rgba(255,255,255,0.11);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.026)),
+    rgba(9, 14, 10, 0.88);
+  box-shadow: 0 22px 70px var(--shadow);
+  padding: 16px;
+}
+.session-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.075);
+}
+.session-row:last-child { border-bottom: 0; }
+.session-row span {
+  color: #7e8b83;
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.session-row strong {
+  color: #f2fff6;
+  text-align: right;
+  word-break: break-word;
+}
+
+.feed-section {
+  padding: 12px 0 52px;
+}
+.event-shell {
+  border: 1px solid rgba(255,255,255,0.11);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.066), rgba(255,255,255,0.022)),
+    rgba(9, 14, 10, 0.82);
+  box-shadow: 0 22px 70px var(--shadow);
+  padding: 18px;
+}
+.event-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.09);
+}
+.event-head h2 {
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 3.2rem);
+  line-height: 0.92;
+  letter-spacing: -0.065em;
+}
+.event-head p {
+  margin: 9px 0 0;
+  color: #95a19a;
+  max-width: 720px;
+}
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 31px;
+  border: 1px solid var(--border-soft);
+  background: rgba(34,255,136,0.08);
+  color: var(--green);
+  font-size: 0.7rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 9px;
+  white-space: nowrap;
+}
+.event-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 16px 0;
+}
+.event-meta {
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.18);
+  padding: 10px;
+}
+.event-meta span {
+  display: block;
+  color: #78847c;
+  font-size: 0.64rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.event-meta strong {
+  display: block;
+  color: #eef8f1;
+  font-size: 0.84rem;
+}
+.fight-list {
+  display: grid;
+  gap: 10px;
+}
+.fight-row {
+  border-color: rgba(34,255,136,0.25);
+  border: 1px solid rgba(255,255,255,0.1);
+  background:
+    linear-gradient(90deg, rgba(34,255,136,0.075), transparent 66%),
+    rgba(255,255,255,0.035);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) minmax(132px, 0.32fr);
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+}
+.fighter-side {
+  min-width: 0;
+}
+.fighter-side span,
+.odds-box span {
+  display: block;
+  color: #77837c;
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.fighter-side strong {
+  display: block;
+  color: #f8fff9;
+  font-size: clamp(1.08rem, 2vw, 1.38rem);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+.vs-pill {
+  border: 1px solid var(--border-soft);
+  background: rgba(34,255,136,0.06);
+  color: var(--green);
+  min-width: 42px;
+  min-height: 42px;
+  display: grid;
+  place-items: center;
+  font-weight: 950;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+}
+.odds-box {
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(0,0,0,0.22);
+  padding: 10px;
+  text-align: right;
+}
+.odds-pair {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  color: var(--green);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.86rem;
+  font-weight: 950;
+}
+.pending-prompt {
+  border: 1px solid rgba(34,255,136,0.22);
+  background:
+    linear-gradient(90deg, rgba(34,255,136,0.11), rgba(34,255,136,0.03)),
+    rgba(255,255,255,0.035);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 14px;
+}
+.pending-prompt strong {
+  display: block;
+  color: #f8fff9;
+  font-size: 1.05rem;
+  letter-spacing: -0.035em;
+  margin-bottom: 3px;
+}
+.pending-prompt span {
+  color: #97a39b;
+  font-size: 0.86rem;
+}
+.notify-button {
+  border: 1px solid rgba(34,255,136,0.58);
+  background: linear-gradient(180deg, #22ff88, #17c967);
+  color: #021007;
+  min-height: 44px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 950;
+  white-space: nowrap;
+}
+.notify-button:hover { filter: brightness(1.04); transform: translateY(-1px); }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: none;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 86px 22px 22px;
+  background: rgba(0,0,0,0.56);
+  backdrop-filter: blur(7px);
+}
+.modal.is-open { display: flex; }
+.modal-panel {
+  width: min(430px, 100%);
+  border: 1px solid rgba(255,255,255,0.14);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)),
+    #071009;
+  box-shadow: 0 22px 80px rgba(0,0,0,0.58);
+  padding: 18px;
+}
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.09);
+}
+.modal-head h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: -0.055em;
+}
+.close-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.04);
+  color: #dce7df;
+  font-weight: 950;
+}
+.close-btn:hover { border-color: rgba(34,255,136,0.42); color: var(--green); }
+.sub-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.075);
+}
+.sub-row span {
+  color: #839087;
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.sub-row strong {
+  color: #f4fff7;
+  text-align: right;
+  word-break: break-word;
+}
+.modal-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+.btn {
+  min-height: 48px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+  color: #eef7f0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  font-weight: 950;
+  letter-spacing: 0.01em;
+  transition: 0.18s ease;
+}
+.btn:hover { transform: translateY(-1px); border-color: rgba(34,255,136,0.42); color: var(--green); }
+.btn-primary {
+  border-color: rgba(34,255,136,0.64);
+  background: linear-gradient(180deg, #22ff88, #17c967);
+  color: #021007;
+  box-shadow: 0 0 22px rgba(34,255,136,0.18);
+}
+.btn-primary:hover { color: #021007; filter: brightness(1.04); }
+.btn-danger {
+  border-color: rgba(255,77,95,0.42);
+  color: #ff9ca7;
+}
+.inline-state {
+  display: none;
+  margin-top: 12px;
+  border: 1px solid rgba(34,255,136,0.18);
+  background: rgba(34,255,136,0.06);
+  padding: 11px;
+  color: #c8d5cc;
+  font-size: 0.76rem;
+}
+.inline-state.is-visible { display: block; }
+.responsible-box {
+  border: 1px solid rgba(255,230,109,0.2);
+  background: rgba(255,230,109,0.06);
+  padding: 13px;
+  margin-top: 16px;
+}
+.responsible-box strong {
+  color: #fff3a1;
+  display: block;
+  margin-bottom: 5px;
+}
+.responsible-box p {
+  color: #c8c0a3;
+  margin: 0;
+  font-size: 0.76rem;
+}
+
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 0 34px;
+  color: #8d9991;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: 24px;
+}
+.footer-brand {
+  color: #f8fff9;
+  font-weight: 950;
+  letter-spacing: -0.04em;
+  font-size: 1.2rem;
+}
+.footer p { margin: 6px 0 0; }
+.disclaimer {
+  border: 1px solid rgba(255,255,255,0.09);
+  background: rgba(255,255,255,0.025);
+  padding: 14px;
+  font-size: 0.76rem;
+}
+
+@media (max-width: 980px) {
+  .nav {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 10px 0;
+  }
+  .top-actions { flex-wrap: wrap; }
+  .feed-hero-grid,
+  .footer-grid { grid-template-columns: 1fr; }
+  .event-head,
+  .pending-prompt {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .event-meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fight-row { grid-template-columns: 1fr; }
+  .vs-pill { width: 42px; }
+  .odds-box { text-align: left; }
+  .odds-pair { justify-content: flex-start; }
+}
+@media (max-width: 680px) {
+  .container { width: min(100% - 20px, 1180px); }
+  .nav { gap: 8px; padding: 8px 0; }
+  .brand { gap: 8px; font-size: 0.92rem; }
+  .brand-mark { width: 32px; height: 32px; border-radius: 9px; }
+  .top-actions { width: 100%; display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
+  .top-button { flex: 0 0 auto; min-height: 30px; font-size: 0.62rem; padding: 0 9px; }
+  .edge-ticker { display: none; }
+  .feed-hero { padding: 14px 0 10px; }
+  .eyebrow { font-size: 0.58rem; margin-bottom: 8px; letter-spacing: 0.12em; }
+  h1 { font-size: clamp(1.86rem, 9.8vw, 2.38rem); line-height: 0.94; letter-spacing: -0.065em; }
+  .hero-copy { margin-top: 10px; font-size: 0.78rem; line-height: 1.38; }
+  .event-shell,
+  .session-card { padding: 10px; }
+  .feed-section { padding: 8px 0 32px; }
+  .event-head { padding-bottom: 11px; gap: 10px; }
+  .event-head h2 { font-size: clamp(1.45rem, 8vw, 1.9rem); }
+  .event-head p { font-size: 0.78rem; }
+  .status-pill { min-height: 25px; font-size: 0.56rem; padding: 4px 7px; }
+  .sub-row { align-items: stretch; flex-direction: column; }
+  .sub-row strong,
+  .session-row strong { text-align: left; }
+  .event-meta-grid { grid-template-columns: 1fr; }
+  .fight-row { padding: 10px; gap: 8px; }
+  .fighter-side strong { font-size: 1rem; }
+  .vs-pill { min-width: 34px; min-height: 34px; font-size: 0.62rem; }
+  .pending-prompt { padding: 10px; gap: 10px; }
+  .pending-prompt strong { font-size: 0.96rem; }
+  .pending-prompt span { font-size: 0.76rem; }
+  .notify-button { min-height: 38px; font-size: 0.76rem; }
+  .notify-button { width: 100%; }
+  .modal { align-items: stretch; padding: 74px 12px 12px; }
+  .modal-panel { width: 100%; }
+  .ticker-track { animation-duration: 40s; }
+  .ticker-item { padding-inline: 13px; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="index.html" aria-label="Live Picks home">
+      <span class="brand-mark"><img src="lp-logo.png" alt="Live Picks logo" onerror="this.remove(); this.parentElement.textContent='LP';"></span>
+      <span>Live Picks</span>
+    </a>
+
+    <div class="top-actions">
+      <button class="top-button primary" type="button" id="manageButton">Manage Subscription</button>
+      <button class="top-button" type="button" id="logoutButton">Logout</button>
+      <a class="top-button" href="index.html">Home</a>
+    </div>
+  </div>
+</header>
+
+<div class="edge-ticker" aria-label="Premium feed ticker">
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="ticker-market">FEED</span><strong>Upcoming release windows</strong><em>LIVE</em></div>
+    <div class="ticker-item"><span class="ticker-market">WATCH</span><strong>Walkout condition board</strong><em>H2H</em></div>
+    <div class="ticker-item"><span class="ticker-market">ACCESS</span><strong>Premium subscribers only</strong><em class="warn">18+</em></div>
+    <div class="ticker-item"><span class="ticker-market">ALERTS</span><strong>Email-first updates</strong><em>READY</em></div>
+    <div class="ticker-item"><span class="ticker-market">FEED</span><strong>Upcoming release windows</strong><em>LIVE</em></div>
+    <div class="ticker-item"><span class="ticker-market">WATCH</span><strong>Walkout condition board</strong><em>H2H</em></div>
+    <div class="ticker-item"><span class="ticker-market">ACCESS</span><strong>Premium subscribers only</strong><em class="warn">18+</em></div>
+    <div class="ticker-item"><span class="ticker-market">ALERTS</span><strong>Email-first updates</strong><em>READY</em></div>
+  </div>
+</div>
+
+<main id="feed">
+  <section class="feed-hero">
+    <div class="container feed-hero-grid">
+      <div>
+        <span class="eyebrow">Premium event feed</span>
+        <h1>UFC Fight Night board.</h1>
+        <p class="hero-copy">One event at a time. The feed stays focused on the current card, the fight list, and the odds being monitored before picks go live.</p>
+      </div>
+
+      <aside class="session-card" aria-label="Subscriber session">
+        <div class="session-row"><span>Signed in</span><strong id="userEmail">Loading...</strong></div>
+        <div class="session-row"><span>Event</span><strong>UFC Fight Night</strong></div>
+        <div class="session-row"><span>Access</span><strong>Premium active</strong></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="feed-section" aria-label="Current event fights">
+    <div class="container">
+      <div class="event-shell">
+        <div class="event-head">
+          <div>
+            <span class="eyebrow">Current premium event</span>
+            <h2>Moreno vs Kavanagh.</h2>
+            <p>Main-card odds board. Odds shown here are placeholders for your live market feed and can be replaced with bookmaker data later.</p>
+          </div>
+          <span class="status-pill">Picks pending</span>
+        </div>
+
+        <div class="event-meta-grid" aria-label="Event details">
+          <div class="event-meta"><span>Event date</span><strong>June 21</strong></div>
+          <div class="event-meta"><span>Market</span><strong>Head to head</strong></div>
+          <div class="event-meta"><span>Release</span><strong>Pending</strong></div>
+          <div class="event-meta"><span>Alert channel</span><strong>Push + email</strong></div>
+        </div>
+
+        <div class="fight-list" aria-label="Fight list with odds">
+          <article class="fight-row">
+            <div class="fighter-side">
+              <span>Red corner</span>
+              <strong>Example Fighter</strong>
+            </div>
+            <div class="vs-pill">VS</div>
+            <div class="fighter-side">
+              <span>Blue corner</span>
+              <strong>Example Fighter</strong>
+            </div>
+            <div class="odds-box">
+              <span>Odds</span>
+              <div class="odds-pair"><strong>1.72</strong><strong>2.14</strong></div>
+            </div>
+          </article>
+
+          <article class="fight-row">
+            <div class="fighter-side">
+              <span>Red corner</span>
+              <strong>Example Fighter</strong>
+            </div>
+            <div class="vs-pill">VS</div>
+            <div class="fighter-side">
+              <span>Blue corner</span>
+              <strong>Example Fighter</strong>
+            </div>
+            <div class="odds-box">
+              <span>Odds</span>
+              <div class="odds-pair"><strong>1.91</strong><strong>1.91</strong></div>
+            </div>
+          </article>
+
+          <article class="fight-row">
+            <div class="fighter-side">
+              <span>Red corner</span>
+              <strong>Example Fighter</strong>
+            </div>
+            <div class="vs-pill">VS</div>
+            <div class="fighter-side">
+              <span>Blue corner</span>
+              <strong>Example Fighter</strong>
+            </div>
+            <div class="odds-box">
+              <span>Odds</span>
+              <div class="odds-pair"><strong>2.46</strong><strong>1.55</strong></div>
+            </div>
+          </article>
+
+          <article class="fight-row">
+            <div class="fighter-side">
+              <span>Red corner</span>
+              <strong>Example Fighter</strong>
+            </div>
+            <div class="vs-pill">VS</div>
+            <div class="fighter-side">
+              <span>Blue corner</span>
+              <strong>Example Fighter</strong>
+            </div>
+            <div class="odds-box">
+              <span>Odds</span>
+              <div class="odds-pair"><strong>1.48</strong><strong>2.67</strong></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="pending-prompt">
+          <div>
+            <strong>Picks are pending.</strong>
+            <span>Click here to receive push notifications when picks go live.</span>
+          </div>
+          <button class="notify-button feed-action" type="button" data-message="Push notification signup can be connected here once the site has a notification provider.">Enable push notifications</button>
+        </div>
+
+        <div class="inline-state" id="feedState" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="manageModal" aria-hidden="true">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="manageTitle">
+    <div class="modal-head">
+      <div>
+        <span class="eyebrow">Subscription</span>
+        <h2 id="manageTitle">Manage access</h2>
+      </div>
+      <button class="close-btn" type="button" id="closeManage" aria-label="Close subscription panel">X</button>
+    </div>
+
+    <div class="sub-row"><span>Email</span><strong id="accountEmail">subscriber@example.com</strong></div>
+    <div class="sub-row"><span>Plan</span><strong>Live Picks Premium Monthly</strong></div>
+    <div class="sub-row"><span>Renewal</span><strong>Renews July 21, 2026</strong></div>
+    <div class="sub-row"><span>Delivery</span><strong>Email alerts + portal feed</strong></div>
+
+    <div class="modal-actions">
+      <button class="btn btn-primary manage-action" type="button" data-message="Connect this button to Stripe Customer Portal so subscribers can update their payment method.">Update payment method</button>
+      <button class="btn manage-action" type="button" data-message="Connect this button to your billing provider's plan-management flow.">Change plan</button>
+      <button class="btn btn-danger manage-action" type="button" data-message="Connect this button to your cancellation or retention flow before launch.">Cancel subscription</button>
+    </div>
+
+    <div class="inline-state" id="manageState" role="status" aria-live="polite"></div>
+
+    <div class="responsible-box">
+      <strong>Information only. No guaranteed outcomes.</strong>
+      <p>Live Picks does not place bets, accept wagers or promise profit. If gambling is causing harm, call 1800 858 858 for free confidential support.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-brand">Live Picks</div>
+      <p>Premium event feed - 18+ only</p>
+    </div>
+    <div class="disclaimer">
+      Live Picks is an independent analytics and commentary service. It is not affiliated with, endorsed by or licensed by UFC or any sporting organisation. Live Picks does not operate as a bookmaker, does not accept wagers, does not place wagers for customers, and does not guarantee outcomes, profits or returns. Betting involves risk. Chances are you are about to lose. For free and confidential support call 1800 858 858 or visit gamblinghelponline.org.au.
+    </div>
+  </div>
+</footer>
+
+<script>
+  const userEmail = document.getElementById('userEmail');
+  const accountEmail = document.getElementById('accountEmail');
+  const manageButton = document.getElementById('manageButton');
+  const closeManage = document.getElementById('closeManage');
+  const manageModal = document.getElementById('manageModal');
+  const manageState = document.getElementById('manageState');
+  const feedState = document.getElementById('feedState');
+  const logoutButton = document.getElementById('logoutButton');
+  const savedEmail = localStorage.getItem('livePicksPortalEmail') || sessionStorage.getItem('livePicksPortalEmail');
+  const activeEmail = savedEmail;
+
+  if (!activeEmail) {
+    window.location.replace('portal.html');
+  } else {
+    userEmail.textContent = activeEmail;
+    accountEmail.textContent = activeEmail;
+    sessionStorage.setItem('livePicksPortalEmail', activeEmail);
+  }
+
+  function openManagePanel() {
+    manageModal.classList.add('is-open');
+    manageModal.setAttribute('aria-hidden', 'false');
+    closeManage.focus();
+  }
+
+  function closeManagePanel() {
+    manageModal.classList.remove('is-open');
+    manageModal.setAttribute('aria-hidden', 'true');
+    manageButton.focus();
+  }
+
+  manageButton.addEventListener('click', openManagePanel);
+  closeManage.addEventListener('click', closeManagePanel);
+  manageModal.addEventListener('click', (event) => {
+    if (event.target === manageModal) closeManagePanel();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && manageModal.classList.contains('is-open')) {
+      closeManagePanel();
+    }
+  });
+
+  logoutButton.addEventListener('click', () => {
+    localStorage.removeItem('livePicksPortalEmail');
+    sessionStorage.removeItem('livePicksPortalEmail');
+    window.location.href = 'portal.html';
+  });
+
+  document.querySelectorAll('.manage-action').forEach((button) => {
+    button.addEventListener('click', () => {
+      manageState.classList.add('is-visible');
+      manageState.textContent = button.dataset.message;
+    });
+  });
+
+  document.querySelectorAll('.feed-action').forEach((button) => {
+    button.addEventListener('click', () => {
+      feedState.classList.add('is-visible');
+      feedState.textContent = button.dataset.message;
+    });
+  });
+
+  document.querySelectorAll('.edge-ticker').forEach((ticker) => {
+    const pause = () => ticker.classList.add('is-paused');
+    const resume = () => ticker.classList.remove('is-paused');
+    ticker.addEventListener('pointerdown', pause, { passive: true });
+    ticker.addEventListener('pointerup', resume, { passive: true });
+    ticker.addEventListener('pointercancel', resume, { passive: true });
+    ticker.addEventListener('pointerleave', resume, { passive: true });
+  });
+</script>
+</body>
+</html>

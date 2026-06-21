@@ -26,6 +26,7 @@
     html {
       min-height: 100%;
       background: var(--bg);
+      scroll-behavior: smooth;
     }
 
     body {
@@ -57,21 +58,21 @@
     a { color: inherit; }
 
     .container {
-      width: min(100% - 32px, 980px);
+      width: min(100% - 38px, 1180px);
       margin: 0 auto;
     }
 
     .topbar {
       border-bottom: 1px solid var(--border);
       background: rgba(5, 8, 6, 0.86);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
     }
 
     .nav {
-      min-height: 56px;
+      min-height: 66px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -81,18 +82,24 @@
     .brand {
       text-decoration: none;
       color: white;
-      font-size: 1rem;
+      font-size: 1.06rem;
       font-weight: 950;
       letter-spacing: -0.04em;
     }
 
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .nav-link {
       text-decoration: none;
-      min-height: 34px;
+      min-height: 38px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0 12px;
+      padding: 0 14px;
       border: 1px solid rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.025);
       color: #d7ded9;
@@ -101,32 +108,106 @@
       letter-spacing: 0.04em;
       text-transform: uppercase;
       font-weight: 900;
+      transition: 0.18s ease;
     }
 
     .nav-link:hover {
       border-color: var(--border-soft);
       background: rgba(34, 255, 136, 0.06);
       color: var(--green);
+      transform: translateY(-1px);
+    }
+
+    .edge-ticker {
+      border-bottom: 1px solid rgba(34,255,136,0.16);
+      overflow: hidden;
+      background: linear-gradient(180deg, #07100a, #030604);
+      box-shadow: inset 0 -1px 0 rgba(255,255,255,0.025);
+      white-space: nowrap;
+      position: relative;
+      z-index: 5;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      align-items: center;
+      animation: ticker 40s linear infinite;
+      will-change: transform;
+    }
+
+    .edge-ticker:hover .ticker-track,
+    .edge-ticker:focus-within .ticker-track {
+      animation-play-state: paused;
+    }
+
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-right: 1px solid rgba(255,255,255,0.075);
+      color: #c5cec8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.045em;
+      text-transform: uppercase;
+    }
+
+    .ticker-market {
+      color: #657269;
+      font-size: 0.56rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+    }
+
+    .ticker-item strong {
+      color: #f6fff8;
+      font-weight: 950;
+    }
+
+    .ticker-item em {
+      min-width: 42px;
+      text-align: center;
+      color: var(--green);
+      font-style: normal;
+      font-weight: 950;
+      padding: 2px 6px;
+      border: 1px solid var(--border-soft);
+      background: rgba(34,255,136,0.065);
+      box-shadow: inset 0 0 14px rgba(34,255,136,0.03), 0 0 12px rgba(34,255,136,0.08);
+    }
+
+    .ticker-item em.odds-low {
+      color: var(--red);
+      border-color: rgba(255,77,95,0.42);
+      background: rgba(255,77,95,0.08);
+      box-shadow: inset 0 0 14px rgba(255,77,95,0.06), 0 0 12px rgba(255,77,95,0.12);
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
     }
 
     .page {
-      min-height: calc(100dvh - 56px);
+      min-height: calc(100dvh - 106px);
       display: grid;
-      place-items: center;
-      padding: 58px 0;
+      align-items: center;
+      padding: clamp(56px, 6vw, 92px) 0;
       position: relative;
       z-index: 1;
     }
 
-    .signup-card {
-      width: min(100%, 680px);
-      border: 1px solid var(--border);
-      background:
-        radial-gradient(circle at 88% 12%, rgba(255,77,95,0.10), transparent 24%),
-        radial-gradient(circle at 12% 88%, rgba(34,255,136,0.12), transparent 32%),
-        linear-gradient(180deg, rgba(17,26,20,0.96), rgba(8,12,9,0.96));
-      box-shadow: 0 24px 72px var(--shadow);
-      padding: clamp(24px, 5vw, 42px);
+    .newsletter-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(420px, 0.92fr);
+      gap: clamp(28px, 4vw, 56px);
+      align-items: center;
+    }
+
+    .intro-panel {
+      max-width: 660px;
     }
 
     .kicker {
@@ -153,19 +234,116 @@
     h1 {
       margin: 0;
       color: white;
-      font-size: clamp(2.6rem, 8vw, 5.4rem);
-      line-height: 0.9;
-      letter-spacing: -0.075em;
+      font-size: clamp(4.2rem, 7.2vw, 7.4rem);
+      line-height: 0.86;
+      letter-spacing: -0.085em;
       text-transform: uppercase;
       text-wrap: balance;
     }
 
     .copy {
-      margin: 20px 0 0;
+      margin: 24px 0 0;
       color: var(--muted);
-      font-size: clamp(0.98rem, 2vw, 1.18rem);
-      line-height: 1.6;
-      max-width: 560px;
+      font-size: clamp(1.02rem, 1.35vw, 1.24rem);
+      line-height: 1.62;
+      max-width: 620px;
+    }
+
+    .copy strong {
+      color: #f3fff7;
+    }
+
+    .newsletter-points {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .point {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.026);
+      padding: 12px 14px;
+      min-height: 0;
+    }
+
+    .point strong {
+      display: block;
+      color: white;
+      font-size: 0.76rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .point span {
+      display: block;
+      color: #87928b;
+      font-size: 0.84rem;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .signup-card {
+      width: 100%;
+      border: 1px solid var(--border);
+      background:
+        radial-gradient(circle at 88% 12%, rgba(255,77,95,0.10), transparent 24%),
+        radial-gradient(circle at 12% 88%, rgba(34,255,136,0.12), transparent 32%),
+        linear-gradient(180deg, rgba(17,26,20,0.96), rgba(8,12,9,0.96));
+      box-shadow: 0 24px 72px var(--shadow);
+      padding: clamp(28px, 3.8vw, 44px);
+    }
+
+    .card-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+      color: #89958d;
+      font-size: 0.68rem;
+      font-weight: 950;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .live-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #ffd9de;
+    }
+
+    .live-dot::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--red);
+      box-shadow: 0 0 12px rgba(255,77,95,0.9);
+      animation: blinkDot 1s infinite ease-in-out;
+    }
+
+    @keyframes blinkDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.32; transform: scale(0.78); }
+    }
+
+    .signup-card h2 {
+      margin: 0;
+      color: white;
+      font-size: clamp(2rem, 3.8vw, 3.4rem);
+      line-height: 0.92;
+      letter-spacing: -0.065em;
+      text-transform: uppercase;
+    }
+
+    .card-copy {
+      margin: 16px 0 0;
+      color: #9aa59e;
+      font-size: 0.96rem;
+      line-height: 1.55;
     }
 
     .form {
@@ -192,7 +370,7 @@
 
     input[type="email"] {
       width: 100%;
-      min-height: 52px;
+      min-height: 54px;
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: 0;
       background: rgba(255,255,255,0.035);
@@ -211,7 +389,7 @@
     input::placeholder { color: #738078; }
 
     .btn {
-      min-height: 52px;
+      min-height: 54px;
       border: 1px solid var(--green);
       background: var(--green);
       color: #021105;
@@ -223,9 +401,11 @@
       cursor: pointer;
       box-shadow: 0 0 28px rgba(34,255,136,0.25);
       white-space: nowrap;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
     }
 
     .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(1px) scale(0.98); }
     .btn:disabled { opacity: 0.58; cursor: wait; transform: none; }
 
     .fine-print {
@@ -245,6 +425,37 @@
 
     .message.error { color: #ffd9de; }
 
+    .premium-reminder {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .premium-reminder span {
+      color: #7f8b84;
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .premium-reminder a {
+      color: var(--green);
+      font-size: 0.78rem;
+      font-weight: 950;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .premium-reminder a:hover {
+      text-decoration: underline;
+    }
+
     .hp-field {
       position: absolute;
       left: -9999px;
@@ -252,19 +463,213 @@
       pointer-events: none;
     }
 
-    @media (max-width: 620px) {
-      .container { width: min(100% - 20px, 980px); }
-      .nav { min-height: 46px; }
-      .brand { font-size: 0.92rem; }
-      .nav-link { min-height: 30px; padding: 0 10px; font-size: 0.58rem; }
-      .page { padding: 26px 0; align-items: start; }
-      .signup-card { padding: 20px; }
-      .kicker { margin-bottom: 12px; font-size: 0.6rem; }
-      h1 { font-size: clamp(2.1rem, 13vw, 3.1rem); }
-      .copy { margin-top: 14px; font-size: 0.88rem; line-height: 1.48; }
-      .field-row { grid-template-columns: 1fr; }
-      .btn { width: 100%; min-height: 44px; }
-      input[type="email"] { min-height: 44px; }
+    .responsible-footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 28px 0 38px;
+      background: rgba(2, 3, 2, 0.32);
+    }
+
+    .disclaimer-card {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .disclaimer-card strong {
+      color: #f6fff8;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .disclaimer-card p {
+      margin: 0;
+      color: #87928b;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    @media (max-width: 980px) {
+      .newsletter-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .intro-panel {
+        max-width: none;
+      }
+
+      h1 {
+        max-width: 760px;
+      }
+
+      .signup-card {
+        max-width: 720px;
+      }
+
+      .disclaimer-card {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        width: min(100% - 20px, 1180px);
+      }
+
+      .nav {
+        min-height: 46px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px 0;
+      }
+
+      .brand {
+        font-size: 0.92rem;
+      }
+
+      .nav-actions {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+        width: 100%;
+      }
+
+      .nav-link {
+        min-height: 30px;
+        min-width: 0;
+        padding: 0 6px;
+        font-size: 0.52rem;
+        white-space: nowrap;
+      }
+
+      .ticker-track {
+        animation-duration: 28s;
+      }
+
+      .ticker-item {
+        gap: 5px;
+        padding: 5px 10px;
+        font-size: 0.54rem;
+        letter-spacing: 0.035em;
+      }
+
+      .ticker-market {
+        font-size: 0.45rem;
+      }
+
+      .ticker-item em {
+        min-width: 34px;
+        padding: 1px 4px;
+        font-size: 0.52rem;
+      }
+
+      .page {
+        min-height: auto;
+        padding: 28px 0 30px;
+        align-items: start;
+      }
+
+      .newsletter-layout {
+        gap: 18px;
+      }
+
+      .kicker {
+        margin-bottom: 12px;
+        font-size: 0.6rem;
+      }
+
+      h1 {
+        font-size: clamp(2.3rem, 13vw, 3.35rem);
+        line-height: 0.92;
+      }
+
+      .copy {
+        margin-top: 14px;
+        font-size: 0.88rem;
+        line-height: 1.48;
+      }
+
+      .newsletter-points {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .point {
+        min-height: 0;
+        padding: 11px;
+      }
+
+      .point strong {
+        font-size: 0.62rem;
+        margin-bottom: 4px;
+      }
+
+      .point span {
+        font-size: 0.76rem;
+      }
+
+      .signup-card {
+        padding: 18px;
+      }
+
+      .card-label {
+        margin-bottom: 12px;
+        font-size: 0.56rem;
+      }
+
+      .signup-card h2 {
+        font-size: clamp(1.7rem, 10vw, 2.5rem);
+      }
+
+      .card-copy {
+        margin-top: 12px;
+        font-size: 0.84rem;
+      }
+
+      .form {
+        margin-top: 20px;
+      }
+
+      .field-row {
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+        min-height: 44px;
+      }
+
+      input[type="email"] {
+        min-height: 44px;
+      }
+
+      .premium-reminder {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .responsible-footer {
+        padding: 22px 0 30px;
+      }
+
+      .disclaimer-card {
+        padding: 14px;
+      }
+
+      .disclaimer-card p {
+        font-size: 0.72rem;
+        line-height: 1.45;
+      }
     }
   </style>
 </head>
@@ -272,16 +677,47 @@
   <header class="topbar">
     <div class="container nav">
       <a class="brand" href="index.html">Live Picks</a>
-      <a class="nav-link" href="index.html#predictions">Back to model</a>
+    <div class="nav-actions">
+      <a class="nav-link" href="index.html#model">Back to model</a>
+      <a class="nav-link" href="portal.html">Premium Login</a>
+      <a class="nav-link" href="checkout.html">Subscribe</a>
     </div>
-  </header>
+  </div>
+</header>
+
+  <div class="edge-ticker" aria-label="Live fight odds ticker">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="ticker-market">Moneyline</span><strong>Pantoja</strong><em>1.58</em></span>
+      <span class="ticker-item"><span class="ticker-market">Market</span><strong>Model Edge</strong><em>+8.4%</em></span>
+      <span class="ticker-item"><span class="ticker-market">Live Read</span><strong>Crowd Energy</strong><em>High</em></span>
+      <span class="ticker-item"><span class="ticker-market">Condition</span><strong>Walkout</strong><em>Pending</em></span>
+      <span class="ticker-item"><span class="ticker-market">Alert</span><strong>Steam Move</strong><em class="odds-low">Watch</em></span>
+      <span class="ticker-item"><span class="ticker-market">Premium</span><strong>Fight Night Edge</strong><em>Live</em></span>
+      <span class="ticker-item"><span class="ticker-market">Moneyline</span><strong>Pantoja</strong><em>1.58</em></span>
+      <span class="ticker-item"><span class="ticker-market">Market</span><strong>Model Edge</strong><em>+8.4%</em></span>
+      <span class="ticker-item"><span class="ticker-market">Live Read</span><strong>Crowd Energy</strong><em>High</em></span>
+      <span class="ticker-item"><span class="ticker-market">Condition</span><strong>Walkout</strong><em>Pending</em></span>
+      <span class="ticker-item"><span class="ticker-market">Alert</span><strong>Steam Move</strong><em class="odds-low">Watch</em></span>
+      <span class="ticker-item"><span class="ticker-market">Premium</span><strong>Fight Night Edge</strong><em>Live</em></span>
+    </div>
+  </div>
 
   <main class="page">
-    <section class="container">
-      <div class="signup-card">
+    <section class="container newsletter-layout">
+      <div class="intro-panel">
         <div class="kicker">Free fight-night updates</div>
         <h1>Get the free newsletter.</h1>
-        <p class="copy">Type your email below for updates, model notes and fight-night reminders before premium live picks are released.</p>
+        <p class="copy"><strong>Get the notes before the picks move.</strong> We’ll send fight-night reminders, model updates and the signals we’re watching before premium live picks are released.</p>
+      </div>
+
+      <div class="signup-card">
+        <div class="card-label">
+          <span>Newsletter access</span>
+          <span class="live-dot">Free</span>
+        </div>
+
+        <h2>Type your email here for updates.</h2>
+        <p class="card-copy">Join the free list and we’ll keep you posted when fight-night notes, model changes and release windows are ready.</p>
 
         <form class="form" id="newsletterForm" action="/api/subscribe" method="POST" novalidate>
           <input type="hidden" name="source" value="free-newsletter-page">
@@ -291,7 +727,7 @@
           </div>
 
           <div>
-            <label for="email">Type your email here for updates</label>
+            <label for="email">Email address</label>
             <div class="field-row">
               <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
               <button class="btn" type="submit">Join Free</button>
@@ -301,9 +737,36 @@
           <p class="fine-print">No spam. Just Live Picks updates. You can remove yourself from the list any time.</p>
           <p class="message" id="formMessage" role="status" aria-live="polite"></p>
         </form>
+
+        <div class="newsletter-points" aria-label="Newsletter benefits">
+          <div class="point">
+            <strong>Market notes</strong>
+            <span>Early reads on odds movement, value gaps and steam.</span>
+          </div>
+          <div class="point">
+            <strong>Live signals</strong>
+            <span>Walkout, crowd and condition markers worth watching.</span>
+          </div>
+          <div class="point">
+            <strong>Release alerts</strong>
+            <span>Know when the premium model is close to going live.</span>
+          </div>
+        </div>
+
+        <div class="premium-reminder">
+          <span>Want the full model?</span>
+          <a href="thank-you.html">Go premium</a>
+        </div>
       </div>
     </section>
   </main>
+
+  <footer class="responsible-footer">
+    <div class="container disclaimer-card">
+      <strong>Gamble responsibly</strong>
+      <p>Live Picks is for informational and entertainment purposes only. Nothing on this site guarantees an outcome or should be treated as financial advice. Only bet what you can afford to lose, never chase losses, and step away if betting stops being enjoyable. You must be 18+ to participate in wagering.</p>
+    </div>
+  </footer>
 
   <script>
     const form = document.getElementById('newsletterForm');
