@@ -713,7 +713,7 @@ h1 {
     </a>
 
     <div class="top-actions">
-      <button class="top-button primary" type="button" id="manageButton">Manage Account</button>
+      <a class="top-button primary" id="manageButton" href="account.html">Manage Account</a>
       <button class="top-button" type="button" id="logoutButton">Logout</button>
       <a class="top-button" href="index.html">Home</a>
     </div>
@@ -849,73 +849,6 @@ h1 {
   </section>
 </main>
 
-<div class="modal" id="manageModal" aria-hidden="true">
-  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="manageTitle">
-    <div class="modal-head">
-      <div>
-        <span class="eyebrow">Account</span>
-        <h2 id="manageTitle">Manage account</h2>
-      </div>
-      <button class="close-btn" type="button" id="closeManage" aria-label="Close account panel">X</button>
-    </div>
-
-    <div class="sub-row"><span>Email</span><strong id="accountEmail">subscriber@example.com</strong></div>
-    <div class="sub-row"><span>Plan</span><strong>Live Picks Premium</strong></div>
-    <div class="sub-row"><span>Billing</span><strong>Managed by Stripe</strong></div>
-    <div class="sub-row"><span>Delivery</span><strong>Email alerts + portal feed</strong></div>
-
-    <section class="account-section" aria-label="Change login email">
-      <h3>Change login email</h3>
-      <p>Your login email controls subscriber access and billing contact details. To protect your account, confirm your current password before changing it.</p>
-      <form class="account-form" id="emailChangeForm" novalidate>
-        <div class="account-field">
-          <label for="newEmail">New email</label>
-          <input class="account-input" id="newEmail" type="email" placeholder="new@email.com" autocomplete="email">
-        </div>
-        <div class="account-field">
-          <label for="emailCurrentPassword">Current password</label>
-          <input class="account-input" id="emailCurrentPassword" type="password" placeholder="Confirm current password" autocomplete="current-password">
-        </div>
-        <button class="btn btn-primary" type="submit">Update email</button>
-      </form>
-      <span class="account-note">We update Supabase and the Stripe customer email together so the subscriber record stays aligned.</span>
-    </section>
-
-    <section class="account-section" aria-label="Change password">
-      <h3>Change password</h3>
-      <p>Use this when you know your current password. If you forgot it, use Reset access from the login page instead.</p>
-      <form class="account-form" id="passwordChangeForm" novalidate>
-        <div class="account-field">
-          <label for="passwordCurrentPassword">Current password</label>
-          <input class="account-input" id="passwordCurrentPassword" type="password" placeholder="Current password" autocomplete="current-password">
-        </div>
-        <div class="account-field">
-          <label for="newPassword">New password</label>
-          <input class="account-input" id="newPassword" type="password" placeholder="At least 6 characters" autocomplete="new-password">
-        </div>
-        <div class="account-field">
-          <label for="confirmNewPassword">Confirm new password</label>
-          <input class="account-input" id="confirmNewPassword" type="password" placeholder="Repeat new password" autocomplete="new-password">
-        </div>
-        <button class="btn btn-primary" type="submit">Update password</button>
-      </form>
-    </section>
-
-    <div class="modal-actions">
-      <button class="btn manage-action" type="button" data-message="Connect this button to Stripe Customer Portal so subscribers can update card details, invoices and billing preferences.">Billing settings</button>
-      <button class="btn manage-action" type="button" data-message="Connect this button to your billing provider's plan-management flow.">Change plan</button>
-      <button class="btn btn-danger manage-action" type="button" data-message="Connect this button to your cancellation or retention flow before launch.">Cancel subscription</button>
-    </div>
-
-    <div class="inline-state" id="manageState" role="status" aria-live="polite"></div>
-
-    <div class="responsible-box">
-      <strong>Information only. No guaranteed outcomes.</strong>
-      <p>Live Picks does not place bets, accept wagers or promise profit. If gambling is causing harm, call 1800 858 858 for free confidential support.</p>
-    </div>
-  </div>
-</div>
-
 <footer class="footer">
   <div class="container footer-grid">
     <div>
@@ -930,207 +863,23 @@ h1 {
 
 <script>
   const userEmail = document.getElementById('userEmail');
-  const accountEmail = document.getElementById('accountEmail');
-  const manageButton = document.getElementById('manageButton');
-  const closeManage = document.getElementById('closeManage');
-  const manageModal = document.getElementById('manageModal');
-  const manageState = document.getElementById('manageState');
   const feedState = document.getElementById('feedState');
   const logoutButton = document.getElementById('logoutButton');
-  const emailChangeForm = document.getElementById('emailChangeForm');
-  const passwordChangeForm = document.getElementById('passwordChangeForm');
-  const newEmailInput = document.getElementById('newEmail');
-  const emailCurrentPasswordInput = document.getElementById('emailCurrentPassword');
-  const passwordCurrentPasswordInput = document.getElementById('passwordCurrentPassword');
-  const newPasswordInput = document.getElementById('newPassword');
-  const confirmNewPasswordInput = document.getElementById('confirmNewPassword');
   const savedEmail = localStorage.getItem('livePicksPortalEmail') || sessionStorage.getItem('livePicksPortalEmail');
   let activeEmail = savedEmail;
 
   if (!activeEmail) {
     window.location.replace('portal.html');
   } else {
+    activeEmail = activeEmail.trim().toLowerCase();
     userEmail.textContent = activeEmail;
-    accountEmail.textContent = activeEmail;
     sessionStorage.setItem('livePicksPortalEmail', activeEmail);
   }
-
-  function showManageState(message, isError = false) {
-    manageState.classList.add('is-visible');
-    manageState.classList.toggle('is-error', Boolean(isError));
-    manageState.textContent = message;
-  }
-
-  function updateStoredEmail(newEmail) {
-    const normalizedEmail = newEmail.trim().toLowerCase();
-    activeEmail = normalizedEmail;
-    userEmail.textContent = normalizedEmail;
-    accountEmail.textContent = normalizedEmail;
-
-    if (localStorage.getItem('livePicksPortalEmail')) {
-      localStorage.setItem('livePicksPortalEmail', normalizedEmail);
-    }
-
-    sessionStorage.setItem('livePicksPortalEmail', normalizedEmail);
-  }
-
-  function setButtonLoading(button, isLoading, loadingText) {
-    if (!button) return;
-    if (isLoading) {
-      button.dataset.originalText = button.textContent;
-      button.textContent = loadingText;
-      button.disabled = true;
-      return;
-    }
-
-    button.disabled = false;
-    button.textContent = button.dataset.originalText || button.textContent;
-  }
-
-  function openManagePanel() {
-    manageModal.classList.add('is-open');
-    manageModal.setAttribute('aria-hidden', 'false');
-    closeManage.focus();
-  }
-
-  function closeManagePanel() {
-    manageModal.classList.remove('is-open');
-    manageModal.setAttribute('aria-hidden', 'true');
-    manageButton.focus();
-  }
-
-  manageButton.addEventListener('click', openManagePanel);
-  closeManage.addEventListener('click', closeManagePanel);
-  manageModal.addEventListener('click', (event) => {
-    if (event.target === manageModal) closeManagePanel();
-  });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && manageModal.classList.contains('is-open')) {
-      closeManagePanel();
-    }
-  });
-
-  emailChangeForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    const newEmail = newEmailInput.value.trim().toLowerCase();
-    const currentPassword = emailCurrentPasswordInput.value.trim();
-    const submitButton = emailChangeForm.querySelector('button[type="submit"]');
-
-    if (!newEmail || !newEmail.includes('@')) {
-      newEmailInput.focus();
-      showManageState('Enter a valid new email address.', true);
-      return;
-    }
-
-    if (newEmail === activeEmail) {
-      newEmailInput.focus();
-      showManageState('That email is already your current login email.', true);
-      return;
-    }
-
-    if (!currentPassword) {
-      emailCurrentPasswordInput.focus();
-      showManageState('Enter your current password before changing your email.', true);
-      return;
-    }
-
-    try {
-      setButtonLoading(submitButton, true, 'Updating email...');
-      showManageState('Checking your password and updating your account...');
-
-      const response = await fetch('/api/update-account-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: activeEmail,
-          newEmail,
-          currentPassword
-        })
-      });
-
-      const data = await response.json();
-
-      if (!response.ok || !data.ok) {
-        throw new Error(data.error || 'Email update failed.');
-      }
-
-      updateStoredEmail(data.email || newEmail);
-      emailChangeForm.reset();
-      showManageState('Email updated. Use the new email next time you log in.');
-    } catch (error) {
-      showManageState(error.message || 'Email update failed.', true);
-    } finally {
-      setButtonLoading(submitButton, false);
-    }
-  });
-
-  passwordChangeForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    const currentPassword = passwordCurrentPasswordInput.value.trim();
-    const newPassword = newPasswordInput.value.trim();
-    const confirmNewPassword = confirmNewPasswordInput.value.trim();
-    const submitButton = passwordChangeForm.querySelector('button[type="submit"]');
-
-    if (!currentPassword) {
-      passwordCurrentPasswordInput.focus();
-      showManageState('Enter your current password first.', true);
-      return;
-    }
-
-    if (newPassword.length < 6) {
-      newPasswordInput.focus();
-      showManageState('Your new password must be at least 6 characters.', true);
-      return;
-    }
-
-    if (newPassword !== confirmNewPassword) {
-      confirmNewPasswordInput.focus();
-      showManageState('The new password confirmation does not match.', true);
-      return;
-    }
-
-    try {
-      setButtonLoading(submitButton, true, 'Updating password...');
-      showManageState('Checking your current password and saving the new one...');
-
-      const response = await fetch('/api/update-account-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: activeEmail,
-          currentPassword,
-          newPassword
-        })
-      });
-
-      const data = await response.json();
-
-      if (!response.ok || !data.ok) {
-        throw new Error(data.error || 'Password update failed.');
-      }
-
-      passwordChangeForm.reset();
-      showManageState('Password updated. Use the new password next time you log in.');
-    } catch (error) {
-      showManageState(error.message || 'Password update failed.', true);
-    } finally {
-      setButtonLoading(submitButton, false);
-    }
-  });
 
   logoutButton.addEventListener('click', () => {
     localStorage.removeItem('livePicksPortalEmail');
     sessionStorage.removeItem('livePicksPortalEmail');
     window.location.href = 'portal.html';
-  });
-
-  document.querySelectorAll('.manage-action').forEach((button) => {
-    button.addEventListener('click', () => {
-      showManageState(button.dataset.message);
-    });
   });
 
   document.querySelectorAll('.feed-action').forEach((button) => {
