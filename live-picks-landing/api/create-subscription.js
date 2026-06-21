@@ -1,21 +1,49 @@
-import Stripe from "stripe";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
 export default async function handler(req, res) {
+  res.setHeader("Cache-Control", "no-store");
+
+  if (req.method === "GET") {
+    return res.status(200).json({
+      ok: true,
+      route: "/api/create-subscription",
+      stripeSecretKeyPresent: Boolean(process.env.STRIPE_SECRET_KEY),
+      stripeSecretKeyMode: process.env.STRIPE_SECRET_KEY?.startsWith("sk_live_")
+        ? "live"
+        : process.env.STRIPE_SECRET_KEY?.startsWith("sk_test_")
+          ? "test"
+          : "missing-or-invalid",
+      priceWeeklyPresent: Boolean(process.env.STRIPE_PRICE_WEEKLY),
+      priceWeeklyLooksValid: process.env.STRIPE_PRICE_WEEKLY?.startsWith("price_") || false
+    });
+  }
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
-    const { email } = req.body || {};
+    const secretKey = process.env.STRIPE_SECRET_KEY;
+    const priceId = process.env.STRIPE_PRICE_WEEKLY;
 
-    if (!email || !email.includes("@")) {
-      return res.status(400).json({ error: "Valid email is required" });
+    if (!secretKey || !secretKey.startsWith("sk_")) {
+      return res.status(500).json({
+        error: "Missing or invalid STRIPE_SECRET_KEY in Vercel."
+      });
     }
 
-    if (!process.env.STRIPE_PRICE_WEEKLY) {
-      return res.status(500).json({ error: "Missing STRIPE_PRICE_WEEKLY environment variable" });
+    if (!priceId || !priceId.startsWith("price_")) {
+      return res.status(500).json({
+        error: "Missing or invalid STRIPE_PRICE_WEEKLY in Vercel."
+      });
+    }
+
+    const { default: Stripe } = await import("stripe");
+    const stripe = new Stripe(secretKey);
+
+    const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
+    const email = String(body.email || "").trim().toLowerCase();
+
+    if (!email || !email.includes("@")) {
+      return res.status(400).json({ error: "Valid email is required." });
     }
 
     const customer = await stripe.customers.create({
@@ -27,60 +55,33 @@ export default async function handler(req, res) {
 
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
-      items: [
-        {
-          price: process.env.STRIPE_PRICE_WEEKLY
-        }
-      ],
+      items: [{ price: priceId }],
       payment_behavior: "default_incomplete",
       payment_settings: {
         save_default_payment_method: "on_subscription"
       },
-      expand: ["latest_invoice.confirmation_secret", "latest_invoice.payment_intent"]
+      expand: ["latest_invoice.payment_intent"]
     });
 
-    const invoice = subscription.latest_invoice;
-    const clientSecret =
-      invoice?.confirmation_secret?.client_secret ||
-      invoice?.payment_intent?.client_secret;
+    const paymentIntent = subscription.latest_invoice?.payment_intent;
 
-    if (!clientSecret) {
-      return res.status(500).json({ error: "Could not create payment confirmation secret" });
+    if (!paymentIntent?.client_secret) {
+      return res.status(500).json({
+        error: "Stripe did not return a payment intent client secret."
+      });
     }
 
     return res.status(200).json({
-      clientSecret,
-      subscriptionId: subscription.id,
-      customerId: customer.id
+      clientSecret: paymentIntent.client_secret,
+      subscriptionId: subscription.id
     });
   } catch (error) {
+    console.error("Stripe subscription error:", error);
+
     return res.status(500).json({
-      error: error.message
-    });
-  }
-}
-        save_default_payment_method: "on_subscription"
-      },
-      expand: ["latest_invoice.confirmation_secret", "latest_invoice.payment_intent"]
-    });
-
-    const invoice = subscription.latest_invoice;
-    const clientSecret =
-      invoice?.confirmation_secret?.client_secret ||
-      invoice?.payment_intent?.client_secret;
-
-    if (!clientSecret) {
-      return res.status(500).json({ error: "Could not create payment confirmation secret" });
-    }
-
-    return res.status(200).json({
-      clientSecret,
-      subscriptionId: subscription.id,
-      customerId: customer.id
-    });
-  } catch (error) {
-    return res.status(500).json({
-      error: error.message
+      error: error.message || "Subscription creation failed.",
+      code: error.code || null,
+      type: error.type || null
     });
   }
 }
