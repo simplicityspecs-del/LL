@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#050806">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="msapplication-TileColor" content="#050806">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#fafbf9">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-TileColor" content="#fafbf9">
+<meta name="color-scheme" content="light">
 <title>Live Picks • Fight Night Edge Model</title>
 <meta name="description" content="Live Picks analyses fight-night market holes by combining model probabilities with walkout reads, crowd energy, fighter condition, media pressure and live bookmaker movement.">
 <style>
@@ -4672,6 +4672,1967 @@ h1 {
   }
 }
 
+/* Desktop landing refresh: reference-style light hero while keeping mobile untouched. */
+.desktop-brand-mark,
+.desktop-model-snapshot,
+.desktop-proof-grid {
+  display: none;
+}
+
+@media (min-width: 681px) {
+  .topbar {
+    border-bottom: 1px solid rgba(8,11,8,0.1);
+    background: rgba(250,251,249,0.9);
+    color: #070907;
+    box-shadow: 0 10px 28px rgba(14,18,15,0.08);
+  }
+
+  .topbar .nav {
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    min-height: 66px !important;
+    column-gap: 28px !important;
+  }
+
+  .topbar .brand.brand-text-only {
+    gap: 10px !important;
+    color: #060806;
+    font-size: 1.02rem;
+    letter-spacing: -0.035em;
+  }
+
+  .topbar .brand span:last-child {
+    color: #060806;
+  }
+
+  .desktop-brand-mark {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .desktop-brand-mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .topbar .header-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between !important;
+    gap: 24px !important;
+  }
+
+  .topbar .desktop-nav {
+    flex: 1 1 auto;
+    justify-content: center;
+    gap: clamp(14px, 2.1vw, 34px) !important;
+    color: #131713;
+  }
+
+  .topbar .desktop-nav a,
+  .topbar .header-buttons .nav-links a {
+    flex: 0 1 auto !important;
+    width: auto !important;
+    min-height: 0;
+    padding: 8px 2px;
+    border: 0 !important;
+    background: transparent !important;
+    color: #131713;
+    font-size: 0.86rem;
+    font-weight: 720;
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: none;
+  }
+
+  .topbar .desktop-nav a:hover,
+  .topbar .desktop-nav a.active {
+    color: #000;
+    background: transparent !important;
+  }
+
+  .topbar .top-actions {
+    flex: 0 0 auto;
+    gap: 10px !important;
+  }
+
+  .topbar .header-buttons .top-actions .login-btn,
+  .topbar .login-btn {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-height: 38px;
+    padding: 0 18px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 750;
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: none;
+  }
+
+  .topbar .newsletter-btn {
+    border-color: rgba(8,11,8,0.14) !important;
+    background: rgba(255,255,255,0.82) !important;
+    color: #080a08 !important;
+  }
+
+  .topbar .premium-login-link {
+    border-color: #050506 !important;
+    background: #050506 !important;
+    color: #fff !important;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.16);
+  }
+
+  .hero {
+    padding: 48px 0 28px;
+    border-bottom: 0;
+    background:
+      radial-gradient(circle at 18% 2%, rgba(34,255,136,0.06), transparent 28%),
+      linear-gradient(180deg, #fafbf9 0%, #f6f8f5 100%);
+    color: #060806;
+  }
+
+  .hero-grid {
+    grid-template-columns: minmax(0, 0.82fr) minmax(520px, 1.18fr);
+    gap: 42px;
+    align-items: center;
+  }
+
+  .hero-copy-wrap {
+    max-width: 610px;
+  }
+
+  .hero .kicker {
+    margin-bottom: 14px;
+    color: #777e78;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+  }
+
+  .hero .kicker::before {
+    display: none;
+  }
+
+  .hero h1 {
+    max-width: 620px;
+    color: #020302;
+    font-size: clamp(3rem, 4.45vw, 5rem);
+    line-height: 1.1;
+    letter-spacing: -0.075em;
+  }
+
+  .hero-lead,
+  .hero-insight-grid,
+  .hero-note {
+    display: none;
+  }
+
+  .hero-copy {
+    max-width: 530px;
+    margin-top: 18px;
+    color: #343a36;
+    font-size: clamp(0.98rem, 1.02vw, 1.08rem);
+    line-height: 1.58;
+    font-weight: 470;
+  }
+
+  .hero-actions {
+    margin-top: 24px;
+    gap: 10px;
+  }
+
+  .hero-actions .btn {
+    min-height: 42px;
+    padding: 0 20px;
+    border: 1px solid #dde1dc;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #fff, #f5f6f4);
+    color: #080a08;
+    box-shadow: 0 8px 18px rgba(19,23,20,0.06);
+    font-size: 0.82rem;
+    font-weight: 760;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .desktop-fight-visual {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin: 0 !important;
+    align-content: start;
+  }
+
+  .desktop-fighter-panel {
+    min-height: 390px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #dde2dd;
+    border-radius: 12px;
+    background:
+      radial-gradient(circle at 50% 20%, rgba(0,0,0,0.035), transparent 34%),
+      rgba(255,255,255,0.9);
+    box-shadow: 0 18px 46px rgba(14,18,15,0.08);
+    padding: 18px 22px 20px;
+  }
+
+  .desktop-fighter-heading {
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  .desktop-fighter-heading strong {
+    display: block;
+    color: #080a08;
+    font-size: 0.95rem;
+    font-weight: 950;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .desktop-fighter-heading span {
+    color: #68706a;
+    font-size: 0.72rem;
+    font-weight: 650;
+  }
+
+  .desktop-fighter-art {
+    position: relative;
+    width: 130px;
+    height: 132px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    margin: 16px 0 14px;
+    overflow: hidden;
+  }
+
+  .desktop-fighter-art img {
+    width: auto !important;
+    height: 132px !important;
+    max-width: none;
+    object-fit: contain;
+  }
+
+  .paper-art img {
+    opacity: 1;
+    filter: drop-shadow(0 18px 20px rgba(0,0,0,0.12));
+    transform: translateY(3px);
+  }
+
+  .reality-art img {
+    filter: drop-shadow(0 18px 20px rgba(255,77,95,0.14));
+    transform: translateY(3px);
+  }
+
+  .reality-art::before,
+  .reality-art::after {
+    display: none;
+  }
+
+  .reality-art::before {
+    left: 32px;
+    transform: rotate(-34deg);
+  }
+
+  .reality-art::after {
+    right: 32px;
+    transform: rotate(34deg);
+  }
+
+  .desktop-fighter-list {
+    width: 100%;
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 4px 0 0;
+    list-style: none;
+  }
+
+  .desktop-fighter-list li {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #181c19;
+    font-size: 0.86rem;
+    font-weight: 560;
+    line-height: 1.2;
+  }
+
+  .desktop-fighter-list li::before {
+    width: 15px;
+    height: 15px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: #d7dbd6;
+    color: #242a25;
+    content: "✓";
+    font-size: 0.62rem;
+    font-weight: 950;
+  }
+
+  .reality-panel .desktop-fighter-list li::before {
+    content: "×";
+    background: #e1e4e0;
+  }
+
+  .desktop-shift-arrow {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    top: 43%;
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #dbe0db;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.92);
+    color: #050506;
+    box-shadow: 0 12px 32px rgba(14,18,15,0.12);
+    font-size: 1.65rem;
+    line-height: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .desktop-model-snapshot {
+    display: block;
+    padding: 0 0 34px;
+    border-bottom: 1px solid #dde2dd;
+    background: #f6f8f5;
+    color: #080a08;
+  }
+
+  .snapshot-kicker {
+    margin-bottom: 12px;
+    color: #303632;
+    font-size: 0.68rem;
+    font-weight: 950;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .snapshot-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .snapshot-card {
+    min-height: 132px;
+    border: 1px solid #dde2dd;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.86);
+    box-shadow: 0 12px 28px rgba(14,18,15,0.055);
+    padding: 16px;
+  }
+
+  .snapshot-card h3 {
+    margin: 0 0 14px;
+    color: #070907;
+    font-size: 0.96rem;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    font-weight: 820;
+  }
+
+  .snapshot-ok {
+    display: inline-grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+    border: 1px solid rgba(36,145,84,0.45);
+    border-radius: 50%;
+    color: #249154;
+    font-size: 0.66rem;
+  }
+
+  .snapshot-meter-row {
+    display: grid;
+    grid-template-columns: 70px minmax(0, 1fr) 36px;
+    gap: 9px;
+    align-items: center;
+    margin-top: 9px;
+    color: #161a17;
+    font-size: 0.72rem;
+    font-weight: 650;
+  }
+
+  .snapshot-meter-row strong {
+    color: #303632;
+    text-align: right;
+    font-weight: 700;
+  }
+
+  .snapshot-meter {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #ecefec;
+  }
+
+  .snapshot-meter i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #777d78, #343a36);
+  }
+
+  .snapshot-heatmap {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 3px;
+  }
+
+  .snapshot-heatmap span {
+    height: 13px;
+    background: #e1e4e0;
+  }
+
+  .snapshot-heatmap .mid {
+    background: #aeb4af;
+  }
+
+  .snapshot-heatmap .hot {
+    background: #6d746f;
+  }
+
+  .snapshot-scale,
+  .snapshot-timeline-labels {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 8px;
+    color: #4e5650;
+    font-size: 0.64rem;
+    font-weight: 650;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .snapshot-timeline {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 32px 8px 0;
+  }
+
+  .snapshot-timeline::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    background: #afb5b0;
+    transform: translateY(-50%);
+  }
+
+  .snapshot-timeline span {
+    position: relative;
+    z-index: 1;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #9fa6a1;
+  }
+
+  .snapshot-timeline span.active {
+    background: #4ca978;
+  }
+
+  .snapshot-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: 12px;
+    overflow: hidden;
+    border: 1px solid #dde2dd;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 12px 28px rgba(14,18,15,0.05);
+  }
+
+  .snapshot-stat {
+    min-height: 72px;
+    display: grid;
+    align-content: center;
+    gap: 3px;
+    padding: 14px 18px;
+    border-left: 1px solid #e6e9e5;
+  }
+
+  .snapshot-stat:first-child {
+    border-left: 0;
+  }
+
+  .snapshot-stat strong {
+    color: #050706;
+    font-size: 1.28rem;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .snapshot-stat span {
+    color: #4f5751;
+    font-size: 0.72rem;
+    font-weight: 680;
+    line-height: 1.15;
+  }
+
+  #proof {
+    padding-top: 44px;
+    padding-bottom: 54px;
+    border-top: 1px solid #dde2dd;
+    border-bottom: 1px solid #dde2dd;
+    background: #f6f8f5;
+    color: #070907;
+  }
+
+  #proof .section-heading {
+    align-items: center;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e0e4df;
+  }
+
+  #proof .section-heading h2 {
+    color: #151915;
+    font-size: 0.72rem;
+    line-height: 1;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  #proof .section-heading p {
+    max-width: 470px;
+    color: #555d57;
+    font-size: 0.84rem;
+    line-height: 1.4;
+  }
+
+  #proof .picks-grid {
+    display: none;
+  }
+
+  .desktop-proof-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .proof-win-card {
+    min-height: 212px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #dde2dd;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.88);
+    box-shadow: 0 12px 28px rgba(14,18,15,0.055);
+    padding: 11px 12px 10px;
+  }
+
+  .proof-date {
+    color: #343b36;
+    font-size: 0.58rem;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+    line-height: 1.25;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .proof-fight {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 7px;
+    align-items: center;
+    padding: 9px 0 10px;
+    text-align: center;
+  }
+
+  .proof-fighter {
+    min-width: 0;
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+  }
+
+  .proof-face {
+    position: relative;
+    width: 62px;
+    height: 62px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #f2f4f1, #e8ece7);
+  }
+
+  .proof-face img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .proof-fighter.winner .proof-face::after {
+    content: "✓";
+    position: absolute;
+    left: 2px;
+    bottom: 2px;
+    width: 16px;
+    height: 16px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #48b978;
+    color: white;
+    font-size: 0.62rem;
+    font-weight: 950;
+  }
+
+  .proof-fighter strong {
+    max-width: 100%;
+    color: #101411;
+    font-size: 0.68rem;
+    line-height: 1.05;
+    font-weight: 780;
+    white-space: nowrap;
+  }
+
+  .proof-fighter span {
+    color: #68706a;
+    font-size: 0.58rem;
+    line-height: 1;
+    font-weight: 650;
+  }
+
+  .proof-vs {
+    color: #171b18;
+    font-size: 0.64rem;
+    font-weight: 820;
+    text-transform: uppercase;
+  }
+
+  .proof-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 9px;
+    border-top: 1px solid #e2e6e1;
+    color: #202621;
+    font-size: 0.64rem;
+    font-weight: 750;
+  }
+
+  .proof-result strong {
+    min-width: 44px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #dcf4e7;
+    color: #24774b;
+    font-size: 0.66rem;
+    line-height: 1;
+    text-align: center;
+  }
+}
+
+/* Desktop light scheme extension: carry the reference white/black system through the rest of the page. */
+@media (min-width: 681px) {
+  body {
+    background: #f6f8f5;
+    color: #070907;
+  }
+
+  body::before {
+    background-image:
+      linear-gradient(rgba(8,11,8,0.026) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(8,11,8,0.026) 1px, transparent 1px);
+    opacity: 0.62;
+  }
+
+  .odds-ticker {
+    border-top: 1px solid #e0e4df;
+    border-bottom: 1px solid #dbe0db;
+    background: #fff;
+    box-shadow: none;
+  }
+
+  .odds-ticker .ticker-item {
+    border-right: 1px solid #e4e8e3;
+    color: #343a36;
+  }
+
+  .odds-ticker .ticker-market {
+    color: #777e78;
+  }
+
+  .odds-ticker .ticker-item strong {
+    color: #070907;
+  }
+
+  .odds-ticker .ticker-item em,
+  .odds-ticker .ticker-item em.odds-low {
+    border-color: #050506;
+    background: #050506;
+    color: #fff;
+    box-shadow: none;
+  }
+
+  #predictions,
+  #model,
+  #signals,
+  .data-strip,
+  .thesis-section,
+  .footer {
+    background: #f6f8f5;
+    color: #070907;
+  }
+
+  #predictions.section,
+  #model.section,
+  #signals.section,
+  .thesis-section {
+    border-top: 1px solid #dde2dd;
+    border-bottom: 1px solid #dde2dd;
+  }
+
+  .section-heading {
+    align-items: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #e0e4df;
+  }
+
+  .section-heading h2,
+  .thesis-heading h2 {
+    color: #151915;
+  }
+
+  .section-heading p {
+    color: #555d57;
+  }
+
+  #predictions .model-card {
+    border: 1px solid #dde2dd;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 16px 42px rgba(14,18,15,0.08);
+  }
+
+  #predictions .model-card + .model-card {
+    margin-top: 18px;
+  }
+
+  #predictions .fight-title {
+    border-bottom: 1px solid #e0e4df;
+    background: #fff;
+  }
+
+  #predictions .fight-title h2 {
+    color: #303632;
+  }
+
+  .result-chip {
+    border-color: #050506;
+    background: #050506;
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .result-chip::before {
+    background: #fff;
+  }
+
+  #predictions .matchup {
+    border: 1px solid #dde2dd;
+    background: #f7f8f6;
+  }
+
+  #predictions .fighter-card {
+    background: #fff;
+  }
+
+  #predictions .fighter-card.pick {
+    border-left-color: #050506;
+    background: linear-gradient(90deg, rgba(5,5,6,0.06), rgba(255,255,255,0) 72%);
+  }
+
+  #predictions .fighter-card.fade {
+    opacity: 1;
+  }
+
+  #predictions .portrait {
+    border-color: #d7dcd7;
+    background: linear-gradient(180deg, #f2f4f1, #e8ece7);
+  }
+
+  #predictions .portrait::after {
+    background: linear-gradient(to top, rgba(0,0,0,0.08), transparent 45%);
+  }
+
+  #predictions .fighter-name,
+  .mini-fighter strong {
+    color: #070907;
+  }
+
+  .tag {
+    border-color: #dfe4df;
+    background: #f7f8f6;
+    color: #4f5751;
+  }
+
+  .tag.green,
+  .tag.red {
+    border-color: #050506;
+    background: #050506;
+    color: #fff;
+  }
+
+  .form-label {
+    color: #68706a;
+  }
+
+  .form-dots span {
+    background: #dce1dc;
+  }
+
+  .form-dots span.win,
+  .form-dots span.loss {
+    background: #050506;
+    box-shadow: none;
+  }
+
+  #predictions .vs-block {
+    border-inline: 1px solid #dde2dd;
+    background: #f1f3f0;
+  }
+
+  #predictions .vs-block div {
+    border-color: #d4dad4;
+    background: #fff;
+    color: #050506;
+    box-shadow: none;
+  }
+
+  .edge-box {
+    border-color: #dde2dd;
+    background: #fff;
+  }
+
+  .edge-box .label {
+    color: #68706a;
+  }
+
+  .edge-box .value,
+  .edge-box .value.green,
+  .edge-box .value.red {
+    color: #050506;
+  }
+
+  .edge-box small {
+    color: #555d57;
+  }
+
+  .premium-strip {
+    border-color: #050506;
+    border-radius: 8px;
+    background: #050506;
+  }
+
+  .premium-strip strong {
+    color: #fff;
+  }
+
+  .premium-strip .btn-primary {
+    border-color: #fff;
+    background: #fff;
+    color: #050506;
+    box-shadow: none;
+  }
+
+  .data-strip {
+    border-block: 1px solid #dde2dd;
+  }
+
+  .data-card,
+  .how-card,
+  .signal-card,
+  .thesis-card,
+  .scope-panel,
+  .pick-card {
+    border: 1px solid #dde2dd;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 12px 28px rgba(14,18,15,0.055);
+  }
+
+  .data-card strong {
+    color: #070907;
+  }
+
+  .data-card span {
+    color: #555d57;
+  }
+
+  .step,
+  .scope-label,
+  .signal-status {
+    color: #555d57;
+    text-shadow: none;
+  }
+
+  .how-card h3,
+  .signal-card h3,
+  .scope-panel h3,
+  .thesis-card-title {
+    color: #070907;
+  }
+
+  .how-card p,
+  .signal-card p,
+  .scope-list li,
+  .thesis-card p {
+    color: #4f5751;
+  }
+
+  .infographic {
+    border-color: #dde2dd;
+    border-radius: 8px;
+    background: #f6f8f5;
+  }
+
+  .infographic-title {
+    color: #68706a;
+  }
+
+  .crowd-bars span {
+    background: linear-gradient(180deg, #050506, #a8afa9);
+    box-shadow: none;
+  }
+
+  .sentiment-map span {
+    border-color: #dde2dd;
+    background: #ecefec;
+  }
+
+  .sentiment-map span.hot,
+  .sentiment-map span.bad {
+    background: #050506;
+    box-shadow: none;
+  }
+
+  .sentiment-map span.mid {
+    background: #9ea6a0;
+  }
+
+  .condition-row {
+    color: #4f5751;
+  }
+
+  .meter {
+    background: #e1e4e0;
+  }
+
+  .meter span {
+    background: #050506;
+    box-shadow: none;
+  }
+
+  .signal-card {
+    border-color: #dde2dd;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.96), rgba(246,248,245,0.96));
+    box-shadow: 0 12px 28px rgba(14,18,15,0.055);
+  }
+
+  .signal-card::before {
+    background: linear-gradient(90deg, rgba(5,5,6,0.03), transparent 46%);
+  }
+
+  .signal-code {
+    border-color: #050506;
+    border-radius: 8px;
+    background: #050506;
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .signal-meta {
+    border-top: 1px solid #e2e6e1;
+  }
+
+  .signal-meta span {
+    color: #68706a;
+  }
+
+  .signal-meta strong {
+    color: #070907;
+  }
+
+  .signal-card.featured {
+    border-color: #dde2dd;
+    box-shadow: 0 12px 28px rgba(14,18,15,0.055);
+  }
+
+  .thesis-card,
+  .thesis-punchcard {
+    border-color: #dde2dd;
+    background: rgba(255,255,255,0.92);
+  }
+
+  .thesis-card::before,
+  .thesis-punchcard::before {
+    background: linear-gradient(90deg, rgba(5,5,6,0.026), transparent 42%);
+    opacity: 1;
+  }
+
+  .thesis-marker {
+    border-color: #050506;
+    background: #050506;
+    color: #fff;
+  }
+
+  .thesis-card p strong,
+  .scope-list strong {
+    color: #070907;
+  }
+
+  .thesis-result-note {
+    color: #303632 !important;
+  }
+
+  .thesis-card.pressure {
+    border-left-color: #050506;
+  }
+
+  .thesis-punchcard {
+    border-color: #050506;
+    background: #050506;
+  }
+
+  .thesis-punchcard::before {
+    display: none;
+  }
+
+  .thesis-punchcard p {
+    color: #fff;
+  }
+
+  .thesis-card.final {
+    border-color: #050506;
+  }
+
+  .thesis-live-callout {
+    border-left-color: #050506;
+    background: linear-gradient(90deg, rgba(5,5,6,0.05), transparent 72%);
+  }
+
+  .thesis-live-callout span,
+  .thesis-live-callout p {
+    color: #070907;
+  }
+
+  .scope-list li {
+    border-color: #dde2dd;
+    background: #f6f8f5;
+  }
+
+  .pick-card-top {
+    border-bottom: 1px solid #e0e4df;
+    background: #fff;
+    color: #303632;
+  }
+
+  .mini-fighter .mini-face {
+    border-color: #d7dcd7;
+    background: linear-gradient(180deg, #f2f4f1, #e8ece7);
+  }
+
+  .mini-fighter.winner .mini-face {
+    border-color: #050506;
+    box-shadow: none;
+  }
+
+  .odds {
+    color: #050506;
+  }
+
+  .footer {
+    border-top: 1px solid #dde2dd;
+  }
+
+  .footer-brand {
+    color: #070907;
+  }
+
+  .footer p,
+  .disclaimer {
+    color: #555d57;
+  }
+
+  .disclaimer {
+    border-color: #dde2dd;
+    border-radius: 8px;
+    background: #fff;
+  }
+}
+
+@media (min-width: 681px) and (max-width: 1100px) {
+  .topbar .desktop-nav {
+    display: none !important;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .desktop-fight-visual {
+    max-width: 760px;
+    margin: 10px auto 0 !important;
+  }
+
+  .snapshot-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .desktop-proof-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 681px) and (max-width: 820px) {
+  .desktop-fight-visual {
+    max-width: 430px;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .desktop-shift-arrow {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    margin: -4px auto;
+  }
+
+  .snapshot-grid,
+  .snapshot-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .snapshot-stat {
+    border-left: 0;
+    border-top: 1px solid #e6e9e5;
+  }
+
+  .snapshot-stat:first-child {
+    border-top: 0;
+  }
+
+  .desktop-proof-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Final light-mode polish: coloured signals, mobile light treatment, and subtle motion. */
+.form-dots span.win {
+  background: #2fba73 !important;
+  box-shadow: 0 0 12px rgba(47,186,115,0.24) !important;
+}
+
+.form-dots span.loss {
+  background: #ff4d5f !important;
+  box-shadow: 0 0 12px rgba(255,77,95,0.22) !important;
+}
+
+.crowd-bars span {
+  background: linear-gradient(180deg, #2fba73, rgba(47,186,115,0.18)) !important;
+  box-shadow: 0 0 14px rgba(47,186,115,0.18) !important;
+}
+
+.sentiment-map span {
+  border-color: rgba(47,186,115,0.18) !important;
+  background: rgba(47,186,115,0.08) !important;
+}
+
+.sentiment-map span.hot {
+  background: rgba(47,186,115,0.76) !important;
+  box-shadow: 0 0 14px rgba(47,186,115,0.26) !important;
+}
+
+.sentiment-map span.mid {
+  background: rgba(47,186,115,0.28) !important;
+}
+
+.sentiment-map span.bad {
+  background: rgba(255,77,95,0.66) !important;
+  box-shadow: 0 0 14px rgba(255,77,95,0.2) !important;
+}
+
+.meter span {
+  background: #2fba73 !important;
+  box-shadow: 0 0 13px rgba(47,186,115,0.26) !important;
+}
+
+.condition-row:nth-child(4) .meter span {
+  background: #ff4d5f !important;
+  box-shadow: 0 0 13px rgba(255,77,95,0.22) !important;
+}
+
+@media (min-width: 681px) {
+  .reality-art::before,
+  .reality-art::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  .desktop-model-snapshot .snapshot-card {
+    background:
+      radial-gradient(circle at 18% 6%, rgba(47,186,115,0.08), transparent 30%),
+      rgba(255,255,255,0.92);
+  }
+
+  .desktop-model-snapshot .snapshot-card:nth-child(2) {
+    background:
+      radial-gradient(circle at 72% 4%, rgba(255,77,95,0.08), transparent 28%),
+      radial-gradient(circle at 20% 10%, rgba(47,186,115,0.08), transparent 30%),
+      rgba(255,255,255,0.92);
+  }
+
+  .desktop-model-snapshot .snapshot-card:nth-child(4) {
+    background:
+      radial-gradient(circle at 90% 18%, rgba(47,186,115,0.1), transparent 26%),
+      rgba(255,255,255,0.92);
+  }
+
+  .snapshot-meter-row .snapshot-meter i {
+    background: linear-gradient(90deg, #2fba73, #238d58);
+    box-shadow: 0 0 12px rgba(47,186,115,0.2);
+  }
+
+  .snapshot-card:first-child .snapshot-meter-row:nth-of-type(2) .snapshot-meter i {
+    background: linear-gradient(90deg, #b9c0bb, #7b847e);
+    box-shadow: none;
+  }
+
+  .snapshot-card:first-child .snapshot-meter-row:nth-of-type(3) .snapshot-meter i {
+    background: linear-gradient(90deg, #ff6b78, #d93245);
+    box-shadow: 0 0 12px rgba(255,77,95,0.18);
+  }
+
+  .snapshot-heatmap span {
+    background: #e8f4ec;
+  }
+
+  .snapshot-heatmap .mid {
+    background: rgba(47,186,115,0.38);
+  }
+
+  .snapshot-heatmap .hot {
+    background: #2fba73;
+    box-shadow: 0 0 12px rgba(47,186,115,0.22);
+  }
+
+  .snapshot-heatmap span:nth-child(6),
+  .snapshot-heatmap span:nth-child(15) {
+    background: rgba(255,77,95,0.72);
+    box-shadow: 0 0 12px rgba(255,77,95,0.18);
+  }
+
+  .snapshot-ok {
+    border-color: rgba(47,186,115,0.55);
+    background: rgba(47,186,115,0.08);
+    color: #238d58;
+  }
+
+  .snapshot-timeline::before {
+    background: linear-gradient(90deg, #b9c0bb, #d5b958 52%, #2fba73);
+  }
+
+  .snapshot-timeline span {
+    background: #a7aea9;
+  }
+
+  .snapshot-timeline span:nth-child(2) {
+    background: #d5b958;
+  }
+
+  .snapshot-timeline span.active {
+    background: #2fba73;
+    box-shadow: 0 0 14px rgba(47,186,115,0.3);
+  }
+
+  .snapshot-stat strong {
+    color: #1f8a53;
+  }
+
+  .snapshot-stat:nth-child(2) strong {
+    color: #050506;
+  }
+}
+
+.desktop-fighter-art img,
+.mobile-figure-wrap img,
+.crowd-bars span,
+.sentiment-map span.hot,
+.sentiment-map span.bad,
+.meter span,
+.form-dots span.win,
+.form-dots span.loss {
+  will-change: translate, opacity, filter;
+}
+
+.desktop-fighter-art img,
+.mobile-figure-wrap img {
+  animation: figureFloat 4.6s ease-in-out infinite;
+}
+
+.reality-art img,
+.reality-side .mobile-figure-wrap img {
+  animation-delay: 0.55s;
+}
+
+.crowd-bars span,
+.meter span {
+  transform-origin: bottom;
+  animation: signalLift 3.8s ease-in-out infinite;
+}
+
+.crowd-bars span:nth-child(2),
+.condition-row:nth-child(2) .meter span {
+  animation-delay: 0.16s;
+}
+
+.crowd-bars span:nth-child(3),
+.condition-row:nth-child(3) .meter span {
+  animation-delay: 0.32s;
+}
+
+.crowd-bars span:nth-child(4),
+.condition-row:nth-child(4) .meter span {
+  animation-delay: 0.48s;
+}
+
+.crowd-bars span:nth-child(5) {
+  animation-delay: 0.64s;
+}
+
+.crowd-bars span:nth-child(6) {
+  animation-delay: 0.8s;
+}
+
+.crowd-bars span:nth-child(7) {
+  animation-delay: 0.96s;
+}
+
+.sentiment-map span.hot,
+.sentiment-map span.bad,
+.form-dots span.win,
+.form-dots span.loss {
+  animation: signalGlow 3.4s ease-in-out infinite;
+}
+
+.sentiment-map span:nth-child(3n),
+.form-dots span:nth-child(2n) {
+  animation-delay: 0.22s;
+}
+
+.sentiment-map span:nth-child(4n),
+.form-dots span:nth-child(3n) {
+  animation-delay: 0.44s;
+}
+
+@keyframes figureFloat {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
+}
+
+@keyframes signalLift {
+  0%, 100% { filter: saturate(1); opacity: 0.9; }
+  50% { filter: saturate(1.18); opacity: 1; }
+}
+
+@keyframes signalGlow {
+  0%, 100% { filter: saturate(1); }
+  50% { filter: saturate(1.18) brightness(1.04); }
+}
+
+@media (max-width: 680px) {
+  html,
+  body {
+    background: #f6f8f5;
+    color: #070907;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 18% 8%, rgba(47,186,115,0.08), transparent 28%),
+      linear-gradient(180deg, #fafbf9 0%, #f6f8f5 100%);
+  }
+
+  body::before {
+    background-image:
+      linear-gradient(rgba(8,11,8,0.026) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(8,11,8,0.026) 1px, transparent 1px);
+    opacity: 0.62;
+  }
+
+  .topbar {
+    border-bottom: 1px solid #dde2dd !important;
+    background: rgba(250,251,249,0.92);
+    color: #070907;
+    box-shadow: 0 10px 28px rgba(14,18,15,0.08);
+  }
+
+  .brand.brand-text-only,
+  .brand span:last-child {
+    color: #060806 !important;
+  }
+
+  .topbar .newsletter-btn {
+    border-color: rgba(8,11,8,0.14) !important;
+    background: rgba(255,255,255,0.82) !important;
+    color: #080a08 !important;
+  }
+
+  .topbar .premium-login-link {
+    border-color: #050506 !important;
+    background: #050506 !important;
+    color: #fff !important;
+  }
+
+  .odds-ticker {
+    border-top: 1px solid #e0e4df;
+    border-bottom: 1px solid #dbe0db;
+    background: #fff;
+    box-shadow: none;
+  }
+
+  .odds-ticker .ticker-item {
+    border-right: 1px solid #e4e8e3;
+    color: #343a36;
+  }
+
+  .odds-ticker .ticker-market {
+    color: #777e78;
+  }
+
+  .odds-ticker .ticker-item strong {
+    color: #070907;
+  }
+
+  .odds-ticker .ticker-item em,
+  .odds-ticker .ticker-item em.odds-low {
+    border-color: #050506;
+    background: #050506;
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .hero {
+    border-bottom: 1px solid #dde2dd;
+    background:
+      radial-gradient(circle at 18% 2%, rgba(47,186,115,0.08), transparent 28%),
+      linear-gradient(180deg, #fafbf9 0%, #f6f8f5 100%);
+    color: #060806;
+  }
+
+  .hero .kicker {
+    color: #777e78;
+  }
+
+  .hero .kicker::before {
+    background: #050506;
+    box-shadow: none;
+  }
+
+  .mobile-hero-title {
+    color: #020302;
+  }
+
+  .mobile-hero-thesis {
+    color: #343a36;
+  }
+
+  .mobile-hero-thesis strong {
+    color: #303632;
+  }
+
+  .mobile-fighter-infographic {
+    border: 1px solid #dde2dd;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 12px 28px rgba(14,18,15,0.055);
+  }
+
+  .mobile-infographic-head {
+    border-bottom: 1px solid #e0e4df;
+    background: linear-gradient(90deg, rgba(47,186,115,0.08), transparent 58%);
+  }
+
+  .mobile-infographic-kicker {
+    color: #2f8f5a;
+  }
+
+  .mobile-infographic-head strong,
+  .mobile-fighter-card strong {
+    color: #070907;
+  }
+
+  .mobile-fighter-card {
+    border: 1px solid #dde2dd;
+    background: #fff;
+    box-shadow: 0 10px 24px rgba(14,18,15,0.05);
+  }
+
+  .mobile-fighter-card::before {
+    background: radial-gradient(circle at 24% 38%, rgba(47,186,115,0.12), transparent 34%);
+  }
+
+  .reality-side {
+    border-color: rgba(255,77,95,0.28);
+    background:
+      radial-gradient(circle at 22% 38%, rgba(255,77,95,0.12), transparent 34%),
+      #fff;
+  }
+
+  .mobile-fighter-label {
+    color: #2f8f5a;
+  }
+
+  .mobile-fighter-label.danger {
+    color: #c72b3c;
+  }
+
+  .mobile-fighter-tags span {
+    border-color: #dde2dd;
+    background: #f7f8f6;
+    color: #4f5751;
+  }
+
+  .mobile-infographic-shift {
+    border-color: #dde2dd;
+    background: #fff;
+    color: #555d57;
+  }
+
+  .mobile-infographic-shift strong {
+    color: #050506;
+  }
+
+  .section,
+  .data-strip,
+  .model-intro-section,
+  #predictions,
+  #model,
+  #signals,
+  #proof,
+  .footer {
+    background: #f6f8f5;
+    color: #070907;
+  }
+
+  .model-intro-section {
+    border-bottom: 1px solid #dde2dd;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(47,186,115,0.08), transparent 30%),
+      linear-gradient(180deg, #fafbf9 0%, #f6f8f5 100%);
+  }
+
+  .model-intro-card {
+    border: 1px solid #dde2dd;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 12px 28px rgba(14,18,15,0.055);
+  }
+
+  .model-intro-card::before {
+    background:
+      linear-gradient(90deg, rgba(47,186,115,0.06), transparent 30%, transparent 70%, rgba(47,186,115,0.04)),
+      linear-gradient(180deg, rgba(255,255,255,0.5), transparent 45%);
+  }
+
+  .model-intro-kicker {
+    color: #2f8f5a;
+  }
+
+  .model-intro-kicker::before,
+  .model-intro-kicker::after {
+    background: #d6ded7;
+  }
+
+  .model-intro-card h2,
+  .model-intro-card strong {
+    color: #070907;
+  }
+
+  .model-intro-card p {
+    color: #555d57;
+  }
+
+  .model-intro-card .btn-primary {
+    border-color: #050506;
+    background: #050506;
+    color: #fff;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.14);
+  }
+
+  .section-heading {
+    border-bottom: 1px solid #e0e4df;
+  }
+
+  .section-heading h2 {
+    color: #151915;
+  }
+
+  .section-heading p {
+    color: #555d57;
+  }
+
+  #predictions .model-card {
+    border: 1px solid #dde2dd !important;
+    background: rgba(255,255,255,0.9) !important;
+    box-shadow: 0 12px 28px rgba(14,18,15,0.055) !important;
+  }
+
+  #predictions .fight-title {
+    border-bottom: 1px solid #e0e4df !important;
+    background: #fff !important;
+  }
+
+  #predictions .fight-title h2 {
+    color: #303632 !important;
+  }
+
+  .result-chip,
+  #predictions .fighter-card.pick::after {
+    border-color: #050506 !important;
+    background: #050506 !important;
+    color: #fff !important;
+    box-shadow: none !important;
+  }
+
+  .result-chip::before {
+    background: #fff;
+  }
+
+  #predictions .matchup {
+    border: 1px solid #dde2dd !important;
+    background: #f7f8f6 !important;
+  }
+
+  #predictions .fighter-card {
+    background: #fff !important;
+  }
+
+  #predictions .fighter-card.pick {
+    border-left-color: #050506 !important;
+    background: linear-gradient(90deg, rgba(5,5,6,0.06), rgba(255,255,255,0) 76%) !important;
+  }
+
+  #predictions .fighter-card.fade {
+    opacity: 1 !important;
+  }
+
+  #predictions .portrait {
+    border-color: #d7dcd7 !important;
+    background: linear-gradient(180deg, #f2f4f1, #e8ece7) !important;
+  }
+
+  #predictions .portrait::after {
+    background: linear-gradient(to top, rgba(0,0,0,0.08), transparent 45%);
+  }
+
+  #predictions .fighter-name,
+  .mini-fighter strong {
+    color: #070907 !important;
+  }
+
+  .tag,
+  #predictions .tag {
+    border-color: #dfe4df !important;
+    background: #f7f8f6 !important;
+    color: #4f5751 !important;
+  }
+
+  .tag.green,
+  .tag.red,
+  #predictions .tag.green,
+  #predictions .tag.red {
+    border-color: #050506 !important;
+    background: #050506 !important;
+    color: #fff !important;
+  }
+
+  .form-label,
+  #predictions .form-label {
+    color: #68706a !important;
+  }
+
+  .form-dots span,
+  #predictions .form-dots span {
+    background: #dce1dc !important;
+  }
+
+  .form-dots span.win,
+  #predictions .form-dots span.win {
+    background: #2fba73 !important;
+    box-shadow: 0 0 12px rgba(47,186,115,0.24) !important;
+  }
+
+  .form-dots span.loss,
+  #predictions .form-dots span.loss {
+    background: #ff4d5f !important;
+    box-shadow: 0 0 12px rgba(255,77,95,0.22) !important;
+  }
+
+  .edge-box,
+  .data-card,
+  .how-card,
+  .signal-card,
+  .scope-panel,
+  .pick-card,
+  .proof-win-card,
+  .disclaimer {
+    border-color: #dde2dd !important;
+    background: rgba(255,255,255,0.9) !important;
+    box-shadow: 0 12px 28px rgba(14,18,15,0.055) !important;
+  }
+
+  .edge-box .label,
+  .data-card span,
+  .step,
+  .signal-status,
+  .infographic-title {
+    color: #68706a !important;
+    text-shadow: none !important;
+  }
+
+  .edge-box .value,
+  .edge-box .value.green,
+  .edge-box .value.red,
+  .data-card strong,
+  .how-card h3,
+  .signal-card h3,
+  .scope-panel h3,
+  .footer-brand {
+    color: #070907 !important;
+  }
+
+  .edge-box small,
+  .how-card p,
+  .signal-card p,
+  .scope-list li,
+  .footer p,
+  .disclaimer {
+    color: #555d57 !important;
+  }
+
+  .infographic {
+    border-color: #dde2dd !important;
+    background: #f6f8f5 !important;
+  }
+
+  .signal-code {
+    border-color: #050506 !important;
+    background: #050506 !important;
+    color: #fff !important;
+    box-shadow: none !important;
+  }
+
+  .signal-meta {
+    border-top: 1px solid #e2e6e1 !important;
+  }
+
+  .signal-meta span {
+    color: #68706a !important;
+  }
+
+  .signal-meta strong,
+  .scope-list strong {
+    color: #070907 !important;
+  }
+
+  .pick-card-top {
+    border-bottom: 1px solid #e0e4df !important;
+    background: #fff !important;
+    color: #303632 !important;
+  }
+
+  #proof {
+    overflow: hidden;
+  }
+
+  #proof .picks-grid {
+    display: none !important;
+  }
+
+  #proof .desktop-proof-grid {
+    display: grid !important;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(196px, 72vw);
+    grid-template-columns: none !important;
+    gap: 12px;
+    margin-inline: -11px;
+    padding: 0 11px 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: 11px;
+    scroll-snap-type: inline mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #proof .desktop-proof-grid::-webkit-scrollbar {
+    height: 0;
+  }
+
+  #proof .proof-win-card {
+    min-height: 206px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #dde2dd !important;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.92) !important;
+    box-shadow: 0 12px 28px rgba(14,18,15,0.055) !important;
+    padding: 11px 12px 10px;
+    scroll-snap-align: start;
+  }
+
+  #proof .proof-date {
+    color: #343b36;
+    font-size: 0.56rem;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+    line-height: 1.25;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  #proof .proof-fight {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 7px;
+    align-items: center;
+    padding: 9px 0 10px;
+    text-align: center;
+  }
+
+  #proof .proof-fighter {
+    min-width: 0;
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+  }
+
+  #proof .proof-face {
+    position: relative;
+    width: 58px;
+    height: 58px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #f2f4f1, #e8ece7);
+  }
+
+  #proof .proof-face img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  #proof .proof-fighter.winner .proof-face::after {
+    content: "✓";
+    position: absolute;
+    left: 2px;
+    bottom: 2px;
+    width: 16px;
+    height: 16px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #2fba73;
+    color: white;
+    font-size: 0.62rem;
+    font-weight: 950;
+  }
+
+  #proof .proof-fighter strong {
+    max-width: 100%;
+    color: #101411;
+    font-size: 0.66rem;
+    line-height: 1.05;
+    font-weight: 780;
+    white-space: nowrap;
+  }
+
+  #proof .proof-fighter span {
+    color: #68706a;
+    font-size: 0.56rem;
+    line-height: 1;
+    font-weight: 650;
+  }
+
+  #proof .proof-vs {
+    color: #171b18;
+    font-size: 0.62rem;
+    font-weight: 820;
+    text-transform: uppercase;
+  }
+
+  #proof .proof-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 9px;
+    border-top: 1px solid #e2e6e1;
+    color: #202621;
+    font-size: 0.62rem;
+    font-weight: 750;
+  }
+
+  #proof .proof-result strong {
+    min-width: 44px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #dcf4e7;
+    color: #24774b;
+    font-size: 0.64rem;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .odds {
+    color: #050506 !important;
+  }
+
+  .footer {
+    border-top: 1px solid #dde2dd;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desktop-fighter-art img,
+  .mobile-figure-wrap img,
+  .crowd-bars span,
+  .sentiment-map span.hot,
+  .sentiment-map span.bad,
+  .meter span,
+  .form-dots span.win,
+  .form-dots span.loss {
+    animation: none !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -4679,10 +6640,19 @@ h1 {
 <header class="topbar">
   <div class="container nav">
     <a class="brand brand-text-only" href="#top" aria-label="Live Picks home">
+      <span class="desktop-brand-mark"><img src="lp-logo.png" alt="Live Picks logo"></span>
       <span>Live Picks</span>
     </a>
 
     <div class="header-buttons">
+      <nav class="nav-links desktop-nav" aria-label="Primary navigation">
+        <a href="#model">Model</a>
+        <a href="#proof">Past wins</a>
+        <a href="#signals">Live data</a>
+        <a href="checkout.html">Pricing</a>
+        <a href="#model">About</a>
+      </nav>
+
       <div class="top-actions">
         <a href="newsletter.html" class="login-btn secondary-btn newsletter-btn">Free Newsletter</a>
         <a href="portal.html" class="login-btn premium-login-link">Premium Login</a>
@@ -4742,7 +6712,7 @@ h1 {
             <div class="mobile-infographic-compare">
               <div class="mobile-fighter-card paper-side">
                 <div class="mobile-figure-wrap">
-                  <img src="on-paper-fighter.png" alt="On paper fighter icon" class="figure-paper-icon">
+                  <img src="on-paper-fighter-black.png" alt="On paper fighter icon" class="figure-paper-icon">
                 </div>
                 <span class="mobile-fighter-label">On paper</span>
                 <strong>Looks excellent</strong>
@@ -4781,7 +6751,7 @@ h1 {
         </div>
         <h1>Bookies can’t price what they can’t see yet.</h1>
         <p class="hero-lead">Most fight markets are built before the most important late data exists. Live Picks focuses on the information that only becomes visible on fight night.</p>
-        <p class="hero-copy">A fighter can look strong on paper, then walk out flat, tight, drained, distracted, injured or emotionally charged. Physical condition, movement, composure, crowd reaction, public sentiment and last minute pressure can all point toward a result. <strong>These signals are rarely priced correctly by bookmakers because they are not available when the market is first shaped.</strong></p>
+        <p class="hero-copy">Our model reads the fight night, not just the record. We track late signals: physical condition, crowd pressure, narrative shifts and market blind spots to find value the odds miss.</p>
 
         <div class="hero-insight-grid" aria-label="Live Picks edge summary">
           <article class="hero-insight-card">
@@ -4810,49 +6780,99 @@ h1 {
 
         <div class="hero-actions">
           <a class="btn btn-ghost" href="#model">How the model works</a>
+          <a class="btn btn-ghost" href="#proof">View past wins</a>
         </div>
       </div>
 
-      <aside class="release-panel hero-panel" aria-label="What Live Picks captures">
-        <div class="release-head">
-          <div>
-            <span class="release-eyebrow">What Live Picks captures</span>
-            <strong class="release-event">Fight Night Signals</strong>
+      <aside class="desktop-fight-visual hero-panel" aria-label="On paper versus fight night reality">
+        <article class="desktop-fighter-panel paper-panel">
+          <div class="desktop-fighter-heading">
+            <strong>On paper</strong>
+            <span>What the market sees</span>
           </div>
-          <span class="live-status">Live data</span>
-        </div>
-
-        <div class="release-stack">
-          <div class="release-item">
-            <span class="release-num">01</span>
-            <div>
-              <strong>Physical condition on arrival</strong>
-              <p>How the fighter walks, breathes, holds posture, carries tension and responds to the arena.</p>
-            </div>
+          <div class="desktop-fighter-art paper-art">
+            <img src="on-paper-fighter-black.png" alt="On paper fighter icon">
           </div>
+          <ul class="desktop-fighter-list">
+            <li>Looks excellent</li>
+            <li>Clean record</li>
+            <li>Strong camp</li>
+            <li>Market favourite</li>
+            <li>Physical advantages</li>
+          </ul>
+        </article>
 
-          <div class="release-item">
-            <span class="release-num">02</span>
-            <div>
-              <strong>Emotional and environmental pressure</strong>
-              <p>Press conference moments, face offs, public sentiment, crowd energy and visible reactions.</p>
-            </div>
+        <div class="desktop-shift-arrow" aria-hidden="true">→</div>
+
+        <article class="desktop-fighter-panel reality-panel">
+          <div class="desktop-fighter-heading">
+            <strong>Fight night</strong>
+            <span>What really happens</span>
           </div>
-
-          <div class="release-item">
-            <span class="release-num">03</span>
-            <div>
-              <strong>Final model lock</strong>
-              <p>The read gets stronger as more late data arrives, which is why some alerts only come moments before the fight starts.</p>
-            </div>
+          <div class="desktop-fighter-art reality-art">
+            <img src="fight-night-fighter.png" alt="Fight night fighter icon">
           </div>
-        </div>
-
-        <div class="hero-panel-footer">
-          <strong>Winner market only.</strong>
-          <span>We focus on head to head outcomes, where late information creates the clearest edge.</span>
-        </div>
+          <ul class="desktop-fighter-list">
+            <li>Looks compromised</li>
+            <li>Bad reception</li>
+            <li>Flat</li>
+            <li>Drained</li>
+            <li>Emotionally charged</li>
+            <li>Late pressure</li>
+          </ul>
+        </article>
       </aside>
+    </div>
+  </section>
+
+  <section class="desktop-model-snapshot" aria-label="The Live Picks model snapshot">
+    <div class="container">
+      <div class="snapshot-kicker">The Live Picks Model</div>
+
+      <div class="snapshot-grid">
+        <article class="snapshot-card">
+          <h3>Crowd pressure</h3>
+          <div class="snapshot-meter-row"><span>Support</span><div class="snapshot-meter"><i style="width:78%"></i></div><strong>78%</strong></div>
+          <div class="snapshot-meter-row"><span>Neutral</span><div class="snapshot-meter"><i style="width:14%"></i></div><strong>14%</strong></div>
+          <div class="snapshot-meter-row"><span>Hostile</span><div class="snapshot-meter"><i style="width:8%"></i></div><strong>8%</strong></div>
+        </article>
+
+        <article class="snapshot-card">
+          <h3>Narrative / sentiment</h3>
+          <div class="snapshot-heatmap" aria-hidden="true">
+            <span></span><span></span><span class="hot"></span><span class="hot"></span><span></span><span></span><span class="mid"></span><span class="hot"></span><span class="mid"></span><span></span>
+            <span class="mid"></span><span class="hot"></span><span class="hot"></span><span></span><span class="mid"></span><span class="mid"></span><span></span><span class="hot"></span><span class="hot"></span><span class="mid"></span>
+            <span></span><span class="mid"></span><span></span><span class="hot"></span><span class="hot"></span><span class="mid"></span><span></span><span></span><span class="hot"></span><span class="hot"></span>
+          </div>
+          <div class="snapshot-scale"><span>Negative</span><span>Neutral</span><span>Positive</span></div>
+        </article>
+
+        <article class="snapshot-card">
+          <h3>Live readiness <span class="snapshot-ok">✓</span></h3>
+          <div class="snapshot-meter-row"><span>Energy</span><div class="snapshot-meter"><i style="width:82%"></i></div><strong>82%</strong></div>
+          <div class="snapshot-meter-row"><span>Hydration</span><div class="snapshot-meter"><i style="width:71%"></i></div><strong>71%</strong></div>
+          <div class="snapshot-meter-row"><span>Recovery</span><div class="snapshot-meter"><i style="width:76%"></i></div><strong>76%</strong></div>
+        </article>
+
+        <article class="snapshot-card timeline-card">
+          <h3>Late-lock timeline</h3>
+          <div class="snapshot-timeline" aria-hidden="true">
+            <span></span><span></span><span class="active"></span>
+          </div>
+          <div class="snapshot-timeline-labels">
+            <span>Open<br>T-48h</span>
+            <span>Tracking<br>T-6h</span>
+            <span>Final lock<br>T-30s</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="snapshot-stat-grid">
+        <div class="snapshot-stat"><strong>10k</strong><span>Simulations per fight</span></div>
+        <div class="snapshot-stat"><strong>28W - 14L</strong><span>Model record</span></div>
+        <div class="snapshot-stat"><strong>30s</strong><span>Final lock before fight</span></div>
+        <div class="snapshot-stat"><strong>H2H</strong><span>Head-to-head context only</span></div>
+      </div>
     </div>
   </section>
 
@@ -5209,77 +7229,121 @@ h1 {
     </div>
   </section>
 
-  <section class="section thesis-section">
-    <div class="container">
-      <div class="section-heading thesis-heading">
-        <h2>The thesis.</h2>
-      </div>
-
-      <div class="thesis-layout">
-        <article class="thesis-manifesto">
-          <section class="thesis-card wide">
-            <span class="thesis-marker">01</span>
-            <h3 class="thesis-card-title">Personality moves price.</h3>
-            <p>UFC is a small group of elite fighters, each with wildly different personalities and attitudes. Styles make matchups, and this is truer here than in almost any other sport. Confidence wins fights. Arrogance loses them. Ego can be the deciding factor.</p>
-            <p>What makes UFC so uniquely unpredictable is that it’s only two competitors in a cage. That leaves massive room for variance. The best game plan can be shattered by bad press, awkward face off moments, negative energy, or even something as random as a viral flu.</p>
-          </section>
-
-          <section class="thesis-punchcard">
-            <p>The fight must go on.</p>
-          </section>
-
-          <section class="thesis-card">
-            <span class="thesis-marker">02</span>
-            <h3 class="thesis-card-title">Late reads matter.</h3>
-            <p>Sometimes you can’t accurately read a fight until the referee claps his hands. A fighter can have every physical advantage in the world, but a humiliating moment at the press conference, a hostile walkout reception, or an electric crowd response can swing the outcome harder than any single punch.</p>
-            <p>This is the manifestation of two powerful individuals colliding and sometimes it feels impossible to predict.</p>
-          </section>
-
-          <section class="thesis-card pressure">
-            <span class="thesis-marker">03</span>
-            <h3 class="thesis-card-title">Atmosphere beats paper.</h3>
-            <p>Basic stats (height, weight, reach, record, stylistic matchups) give you an edge, but attitude and atmosphere often decide more fights than all the numbers combined.</p>
-            <p>Imagine having the clear advantage on paper… only to walk out to 50,000 people booing you while they pour energy into your opponent. The crowd cheers their mistakes, falls silent during your best technical moments, and boos every time you try to slow the fight down.</p>
-          </section>
-
-          <section class="thesis-card wide pressure">
-            <span class="thesis-marker">04</span>
-            <h3 class="thesis-card-title">Pressure is the blind spot.</h3>
-            <p><strong>That pressure is real and it influences fighters.</strong> That’s exactly what Live Picks is built to capture.</p>
-            <p>We scrape every meaningful physical data point, study fight history, current form, personality traits, crowd dynamics, and hidden blind spots. We look for the fighter who simply wants it more on that specific night because those are the ones who shock the world.</p>
-          </section>
-
-          <section class="thesis-card final">
-            <div>
-              <span class="thesis-marker">05</span>
-              <h3 class="thesis-card-title">The edge is late.</h3>
-              <p class="thesis-result-note">Running this model has delivered strong profitability, with tens of thousands in results.</p>
-            </div>
-            <div class="thesis-live-callout">
-              <span>The one catch?</span>
-              <p>The best edge comes from betting live, right as the fight is about to happen.</p>
-            </div>
-          </section>
-        </article>
-
-        <aside class="scope-panel thesis-rules">
-          <div class="scope-label">Live Picks rules</div>
-          <h3>Only release a pick when the late read is real.</h3>
-          <ul class="scope-list">
-            <li><strong>Head-to-head only</strong>We only assess which fighter is most likely to win the matchup overall.</li>
-            <li><strong>No method or round props</strong>Those markets are too noisy and too difficult to quantify with confidence.</li>
-            <li><strong>Late confirmation matters</strong>Some plays are not fit to release until the final minutes, or even the final 30 seconds before the fight starts.</li>
-          </ul>
-        </aside>
-      </div>
-    </div>
-  </section>
-
   <section id="proof" class="section">
     <div class="container">
       <div class="section-heading">
         <h2>Past wins.</h2>
         <p>Examples of underdogs and live fight-night reads that exposed potential holes in bookmaker pricing.</p>
+      </div>
+
+      <div class="desktop-proof-grid" aria-label="Past wins desktop cards">
+        <article class="proof-win-card">
+          <div class="proof-date">Jun 28, 2025 • Freedom 250</div>
+          <div class="proof-fight">
+            <div class="proof-fighter winner">
+              <div class="proof-face"><img src="justin.png" alt="Justin Gaethje"></div>
+              <strong>Gaethje</strong>
+              <span>Model pick</span>
+            </div>
+            <div class="proof-vs">vs</div>
+            <div class="proof-fighter">
+              <div class="proof-face"><img src="illa.png" alt="Ilia Topuria"></div>
+              <strong>Topuria</strong>
+              <span>Market side</span>
+            </div>
+          </div>
+          <div class="proof-result"><span>Winner</span><strong>+340</strong></div>
+        </article>
+
+        <article class="proof-win-card">
+          <div class="proof-date">Nov 2, 2024 • Fight Night</div>
+          <div class="proof-fight">
+            <div class="proof-fighter winner">
+              <div class="proof-face"><img src="green.png" alt="Bobby Green"></div>
+              <strong>Green</strong>
+              <span>Model pick</span>
+            </div>
+            <div class="proof-vs">vs</div>
+            <div class="proof-fighter">
+              <div class="proof-face"><img src="zellhuber.png" alt="Daniel Zellhuber"></div>
+              <strong>Zellhuber</strong>
+              <span>Paper edge</span>
+            </div>
+          </div>
+          <div class="proof-result"><span>Winner</span><strong>+290</strong></div>
+        </article>
+
+        <article class="proof-win-card">
+          <div class="proof-date">Oct 12, 2024 • UFC 304</div>
+          <div class="proof-fight">
+            <div class="proof-fighter winner">
+              <div class="proof-face"><img src="strickland.png" alt="Sean Strickland"></div>
+              <strong>Strickland</strong>
+              <span>Model pick</span>
+            </div>
+            <div class="proof-vs">vs</div>
+            <div class="proof-fighter">
+              <div class="proof-face"><img src="fluffy.png" alt="Anthony Hernandez"></div>
+              <strong>Hernandez</strong>
+              <span>Public side</span>
+            </div>
+          </div>
+          <div class="proof-result"><span>Winner</span><strong>+202</strong></div>
+        </article>
+
+        <article class="proof-win-card">
+          <div class="proof-date">Sep 14, 2024 • UFC 303</div>
+          <div class="proof-fight">
+            <div class="proof-fighter">
+              <div class="proof-face"><img src="adesanya.png" alt="Israel Adesanya"></div>
+              <strong>Adesanya</strong>
+              <span>Market side</span>
+            </div>
+            <div class="proof-vs">vs</div>
+            <div class="proof-fighter winner">
+              <div class="proof-face"><img src="pyfer.png" alt="Joe Pyfer"></div>
+              <strong>Pyfer</strong>
+              <span>Model pick</span>
+            </div>
+          </div>
+          <div class="proof-result"><span>Winner</span><strong>+270</strong></div>
+        </article>
+
+        <article class="proof-win-card">
+          <div class="proof-date">Aug 31, 2024 • Main Card</div>
+          <div class="proof-fight">
+            <div class="proof-fighter winner">
+              <div class="proof-face"><img src="neal.png" alt="Geoff Neal"></div>
+              <strong>Neal</strong>
+              <span>Model pick</span>
+            </div>
+            <div class="proof-vs">vs</div>
+            <div class="proof-fighter">
+              <div class="proof-face"><img src="medic.png" alt="Uros Medic"></div>
+              <strong>Medic</strong>
+              <span>Late steam</span>
+            </div>
+          </div>
+          <div class="proof-result"><span>Winner</span><strong>+118</strong></div>
+        </article>
+
+        <article class="proof-win-card">
+          <div class="proof-date">Jul 20, 2024 • Live Edge</div>
+          <div class="proof-fight">
+            <div class="proof-fighter">
+              <div class="proof-face"><img src="fluffy.png" alt="Anthony Hernandez"></div>
+              <strong>Hernandez</strong>
+              <span>Paper edge</span>
+            </div>
+            <div class="proof-vs">vs</div>
+            <div class="proof-fighter winner">
+              <div class="proof-face"><img src="strickland.png" alt="Sean Strickland"></div>
+              <strong>Strickland</strong>
+              <span>Model pick</span>
+            </div>
+          </div>
+          <div class="proof-result"><span>Winner</span><strong>+132</strong></div>
+        </article>
       </div>
 
       <div class="picks-grid">
