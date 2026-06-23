@@ -1,0 +1,19 @@
+{
+  "id": "/",
+  "name": "Live Picks",
+  "short_name": "Live Picks",
+  "description": "Premium fight-night pick alerts and live board.",
+  "start_url": "/premium-feed.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fafbf9",
+  "theme_color": "#fafbf9",
+  "icons": [
+    {
+      "src": "/lp-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
