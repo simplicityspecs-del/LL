@@ -1,39 +1,2030 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#fafbf9">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="msapplication-TileColor" content="#fafbf9">
-<meta name="color-scheme" content="light">
-<title>Live Picks • Fight Night Edge Model</title>
-<meta name="description" content="Live Picks analyses fight-night market holes by combining model probabilities with walkout reads, crowd energy, fighter condition, media pressure and live bookmaker movement.">
-<style>
+/* Shared Live Picks light theme. Loaded after each page's local styles. */
 :root {
-  --bg: #050806;
-  --surface: #0d130f;
-  --border: #26342b;
-  --border-soft: rgba(34, 255, 136, 0.18);
-  --text: #f2f7f3;
-  --faint: #5d6b60;
-  --green: #22ff88;
-  --red: #ff4d5f;
-  --shadow: rgba(0, 0, 0, 0.45);
+  color-scheme: light;
+  --bg: #f6f8f5 !important;
+  --surface: #ffffff !important;
+  --surface-2: #f7f8f6 !important;
+  --border: #dce2dd !important;
+  --border-soft: rgba(5, 5, 6, 0.12) !important;
+  --text: #070907 !important;
+  --muted: #555d57 !important;
+  --faint: #68706a !important;
+  --green: #2fba73 !important;
+  --red: #ff4d5f !important;
+  --warning: #c59a22 !important;
+  --shadow: rgba(14, 18, 15, 0.08) !important;
 }
 
-* { box-sizing: border-box; }
 html {
-  scroll-behavior: smooth;
-  background: var(--bg);
-  min-height: 100%;
+  background: #f6f8f5 !important;
 }
+
 body {
-  margin: 0;
   background:
-    radial-gradient(circle at 18% 8%, rgba(34, 255, 136, 0.10), transparent 28%),
-    radial-gradient(circle at 88% 38%, rgba(34, 255, 136, 0.08), transparent 32%),
-    linear-gradient(180deg, var(--bg) 0%, #060806 44%, #020302 100%);
+    radial-gradient(circle at 16% 7%, rgba(47, 186, 115, 0.08), transparent 30%),
+    radial-gradient(circle at 88% 24%, rgba(5, 5, 6, 0.045), transparent 28%),
+    linear-gradient(180deg, #fafbf9 0%, #f6f8f5 52%, #eef2ef 100%) !important;
+  background-color: #f6f8f5 !important;
+  color: #070907 !important;
+}
+
+body::before {
+  background-image:
+    linear-gradient(rgba(8, 11, 8, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 11, 8, 0.035) 1px, transparent 1px) !important;
+  opacity: 0.7 !important;
+}
+
+body,
+p,
+li,
+small,
+label,
+.copy,
+.hero-copy,
+.checkout-copy,
+.card-copy,
+.login-note,
+.fine-print,
+.note,
+.disclaimer,
+.ticker-item span,
+.footer p {
+  color: #555d57 !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+strong,
+.brand,
+.footer-brand,
+.hero-title,
+.checkout-title,
+.panel-title,
+.panel-head h2,
+.card-heading h3,
+.card-payment-title,
+.card-payment-head,
+.wallet-title,
+.portal-title,
+.fighter-name,
+.value,
+.total,
+.price,
+.odds,
+.data-card strong,
+.summary-row strong,
+.summary-box strong,
+.event-head strong,
+.fight-row strong,
+.session-row strong,
+.premium-box strong {
+  color: #050506 !important;
+}
+
+.topbar {
+  border-bottom: 1px solid #dce2dd !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  box-shadow: 0 10px 30px rgba(14, 18, 15, 0.045) !important;
+}
+
+.topbar .brand,
+.topbar .brand-text-only {
+  gap: 0 !important;
+  color: #050506 !important;
+  font-size: 1.02rem !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.035em !important;
+  line-height: 1 !important;
+}
+
+.topbar .brand span {
+  color: #050506 !important;
+}
+
+.topbar .brand-mark,
+.topbar .desktop-brand-mark {
+  display: none !important;
+}
+
+.portal-mobile-actions {
+  display: none;
+}
+
+.nav-links a,
+.nav-link,
+.login-btn,
+.back-btn,
+.back-link,
+.top-button,
+.filter-btn,
+.mini-btn,
+.card-button,
+.wallet-button,
+.wallet-fallback-button,
+.subscribe-btn {
+  border-color: #dce2dd !important;
+  background: rgba(255, 255, 255, 0.82) !important;
+  color: #303632 !important;
+  box-shadow: none !important;
+}
+
+.nav-links a.active,
+.nav-links a:hover,
+.nav-link:hover,
+.login-btn:hover,
+.back-btn:hover,
+.back-link:hover,
+.top-button:hover,
+.filter-btn.active,
+.mini-btn:hover,
+.card-button:hover,
+.wallet-button:hover,
+.wallet-fallback-button:hover,
+.subscribe-btn:hover {
+  border-color: rgba(47, 186, 115, 0.45) !important;
+  background: rgba(47, 186, 115, 0.08) !important;
+  color: #1f8a53 !important;
+}
+
+.edge-ticker,
+.odds-ticker {
+  border-block: 1px solid #dce2dd !important;
+  background: #ffffff !important;
+  color: #303632 !important;
+}
+
+.ticker-item {
+  border-color: #e2e6e1 !important;
+  background: #f7f8f6 !important;
+  color: #303632 !important;
+}
+
+.ticker-market,
+.eyebrow,
+.kicker,
+.section-label,
+.card-kicker,
+.card-label,
+.form-label,
+.label,
+.step,
+.scope-label,
+.signal-status,
+.status-pill,
+.access-pill,
+.secure-status,
+.secure-pill,
+.privacy-badge,
+.summary-badge,
+.live-status,
+.card-topline,
+.pick-card-top,
+.event-tag,
+.event-meta,
+.preview-time,
+.hero-insight-label {
+  color: #68706a !important;
+  text-shadow: none !important;
+}
+
+.ticker-item em,
+.ticker-item em.odds-low,
+.green,
+.value.green,
+.text-link,
+.factor-score,
+.success-mark,
+.live-dot,
+.result-chip,
+.secure-status::before,
+.secure-pill::before,
+.kicker::before,
+.live-status::before {
+  color: #2fba73 !important;
+}
+
+.red,
+.value.red,
+.danger,
+.inline-state.is-error,
+.event-tag.red,
+.ticker-item em.red {
+  color: #d93245 !important;
+}
+
+.warn,
+.ticker-item em.warn,
+.inline-state.is-warning {
+  color: #9a7416 !important;
+}
+
+.index-page .odds-ticker .ticker-item em {
+  border-color: rgba(47, 186, 115, 0.34) !important;
+  background: rgba(47, 186, 115, 0.1) !important;
+  color: #1f8a53 !important;
+  box-shadow: none !important;
+}
+
+.index-page .odds-ticker .ticker-item em.odds-low {
+  border-color: rgba(217, 50, 69, 0.34) !important;
+  background: rgba(217, 50, 69, 0.1) !important;
+  color: #d93245 !important;
+  box-shadow: none !important;
+}
+
+.card,
+.panel,
+.model-card,
+.fighter-card,
+.edge-box,
+.data-card,
+.how-card,
+.signal-card,
+.pick-card,
+.scope-panel,
+.thesis-card,
+.thesis-punchcard,
+.checkout-panel,
+.summary-box,
+.benefit-card,
+.compliance-card,
+.protocol-card,
+.support-card,
+.terms-box,
+.card-shell,
+.card-payment-box,
+.plan-option,
+.privacy-card,
+.step-card,
+.recovery-panel,
+.login-panel,
+.preview-panel,
+.highlight-card,
+.event-card,
+.account-card,
+.feed-card,
+.session-card,
+.event-shell,
+.fight-row,
+.pending-prompt,
+.sticky-card,
+.account-main,
+.account-section-wrap,
+.intro-panel,
+.signup-card,
+.disclaimer-card,
+.premium-reminder,
+.summary-card,
+.chart-card,
+.list-card,
+.hero-side,
+.hero-main,
+.hero-panel,
+.hero-insight-card,
+.release-panel,
+.release-item,
+.premium-box,
+.safer-box,
+.protocol-strip,
+.access-field,
+.processor-state,
+.wallet-primary,
+.wallet-primary-head,
+.card-cell,
+.odds-box {
+  border-color: #dce2dd !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  box-shadow: 0 14px 34px rgba(14, 18, 15, 0.06) !important;
+}
+
+.panel::before,
+.card::before,
+.signal-card::before,
+.thesis-card::before,
+.thesis-punchcard::before,
+.live-data-card::before {
+  opacity: 0.18 !important;
+}
+
+.btn,
+.btn-ghost,
+.top-button,
+.notify-button,
+.wallet-button,
+.wallet-fallback-button,
+.card-button,
+.mini-btn,
+.filter-btn {
+  border-color: #dce2dd !important;
+  background: #ffffff !important;
+  color: #050506 !important;
+  box-shadow: none !important;
+}
+
+.btn-primary,
+.top-button.primary,
+.wallet-primary,
+.wallet-button.wallet-primary,
+.wallet-primary-head,
+.card-button.primary,
+.wallet-fallback-button.primary,
+.notify-button.primary,
+.subscribe-btn,
+.premium-strip,
+.premium-strip .btn-primary {
+  border-color: #050506 !important;
+  background: #050506 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.btn-primary *,
+.top-button.primary *,
+.wallet-primary *,
+.wallet-primary-head *,
+.premium-strip *,
+.subscribe-btn * {
+  color: inherit !important;
+}
+
+.btn-danger {
+  border-color: rgba(255, 77, 95, 0.38) !important;
+  background: rgba(255, 77, 95, 0.08) !important;
+  color: #d93245 !important;
+}
+
+.input,
+.textarea,
+.email-input,
+.account-input,
+input:not([type="checkbox"]):not([type="radio"]),
+textarea,
+.select-like {
+  border-color: #dce2dd !important;
+  background: #ffffff !important;
+  color: #050506 !important;
+  box-shadow: none !important;
+}
+
+.input::placeholder,
+.textarea::placeholder,
+.email-input::placeholder,
+.account-input::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: #8a928c !important;
+}
+
+.input:focus,
+.textarea:focus,
+.email-input:focus,
+.account-input:focus,
+input:focus,
+textarea:focus {
+  border-color: rgba(47, 186, 115, 0.56) !important;
+  box-shadow: 0 0 0 4px rgba(47, 186, 115, 0.10) !important;
+  outline: none !important;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: #2fba73 !important;
+}
+
+.inline-state,
+.message,
+.state,
+.processor-state,
+.panel-note,
+.account-note,
+.checkout-note,
+.terms-box,
+.terms-box--wallet {
+  border-color: #dce2dd !important;
+  background: #f7f8f6 !important;
+  color: #555d57 !important;
+}
+
+.inline-state.is-success,
+.processor-state.is-success,
+.message.is-success {
+  border-color: rgba(47, 186, 115, 0.32) !important;
+  background: rgba(47, 186, 115, 0.08) !important;
+  color: #1f8a53 !important;
+}
+
+.inline-state.is-error,
+.processor-state.is-error,
+.message.is-error {
+  border-color: rgba(255, 77, 95, 0.30) !important;
+  background: rgba(255, 77, 95, 0.08) !important;
+  color: #d93245 !important;
+}
+
+.badge,
+.result-chip,
+.access-pill,
+.secure-pill,
+.privacy-badge,
+.status-pill,
+.summary-badge,
+.event-tag.live,
+.tag.green {
+  border-color: rgba(47, 186, 115, 0.30) !important;
+  background: rgba(47, 186, 115, 0.08) !important;
+  color: #1f8a53 !important;
+}
+
+.tag.red,
+.event-tag.red {
+  border-color: rgba(255, 77, 95, 0.30) !important;
+  background: rgba(255, 77, 95, 0.08) !important;
+  color: #d93245 !important;
+}
+
+.divider,
+.divider-dot,
+.footer,
+.card-row,
+.summary-row,
+.sub-row,
+.event-meta-grid,
+.login-row,
+.panel-links,
+.access-credentials-grid {
+  border-color: #dce2dd !important;
+}
+
+.footer {
+  background: transparent !important;
+}
+
+.disclaimer,
+.responsible-footer,
+.disclaimer-card {
+  border-color: #dce2dd !important;
+  background: rgba(255, 255, 255, 0.86) !important;
+  color: #555d57 !important;
+}
+
+.infographic,
+.chart,
+.graph-callout,
+.line-graph,
+.preview-item,
+.feed-section,
+.event-meta-grid,
+.condition-panel {
+  border-color: #dce2dd !important;
+  background: #f7f8f6 !important;
+}
+
+.crowd-bars span,
+.meter span,
+.snapshot-meter i {
+  background: #2fba73 !important;
+  box-shadow: 0 0 13px rgba(47, 186, 115, 0.20) !important;
+}
+
+.condition-row:nth-child(4) .meter span,
+.loss,
+.form-dots span.loss {
+  background: #ff4d5f !important;
+}
+
+.sentiment-map span,
+.snapshot-heatmap span,
+.form-dots span {
+  border-color: #dce2dd !important;
+  background: #e8ece7 !important;
+}
+
+.sentiment-map span.hot,
+.snapshot-heatmap .hot,
+.form-dots span.win {
+  background: #2fba73 !important;
+}
+
+.sentiment-map span.mid,
+.snapshot-heatmap .mid {
+  background: rgba(47, 186, 115, 0.34) !important;
+}
+
+.sentiment-map span.bad {
+  background: #ff4d5f !important;
+}
+
+#model .how-card::after,
+#model .infographic::after {
+  content: none !important;
+  animation: none !important;
+}
+
+#model .crowd-bars span,
+#model .sentiment-map span,
+#model .meter span {
+  animation: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+.live-data-strip .simulation-visual i {
+  transform-origin: center bottom !important;
+  animation:
+    dataBarResolve 820ms cubic-bezier(.2, .72, .2, 1) both,
+    summaryBarRead 4.8s ease-in-out 1s infinite !important;
+}
+
+.live-data-strip .simulation-visual i:nth-child(2) { animation-delay: 0.08s, 1.12s !important; }
+.live-data-strip .simulation-visual i:nth-child(3) { animation-delay: 0.16s, 1.24s !important; }
+.live-data-strip .simulation-visual i:nth-child(4) { animation-delay: 0.24s, 1.36s !important; }
+.live-data-strip .simulation-visual i:nth-child(5) { animation-delay: 0.32s, 1.48s !important; }
+
+.live-data-strip .record-visual i:nth-child(-n+4) {
+  animation: summaryDotRead 4.8s ease-in-out infinite !important;
+}
+
+.live-data-strip .record-visual i:nth-child(2) { animation-delay: 0.18s !important; }
+.live-data-strip .record-visual i:nth-child(3) { animation-delay: 0.36s !important; }
+.live-data-strip .record-visual i:nth-child(4) { animation-delay: 0.54s !important; }
+
+.live-data-strip .timer-visual::before {
+  animation: summaryTimerSweep 9s linear infinite !important;
+}
+
+.live-data-strip .timer-visual i {
+  animation: summaryNeedleRead 4.8s cubic-bezier(.45, 0, .25, 1) infinite !important;
+}
+
+.live-data-strip .h2h-visual i {
+  animation: summaryCellRead 4.6s ease-in-out infinite !important;
+}
+
+.live-data-strip .h2h-visual i:nth-child(2) {
+  animation-delay: 0.42s !important;
+}
+
+.live-data-strip .h2h-visual b {
+  animation: summaryConnectorRead 4.6s ease-in-out infinite !important;
+  transform-origin: left center;
+}
+
+@keyframes summaryBarRead {
+  0%, 100% { transform: scaleY(0.88); opacity: 0.72; }
+  46% { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes summaryDotRead {
+  0%, 100% {
+    opacity: 0.74;
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(47, 186, 115, 0);
+  }
+  44% {
+    opacity: 1;
+    transform: scale(1.12);
+    box-shadow: 0 0 16px rgba(47, 186, 115, 0.24);
+  }
+}
+
+@keyframes summaryTimerSweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes summaryNeedleRead {
+  0%, 100% { transform: translate(-50%, -100%) rotate(-8deg); }
+  48% { transform: translate(-50%, -100%) rotate(18deg); }
+}
+
+@keyframes summaryCellRead {
+  0%, 100% {
+    box-shadow: inset 0 0 0 10px rgba(47, 186, 115, 0.08);
+    transform: scale(1);
+  }
+  46% {
+    box-shadow: inset 0 0 0 10px rgba(47, 186, 115, 0.16);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes summaryConnectorRead {
+  0%, 100% {
+    opacity: 0.36;
+    transform: scaleX(0.72);
+  }
+  46% {
+    opacity: 0.72;
+    transform: scaleX(1);
+  }
+}
+
+/* Checkout-specific readability pass. */
+.checkout-top-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.checkout-top-actions .login-btn {
+  min-height: 38px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 8px !important;
+  padding: 0 18px !important;
+  font-size: 0.82rem !important;
+  font-weight: 750 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  text-transform: none !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+
+.checkout-top-actions .newsletter-btn {
+  border: 1px solid #dce2dd !important;
+  background: #ffffff !important;
+  color: #303632 !important;
+}
+
+.checkout-top-actions .premium-login-link {
+  border: 1px solid #050506 !important;
+  background: #050506 !important;
+  color: #ffffff !important;
+}
+
+.checkout-top-actions .newsletter-btn:hover {
+  border-color: rgba(47, 186, 115, 0.44) !important;
+  background: rgba(47, 186, 115, 0.08) !important;
+  color: #1f8a53 !important;
+}
+
+.checkout-top-actions .premium-login-link:hover {
+  border-color: #050506 !important;
+  background: #050506 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.checkout-page .edge-ticker {
+  display: block !important;
+  border-top: 1px solid #dce2dd !important;
+  border-bottom: 1px solid #dce2dd !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.checkout-page .ticker-track {
+  animation-duration: 38s !important;
+}
+
+.checkout-page .ticker-item {
+  min-height: 52px;
+  padding: 9px 22px;
+  border-right: 1px solid #dce2dd !important;
+  background: #f7f8f6 !important;
+  color: #303632 !important;
+  font-size: 0.78rem;
+  letter-spacing: 0.07em;
+}
+
+.checkout-page .ticker-market {
+  color: #68706a !important;
+  font-size: 0.62rem;
+}
+
+.checkout-page .ticker-item strong {
+  color: #050506 !important;
+}
+
+.checkout-page .ticker-item em {
+  min-width: 58px;
+  padding: 4px 8px;
+  border-color: rgba(47, 186, 115, 0.26) !important;
+  background: rgba(47, 186, 115, 0.08) !important;
+  box-shadow: none !important;
+}
+
+.checkout-page .ticker-item em.warn {
+  border-color: rgba(197, 154, 34, 0.34) !important;
+  background: rgba(197, 154, 34, 0.08) !important;
+}
+
+.checkout-page .ticker-item em.red {
+  border-color: rgba(217, 50, 69, 0.35) !important;
+  background: rgba(217, 50, 69, 0.08) !important;
+}
+
+.checkout-page .checkout-topbar {
+  background: #ffffff !important;
+  border-bottom: 1px solid #dce2dd !important;
+  box-shadow: none !important;
+}
+
+.checkout-page .checkout-topbar .checkout-nav {
+  width: min(100% - 48px, 1180px) !important;
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  align-items: start !important;
+  gap: 10px !important;
+  padding: 11px 0 12px !important;
+}
+
+.checkout-page .checkout-topbar .brand {
+  width: fit-content !important;
+  font-size: clamp(1.38rem, 2vw, 1.62rem) !important;
+  font-weight: 950 !important;
+  letter-spacing: -0.055em !important;
+  line-height: 0.95 !important;
+}
+
+.checkout-header-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(148px, 180px));
+  justify-content: center;
+  justify-self: center;
+  gap: 10px;
+  width: min(100%, 390px);
+}
+
+.checkout-header-button {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dce2dd;
+  background: #ffffff;
+  color: #303632;
+  font-size: 0.76rem;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.checkout-header-button:hover {
+  border-color: rgba(47, 186, 115, 0.5);
+  background: rgba(47, 186, 115, 0.07);
+  color: #1f8a53;
+  transform: translateY(-1px);
+}
+
+/* Desktop refinement: align the key page headers with the compact mobile treatment. */
+@media (min-width: 681px) {
+  .index-page .topbar,
+  .portal-page .topbar,
+  .checkout-page .checkout-topbar {
+    background: rgba(255, 255, 255, 0.94) !important;
+    border-bottom: 1px solid #dce2dd !important;
+    box-shadow: 0 8px 22px rgba(14, 18, 15, 0.045) !important;
+  }
+
+  .index-page .topbar .container.nav,
+  .portal-page .topbar .container.nav,
+  .checkout-page .checkout-topbar .checkout-nav {
+    width: min(100% - 36px, 1180px) !important;
+    min-height: 42px !important;
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 6px 0 !important;
+  }
+
+  .index-page .topbar .brand.brand-text-only,
+  .portal-page .topbar .brand.brand-text-only,
+  .checkout-page .checkout-topbar .brand.brand-text-only {
+    min-width: max-content !important;
+    width: auto !important;
+    color: #050506 !important;
+    font-size: 0.96rem !important;
+    font-weight: 950 !important;
+    letter-spacing: -0.045em !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .index-page .topbar .brand.brand-text-only span,
+  .portal-page .topbar .brand.brand-text-only span,
+  .checkout-page .checkout-topbar .brand.brand-text-only span {
+    color: #050506 !important;
+    max-width: none !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+  }
+
+  .index-page .topbar .header-buttons {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 0 !important;
+  }
+
+  .index-page .topbar .desktop-nav,
+  .portal-page .portal-desktop-actions {
+    display: none !important;
+  }
+
+  .index-page .topbar .top-actions,
+  .portal-page .portal-mobile-actions,
+  .checkout-page .checkout-header-actions {
+    width: auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    grid-template-columns: none !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    justify-self: end !important;
+    gap: 6px !important;
+    margin-left: auto !important;
+  }
+
+  .index-page .topbar .top-actions .login-btn,
+  .portal-page .portal-mobile-actions .nav-link,
+  .checkout-page .checkout-header-button {
+    width: auto !important;
+    min-width: 0 !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    flex: 0 1 auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 10px !important;
+    border: 1px solid #dce2dd !important;
+    border-radius: 6px !important;
+    background: rgba(255, 255, 255, 0.82) !important;
+    color: #303632 !important;
+    box-shadow: none !important;
+    font-size: 0.64rem !important;
+    font-weight: 820 !important;
+    letter-spacing: 0.02em !important;
+    line-height: 1 !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+  }
+
+  .index-page .topbar .premium-login-link,
+  .checkout-page .checkout-header-button:last-child {
+    border-color: #050506 !important;
+    background: #050506 !important;
+    color: #ffffff !important;
+  }
+
+  .portal-page .portal-mobile-actions .nav-link:hover,
+  .checkout-page .checkout-header-button:hover,
+  .index-page .topbar .top-actions .login-btn:hover {
+    border-color: rgba(47, 186, 115, 0.45) !important;
+    background: rgba(47, 186, 115, 0.08) !important;
+    color: #1f8a53 !important;
+    transform: translateY(-1px);
+  }
+}
+
+/* Desktop-only card polish for the main prediction cards. */
+@media (min-width: 681px) {
+  .index-page #predictions.section {
+    padding: 58px 0 62px !important;
+  }
+
+  .index-page #predictions .model-card {
+    border: 1px solid #dfe5df !important;
+    border-radius: 8px !important;
+    background:
+      linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)),
+      linear-gradient(90deg, rgba(47,186,115,0.025), transparent 42%, rgba(5,5,6,0.018)) !important;
+    box-shadow: 0 18px 42px rgba(14, 18, 15, 0.07) !important;
+    overflow: hidden !important;
+  }
+
+  .index-page #predictions .model-card + .model-card {
+    margin-top: 20px !important;
+  }
+
+  .index-page #predictions .fight-board {
+    padding: 22px 24px 24px !important;
+  }
+
+  .index-page #predictions .fight-title {
+    min-height: 54px !important;
+    margin: -22px -24px 22px !important;
+    padding: 0 24px !important;
+    border-bottom: 1px solid #dfe5df !important;
+    background: rgba(255,255,255,0.92) !important;
+  }
+
+  .index-page #predictions .fight-title h2 {
+    color: #050506 !important;
+    font-size: 0.82rem !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.17em !important;
+    text-transform: uppercase !important;
+  }
+
+  .index-page #predictions .result-chip {
+    min-height: 30px !important;
+    padding: 0 13px !important;
+    border-color: rgba(47, 186, 115, 0.32) !important;
+    background: rgba(47, 186, 115, 0.08) !important;
+    color: #1f8a53 !important;
+    box-shadow: none !important;
+  }
+
+  .index-page #predictions .result-chip::before {
+    background: #2fba73 !important;
+  }
+
+  .index-page #predictions .matchup {
+    grid-template-columns: minmax(0, 1fr) 96px minmax(0, 1fr) !important;
+    gap: 0 !important;
+    border: 1px solid #dfe5df !important;
+    background: #ffffff !important;
+  }
+
+  .index-page #predictions .fighter-card {
+    min-height: 210px !important;
+    padding: 28px !important;
+    grid-template-columns: 92px minmax(0, 1fr) !important;
+    gap: 18px !important;
+    background: rgba(255,255,255,0.94) !important;
+  }
+
+  .index-page #predictions .fighter-card.pick {
+    border-left: 0 !important;
+    background: linear-gradient(90deg, rgba(47,186,115,0.045), rgba(255,255,255,0.96) 54%) !important;
+  }
+
+  .index-page #predictions .fighter-card.fade {
+    opacity: 1 !important;
+  }
+
+  .index-page #predictions .portrait {
+    width: 92px !important;
+    height: 92px !important;
+    border-color: #dce2dd !important;
+    border-radius: 8px !important;
+    background: linear-gradient(180deg, #f6f8f5, #e9eee9) !important;
+    box-shadow: none !important;
+  }
+
+  .index-page #predictions .fighter-name {
+    color: #050506 !important;
+    font-size: clamp(2.05rem, 3.2vw, 3.15rem) !important;
+    line-height: 0.94 !important;
+    letter-spacing: -0.075em !important;
+  }
+
+  .index-page #predictions .fighter-meta {
+    gap: 8px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .index-page #predictions .tag {
+    min-height: 30px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    border-color: #dfe5df !important;
+    background: rgba(255,255,255,0.86) !important;
+    color: #555d57 !important;
+    padding: 0 10px !important;
+    font-size: 0.68rem !important;
+    font-weight: 920 !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .index-page #predictions .tag.green {
+    border-color: rgba(47, 186, 115, 0.36) !important;
+    background: rgba(47, 186, 115, 0.08) !important;
+    color: #1f8a53 !important;
+  }
+
+  .index-page #predictions .tag.red {
+    border-color: rgba(255, 77, 95, 0.34) !important;
+    background: rgba(255, 77, 95, 0.07) !important;
+    color: #d93245 !important;
+  }
+
+  .index-page #predictions .form-label {
+    color: #68706a !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.16em !important;
+  }
+
+  .index-page #predictions .form-dots {
+    gap: 7px !important;
+  }
+
+  .index-page #predictions .form-dots span {
+    width: 25px !important;
+    height: 7px !important;
+    border-radius: 0 !important;
+    background: #dce2dd !important;
+  }
+
+  .index-page #predictions .form-dots span.win {
+    background: #2fba73 !important;
+    box-shadow: 0 10px 20px rgba(47,186,115,0.14) !important;
+  }
+
+  .index-page #predictions .form-dots span.loss {
+    background: #ff4d5f !important;
+    box-shadow: 0 10px 20px rgba(255,77,95,0.13) !important;
+  }
+
+  .index-page #predictions .vs-block {
+    width: 96px !important;
+    border-inline: 1px solid #dfe5df !important;
+    background: linear-gradient(90deg, rgba(8,11,8,0.025), rgba(47,186,115,0.035), rgba(8,11,8,0.025)) !important;
+  }
+
+  .index-page #predictions .vs-block div {
+    width: 58px !important;
+    height: 58px !important;
+    border-color: #d6ddd7 !important;
+    background: #ffffff !important;
+    color: #050506 !important;
+    box-shadow: 0 10px 24px rgba(14,18,15,0.06) !important;
+  }
+
+  .index-page #predictions .edge-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    margin-top: 14px !important;
+  }
+
+  .index-page #predictions .edge-box {
+    min-height: 118px !important;
+    border: 1px solid #dfe5df !important;
+    border-radius: 6px !important;
+    background: rgba(255,255,255,0.9) !important;
+    box-shadow: none !important;
+    padding: 18px 16px !important;
+  }
+
+  .index-page #predictions .edge-box .label {
+    color: #68706a !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.17em !important;
+  }
+
+  .index-page #predictions .edge-box .value {
+    color: #050506 !important;
+    font-size: clamp(1.8rem, 2.7vw, 2.65rem) !important;
+    line-height: 0.96 !important;
+  }
+
+  .index-page #predictions .edge-box .value.green {
+    color: #2fba73 !important;
+  }
+
+  .index-page #predictions .edge-box .value.red {
+    color: #d93245 !important;
+  }
+
+  .index-page #predictions .edge-box small {
+    color: #555d57 !important;
+    font-size: 0.86rem !important;
+    line-height: 1.38 !important;
+  }
+
+  .index-page #predictions .premium-strip {
+    min-height: 72px !important;
+    margin-top: 14px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: #050506 !important;
+    box-shadow: none !important;
+    padding: 18px 20px !important;
+  }
+
+  .index-page #predictions .premium-strip strong {
+    color: #ffffff !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .index-page #predictions .premium-strip .subscribe-cta {
+    min-height: 36px !important;
+    border-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #050506 !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Desktop-only cleanup for the Justin/Ilia and Green/Zellhuber cards. */
+@media (min-width: 681px) {
+  .index-page #predictions.section {
+    padding: 42px 0 48px !important;
+  }
+
+  .index-page #predictions .container {
+    width: min(1180px, calc(100% - 64px)) !important;
+  }
+
+  .index-page #predictions .model-card {
+    border-color: #dfe5df !important;
+    border-radius: 8px !important;
+    background: rgba(255,255,255,0.94) !important;
+    box-shadow: 0 14px 32px rgba(14,18,15,0.055) !important;
+  }
+
+  .index-page #predictions .model-card + .model-card {
+    margin-top: 18px !important;
+  }
+
+  .index-page #predictions .fight-board {
+    padding: 16px !important;
+  }
+
+  .index-page #predictions .fight-title {
+    min-height: 44px !important;
+    margin: -16px -16px 14px !important;
+    padding: 0 16px !important;
+    background: rgba(255,255,255,0.96) !important;
+  }
+
+  .index-page #predictions .fight-title h2 {
+    font-size: 0.72rem !important;
+    letter-spacing: 0.16em !important;
+  }
+
+  .index-page #predictions .result-chip {
+    min-height: 26px !important;
+    padding: 0 10px !important;
+    font-size: 0.62rem !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .index-page #predictions .matchup {
+    grid-template-columns: minmax(0, 1fr) 58px minmax(0, 1fr) !important;
+    background: #ffffff !important;
+  }
+
+  .index-page #predictions .fighter-card {
+    min-height: 132px !important;
+    padding: 16px 18px !important;
+    grid-template-columns: 68px minmax(0, 1fr) !important;
+    gap: 13px !important;
+  }
+
+  .index-page #predictions .fighter-card.pick {
+    background: linear-gradient(90deg, rgba(47,186,115,0.045), rgba(255,255,255,0.98) 58%) !important;
+  }
+
+  .index-page #predictions .portrait {
+    width: 68px !important;
+    height: 68px !important;
+    border-radius: 8px !important;
+  }
+
+  .index-page #predictions .fighter-name {
+    margin-bottom: 8px !important;
+    padding-right: 0 !important;
+    font-size: clamp(1.42rem, 2.2vw, 2rem) !important;
+    line-height: 0.98 !important;
+    letter-spacing: -0.065em !important;
+  }
+
+  .index-page #predictions .fighter-name br {
+    display: none !important;
+  }
+
+  .index-page #predictions .fighter-meta {
+    gap: 6px !important;
+    margin-bottom: 9px !important;
+  }
+
+  .index-page #predictions .tag {
+    min-height: 24px !important;
+    padding: 0 8px !important;
+    font-size: 0.58rem !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  .index-page #predictions .form-line {
+    gap: 5px !important;
+  }
+
+  .index-page #predictions .form-label {
+    font-size: 0.56rem !important;
+    letter-spacing: 0.14em !important;
+  }
+
+  .index-page #predictions .form-dots {
+    gap: 5px !important;
+  }
+
+  .index-page #predictions .form-dots span {
+    width: 18px !important;
+    height: 5px !important;
+  }
+
+  .index-page #predictions .vs-block {
+    width: 58px !important;
+  }
+
+  .index-page #predictions .vs-block div {
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 0.72rem !important;
+  }
+
+  .index-page #predictions .edge-grid {
+    gap: 10px !important;
+    margin-top: 10px !important;
+  }
+
+  .index-page #predictions .edge-box {
+    min-height: 86px !important;
+    padding: 12px !important;
+  }
+
+  .index-page #predictions .edge-box .label {
+    margin-bottom: 7px !important;
+    font-size: 0.58rem !important;
+    letter-spacing: 0.15em !important;
+  }
+
+  .index-page #predictions .edge-box .value {
+    font-size: clamp(1.22rem, 2vw, 1.72rem) !important;
+    letter-spacing: -0.055em !important;
+  }
+
+  .index-page #predictions .edge-box small {
+    margin-top: 6px !important;
+    font-size: 0.68rem !important;
+    line-height: 1.28 !important;
+  }
+
+  .index-page #predictions .premium-strip {
+    display: none !important;
+  }
+}
+
+.checkout-panel,
+.checkout-panel .wallet-primary,
+.checkout-panel .card-payment-box,
+.checkout-panel .terms-box,
+.checkout-panel .card-shell {
+  border-color: #dce2dd !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  color: #050506 !important;
+  box-shadow: 0 14px 34px rgba(14, 18, 15, 0.06) !important;
+}
+
+.checkout-hero {
+  padding-top: 28px !important;
+}
+
+.checkout-grid {
+  gap: 18px !important;
+}
+
+.checkout-panel {
+  max-width: 760px;
+  margin-inline: auto;
+  padding: 22px !important;
+}
+
+.checkout-panel .wallet-primary {
+  margin: 16px 0 12px !important;
+  padding: 18px !important;
+}
+
+.checkout-panel .wallet-primary-head {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #050506 !important;
+  margin-bottom: 14px !important;
+}
+
+.checkout-panel .wallet-primary-head * {
+  color: inherit !important;
+}
+
+.checkout-panel .checkout-head,
+.checkout-panel .card-payment-head,
+.checkout-panel .card-row,
+.checkout-panel .card-cell + .card-cell {
+  border-color: #e2e6e1 !important;
+}
+
+.checkout-panel .checkout-title,
+.checkout-panel .wallet-title,
+.checkout-panel .card-payment-title,
+.checkout-panel .plan-option strong,
+.checkout-panel .check-row strong,
+.checkout-panel .processor-state strong {
+  color: #050506 !important;
+}
+
+.checkout-panel .eyebrow,
+.checkout-panel .wallet-kicker,
+.checkout-panel .card-kicker,
+.checkout-panel .form-label,
+.checkout-panel .access-setup-note,
+.checkout-panel .card-payment-copy,
+.checkout-panel .wallet-microcopy,
+.checkout-panel .card-cell,
+.checkout-panel .check-row,
+.checkout-panel .processor-state p {
+  color: #555d57 !important;
+}
+
+.checkout-panel .wallet-price-pill,
+.checkout-panel .plan-option.active strong,
+.checkout-panel .secure-status,
+.checkout-panel .check-row a {
+  color: #1f8a53 !important;
+}
+
+.checkout-panel .plan-option {
+  border-color: #dce2dd !important;
+  background: #f7f8f6 !important;
+  color: #303632 !important;
+}
+
+.checkout-panel .plan-option.active {
+  border-color: rgba(47, 186, 115, 0.44) !important;
+  background: rgba(47, 186, 115, 0.08) !important;
+}
+
+.checkout-panel .access-credentials-grid {
+  gap: 12px !important;
+}
+
+.checkout-panel .email-input {
+  border-color: #dce2dd !important;
+  background: #ffffff !important;
+  color: #050506 !important;
+  min-height: 52px !important;
+}
+
+.checkout-panel .divider {
+  color: #68706a !important;
+  margin: 14px 0 !important;
+}
+
+.checkout-panel .divider::before,
+.checkout-panel .divider::after {
+  background: #dce2dd !important;
+}
+
+.checkout-panel .wallet-button,
+.checkout-panel .card-button {
+  border-color: #050506 !important;
+  background: #050506 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  min-height: 54px !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.08em !important;
+}
+
+.checkout-panel .wallet-fallback-button:not(.is-visible) {
+  display: none !important;
+}
+
+.checkout-panel .express-checkout-element.is-hidden,
+.checkout-panel .wallet-fallback-button:not(.is-visible) + .wallet-microcopy {
+  display: none !important;
+}
+
+.checkout-panel .processor-state {
+  border-color: rgba(197, 154, 34, 0.28) !important;
+  background: rgba(197, 154, 34, 0.08) !important;
+  box-shadow: none !important;
+  margin-top: 12px !important;
+}
+
+.checkout-panel .processor-state:not(.is-visible) {
+  display: none !important;
+}
+
+.checkout-panel .card-payment-box {
+  margin-bottom: 0 !important;
+  padding: 16px !important;
+}
+
+.checkout-panel .card-payment-head {
+  margin-bottom: 12px !important;
+}
+
+.checkout-panel .card-payment-copy {
+  margin-bottom: 0 !important;
+}
+
+@media (max-width: 680px) {
+  .topbar {
+    background: rgba(255, 255, 255, 0.94) !important;
+  }
+
+  .container {
+    width: min(100% - 24px, 1180px) !important;
+  }
+
+  .checkout-top-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .checkout-top-actions .login-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 28px !important;
+    padding-inline: 7px !important;
+    font-size: clamp(0.52rem, 2.55vw, 0.62rem) !important;
+  }
+
+  .checkout-page .checkout-topbar .checkout-nav {
+    width: min(100% - 12px, 1180px) !important;
+    min-height: 34px !important;
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 4px 0 !important;
+  }
+
+  .checkout-page .checkout-topbar .brand {
+    min-width: max-content !important;
+    font-size: 0.82rem !important;
+    letter-spacing: -0.04em !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .checkout-header-actions {
+    width: auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    grid-template-columns: none !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    justify-self: end !important;
+    gap: 4px !important;
+  }
+
+  .checkout-header-button {
+    width: auto !important;
+    min-width: 0 !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    flex: 0 1 auto !important;
+    padding: 0 8px !important;
+    border-radius: 5px !important;
+    font-size: clamp(0.48rem, 2.15vw, 0.56rem) !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .checkout-page .ticker-item {
+    min-height: 28px !important;
+    padding: 4px 12px !important;
+    font-size: 0.56rem !important;
+  }
+
+  .checkout-page .ticker-market {
+    font-size: 0.48rem !important;
+  }
+
+  .checkout-page .ticker-item em {
+    min-width: 38px !important;
+    padding: 2px 5px !important;
+  }
+
+  .newsletter-page .topbar .container.nav {
+    width: min(100% - 12px, 1180px) !important;
+    min-height: 34px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-direction: row !important;
+    gap: 6px !important;
+    padding: 4px 0 !important;
+  }
+
+  .newsletter-page .topbar .brand.brand-text-only {
+    min-width: max-content !important;
+    font-size: 0.82rem !important;
+    letter-spacing: -0.04em !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .newsletter-page .newsletter-desktop-actions {
+    display: none !important;
+  }
+
+  .newsletter-page .newsletter-mobile-actions {
+    width: auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 4px !important;
+    margin-left: auto !important;
+  }
+
+  .newsletter-page .newsletter-mobile-actions .nav-link {
+    width: auto !important;
+    min-width: 0 !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    padding: 0 8px !important;
+    border-radius: 5px !important;
+    font-size: clamp(0.48rem, 2.15vw, 0.56rem) !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .newsletter-page .ticker-item {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    font-size: 0.58rem !important;
+  }
+
+  .index-page .odds-ticker {
+    border-top: 1px solid #dce2dd !important;
+    border-bottom: 1px solid #dce2dd !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  .index-page .odds-ticker .ticker-track {
+    animation-duration: 28s !important;
+  }
+
+  .index-page .odds-ticker .ticker-item {
+    min-height: 28px !important;
+    gap: 5px !important;
+    padding: 5px 10px !important;
+    border-right: 1px solid #e4e8e3 !important;
+    background: #f7f8f6 !important;
+    color: #343a36 !important;
+    font-size: 0.54rem !important;
+    line-height: 1 !important;
+    letter-spacing: 0.035em !important;
+  }
+
+  .index-page .odds-ticker .ticker-market {
+    color: #777e78 !important;
+    font-size: 0.45rem !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .index-page .odds-ticker .ticker-item strong {
+    color: #070907 !important;
+  }
+
+  .index-page .odds-ticker .ticker-item em {
+    min-width: 34px !important;
+    padding: 1px 4px !important;
+    border-color: rgba(47, 186, 115, 0.34) !important;
+    background: rgba(47, 186, 115, 0.1) !important;
+    color: #1f8a53 !important;
+    box-shadow: none !important;
+    font-size: 0.52rem !important;
+  }
+
+  .index-page .odds-ticker .ticker-item em.odds-low {
+    border-color: rgba(217, 50, 69, 0.34) !important;
+    background: rgba(217, 50, 69, 0.1) !important;
+    color: #d93245 !important;
+  }
+
+  .portal-page .topbar .container.nav {
+    width: min(100% - 12px, 1180px) !important;
+    min-height: 34px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-direction: row !important;
+    gap: 6px !important;
+    padding: 4px 0 !important;
+  }
+
+  .portal-page .topbar .brand.brand-text-only {
+    min-width: max-content !important;
+    font-size: 0.82rem !important;
+    letter-spacing: -0.04em !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .portal-page .portal-desktop-actions {
+    display: none !important;
+  }
+
+  .portal-page .portal-mobile-actions {
+    width: auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 4px !important;
+    margin-left: auto !important;
+  }
+
+  .portal-page .portal-mobile-actions .nav-link {
+    width: auto !important;
+    min-width: 0 !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 8px !important;
+    border: 1px solid #dce2dd !important;
+    border-radius: 5px !important;
+    background: rgba(255, 255, 255, 0.82) !important;
+    color: #303632 !important;
+    font-size: clamp(0.48rem, 2.15vw, 0.56rem) !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+  }
+
+  .checkout-hero {
+    padding-top: 14px !important;
+  }
+
+  .checkout-panel {
+    padding: 14px !important;
+  }
+
+  .checkout-panel .wallet-primary {
+    padding: 13px !important;
+  }
+
+  .checkout-panel .access-credentials-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Safari mobile hero overflow / paint hotfix
+   Fixes the iOS Safari issue where the decorative fighter artwork can escape
+   its card and paint as giant red / green blocks over the page.
+   -------------------------------------------------------------------------- */
+@media (max-width: 680px) {
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .index-page,
+  .index-page .topbar,
+  .index-page .edge-ticker,
+  .index-page main,
+  .index-page .hero,
+  .index-page .hero-grid,
+  .index-page .hero-copy-wrap,
+  .index-page .mobile-hero-condensed,
+  .index-page .mobile-fighter-infographic,
+  .index-page .mobile-infographic-compare,
+  .index-page .mobile-fighter-card,
+  .index-page .model-intro-section {
+    max-width: 100vw !important;
+  }
+
+  .index-page .topbar,
+  .index-page .edge-ticker,
+  .index-page .hero {
+    position: relative !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    contain: paint !important;
+  }
+
+  .index-page .ticker-track {
+    will-change: transform !important;
+    transform: translate3d(0, 0, 0) !important;
+    -webkit-transform: translate3d(0, 0, 0) !important;
+  }
+
+  /* The desktop hero artwork must never participate in the mobile layout. */
+  .index-page .hero-panel,
+  .index-page .desktop-fight-visual {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .index-page .mobile-fighter-infographic {
+    position: relative !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    contain: layout paint !important;
+    border-radius: 8px !important;
+  }
+
+  .index-page .mobile-fighter-card {
+    position: relative !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    contain: paint !important;
+    clip-path: inset(0 round 7px) !important;
+    -webkit-clip-path: inset(0 round 7px) !important;
+    transform: translateZ(0) !important;
+    -webkit-transform: translateZ(0) !important;
+  }
+
+  .index-page .mobile-fighter-card::before {
+    inset: 0 !important;
+    z-index: 0 !important;
+  }
+
+  .index-page .mobile-fighter-card > :not(.mobile-figure-wrap) {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  .index-page .mobile-figure-wrap {
+    position: absolute !important;
+    left: 10px !important;
+    top: 50% !important;
+    width: 64px !important;
+    height: 76px !important;
+    max-width: 64px !important;
+    max-height: 76px !important;
+    transform: translate3d(0, -50%, 0) !important;
+    -webkit-transform: translate3d(0, -50%, 0) !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    contain: strict !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+  }
+
+  .index-page .mobile-figure-wrap img,
+  .index-page .figure-paper-icon,
+  .index-page .reality-side .mobile-figure-wrap img {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    object-position: center bottom !important;
+    transform: none !important;
+    -webkit-transform: translateZ(0) !important;
+    animation: none !important;
+    filter: none !important;
+    will-change: auto !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+  }
+}
+
+/* Extra-safe iOS fallback: replace the remote PNG artwork with tiny CSS badges on
+   touch WebKit only. This prevents the Safari compositor from painting a full-size
+   image layer over the hero while leaving desktop/Chrome artwork untouched. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 680px) {
+    .index-page .mobile-figure-wrap img,
+    .index-page .desktop-fighter-art img {
+      display: none !important;
+    }
+
+    .index-page .mobile-figure-wrap {
+      display: grid !important;
+      place-items: center !important;
+      background: transparent !important;
+    }
+
+    .index-page .mobile-figure-wrap::before {
+      content: "";
+      width: 44px;
+      height: 62px;
+      border-radius: 999px 999px 16px 16px;
+      border: 2px solid rgba(47, 186, 115, 0.38);
+      background:
+        radial-gradient(circle at 50% 18%, rgba(47, 186, 115, 0.34) 0 13px, transparent 14px),
+        linear-gradient(180deg, rgba(47, 186, 115, 0.28), rgba(47, 186, 115, 0.08));
+      box-shadow: inset 0 0 18px rgba(47, 186, 115, 0.10);
+    }
+
+    .index-page .reality-side .mobile-figure-wrap::before {
+      border-color: rgba(217, 50, 69, 0.38);
+      background:
+        radial-gradient(circle at 50% 18%, rgba(217, 50, 69, 0.30) 0 13px, transparent 14px),
+        linear-gradient(180deg, rgba(217, 50, 69, 0.22), rgba(217, 50, 69, 0.07));
+      box-shadow: inset 0 0 18px rgba(217, 50, 69, 0.10);
+      transform: rotate(-5deg);
+    }
+  }
+}
+
+
+
+
+/* safari-mobile-emergency-hotfix */
+/* --------------------------------------------------------------------------
+   EMERGENCY SAFARI MOBILE FIX
+   The previous fix still left the mobile comparison graphic in the render tree.
+   iOS Safari can composite that section as full-page red/green blocks. This
+   version removes that graphic from the mobile paint tree entirely and swaps in
+   safe text-only cards. Desktop is unchanged.
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 680px) {
+  html,
+  body,
+  .index-page {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    position: relative !important;
+  }
+
+  .index-page *,
+  .index-page *::before,
+  .index-page *::after {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Hard-disable the exact hero visual that is causing the Safari paint layer bug. */
+  .index-page .mobile-fighter-infographic,
+  .index-page .desktop-fight-visual,
+  .index-page .desktop-fighter-panel,
+  .index-page .desktop-fighter-art,
+  .index-page .hero-panel {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-width: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    animation: none !important;
+  }
+
+  .index-page .hero,
+  .index-page .hero-grid,
+  .index-page .hero-copy-wrap,
+  .index-page .mobile-hero-condensed {
+    position: relative !important;
+    z-index: 1 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    contain: layout paint !important;
+  }
+
+  .index-page .mobile-hero-condensed::after {
+    content: "On paper: clean record / strong camp / market favourite  →  Fight night: flat walkout / pressure / late condition read";
+    display: block !important;
+    margin-top: 12px !important;
+    padding: 12px 13px !important;
+    border: 1px solid #dce2dd !important;
+    border-left: 4px solid #050506 !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    color: #303632 !important;
+    box-shadow: 0 10px 22px rgba(14, 18, 15, 0.055) !important;
+    font-size: 0.72rem !important;
+    line-height: 1.45 !important;
+    font-weight: 850 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: uppercase !important;
+  }
+
+  .index-page img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .index-page .topbar,
+  .index-page .edge-ticker,
+  .index-page main,
+  .index-page section,
+  .index-page .container {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+}
+
+/* iOS Safari specific belt-and-braces fallback. */
+@supports (-webkit-touch-callout: none) {
+  @media screen and (max-width: 680px) {
+    .index-page .mobile-fighter-infographic,
+    .index-page .mobile-fighter-infographic *,
+    .index-page .desktop-fight-visual,
+    .index-page .desktop-fight-visual * {
+      display: none !important;
+      visibility: hidden !important;
+      width: 0 !important;
+      height: 0 !important;
+      max-width: 0 !important;
+      max-height: 0 !important;
+      overflow: hidden !important;
+      transform: none !important;
+      -webkit-transform: none !important;
+      animation: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+
+
+@media screen and (max-width: 680px) {
+
+
+  .index-page .mobile-hero-condensed::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .index-page .mobile-safe-summary {
+    display: block !important;
+    margin-top: 12px !important;
+    padding: 12px 13px !important;
+    border: 1px solid #dce2dd !important;
+    border-left: 4px solid #050506 !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    color: #303632 !important;
+    box-shadow: 0 10px 22px rgba(14, 18, 15, 0.055) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    overflow: hidden !important;
+    contain: paint !important;
+  }
+
+  .index-page .mobile-safe-kicker {
+    display: block !important;
+    margin-bottom: 5px !important;
+    color: #2f8f5a !important;
+    font-size: 0.52rem !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+  }
+
+  .index-page .mobile-safe-summary strong {
+    display: block !important;
+    margin-bottom: 6px !important;
+    color: #050506 !important;
+    font-size: 0.88rem !important;
+    line-height: 1.2 !important;
+    font-weight: 950 !important;
+  }
+
+  .index-page .mobile-safe-summary p {
+    margin: 0 !important;
+    color: #303632 !important;
+    font-size: 0.72rem !important;
+    line-height: 1.45 !important;
+    font-weight: 650 !important;
+  }
+
+  .index-page .mobile-safe-summary b {
+    color: #050506 !important;
+    font-weight: 950 !important;
+  }
+
+}
   background-color: var(--bg);
   color: var(--text);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
