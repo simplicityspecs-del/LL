@@ -8534,136 +8534,6 @@ body {
   }
 }
 
-/* Hero artwork removed for stability; keep the landing hero single-column. */
-.hero-grid {
-  grid-template-columns: minmax(0, 1fr) !important;
-  max-width: 920px;
-}
-
-.hero-copy-wrap {
-  max-width: 920px;
-}
-
-/* iOS Safari guard: mobile uses text-only cards so large transparent PNGs cannot overpaint. */
-@media (max-width: 680px) {
-  html,
-  body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden !important;
-  }
-
-  .hero .mobile-fighter-infographic,
-  .hero .desktop-fight-visual,
-  .hero .desktop-fighter-panel,
-  .hero .desktop-fighter-art,
-  .hero img[src*="on-paper-fighter"],
-  .hero img[src*="fight-night-fighter"] {
-    display: none !important;
-    visibility: hidden !important;
-    width: 0 !important;
-    height: 0 !important;
-    max-width: 0 !important;
-    max-height: 0 !important;
-    overflow: hidden !important;
-  }
-
-  .mobile-fighter-infographic,
-  .mobile-infographic-compare,
-  .mobile-fighter-card {
-    max-width: 100%;
-    overflow: hidden !important;
-    contain: paint;
-    isolation: isolate;
-  }
-
-  .mobile-fighter-card {
-    min-height: 0 !important;
-    padding: 14px !important;
-  }
-
-  .mobile-fighter-card::before,
-  .mobile-figure-wrap,
-  .mobile-figure-wrap img,
-  .mobile-figure-wrap .figure-paper-icon {
-    display: none !important;
-    content: none !important;
-  }
-
-  .mobile-fighter-card strong {
-    font-size: 1rem !important;
-  }
-
-  .mobile-fighter-tags span {
-    font-size: 0.54rem !important;
-    padding: 5px 7px !important;
-  }
-
-  #signals .signal-card-modern {
-    border-radius: 12px !important;
-  }
-
-  #signals .signal-summary {
-    grid-template-columns: auto minmax(0, 1fr) auto !important;
-    align-items: start !important;
-    gap: 10px !important;
-    padding: 12px !important;
-  }
-
-  #signals .signal-summary .signal-top {
-    gap: 5px !important;
-  }
-
-  #signals .signal-card-modern .signal-code {
-    width: 34px !important;
-    height: 34px !important;
-    border-radius: 10px !important;
-  }
-
-  #signals .signal-copy h3 {
-    margin-bottom: 4px !important;
-    font-size: 0.98rem !important;
-    line-height: 1.08 !important;
-  }
-
-  #signals .signal-copy p {
-    display: -webkit-box !important;
-    overflow: hidden !important;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    font-size: 0.72rem !important;
-    line-height: 1.32 !important;
-  }
-
-  #signals .signal-toggle {
-    width: 26px !important;
-    height: 26px !important;
-  }
-
-  #signals .signal-dropdown {
-    grid-template-columns: 1fr !important;
-    gap: 0 !important;
-    padding: 0 12px 12px !important;
-  }
-
-  #signals .signal-dropdown .signal-meta {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px !important;
-    padding: 9px 10px !important;
-    border-radius: 10px !important;
-  }
-
-  #signals .signal-dropdown .signal-meta span {
-    font-size: 0.5rem !important;
-    line-height: 1.45 !important;
-  }
-
-  #signals .signal-graphic {
-    display: none !important;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -8677,6 +8547,173 @@ body {
 
 </style>
 <link rel="stylesheet" href="light-theme.css">
+<style id="safari-mobile-hotfix">
+
+/* --------------------------------------------------------------------------
+   Safari mobile hero overflow / paint hotfix
+   Fixes the iOS Safari issue where the decorative fighter artwork can escape
+   its card and paint as giant red / green blocks over the page.
+   -------------------------------------------------------------------------- */
+@media (max-width: 680px) {
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .index-page,
+  .index-page .topbar,
+  .index-page .edge-ticker,
+  .index-page main,
+  .index-page .hero,
+  .index-page .hero-grid,
+  .index-page .hero-copy-wrap,
+  .index-page .mobile-hero-condensed,
+  .index-page .mobile-fighter-infographic,
+  .index-page .mobile-infographic-compare,
+  .index-page .mobile-fighter-card,
+  .index-page .model-intro-section {
+    max-width: 100vw !important;
+  }
+
+  .index-page .topbar,
+  .index-page .edge-ticker,
+  .index-page .hero {
+    position: relative !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    contain: paint !important;
+  }
+
+  .index-page .ticker-track {
+    will-change: transform !important;
+    transform: translate3d(0, 0, 0) !important;
+    -webkit-transform: translate3d(0, 0, 0) !important;
+  }
+
+  /* The desktop hero artwork must never participate in the mobile layout. */
+  .index-page .hero-panel,
+  .index-page .desktop-fight-visual {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .index-page .mobile-fighter-infographic {
+    position: relative !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    contain: layout paint !important;
+    border-radius: 8px !important;
+  }
+
+  .index-page .mobile-fighter-card {
+    position: relative !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    contain: paint !important;
+    clip-path: inset(0 round 7px) !important;
+    -webkit-clip-path: inset(0 round 7px) !important;
+    transform: translateZ(0) !important;
+    -webkit-transform: translateZ(0) !important;
+  }
+
+  .index-page .mobile-fighter-card::before {
+    inset: 0 !important;
+    z-index: 0 !important;
+  }
+
+  .index-page .mobile-fighter-card > :not(.mobile-figure-wrap) {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  .index-page .mobile-figure-wrap {
+    position: absolute !important;
+    left: 10px !important;
+    top: 50% !important;
+    width: 64px !important;
+    height: 76px !important;
+    max-width: 64px !important;
+    max-height: 76px !important;
+    transform: translate3d(0, -50%, 0) !important;
+    -webkit-transform: translate3d(0, -50%, 0) !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    contain: strict !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+  }
+
+  .index-page .mobile-figure-wrap img,
+  .index-page .figure-paper-icon,
+  .index-page .reality-side .mobile-figure-wrap img {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    object-position: center bottom !important;
+    transform: none !important;
+    -webkit-transform: translateZ(0) !important;
+    animation: none !important;
+    filter: none !important;
+    will-change: auto !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+  }
+}
+
+/* Extra-safe iOS fallback: replace the remote PNG artwork with tiny CSS badges on
+   touch WebKit only. This prevents the Safari compositor from painting a full-size
+   image layer over the hero while leaving desktop/Chrome artwork untouched. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 680px) {
+    .index-page .mobile-figure-wrap img,
+    .index-page .desktop-fighter-art img {
+      display: none !important;
+    }
+
+    .index-page .mobile-figure-wrap {
+      display: grid !important;
+      place-items: center !important;
+      background: transparent !important;
+    }
+
+    .index-page .mobile-figure-wrap::before {
+      content: "";
+      width: 44px;
+      height: 62px;
+      border-radius: 999px 999px 16px 16px;
+      border: 2px solid rgba(47, 186, 115, 0.38);
+      background:
+        radial-gradient(circle at 50% 18%, rgba(47, 186, 115, 0.34) 0 13px, transparent 14px),
+        linear-gradient(180deg, rgba(47, 186, 115, 0.28), rgba(47, 186, 115, 0.08));
+      box-shadow: inset 0 0 18px rgba(47, 186, 115, 0.10);
+    }
+
+    .index-page .reality-side .mobile-figure-wrap::before {
+      border-color: rgba(217, 50, 69, 0.38);
+      background:
+        radial-gradient(circle at 50% 18%, rgba(217, 50, 69, 0.30) 0 13px, transparent 14px),
+        linear-gradient(180deg, rgba(217, 50, 69, 0.22), rgba(217, 50, 69, 0.07));
+      box-shadow: inset 0 0 18px rgba(217, 50, 69, 0.10);
+      transform: rotate(-5deg);
+    }
+  }
+}
+
+</style>
 </head>
 <body class="index-page">
 
@@ -8743,7 +8780,52 @@ body {
         <div class="kicker">Fight night market intelligence</div>
         <div class="mobile-hero-condensed" aria-label="Condensed Live Picks thesis">
           <h2 class="mobile-hero-title">Bookies can’t price what they can’t see yet.</h2>
-          <p class="mobile-hero-thesis">Paper records miss what fight night reveals: condition, pressure, composure and late market movement. <strong>Live Picks waits for those signals before locking in the read.</strong></p>
+          <p class="mobile-hero-thesis">A fighter can look strong on paper, but fight night can tell a different story. They might walk out flat, tight, drained, distracted, carrying an injury or reacting emotionally to the moment. Physical condition, movement, composure, crowd reaction, public sentiment and late pressure all matter. <strong>These signals are hard to price early because most of them are not visible when the market first forms.</strong></p>
+
+          <div class="mobile-fighter-infographic" aria-label="On paper versus fight night reality infographic">
+            <div class="mobile-infographic-head">
+              <span class="mobile-infographic-kicker">Visual thesis</span>
+              <strong>What the market sees vs what fight night reveals</strong>
+            </div>
+
+            <div class="mobile-infographic-compare">
+              <div class="mobile-fighter-card paper-side">
+                <div class="mobile-figure-wrap">
+                  <img src="on-paper-fighter-black.png" alt="On paper fighter icon" class="figure-paper-icon">
+                </div>
+                <span class="mobile-fighter-label">On paper</span>
+                <strong>Looks excellent</strong>
+                <div class="mobile-fighter-tags">
+                  <span>Clean record</span>
+                  <span>Strong camp</span>
+                  <span>Market favourite</span>
+                  <span>Physical Advantages</span>
+                </div>
+              </div>
+
+              <div class="mobile-infographic-shift">
+                <span>Market set early</span>
+                <strong>→</strong>
+                <span>Reality appears late</span>
+              </div>
+
+              <div class="mobile-fighter-card reality-side">
+                <div class="mobile-figure-wrap">
+                  <img src="fight-night-fighter.png" alt="Fight night fighter icon">
+                </div>
+                <span class="mobile-fighter-label danger">Fight night</span>
+                <strong>Looks compromised</strong>
+                <div class="mobile-fighter-tags">
+                  <span>Bad Reception</span>
+                  <span>Humiliated</span>
+                  <span>dehydrated</span>
+                  <span>sick</span>
+                  <span>impaired</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
 
         </div>
         <h1>Bookies can’t price what they can’t see yet.</h1>
@@ -8781,6 +8863,44 @@ body {
         </div>
       </div>
 
+      <aside class="desktop-fight-visual hero-panel" aria-label="On paper versus fight night reality">
+        <article class="desktop-fighter-panel paper-panel">
+          <div class="desktop-fighter-heading">
+            <strong>On paper</strong>
+            <span>What the market sees</span>
+          </div>
+          <div class="desktop-fighter-art paper-art">
+            <img src="on-paper-fighter-black.png" alt="On paper fighter icon">
+          </div>
+          <ul class="desktop-fighter-list">
+            <li>Looks excellent</li>
+            <li>Clean record</li>
+            <li>Strong camp</li>
+            <li>Market favourite</li>
+            <li>Physical advantages</li>
+          </ul>
+        </article>
+
+        <div class="desktop-shift-arrow" aria-hidden="true">→</div>
+
+        <article class="desktop-fighter-panel reality-panel">
+          <div class="desktop-fighter-heading">
+            <strong>Fight night</strong>
+            <span>What really happens</span>
+          </div>
+          <div class="desktop-fighter-art reality-art">
+            <img src="fight-night-fighter.png" alt="Fight night fighter icon">
+          </div>
+          <ul class="desktop-fighter-list">
+            <li>Looks compromised</li>
+            <li>Bad reception</li>
+            <li>Flat</li>
+            <li>Drained</li>
+            <li>Emotionally charged</li>
+            <li>Late pressure</li>
+          </ul>
+        </article>
+      </aside>
     </div>
   </section>
 
@@ -9134,7 +9254,7 @@ body {
         </aside>
 
         <div class="signals-grid signal-accordion">
-        <details class="signal-card featured signal-card-modern signal-condition">
+        <details class="signal-card featured signal-card-modern signal-condition" open>
           <summary class="signal-summary">
             <div class="signal-top">
               <span class="signal-code">PC</span>
