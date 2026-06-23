@@ -667,7 +667,7 @@ h1 {
 
 .section-heading {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 28px;
   margin-bottom: 24px;
@@ -954,7 +954,7 @@ h1 {
 }
 .crowd-bars {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   gap: 8px;
   height: 106px;
   padding-top: 10px;
@@ -5988,7 +5988,7 @@ h1 {
 .meter span,
 .form-dots span.win,
 .form-dots span.loss {
-  will-change: translate, opacity, filter;
+  will-change: transform, opacity, filter;
 }
 
 .desktop-fighter-art img,
@@ -6913,7 +6913,7 @@ h1 {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
-  align-items: end;
+  align-items: flex-end;
   gap: 14px;
   padding: 22px 22px 0;
   height: 100%;
@@ -7180,15 +7180,9 @@ h1 {
   .reception-graphic span,
   .pressure-graphic span::after,
   .market-graphic span::after {
-  content: "";
-  position: absolute;
-  inset-block: 0;
-  left: 0;
-  width: 64%;
-  background: #050506;
-  transform-origin: left center;
-  animation: marketFill 8.8s ease-in-out infinite;
-}
+    animation: none !important;
+    filter: none !important;
+  }
 }
 
 
@@ -7331,7 +7325,7 @@ h1 {
 .simulation-visual {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  align-items: end;
+  align-items: flex-end;
   gap: 6px;
   padding-top: 12px;
 }
@@ -7794,7 +7788,7 @@ h1 {
 }
 
 @keyframes orbitNode {
-  to { rotate: 360deg; }
+  to { transform: rotate(360deg); }
 }
 
 @media (max-width: 980px) {
@@ -8531,6 +8525,115 @@ body {
     min-height: 22px !important;
     padding-inline: 4px !important;
     font-size: clamp(0.43rem, 2.35vw, 0.5rem) !important;
+  }
+}
+
+/* iOS Safari guardrails: keep animated panels inside their cards on phones. */
+@media (max-width: 680px) {
+  .mobile-fighter-infographic,
+  .mobile-infographic-compare,
+  .mobile-fighter-card,
+  .mobile-infographic-shift,
+  .live-data-system,
+  .console-shell,
+  #signals .signals-grid.signal-accordion,
+  #signals .signal-card-modern,
+  #signals .signal-dropdown,
+  #signals .signal-graphic {
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .mobile-fighter-infographic,
+  .mobile-fighter-card,
+  .console-shell,
+  #signals .signal-card-modern,
+  #signals .signal-graphic {
+    contain: paint;
+    overflow: hidden !important;
+  }
+
+  .mobile-infographic-compare {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  .mobile-fighter-card {
+    display: grid !important;
+    grid-template-columns: 72px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 10px;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 10px !important;
+  }
+
+  .mobile-fighter-card::before {
+    inset: 0;
+  }
+
+  .mobile-figure-wrap {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    width: 64px !important;
+    height: 76px !important;
+    transform: none !important;
+  }
+
+  .mobile-figure-wrap img,
+  .figure-paper-icon {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .mobile-fighter-label,
+  .mobile-fighter-card > strong,
+  .mobile-fighter-tags {
+    grid-column: 2;
+    min-width: 0;
+  }
+
+  .mobile-fighter-tags span {
+    max-width: 100%;
+  }
+
+  .mobile-infographic-shift {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+  }
+
+  #signals .signal-summary {
+    grid-template-columns: 44px minmax(0, 1fr) 32px !important;
+    align-items: start !important;
+  }
+
+  #signals .signal-summary .signal-top,
+  #signals .signal-copy,
+  #signals .signal-copy h3,
+  #signals .signal-copy p {
+    min-width: 0 !important;
+  }
+
+  #signals .signal-summary .signal-top {
+    width: 44px;
+  }
+
+  #signals .signal-toggle {
+    justify-self: end;
+  }
+
+  .condition-graphic .scan-bar,
+  .movement-graphic span,
+  .pressure-graphic span,
+  .market-graphic span {
+    max-width: 100%;
   }
 }
 
