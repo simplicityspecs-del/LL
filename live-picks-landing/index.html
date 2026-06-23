@@ -7180,10 +7180,15 @@ h1 {
   .reception-graphic span,
   .pressure-graphic span::after,
   .market-graphic span::after {
-    animation: none !important;
-    filter: none !important;
-    transform: none !important;
-  }
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 64%;
+  background: #050506;
+  transform-origin: left center;
+  animation: marketFill 8.8s ease-in-out infinite;
+}
 }
 
 
@@ -8436,437 +8441,96 @@ body {
   84% { transform: scaleX(0.76); }
 }
 
-/* Professional data-motion pass: every animated element now behaves like a reading. */
-.desktop-fighter-art img,
-.mobile-figure-wrap img,
-.form-dots span.win,
-.form-dots span.loss,
-.sentiment-map span.hot,
-.sentiment-map span.bad {
-  animation: none !important;
-  animation-delay: 0s !important;
-  animation-direction: normal !important;
-  filter: none !important;
-  translate: 0 0 !important;
-  will-change: auto !important;
-}
-
-.live-edge-cta {
-  animation: ctaSignalHold 3.8s ease-in-out infinite !important;
-}
-
-.live-edge-cta::after {
-  animation: ctaSignalSweep 3.8s ease-out infinite !important;
-}
-
-.data-card-pulse,
-.live-data-card:nth-child(2) .data-card-pulse,
-.live-data-card:nth-child(3) .data-card-pulse,
-.live-data-card:nth-child(4) .data-card-pulse {
-  animation: dataHeartbeat 3.6s ease-in-out infinite !important;
-  animation-direction: normal !important;
-  animation-duration: 3.6s !important;
-}
-
-.live-data-card:nth-child(2) .data-card-pulse { animation-delay: 0.45s !important; }
-.live-data-card:nth-child(3) .data-card-pulse { animation-delay: 0.9s !important; }
-.live-data-card:nth-child(4) .data-card-pulse { animation-delay: 1.35s !important; }
-
-.crowd-bars span,
-.simulation-visual i,
-.reception-graphic span {
-  transform-origin: center bottom !important;
-  animation: dataBarResolve 820ms cubic-bezier(.2, .72, .2, 1) both !important;
-  animation-direction: normal !important;
-  filter: none !important;
-}
-
-.meter span,
-.snapshot-meter i,
-.pressure-graphic span::after,
-.market-graphic span::after {
-  transform-origin: left center !important;
-  animation: dataMeterResolve 860ms cubic-bezier(.2, .72, .2, 1) both !important;
-  animation-direction: normal !important;
-  filter: none !important;
-}
-
-.crowd-bars span:nth-child(1),
-.simulation-visual i:nth-child(1),
-.reception-graphic span:nth-child(1),
-.pressure-graphic span:nth-child(1)::after,
-.market-graphic span:nth-child(1)::after {
-  animation-delay: 0.04s !important;
-  animation-duration: 820ms !important;
-}
-
-.crowd-bars span:nth-child(2),
-.simulation-visual i:nth-child(2),
-.reception-graphic span:nth-child(2),
-.pressure-graphic span:nth-child(2)::after,
-.market-graphic span:nth-child(2)::after,
-.condition-row:nth-child(2) .meter span {
-  animation-delay: 0.1s !important;
-  animation-duration: 860ms !important;
-  animation-direction: normal !important;
-}
-
-.crowd-bars span:nth-child(3),
-.simulation-visual i:nth-child(3),
-.reception-graphic span:nth-child(3),
-.pressure-graphic span:nth-child(3)::after,
-.market-graphic span:nth-child(3)::after,
-.condition-row:nth-child(3) .meter span {
-  animation-delay: 0.16s !important;
-  animation-duration: 900ms !important;
-  animation-direction: normal !important;
-}
-
-.crowd-bars span:nth-child(4),
-.simulation-visual i:nth-child(4),
-.reception-graphic span:nth-child(4),
-.market-graphic span:nth-child(4)::after,
-.condition-row:nth-child(4) .meter span {
-  animation-delay: 0.22s !important;
-  animation-duration: 940ms !important;
-  animation-direction: normal !important;
-}
-
-.crowd-bars span:nth-child(5),
-.simulation-visual i:nth-child(5),
-.reception-graphic span:nth-child(5) {
-  animation-delay: 0.28s !important;
-  animation-duration: 980ms !important;
-}
-
-.crowd-bars span:nth-child(6) { animation-delay: 0.34s !important; }
-.crowd-bars span:nth-child(7) { animation-delay: 0.4s !important; }
-
-.snapshot-heatmap span,
-.sentiment-map span,
-.h2h-visual i,
-.record-visual i {
-  animation: dataCellResolve 520ms ease-out both !important;
-  animation-direction: normal !important;
-  filter: none !important;
-}
-
-.record-visual i:nth-child(-n+4) {
-  animation: dataCellResolve 520ms ease-out both !important;
-  animation-direction: normal !important;
-}
-
-.snapshot-heatmap span:nth-child(3n),
-.sentiment-map span:nth-child(3n),
-.record-visual i:nth-child(2),
-.h2h-visual i:nth-child(2) {
-  animation-delay: 0.08s !important;
-  animation-duration: 540ms !important;
-}
-
-.snapshot-heatmap span:nth-child(4n),
-.sentiment-map span:nth-child(4n),
-.record-visual i:nth-child(3) {
-  animation-delay: 0.14s !important;
-  animation-duration: 560ms !important;
-}
-
-.record-visual i:nth-child(4) {
-  animation-delay: 0.2s !important;
-  animation-duration: 580ms !important;
-}
-
-.timer-visual::before {
-  animation: timerRingResolve 1s cubic-bezier(.2, .72, .2, 1) both !important;
-}
-
-.timer-visual i {
-  animation: timerNeedleResolve 900ms cubic-bezier(.2, .72, .2, 1) both !important;
-  animation-direction: normal !important;
-}
-
-.orbit-ring,
-.ring-one,
-.ring-two {
-  animation: confidenceRingRead 4.8s ease-in-out infinite !important;
-  animation-direction: normal !important;
-}
-
-.condition-graphic .scan-ring,
-.composure-graphic .orbit {
-  animation: confidenceRingReadCentered 4.8s ease-in-out infinite !important;
-  animation-direction: normal !important;
-}
-
-.ring-two,
-.composure-graphic .orbit.two {
-  animation-delay: 0.8s !important;
-  animation-duration: 5.4s !important;
-}
-
-.orbit-node,
-.node-one,
-.node-two,
-.node-three {
-  rotate: 0deg !important;
-  animation: nodeSampleConfirm 3.6s ease-in-out infinite !important;
-  animation-direction: normal !important;
-}
-
-.node-two { animation-delay: 0.6s !important; }
-.node-three { animation-delay: 1.2s !important; }
-
-.condition-graphic .scan-core,
-.composure-graphic .pulse-dot {
-  animation: measuredPulse 3.2s ease-in-out infinite !important;
-  animation-direction: normal !important;
-}
-
-.condition-graphic .scan-bar {
-  animation: scanLineRead 4.8s linear infinite !important;
-  animation-direction: normal !important;
-  opacity: 0.82;
-}
-
-.condition-graphic .scan-bar.one { animation-delay: 0s !important; }
-.condition-graphic .scan-bar.two { animation-delay: 0.45s !important; }
-.condition-graphic .scan-bar.three { animation-delay: 0.9s !important; }
-
-.movement-graphic span::after,
-.movement-graphic span:nth-child(1)::after,
-.movement-graphic span:nth-child(2)::after,
-.movement-graphic span:nth-child(3)::after {
-  animation: routeSampleRead 4.8s linear infinite !important;
-  animation-direction: normal !important;
-  animation-duration: 4.8s !important;
-}
-
-.movement-graphic span:nth-child(2)::after { animation-delay: 0.55s !important; }
-.movement-graphic span:nth-child(3)::after { animation-delay: 1.1s !important; }
-
-@keyframes dataHeartbeat {
-  0%, 100% {
-    opacity: 0.72;
-    transform: scale(1);
-    box-shadow: 0 0 0 6px rgba(47,186,115,0.08);
-  }
-  42% {
-    opacity: 1;
-    transform: scale(1.08);
-    box-shadow: 0 0 0 11px rgba(47,186,115,0.12);
-  }
-}
-
-@keyframes dataBarResolve {
-  from {
-    opacity: 0.42;
-    transform: scaleY(0.16);
-  }
-  to {
-    opacity: 1;
-    transform: scaleY(1);
-  }
-}
-
-@keyframes dataMeterResolve {
-  from {
-    opacity: 0.5;
-    transform: scaleX(0.12);
-  }
-  to {
-    opacity: 1;
-    transform: scaleX(1);
-  }
-}
-
-@keyframes dataCellResolve {
-  from {
-    opacity: 0.24;
-    transform: scale(0.88);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes timerRingResolve {
-  from {
-    opacity: 0.35;
-    transform: rotate(-36deg);
-  }
-  to {
-    opacity: 1;
-    transform: rotate(0deg);
-  }
-}
-
-@keyframes timerNeedleResolve {
-  from { transform: translate(-50%, -100%) rotate(-28deg); }
-  to { transform: translate(-50%, -100%) rotate(8deg); }
-}
-
-@keyframes confidenceRingRead {
-  0%, 100% {
-    opacity: 0.38;
-    transform: scale(0.98);
-  }
-  50% {
-    opacity: 0.78;
-    transform: scale(1.02);
-  }
-}
-
-@keyframes confidenceRingReadCentered {
-  0%, 100% {
-    opacity: 0.38;
-    transform: translate(-50%, -50%) scale(0.98);
-  }
-  50% {
-    opacity: 0.78;
-    transform: translate(-50%, -50%) scale(1.02);
-  }
-}
-
-@keyframes nodeSampleConfirm {
-  0%, 100% {
-    opacity: 0.62;
-    transform: scale(1);
-  }
-  45% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
-}
-
-@keyframes measuredPulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-    box-shadow:
-      0 0 0 9px rgba(47,186,115,0.09),
-      0 0 24px rgba(47,186,115,0.22);
-  }
-  45% {
-    transform: translate(-50%, -50%) scale(1.07);
-    box-shadow:
-      0 0 0 16px rgba(47,186,115,0.11),
-      0 0 34px rgba(47,186,115,0.30);
-  }
-}
-
-@keyframes scanLineRead {
-  0% {
-    opacity: 0;
-    transform: translateX(-34%) scaleX(0.58);
-  }
-  18%, 68% {
-    opacity: 0.88;
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(34%) scaleX(1);
-  }
-}
-
-@keyframes routeSampleRead {
-  0% {
-    left: 0;
-    opacity: 0.35;
-    transform: translateY(-50%) scale(0.9);
-  }
-  12%, 82% {
-    opacity: 1;
-  }
-  100% {
-    left: calc(100% - 14px);
-    opacity: 0.45;
-    transform: translateY(-50%) scale(1);
-  }
-}
-
-@keyframes ctaSignalHold {
-  0%, 100% { box-shadow: 0 0 0 rgba(47,186,115,0); }
-  50% { box-shadow: 0 0 24px rgba(47,186,115,0.22); }
-}
-
-@keyframes ctaSignalSweep {
-  0%, 72%, 100% {
-    opacity: 0;
-    transform: scale(0.2);
-  }
-  14% {
-    opacity: 0.24;
-  }
-  58% {
-    opacity: 0;
-    transform: scale(1);
-  }
-}
-
-/* Wider live-read orbit. */
-.console-orbit {
-  --orbit-inner-radius: 92px;
-  --orbit-mid-radius: 116px;
-  --orbit-outer-radius: 132px;
-}
-
-.orbit-node,
-.node-one,
-.node-two,
-.node-three {
-  left: 50% !important;
-  top: 50% !important;
-  transform-origin: center !important;
-  rotate: 0deg !important;
-  animation: nodeOrbitWide 10s linear infinite !important;
-}
-
-.node-one {
-  --orbit-start: 8deg;
-  --orbit-radius: var(--orbit-mid-radius);
-  animation-duration: 10.5s !important;
-}
-
-.node-two {
-  --orbit-start: 132deg;
-  --orbit-radius: var(--orbit-outer-radius);
-  animation-duration: 13s !important;
-}
-
-.node-three {
-  --orbit-start: 252deg;
-  --orbit-radius: var(--orbit-inner-radius);
-  animation-duration: 11.5s !important;
-}
-
-@media (max-width: 980px) {
-  .console-orbit {
-    --orbit-inner-radius: 70px;
-    --orbit-mid-radius: 88px;
-    --orbit-outer-radius: 104px;
-  }
-}
-
+/* Final mobile header compression: brand and actions stay on one compact row. */
 @media (max-width: 680px) {
-  .console-orbit {
-    --orbit-inner-radius: 42px;
-    --orbit-mid-radius: 54px;
-    --orbit-outer-radius: 66px;
+  .topbar .container.nav {
+    width: min(100% - 12px, 1180px) !important;
+    min-height: 34px !important;
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 4px 0 !important;
+  }
+
+  .topbar .brand.brand-text-only {
+    min-width: max-content !important;
+    font-size: 0.82rem !important;
+    letter-spacing: -0.04em !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .topbar .brand.brand-text-only span {
+    max-width: none !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+  }
+
+  .topbar .header-buttons {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+  }
+
+  .topbar .header-buttons .desktop-nav {
+    display: none !important;
+  }
+
+  .topbar .header-buttons .top-actions {
+    width: auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    grid-template-columns: none !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 4px !important;
+  }
+
+  .topbar .header-buttons .top-actions .login-btn {
+    width: auto !important;
+    min-width: 0 !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    flex: 0 1 auto !important;
+    padding: 0 6px !important;
+    border-radius: 5px !important;
+    font-size: clamp(0.48rem, 2.15vw, 0.56rem) !important;
+    font-weight: 800 !important;
+    letter-spacing: 0 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .odds-ticker .ticker-item {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    font-size: 0.58rem !important;
   }
 }
 
-@keyframes nodeOrbitWide {
-  0% {
-    opacity: 0.72;
-    transform: translate(-50%, -50%) rotate(var(--orbit-start)) translateX(var(--orbit-radius)) scale(0.96);
+@media (max-width: 380px) {
+  .topbar .container.nav {
+    width: min(100% - 8px, 1180px) !important;
+    gap: 4px !important;
   }
-  45% {
-    opacity: 1;
-    transform: translate(-50%, -50%) rotate(calc(var(--orbit-start) + 162deg)) translateX(var(--orbit-radius)) scale(1.08);
+
+  .topbar .brand.brand-text-only {
+    font-size: 0.76rem !important;
   }
-  100% {
-    opacity: 0.72;
-    transform: translate(-50%, -50%) rotate(calc(var(--orbit-start) + 360deg)) translateX(var(--orbit-radius)) scale(0.96);
+
+  .topbar .header-buttons .top-actions {
+    gap: 3px !important;
+  }
+
+  .topbar .header-buttons .top-actions .login-btn {
+    height: 22px !important;
+    min-height: 22px !important;
+    padding-inline: 4px !important;
+    font-size: clamp(0.43rem, 2.35vw, 0.5rem) !important;
   }
 }
 
@@ -8884,7 +8548,7 @@ body {
 </style>
 <link rel="stylesheet" href="light-theme.css">
 </head>
-<body>
+<body class="index-page">
 
 <header class="topbar">
   <div class="container nav">
