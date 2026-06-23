@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#fafbf9">
+<meta name="color-scheme" content="light">
+<title>Live Picks - Admin</title>
+<meta name="description" content="Live Picks admin panel for updating premium event fights and locking live picks.">
+<style>
+:root {
+  --bg: #f6f8f5;
+  --surface: #ffffff;
+  --surface-2: #f1f4f1;
+  --border: #dce2dd;
+  --text: #050506;
+  --muted: #555d57;
+  --faint: #747d76;
+  --green: #2fba73;
+  --red: #ff4d5f;
+  --shadow: rgba(14, 18, 15, 0.08);
+}
+
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 5%, rgba(47,186,115,0.08), transparent 32%),
+    linear-gradient(180deg, #fafbf9 0%, #f6f8f5 58%, #eef2ef 100%);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea { font: inherit; }
+
+button { cursor: pointer; }
+
+.container {
+  width: min(1180px, calc(100% - 36px));
+  margin: 0 auto;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(14px);
+}
+
+.nav {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.brand {
+  color: var(--text);
+  font-weight: 950;
+  letter-spacing: -0.045em;
+  text-decoration: none;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-actions a,
+.btn {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 0 13px;
+  font-weight: 850;
+  font-size: 0.78rem;
+  text-decoration: none;
+  transition: 0.18s ease;
+}
+
+.btn:hover,
+.nav-actions a:hover {
+  border-color: rgba(47,186,115,0.45);
+  color: #1f8a53;
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  border-color: #050506;
+  background: #050506;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  border-color: #050506;
+  color: #fff;
+  filter: brightness(1.04);
+}
+
+.btn-danger {
+  border-color: rgba(255,77,95,0.35);
+  background: rgba(255,77,95,0.08);
+  color: #d93245;
+}
+
+.hero {
+  padding: 38px 0 20px;
+}
+
+.kicker {
+  color: var(--green);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+h1 {
+  margin: 0;
+  max-width: 760px;
+  font-size: clamp(2.4rem, 6vw, 5.2rem);
+  line-height: 0.92;
+  letter-spacing: -0.08em;
+}
+
+.hero p {
+  max-width: 720px;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.panel {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 14px 34px var(--shadow);
+  padding: 18px;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.36fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding-bottom: 46px;
+}
+
+.panel h2 {
+  margin: 0 0 12px;
+  font-size: 1.35rem;
+  letter-spacing: -0.045em;
+}
+
+.panel p {
+  margin: 0 0 14px;
+  color: var(--muted);
+}
+
+.form-grid,
+.fight-form {
+  display: grid;
+  gap: 10px;
+}
+
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field label {
+  color: var(--faint);
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--text);
+  padding: 0 11px;
+  outline: none;
+  font-weight: 720;
+}
+
+.textarea {
+  min-height: 82px;
+  padding: 10px 11px;
+  resize: vertical;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  border-color: rgba(47,186,115,0.55);
+  box-shadow: 0 0 0 4px rgba(47,186,115,0.10);
+}
+
+.state {
+  display: none;
+  margin-top: 12px;
+  border: 1px solid rgba(47,186,115,0.28);
+  border-radius: 7px;
+  background: rgba(47,186,115,0.08);
+  color: #1f8a53;
+  padding: 10px;
+  font-size: 0.8rem;
+}
+
+.state.is-visible { display: block; }
+.state.is-error {
+  border-color: rgba(255,77,95,0.28);
+  background: rgba(255,77,95,0.08);
+  color: #d93245;
+}
+
+.board-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.fight-list {
+  display: grid;
+  gap: 12px;
+}
+
+.fight-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  padding: 14px;
+}
+
+.fight-card.is-locked {
+  border-color: rgba(47,186,115,0.42);
+  box-shadow: inset 0 0 0 1px rgba(47,186,115,0.12);
+}
+
+.fight-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.fight-title {
+  min-width: 0;
+}
+
+.fight-title strong {
+  display: block;
+  color: var(--text);
+  font-size: 1.05rem;
+  line-height: 1.1;
+}
+
+.fight-title span {
+  display: block;
+  color: var(--faint);
+  font-size: 0.72rem;
+  font-weight: 850;
+  margin-top: 3px;
+}
+
+.status-pill {
+  align-self: start;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--faint);
+  padding: 5px 9px;
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.status-pill.is-locked {
+  border-color: rgba(47,186,115,0.32);
+  background: rgba(47,186,115,0.09);
+  color: #1f8a53;
+}
+
+.fight-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.fight-fields .wide {
+  grid-column: 1 / -1;
+}
+
+.fight-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.muted {
+  color: var(--faint);
+  font-size: 0.78rem;
+}
+
+@media (max-width: 900px) {
+  .admin-grid,
+  .event-grid,
+  .fight-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .container { width: min(100% - 20px, 1180px); }
+  .nav { align-items: flex-start; flex-direction: column; padding: 9px 0; }
+  .nav-actions { width: 100%; overflow-x: auto; }
+  .hero { padding: 24px 0 14px; }
+  h1 { font-size: clamp(2rem, 11vw, 2.7rem); }
+  .panel { padding: 13px; }
+  .board-actions { align-items: stretch; flex-direction: column; }
+  .board-actions .btn { width: 100%; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="index.html">Live Picks Admin</a>
+    <div class="nav-actions">
+      <a href="premium-feed.html">Premium Feed</a>
+      <a href="index.html">Home</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="kicker">Live pick control room</div>
+      <h1>Update the board, then lock the pick.</h1>
+      <p>Use this panel before the event to set fights and odds. On fight night, choose the side, add any final read note, and lock the pick to update the premium feed and notify subscribed devices.</p>
+    </div>
+  </section>
+
+  <section class="container admin-grid">
+    <aside class="panel">
+      <h2>Admin Access</h2>
+      <p>Enter the admin secret from your hosting environment. It is kept in this browser session only.</p>
+      <div class="form-grid">
+        <div class="field">
+          <label for="adminSecret">Admin secret</label>
+          <input class="input" id="adminSecret" type="password" autocomplete="current-password" placeholder="ADMIN_SECRET">
+        </div>
+        <button class="btn btn-primary" id="connectButton" type="button">Open admin panel</button>
+        <button class="btn" id="clearSecretButton" type="button">Clear session secret</button>
+      </div>
+      <div class="state" id="adminState" role="status" aria-live="polite"></div>
+      <p class="muted" style="margin-top: 14px;">Required env vars: `ADMIN_SECRET`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`. Push alerts also need VAPID keys.</p>
+    </aside>
+
+    <section class="panel hidden" id="boardPanel">
+      <h2>Current Event</h2>
+      <div class="event-grid">
+        <div class="field">
+          <label for="eventName">Event name</label>
+          <input class="input" id="eventName" placeholder="UFC Fight Night">
+        </div>
+        <div class="field">
+          <label for="eventDate">Event date</label>
+          <input class="input" id="eventDate" placeholder="Saturday, June 29">
+        </div>
+        <div class="field">
+          <label for="eventHeadline">Feed headline</label>
+          <input class="input" id="eventHeadline" placeholder="Moreno vs Kavanagh.">
+        </div>
+        <div class="field">
+          <label for="eventVenue">Venue</label>
+          <input class="input" id="eventVenue" placeholder="TBA">
+        </div>
+        <div class="field">
+          <label for="eventMarket">Market</label>
+          <input class="input" id="eventMarket" placeholder="Head to head">
+        </div>
+        <div class="field">
+          <label for="releaseStatus">Release status</label>
+          <input class="input" id="releaseStatus" placeholder="Picks pending">
+        </div>
+      </div>
+
+      <div class="board-actions">
+        <button class="btn btn-primary" id="saveEventButton" type="button">Save event</button>
+        <button class="btn" id="addFightButton" type="button">Add fight</button>
+        <button class="btn" id="refreshButton" type="button">Refresh board</button>
+      </div>
+
+      <div class="fight-list" id="fightList"></div>
+    </section>
+  </section>
+</main>
+
+<template id="fightTemplate">
+  <article class="fight-card">
+    <div class="fight-head">
+      <div class="fight-title">
+        <strong data-title>New fight</strong>
+        <span data-subtitle>Odds pending</span>
+      </div>
+      <span class="status-pill" data-status>Pending</span>
+    </div>
+    <div class="fight-fields">
+      <div class="field">
+        <label>Order</label>
+        <input class="input" data-field="orderIndex" inputmode="numeric" placeholder="1">
+      </div>
+      <div class="field">
+        <label>Pick side</label>
+        <select class="select" data-field="pickSide">
+          <option value="">No pick yet</option>
+          <option value="red">Red corner</option>
+          <option value="blue">Blue corner</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Red corner</label>
+        <input class="input" data-field="redCorner" placeholder="Fighter A">
+      </div>
+      <div class="field">
+        <label>Blue corner</label>
+        <input class="input" data-field="blueCorner" placeholder="Fighter B">
+      </div>
+      <div class="field">
+        <label>Red odds</label>
+        <input class="input" data-field="redOdds" placeholder="1.91">
+      </div>
+      <div class="field">
+        <label>Blue odds</label>
+        <input class="input" data-field="blueOdds" placeholder="1.91">
+      </div>
+      <div class="field">
+        <label>Pick label</label>
+        <input class="input" data-field="pickLabel" placeholder="Late condition edge">
+      </div>
+      <div class="field">
+        <label>Confidence</label>
+        <input class="input" data-field="confidence" placeholder="Medium / Strong / Final lock">
+      </div>
+      <div class="field wide">
+        <label>Final read note</label>
+        <textarea class="textarea" data-field="note" placeholder="Short note shown to subscribers after lock."></textarea>
+      </div>
+    </div>
+    <div class="fight-actions">
+      <button class="btn btn-primary" type="button" data-action="save">Save fight</button>
+      <button class="btn btn-primary" type="button" data-action="lock">Lock pick + notify</button>
+      <button class="btn" type="button" data-action="unlock">Unlock</button>
+      <button class="btn btn-danger" type="button" data-action="delete">Delete</button>
+    </div>
+  </article>
+</template>
+
+<script>
+  const adminSecretInput = document.getElementById('adminSecret');
+  const connectButton = document.getElementById('connectButton');
+  const clearSecretButton = document.getElementById('clearSecretButton');
+  const adminState = document.getElementById('adminState');
+  const boardPanel = document.getElementById('boardPanel');
+  const fightList = document.getElementById('fightList');
+  const fightTemplate = document.getElementById('fightTemplate');
+  const saveEventButton = document.getElementById('saveEventButton');
+  const addFightButton = document.getElementById('addFightButton');
+  const refreshButton = document.getElementById('refreshButton');
+
+  const eventFields = {
+    name: document.getElementById('eventName'),
+    headline: document.getElementById('eventHeadline'),
+    eventDate: document.getElementById('eventDate'),
+    venue: document.getElementById('eventVenue'),
+    market: document.getElementById('eventMarket'),
+    releaseStatus: document.getElementById('releaseStatus')
+  };
+
+  let adminToken = sessionStorage.getItem('livePicksAdminSecret') || '';
+  let tempFightCounter = 0;
+
+  if (adminToken) {
+    adminSecretInput.value = adminToken;
+    loadBoard();
+  }
+
+  function showState(message, isError = false) {
+    adminState.textContent = message;
+    adminState.classList.add('is-visible');
+    adminState.classList.toggle('is-error', isError);
+  }
+
+  function authHeaders() {
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${adminToken}`
+    };
+  }
+
+  async function apiRequest(options = {}) {
+    const response = await fetch('/api/admin-picks', {
+      method: options.method || 'GET',
+      headers: authHeaders(),
+      body: options.body ? JSON.stringify(options.body) : undefined
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok || !data.ok) {
+      throw new Error(data.error || 'Admin request failed.');
+    }
+
+    return data;
+  }
+
+  async function loadBoard() {
+    adminToken = adminSecretInput.value.trim();
+
+    if (!adminToken) {
+      showState('Enter the admin secret first.', true);
+      return;
+    }
+
+    sessionStorage.setItem('livePicksAdminSecret', adminToken);
+    showState('Loading current board...');
+
+    try {
+      const data = await apiRequest();
+      boardPanel.classList.remove('hidden');
+      renderEvent(data.event);
+      renderFights(data.fights || []);
+      showState('Admin board loaded.');
+    } catch (error) {
+      boardPanel.classList.add('hidden');
+      showState(error.message, true);
+    }
+  }
+
+  function renderEvent(event = {}) {
+    eventFields.name.value = event.name || '';
+    eventFields.headline.value = event.headline || '';
+    eventFields.eventDate.value = event.eventDate || '';
+    eventFields.venue.value = event.venue || '';
+    eventFields.market.value = event.market || '';
+    eventFields.releaseStatus.value = event.releaseStatus || '';
+  }
+
+  function renderFights(fights) {
+    fightList.innerHTML = '';
+
+    if (!fights.length) {
+      addFightCard({
+        orderIndex: 1,
+        redCorner: '',
+        blueCorner: '',
+        redOdds: '',
+        blueOdds: '',
+        status: 'pending'
+      });
+      return;
+    }
+
+    fights.forEach(addFightCard);
+  }
+
+  function addFightCard(fight = {}) {
+    const node = fightTemplate.content.firstElementChild.cloneNode(true);
+    node.dataset.id = fight.id || `temp-${++tempFightCounter}`;
+    node.dataset.persisted = fight.id ? 'true' : 'false';
+
+    fillFightCard(node, fight);
+    fightList.appendChild(node);
+  }
+
+  function fillFightCard(card, fight = {}) {
+    setField(card, 'orderIndex', fight.orderIndex || '');
+    setField(card, 'redCorner', fight.redCorner || '');
+    setField(card, 'blueCorner', fight.blueCorner || '');
+    setField(card, 'redOdds', fight.redOdds || '');
+    setField(card, 'blueOdds', fight.blueOdds || '');
+    setField(card, 'pickSide', fight.pickSide || '');
+    setField(card, 'pickLabel', fight.pickLabel || '');
+    setField(card, 'confidence', fight.confidence || '');
+    setField(card, 'note', fight.note || '');
+
+    updateFightCardChrome(card, fight.status || 'pending');
+  }
+
+  function setField(card, name, value) {
+    const field = card.querySelector(`[data-field="${name}"]`);
+    if (field) field.value = value;
+  }
+
+  function getFightPayload(card) {
+    const payload = {
+      id: card.dataset.persisted === 'true' ? card.dataset.id : '',
+      orderIndex: getField(card, 'orderIndex'),
+      redCorner: getField(card, 'redCorner'),
+      blueCorner: getField(card, 'blueCorner'),
+      redOdds: getField(card, 'redOdds'),
+      blueOdds: getField(card, 'blueOdds'),
+      pickSide: getField(card, 'pickSide'),
+      pickLabel: getField(card, 'pickLabel'),
+      confidence: getField(card, 'confidence'),
+      note: getField(card, 'note')
+    };
+
+    return payload;
+  }
+
+  function getField(card, name) {
+    return card.querySelector(`[data-field="${name}"]`)?.value.trim() || '';
+  }
+
+  function updateFightCardChrome(card, status = 'pending') {
+    const red = getField(card, 'redCorner') || 'Red corner';
+    const blue = getField(card, 'blueCorner') || 'Blue corner';
+    const redOdds = getField(card, 'redOdds') || '-';
+    const blueOdds = getField(card, 'blueOdds') || '-';
+    const statusNode = card.querySelector('[data-status]');
+
+    card.querySelector('[data-title]').textContent = `${red} vs ${blue}`;
+    card.querySelector('[data-subtitle]').textContent = `${redOdds} / ${blueOdds}`;
+    card.classList.toggle('is-locked', status === 'locked');
+    statusNode.textContent = status === 'locked' ? 'Locked' : 'Pending';
+    statusNode.classList.toggle('is-locked', status === 'locked');
+  }
+
+  function collectEventPayload() {
+    return {
+      name: eventFields.name.value.trim(),
+      headline: eventFields.headline.value.trim(),
+      eventDate: eventFields.eventDate.value.trim(),
+      venue: eventFields.venue.value.trim(),
+      market: eventFields.market.value.trim(),
+      releaseStatus: eventFields.releaseStatus.value.trim(),
+      alertChannel: 'Push + feed'
+    };
+  }
+
+  connectButton.addEventListener('click', loadBoard);
+
+  clearSecretButton.addEventListener('click', () => {
+    sessionStorage.removeItem('livePicksAdminSecret');
+    adminToken = '';
+    adminSecretInput.value = '';
+    boardPanel.classList.add('hidden');
+    showState('Admin secret cleared for this browser session.');
+  });
+
+  saveEventButton.addEventListener('click', async () => {
+    showState('Saving event...');
+
+    try {
+      const data = await apiRequest({
+        method: 'POST',
+        body: {
+          action: 'saveEvent',
+          event: collectEventPayload()
+        }
+      });
+      renderEvent(data.event);
+      showState('Event saved.');
+    } catch (error) {
+      showState(error.message, true);
+    }
+  });
+
+  refreshButton.addEventListener('click', loadBoard);
+
+  addFightButton.addEventListener('click', () => {
+    addFightCard({
+      orderIndex: fightList.children.length + 1,
+      status: 'pending'
+    });
+  });
+
+  fightList.addEventListener('input', (event) => {
+    const card = event.target.closest('.fight-card');
+    if (card) updateFightCardChrome(card, card.classList.contains('is-locked') ? 'locked' : 'pending');
+  });
+
+  fightList.addEventListener('click', async (event) => {
+    const button = event.target.closest('button[data-action]');
+    if (!button) return;
+
+    const card = button.closest('.fight-card');
+    const action = button.dataset.action;
+    const payload = getFightPayload(card);
+
+    try {
+      if (action === 'save') {
+        showState('Saving fight...');
+        const data = await apiRequest({
+          method: 'POST',
+          body: {
+            action: 'saveFight',
+            fight: payload
+          }
+        });
+        card.dataset.id = data.fight.id;
+        card.dataset.persisted = 'true';
+        fillFightCard(card, data.fight);
+        showState('Fight saved.');
+      }
+
+      if (action === 'lock') {
+        if (card.dataset.persisted !== 'true') {
+          showState('Save this fight before locking the pick.', true);
+          return;
+        }
+
+        const confirmed = window.confirm('Lock this pick now and notify subscribed devices?');
+        if (!confirmed) return;
+
+        showState('Locking pick and sending notifications...');
+        const data = await apiRequest({
+          method: 'POST',
+          body: {
+            action: 'lockPick',
+            fight: payload
+          }
+        });
+        fillFightCard(card, data.fight);
+
+        const notification = data.notification || {};
+        if (notification.disabled) {
+          showState(notification.message || 'Pick locked. Push notifications are not configured yet.');
+        } else {
+          showState(`Pick locked. Push sent: ${notification.sent || 0}. Failed: ${notification.failed || 0}.`);
+        }
+      }
+
+      if (action === 'unlock') {
+        if (card.dataset.persisted !== 'true') {
+          updateFightCardChrome(card, 'pending');
+          return;
+        }
+
+        showState('Unlocking pick...');
+        const data = await apiRequest({
+          method: 'POST',
+          body: {
+            action: 'unlockPick',
+            fightId: card.dataset.id
+          }
+        });
+        fillFightCard(card, data.fight);
+        showState('Pick unlocked.');
+      }
+
+      if (action === 'delete') {
+        const confirmed = window.confirm('Delete this fight from the premium board?');
+        if (!confirmed) return;
+
+        if (card.dataset.persisted === 'true') {
+          showState('Deleting fight...');
+          await apiRequest({
+            method: 'POST',
+            body: {
+              action: 'deleteFight',
+              fightId: card.dataset.id
+            }
+          });
+        }
+
+        card.remove();
+        showState('Fight deleted.');
+      }
+    } catch (error) {
+      showState(error.message, true);
+    }
+  });
+</script>
+</body>
+</html>
