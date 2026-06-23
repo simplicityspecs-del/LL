@@ -7,6 +7,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="msapplication-TileColor" content="#fafbf9">
 <meta name="color-scheme" content="light">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/lp-logo.png">
 <title>Live Picks - Premium Feed</title>
 <meta name="description" content="Premium Live Picks subscriber feed with upcoming fight-night release windows.">
 <style>
@@ -998,8 +1001,12 @@ h1 {
 
   async function enablePushNotifications() {
     try {
+      if (isIosBrowserTab()) {
+        throw new Error('On iPhone, first add Live Picks to your Home Screen: tap Share, tap Add to Home Screen, then open Live Picks from the new icon and enable push there.');
+      }
+
       if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
-        throw new Error('Push notifications are not supported on this browser.');
+        throw new Error('Push notifications are not supported here. On iPhone, open Live Picks from the Home Screen icon. On desktop, use Chrome, Edge, or Safari with notifications enabled.');
       }
 
       notifyButton.disabled = true;
@@ -1057,6 +1064,13 @@ h1 {
     }
 
     return outputArray;
+  }
+
+  function isIosBrowserTab() {
+    const ua = navigator.userAgent || '';
+    const isIos = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+    return isIos && !isStandalone;
   }
 
   function escapeHtml(value) {
