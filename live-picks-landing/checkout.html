@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#050806">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="msapplication-TileColor" content="#050806">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#fafbf9">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-TileColor" content="#fafbf9">
+<meta name="color-scheme" content="light">
 <title>Live Picks • Secure Checkout</title>
 <meta name="description" content="Subscribe to Live Picks premium fight-night analysis. 18+ only. Betting involves risk. No guaranteed outcomes.">
 <style>
@@ -1030,20 +1030,19 @@ h1 {
 
 </style>
 <script src="https://js.stripe.com/v3/"></script>
+<link rel="stylesheet" href="light-theme.css">
 </head>
-<body>
-<header class="topbar">
-  <div class="container nav">
-    <a class="brand" href="index.html" aria-label="Live Picks home">
-      <span class="brand-mark"><img src="lp-logo.png" alt="Live Picks logo" onerror="this.remove(); this.parentElement.textContent='LP';"></span>
+<body class="checkout-page">
+<header class="topbar checkout-topbar">
+  <div class="container nav checkout-nav">
+    <a class="brand brand-text-only" href="index.html" aria-label="Live Picks home">
       <span>Live Picks</span>
     </a>
 
-    <nav class="nav-links" aria-label="Checkout navigation">
-      <a href="index.html">Home</a>
-      <a class="active" href="#checkout">Subscribe</a>
-      <a href="portal.html">Premium Login</a>
-    </nav>
+    <div class="checkout-header-actions" aria-label="Checkout navigation">
+      <a class="checkout-header-button" href="portal.html">Login</a>
+      <a class="checkout-header-button" href="index.html">Home</a>
+    </div>
   </div>
 </header>
 
@@ -1111,10 +1110,10 @@ h1 {
         <div class="wallet-primary" aria-label="Apple Pay checkout">
           <div class="wallet-primary-head">
             <div>
-              <span class="wallet-kicker">Fastest checkout path</span>
-              <strong class="wallet-title">Subscribe with Apple Pay</strong>
+              <span class="wallet-kicker">Step 1</span>
+              <strong class="wallet-title">Account and plan</strong>
             </div>
-            <span class="wallet-price-pill">Front &amp; centre</span>
+            <span class="wallet-price-pill">$9.90 / week</span>
           </div>
 
           <div class="plan-toggle" aria-label="Plan selector">
@@ -1155,7 +1154,17 @@ h1 {
 
           <div id="express-checkout-element" class="express-checkout-element" aria-label="Stripe Express Checkout"></div>
           <button class="wallet-button wallet-fallback-button" type="button" id="stripeFallbackButton">Open hosted checkout fallback →</button>
-          <p class="wallet-microcopy">Apple Pay now runs through Stripe Express Checkout on this page. Select weekly, confirm the warnings, then complete payment in your wallet.</p>
+          <p class="wallet-microcopy">Select weekly, confirm the disclosures, then choose the available secure payment option.</p>
+        </div>
+
+        <div class="checkout-hidden-state" hidden>
+          <span id="summaryPlan">Weekly</span>
+          <span id="summaryPrice">$9.90 / week</span>
+        </div>
+
+        <div class="processor-state" id="processorState" role="status" aria-live="polite">
+          <strong>Payment processor connection required.</strong>
+          <p>This front-end is ready for Stripe or another approved provider. Connect live payment processing before accepting subscriptions.</p>
         </div>
 
         <div class="divider">or pay by card</div>
@@ -1165,83 +1174,15 @@ h1 {
             <div>
               <span class="card-kicker">Separate fallback box</span>
               <strong class="card-payment-title">Pay by card</strong>
-              <p class="card-payment-copy">Card checkout stays as a hosted fallback while Apple Pay runs on-page.</p>
+              <p class="card-payment-copy">Use hosted Stripe checkout if express checkout is unavailable.</p>
             </div>
           </div>
-
-          <div class="card-shell" aria-hidden="true">
-            <div class="card-row"><div class="card-cell">Card number</div></div>
-            <div class="card-row"><div class="card-cell">MM / YY</div><div class="card-cell">CVC</div><div class="card-cell">ZIP</div></div>
-          </div>
-
-          <button class="card-button" type="button" id="cardButton">Hosted card checkout →</button>
-        </div>
-
-        <div class="summary-box">
-          <div class="summary-row"><span>Plan</span><strong id="summaryPlan">Weekly</strong></div>
-          <div class="summary-row"><span>Delivery</span><strong>Email + access handoff</strong></div>
-          <div class="summary-row"><span>Service</span><strong>Fight-night analysis only</strong></div>
-          <div class="summary-row total"><span>Total today</span><strong id="summaryPrice">$9.90 / week</strong></div>
-        </div>
-
-        <div class="processor-state" id="processorState" role="status" aria-live="polite">
-          <strong>Payment processor connection required.</strong>
-          <p>This front-end is ready for Stripe or another approved provider. Connect live payment processing before accepting subscriptions.</p>
-        </div>
-
-        <div class="safer-box">
-          <strong>What are you really gambling with?</strong>
-          <p>For free and confidential support call <a href="tel:1800858858">1800 858 858</a> or visit <a href="https://www.gamblinghelponline.org.au/">gamblinghelponline.org.au</a>.</p>
-        </div>
-
-        <p class="checkout-note"><strong>No card details are stored by Live Picks.</strong> Final card and wallet handling should be completed through an approved payment provider. Cancel anytime before renewal.</p>
-      </aside>
-    </div>
-  </section>
-
-  <section class="protocol-strip" aria-label="Subscription protections">
-    <div class="container protocol-grid">
-      <div class="protocol-card"><strong>18+</strong><span>Access is restricted to adults only</span></div>
-      <div class="protocol-card"><strong>0</strong><span>No guaranteed wins or returns</span></div>
-      <div class="protocol-card"><strong>NO</strong><span>No bets accepted or placed by Live Picks</span></div>
-      <div class="protocol-card"><strong>24/7</strong><span>Gambling support available in Australia</span></div>
-    </div>
-  </section>
-
-  <section class="compliance-section" id="responsible-gambling">
-    <div class="container compliance-layout">
-      <article class="compliance-card">
-        <div class="section-label">Important wagering warnings</div>
-        <h2>Subscribe for analysis, not certainty.</h2>
-        <ul class="warning-list">
-          <li><strong>Betting involves risk.</strong> You may lose money. Never wager more than you can afford to lose.</li>
-          <li><strong>No result is guaranteed.</strong> Live Picks does not promise profit, returns, strike rate, income or betting success.</li>
-          <li><strong>Information only.</strong> Content is general sports analysis and entertainment. It is not financial advice, personal advice or a recommendation tailored to your circumstances.</li>
-          <li><strong>No wagering service.</strong> Live Picks does not accept bets, facilitate bets, hold customer funds, publish bookmaker odds for in-play bets, or operate as a bookmaker.</li>
-          <li><strong>Do not subscribe if gambling is causing harm.</strong> If you are self-excluded, underage, experiencing gambling harm or trying to stop gambling, do not use this service.</li>
-        </ul>
-      </article>
-
-      <aside class="support-card">
-        <div class="section-label">Safer gambling support</div>
-        <h2>Help and exclusion tools.</h2>
-        <div class="support-grid">
-          <a class="support-link" href="tel:1800858858">
-            <span>CALL</span>
-            <span><strong>National Gambling Helpline</strong>1800 858 858 — free, confidential support 24 hours a day.</span>
-          </a>
-          <a class="support-link" href="https://www.gamblinghelponline.org.au/">
-            <span>WEB</span>
-            <span><strong>Gambling Help Online</strong>Online counselling, live chat, email support and self-help resources.</span>
-          </a>
-          <a class="support-link" href="https://www.betstop.gov.au/">
-            <span>STOP</span>
-            <span><strong>BetStop</strong>Australia’s National Self-Exclusion Register for licensed online and phone wagering services.</span>
-          </a>
+          <button class="card-button" type="button" id="cardButton">Continue to secure card checkout →</button>
         </div>
       </aside>
     </div>
   </section>
+
 </main>
 
 <footer class="footer">
@@ -1438,10 +1379,17 @@ h1 {
   }
 
   async function initialiseStripeExpressCheckout() {
-    if (!window.Stripe) {
-      showProcessorState('Stripe.js did not load.', 'Check your internet connection or use the hosted checkout fallback.');
+    if (window.location.protocol === 'file:') {
       expressCheckoutNode.classList.add('is-hidden');
-      showFallbackButton();
+      hideFallbackButton();
+      hideProcessorState();
+      return;
+    }
+
+    if (!window.Stripe) {
+      expressCheckoutNode.classList.add('is-hidden');
+      hideFallbackButton();
+      hideProcessorState();
       return;
     }
 
@@ -1460,11 +1408,11 @@ h1 {
         currency: STRIPE_CURRENCY,
         paymentMethodTypes: ['card', 'link'],
         appearance: {
-          theme: 'night',
+          theme: 'stripe',
           variables: {
-            colorPrimary: '#22ff88',
-            colorBackground: '#07100a',
-            colorText: '#f2f7f3',
+            colorPrimary: '#2fba73',
+            colorBackground: '#ffffff',
+            colorText: '#050506',
             colorDanger: '#ff4d5f',
             borderRadius: '10px',
             fontFamily: 'Inter, system-ui, sans-serif'
@@ -1511,16 +1459,16 @@ h1 {
           hideProcessorState();
         } else {
           expressCheckoutNode.classList.add('is-hidden');
-          showFallbackButton();
-          showProcessorState('Apple Pay is not available on this device.', 'Use Safari with Apple Pay set up, or use the hosted checkout fallback.');
+          hideFallbackButton();
+          hideProcessorState();
         }
       });
 
       expressCheckoutElement.on('confirm', handleExpressConfirm);
     } catch (error) {
       expressCheckoutNode.classList.add('is-hidden');
-      showFallbackButton();
-      showProcessorState('Stripe Express Checkout could not start.', error.message || 'Check your Vercel environment variables and API files.');
+      hideFallbackButton();
+      hideProcessorState();
     }
   }
 
