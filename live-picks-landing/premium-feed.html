@@ -214,7 +214,7 @@ img { display: block; max-width: 100%; }
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(330px, 0.42fr);
   gap: 22px;
-  align-items: end;
+  align-items: flex-end;
 }
 .eyebrow {
   display: block;
@@ -282,7 +282,7 @@ h1 {
 }
 .event-head {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 18px;
   padding-bottom: 16px;
@@ -355,6 +355,12 @@ h1 {
   align-items: center;
   padding: 14px;
 }
+.fight-row.is-locked {
+  border-color: rgba(34,255,136,0.42);
+  background:
+    linear-gradient(90deg, rgba(34,255,136,0.13), transparent 68%),
+    rgba(255,255,255,0.05);
+}
 .fighter-side {
   min-width: 0;
 }
@@ -401,6 +407,62 @@ h1 {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   font-size: 0.86rem;
   font-weight: 950;
+}
+.pick-panel {
+  grid-column: 1 / -1;
+  border: 1px solid rgba(34,255,136,0.26);
+  background: rgba(34,255,136,0.07);
+  padding: 11px;
+}
+.pick-panel span {
+  display: block;
+  color: #68746d;
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.pick-panel strong {
+  display: block;
+  color: #f8fff9;
+  font-size: 1rem;
+  line-height: 1.15;
+}
+.pick-panel p {
+  margin: 7px 0 0;
+  color: #9ba79f;
+  font-size: 0.84rem;
+}
+.pick-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 8px;
+}
+.pick-meta em {
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.05);
+  color: #cdd8d0;
+  padding: 4px 7px;
+  font-size: 0.62rem;
+  font-style: normal;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.feed-empty {
+  border: 1px dashed rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.026);
+  color: #87928b;
+  padding: 16px;
+  font-size: 0.9rem;
+}
+.loading-card {
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.035);
+  color: #8d9991;
+  padding: 14px;
 }
 .pending-prompt {
   border: 1px solid rgba(34,255,136,0.22);
@@ -738,13 +800,13 @@ h1 {
     <div class="container feed-hero-grid">
       <div>
         <span class="eyebrow">Premium event feed</span>
-        <h1>UFC Fight Night board.</h1>
-        <p class="hero-copy">One event at a time. The feed stays focused on the current card, the fight list, and the odds being monitored before picks go live.</p>
+        <h1 id="feedHeadline">Premium fight board.</h1>
+        <p class="hero-copy" id="feedHeroCopy">One event at a time. The feed stays focused on the current card, the fight list, and the odds being monitored before picks go live.</p>
       </div>
 
       <aside class="session-card" aria-label="Subscriber session">
         <div class="session-row"><span>Signed in</span><strong id="userEmail">Loading...</strong></div>
-        <div class="session-row"><span>Event</span><strong>UFC Fight Night</strong></div>
+        <div class="session-row"><span>Event</span><strong id="sessionEventName">Loading...</strong></div>
         <div class="session-row"><span>Access</span><strong>Premium active</strong></div>
       </aside>
     </div>
@@ -756,83 +818,21 @@ h1 {
         <div class="event-head">
           <div>
             <span class="eyebrow">Current premium event</span>
-            <h2>Moreno vs Kavanagh.</h2>
-            <p>Main-card odds board. Odds shown here are placeholders for your live market feed and can be replaced with bookmaker data later.</p>
+            <h2 id="eventTitle">Loading board.</h2>
+            <p id="eventCopy">Loading the latest fight list, odds and release status.</p>
           </div>
-          <span class="status-pill">Picks pending</span>
+          <span class="status-pill" id="releaseStatusPill">Loading</span>
         </div>
 
         <div class="event-meta-grid" aria-label="Event details">
-          <div class="event-meta"><span>Event date</span><strong>June 21</strong></div>
-          <div class="event-meta"><span>Market</span><strong>Head to head</strong></div>
-          <div class="event-meta"><span>Release</span><strong>Pending</strong></div>
-          <div class="event-meta"><span>Alert channel</span><strong>Push + email</strong></div>
+          <div class="event-meta"><span>Event date</span><strong id="eventDate">Loading...</strong></div>
+          <div class="event-meta"><span>Market</span><strong id="eventMarket">Head to head</strong></div>
+          <div class="event-meta"><span>Venue</span><strong id="eventVenue">TBA</strong></div>
+          <div class="event-meta"><span>Alert channel</span><strong id="eventAlertChannel">Push + feed</strong></div>
         </div>
 
-        <div class="fight-list" aria-label="Fight list with odds">
-          <article class="fight-row">
-            <div class="fighter-side">
-              <span>Red corner</span>
-              <strong>Example Fighter</strong>
-            </div>
-            <div class="vs-pill">VS</div>
-            <div class="fighter-side">
-              <span>Blue corner</span>
-              <strong>Example Fighter</strong>
-            </div>
-            <div class="odds-box">
-              <span>Odds</span>
-              <div class="odds-pair"><strong>1.72</strong><strong>2.14</strong></div>
-            </div>
-          </article>
-
-          <article class="fight-row">
-            <div class="fighter-side">
-              <span>Red corner</span>
-              <strong>Example Fighter</strong>
-            </div>
-            <div class="vs-pill">VS</div>
-            <div class="fighter-side">
-              <span>Blue corner</span>
-              <strong>Example Fighter</strong>
-            </div>
-            <div class="odds-box">
-              <span>Odds</span>
-              <div class="odds-pair"><strong>1.91</strong><strong>1.91</strong></div>
-            </div>
-          </article>
-
-          <article class="fight-row">
-            <div class="fighter-side">
-              <span>Red corner</span>
-              <strong>Example Fighter</strong>
-            </div>
-            <div class="vs-pill">VS</div>
-            <div class="fighter-side">
-              <span>Blue corner</span>
-              <strong>Example Fighter</strong>
-            </div>
-            <div class="odds-box">
-              <span>Odds</span>
-              <div class="odds-pair"><strong>2.46</strong><strong>1.55</strong></div>
-            </div>
-          </article>
-
-          <article class="fight-row">
-            <div class="fighter-side">
-              <span>Red corner</span>
-              <strong>Example Fighter</strong>
-            </div>
-            <div class="vs-pill">VS</div>
-            <div class="fighter-side">
-              <span>Blue corner</span>
-              <strong>Example Fighter</strong>
-            </div>
-            <div class="odds-box">
-              <span>Odds</span>
-              <div class="odds-pair"><strong>1.48</strong><strong>2.67</strong></div>
-            </div>
-          </article>
+        <div class="fight-list" id="fightList" aria-label="Fight list with odds">
+          <div class="loading-card">Loading current fights...</div>
         </div>
 
         <div class="pending-prompt">
@@ -840,7 +840,7 @@ h1 {
             <strong>Picks are pending.</strong>
             <span>Click here to receive push notifications when picks go live.</span>
           </div>
-          <button class="notify-button feed-action" type="button" data-message="Push notification signup can be connected here once the site has a notification provider.">Enable push notifications</button>
+          <button class="notify-button" id="notifyButton" type="button">Enable push notifications</button>
         </div>
 
         <div class="inline-state" id="feedState" role="status" aria-live="polite"></div>
@@ -865,6 +865,18 @@ h1 {
   const userEmail = document.getElementById('userEmail');
   const feedState = document.getElementById('feedState');
   const logoutButton = document.getElementById('logoutButton');
+  const fightList = document.getElementById('fightList');
+  const notifyButton = document.getElementById('notifyButton');
+  const feedHeadline = document.getElementById('feedHeadline');
+  const feedHeroCopy = document.getElementById('feedHeroCopy');
+  const sessionEventName = document.getElementById('sessionEventName');
+  const eventTitle = document.getElementById('eventTitle');
+  const eventCopy = document.getElementById('eventCopy');
+  const releaseStatusPill = document.getElementById('releaseStatusPill');
+  const eventDate = document.getElementById('eventDate');
+  const eventMarket = document.getElementById('eventMarket');
+  const eventVenue = document.getElementById('eventVenue');
+  const eventAlertChannel = document.getElementById('eventAlertChannel');
   const savedEmail = localStorage.getItem('livePicksPortalEmail') || sessionStorage.getItem('livePicksPortalEmail');
   let activeEmail = savedEmail;
 
@@ -874,6 +886,7 @@ h1 {
     activeEmail = activeEmail.trim().toLowerCase();
     userEmail.textContent = activeEmail;
     sessionStorage.setItem('livePicksPortalEmail', activeEmail);
+    loadPremiumFeed();
   }
 
   logoutButton.addEventListener('click', () => {
@@ -882,12 +895,7 @@ h1 {
     window.location.href = 'portal.html';
   });
 
-  document.querySelectorAll('.feed-action').forEach((button) => {
-    button.addEventListener('click', () => {
-      feedState.classList.add('is-visible');
-      feedState.textContent = button.dataset.message;
-    });
-  });
+  notifyButton.addEventListener('click', enablePushNotifications);
 
   document.querySelectorAll('.edge-ticker').forEach((ticker) => {
     const pause = () => ticker.classList.add('is-paused');
@@ -897,6 +905,169 @@ h1 {
     ticker.addEventListener('pointercancel', resume, { passive: true });
     ticker.addEventListener('pointerleave', resume, { passive: true });
   });
+
+  function showFeedState(message, isError = false) {
+    feedState.classList.add('is-visible');
+    feedState.classList.toggle('is-error', isError);
+    feedState.textContent = message;
+  }
+
+  async function loadPremiumFeed() {
+    try {
+      const response = await fetch(`/api/premium-feed?email=${encodeURIComponent(activeEmail)}`);
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.ok) {
+        throw new Error(data.error || 'Could not load the premium feed.');
+      }
+
+      renderEvent(data.event);
+      renderFights(data.fights || []);
+    } catch (error) {
+      fightList.innerHTML = `<div class="feed-empty">${escapeHtml(error.message)}</div>`;
+      showFeedState(error.message, true);
+    }
+  }
+
+  function renderEvent(event = {}) {
+    const headline = event.headline || `${event.name || 'Premium'} board.`;
+    const name = event.name || 'Premium event';
+
+    feedHeadline.textContent = headline;
+    feedHeroCopy.textContent = `Current board for ${name}. Odds and locked picks update here as the live read develops.`;
+    sessionEventName.textContent = name;
+    eventTitle.textContent = headline;
+    eventCopy.textContent = `Fight list and current market odds for ${name}. Locked picks appear here as soon as the final call is made.`;
+    releaseStatusPill.textContent = event.releaseStatus || 'Picks pending';
+    eventDate.textContent = event.eventDate || 'TBA';
+    eventMarket.textContent = event.market || 'Head to head';
+    eventVenue.textContent = event.venue || 'TBA';
+    eventAlertChannel.textContent = event.alertChannel || 'Push + feed';
+  }
+
+  function renderFights(fights) {
+    if (!fights.length) {
+      fightList.innerHTML = '<div class="feed-empty">No fights have been added to the premium board yet.</div>';
+      return;
+    }
+
+    fightList.innerHTML = fights.map(renderFightRow).join('');
+  }
+
+  function renderFightRow(fight) {
+    const locked = fight.status === 'locked';
+    const red = fight.redCorner || 'Red corner';
+    const blue = fight.blueCorner || 'Blue corner';
+    const pickName = fight.pickSide === 'red' ? red : fight.pickSide === 'blue' ? blue : fight.pickLabel;
+    const lockedAt = fight.lockedAt ? new Date(fight.lockedAt).toLocaleString([], {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit'
+    }) : '';
+
+    return `
+      <article class="fight-row${locked ? ' is-locked' : ''}" id="fight-${escapeHtml(fight.id || '')}">
+        <div class="fighter-side">
+          <span>Red corner</span>
+          <strong>${escapeHtml(red)}</strong>
+        </div>
+        <div class="vs-pill">VS</div>
+        <div class="fighter-side">
+          <span>Blue corner</span>
+          <strong>${escapeHtml(blue)}</strong>
+        </div>
+        <div class="odds-box">
+          <span>${locked ? 'Locked' : 'Odds'}</span>
+          <div class="odds-pair"><strong>${escapeHtml(fight.redOdds || '-')}</strong><strong>${escapeHtml(fight.blueOdds || '-')}</strong></div>
+        </div>
+        ${locked ? `
+          <div class="pick-panel">
+            <span>Live pick locked</span>
+            <strong>${escapeHtml(pickName || 'Pick locked')}</strong>
+            ${fight.note ? `<p>${escapeHtml(fight.note)}</p>` : ''}
+            <div class="pick-meta">
+              ${fight.confidence ? `<em>${escapeHtml(fight.confidence)}</em>` : ''}
+              ${lockedAt ? `<em>${escapeHtml(lockedAt)}</em>` : ''}
+            </div>
+          </div>
+        ` : ''}
+      </article>
+    `;
+  }
+
+  async function enablePushNotifications() {
+    try {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
+        throw new Error('Push notifications are not supported on this browser.');
+      }
+
+      notifyButton.disabled = true;
+      showFeedState('Preparing push notifications...');
+
+      const configResponse = await fetch('/api/push-config');
+      const config = await configResponse.json().catch(() => ({}));
+
+      if (!configResponse.ok || !config.ok || !config.vapidPublicKey) {
+        throw new Error(config.error || 'Push notifications are not configured yet.');
+      }
+
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') {
+        throw new Error('Push permission was not granted on this device.');
+      }
+
+      const registration = await navigator.serviceWorker.register('/sw.js');
+      const existingSubscription = await registration.pushManager.getSubscription();
+      const subscription = existingSubscription || await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(config.vapidPublicKey)
+      });
+
+      const response = await fetch('/api/push-subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: activeEmail,
+          subscription
+        })
+      });
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.ok) {
+        throw new Error(data.error || 'Could not save this push subscription.');
+      }
+
+      showFeedState(data.message || 'Push notifications are enabled for this device.');
+    } catch (error) {
+      showFeedState(error.message, true);
+    } finally {
+      notifyButton.disabled = false;
+    }
+  }
+
+  function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+
+    for (let i = 0; i < rawData.length; i += 1) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+
+    return outputArray;
+  }
+
+  function escapeHtml(value) {
+    return String(value || '').replace(/[&<>"']/g, (character) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    }[character]));
+  }
 </script>
 </body>
 </html>
