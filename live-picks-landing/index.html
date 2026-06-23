@@ -8534,6 +8534,16 @@ body {
   }
 }
 
+/* Hero artwork removed for stability; keep the landing hero single-column. */
+.hero-grid {
+  grid-template-columns: minmax(0, 1fr) !important;
+  max-width: 920px;
+}
+
+.hero-copy-wrap {
+  max-width: 920px;
+}
+
 /* iOS Safari guard: mobile uses text-only cards so large transparent PNGs cannot overpaint. */
 @media (max-width: 680px) {
   html,
@@ -8541,6 +8551,21 @@ body {
     width: 100%;
     max-width: 100%;
     overflow-x: hidden !important;
+  }
+
+  .hero .mobile-fighter-infographic,
+  .hero .desktop-fight-visual,
+  .hero .desktop-fighter-panel,
+  .hero .desktop-fighter-art,
+  .hero img[src*="on-paper-fighter"],
+  .hero img[src*="fight-night-fighter"] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    max-width: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
   }
 
   .mobile-fighter-infographic,
@@ -8720,45 +8745,6 @@ body {
           <h2 class="mobile-hero-title">Bookies can’t price what they can’t see yet.</h2>
           <p class="mobile-hero-thesis">Paper records miss what fight night reveals: condition, pressure, composure and late market movement. <strong>Live Picks waits for those signals before locking in the read.</strong></p>
 
-          <div class="mobile-fighter-infographic" aria-label="On paper versus fight night reality infographic">
-            <div class="mobile-infographic-head">
-              <span class="mobile-infographic-kicker">Visual thesis</span>
-              <strong>What the market sees vs what fight night reveals</strong>
-            </div>
-
-            <div class="mobile-infographic-compare">
-              <div class="mobile-fighter-card paper-side">
-                <span class="mobile-fighter-label">On paper</span>
-                <strong>Looks excellent</strong>
-                <div class="mobile-fighter-tags">
-                  <span>Clean record</span>
-                  <span>Strong camp</span>
-                  <span>Market favourite</span>
-                  <span>Physical Advantages</span>
-                </div>
-              </div>
-
-              <div class="mobile-infographic-shift">
-                <span>Market set early</span>
-                <strong>→</strong>
-                <span>Reality appears late</span>
-              </div>
-
-              <div class="mobile-fighter-card reality-side">
-                <span class="mobile-fighter-label danger">Fight night</span>
-                <strong>Looks compromised</strong>
-                <div class="mobile-fighter-tags">
-                  <span>Bad Reception</span>
-                  <span>Humiliated</span>
-                  <span>dehydrated</span>
-                  <span>sick</span>
-                  <span>impaired</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
         </div>
         <h1>Bookies can’t price what they can’t see yet.</h1>
         <p class="hero-lead">Most fight markets are built before the most important late data exists. Live Picks focuses on the information that only becomes visible on fight night.</p>
@@ -8795,44 +8781,6 @@ body {
         </div>
       </div>
 
-      <aside class="desktop-fight-visual hero-panel" aria-label="On paper versus fight night reality">
-        <article class="desktop-fighter-panel paper-panel">
-          <div class="desktop-fighter-heading">
-            <strong>On paper</strong>
-            <span>What the market sees</span>
-          </div>
-          <div class="desktop-fighter-art paper-art">
-            <img src="on-paper-fighter-black.png" alt="On paper fighter icon">
-          </div>
-          <ul class="desktop-fighter-list">
-            <li>Looks excellent</li>
-            <li>Clean record</li>
-            <li>Strong camp</li>
-            <li>Market favourite</li>
-            <li>Physical advantages</li>
-          </ul>
-        </article>
-
-        <div class="desktop-shift-arrow" aria-hidden="true">→</div>
-
-        <article class="desktop-fighter-panel reality-panel">
-          <div class="desktop-fighter-heading">
-            <strong>Fight night</strong>
-            <span>What really happens</span>
-          </div>
-          <div class="desktop-fighter-art reality-art">
-            <img src="fight-night-fighter.png" alt="Fight night fighter icon">
-          </div>
-          <ul class="desktop-fighter-list">
-            <li>Looks compromised</li>
-            <li>Bad reception</li>
-            <li>Flat</li>
-            <li>Drained</li>
-            <li>Emotionally charged</li>
-            <li>Late pressure</li>
-          </ul>
-        </article>
-      </aside>
     </div>
   </section>
 
