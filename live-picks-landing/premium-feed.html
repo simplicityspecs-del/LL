@@ -490,6 +490,12 @@ h1 {
   color: #97a39b;
   font-size: 0.86rem;
 }
+.pending-prompt .prompt-link {
+  color: var(--green);
+  font-weight: 950;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .notify-button {
   border: 1px solid rgba(34,255,136,0.58);
   background: linear-gradient(180deg, #22ff88, #17c967);
@@ -841,7 +847,7 @@ h1 {
         <div class="pending-prompt">
           <div>
             <strong>Picks are pending.</strong>
-            <span>Click here to receive push notifications when picks go live.</span>
+            <span>Click here to receive push notifications when picks go live. On iPhone, use the <a class="prompt-link" href="push-guide.html">Home Screen setup guide</a> first.</span>
           </div>
           <button class="notify-button" id="notifyButton" type="button">Enable push notifications</button>
         </div>
