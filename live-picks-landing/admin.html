@@ -340,6 +340,71 @@ h1 {
   font-size: 0.78rem;
 }
 
+@media (min-width: 681px) {
+  .admin-page .topbar {
+    min-height: 0;
+    background: rgba(255,255,255,0.94);
+    border-bottom: 1px solid #dce2dd;
+    box-shadow: 0 8px 22px rgba(14, 18, 15, 0.045);
+  }
+
+  .admin-page .topbar .container.nav {
+    width: min(100% - 36px, 1180px);
+    min-height: 42px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    justify-content: normal;
+    gap: 12px;
+    padding: 6px 0;
+  }
+
+  .admin-page .topbar .brand {
+    min-width: max-content;
+    width: auto;
+    color: #050506;
+    font-size: 0.96rem;
+    font-weight: 950;
+    letter-spacing: -0.045em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .admin-page .topbar .nav-actions {
+    width: auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    justify-self: end;
+    gap: 6px;
+    margin-left: auto;
+    padding: 0;
+    overflow: visible;
+    flex-wrap: nowrap;
+  }
+
+  .admin-page .topbar .nav-actions a {
+    width: auto;
+    min-width: 0;
+    height: 30px;
+    min-height: 30px;
+    flex: 0 0 auto;
+    padding: 0 10px;
+    border: 1px solid #dce2dd;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.82);
+    color: #303632;
+    box-shadow: none;
+    font-size: 0.64rem;
+    font-weight: 820;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    text-transform: none;
+    white-space: nowrap;
+  }
+}
+
 @media (max-width: 900px) {
   .admin-grid,
   .event-grid,
@@ -360,7 +425,7 @@ h1 {
 }
 </style>
 </head>
-<body>
+<body class="admin-page">
 <header class="topbar">
   <div class="container nav">
     <a class="brand" href="index.html">Live Picks Admin</a>
