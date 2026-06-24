@@ -1866,3 +1866,402 @@ input[type="radio"] {
     color: #ffffff !important;
   }
 }
+
+/* Site-wide ticker lockup. Keeps every page's ticker the same size and style. */
+.index-page .edge-ticker,
+.portal-page .edge-ticker,
+.checkout-page .edge-ticker,
+.premium-feed-page .edge-ticker,
+.account-page .edge-ticker,
+.newsletter-page .edge-ticker,
+.forgot-email-page .edge-ticker {
+  display: block !important;
+  min-height: 34px !important;
+  overflow: hidden !important;
+  border-top: 1px solid #dce2dd !important;
+  border-bottom: 1px solid #dce2dd !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  color: #303632 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.index-page .ticker-track,
+.portal-page .ticker-track,
+.checkout-page .ticker-track,
+.premium-feed-page .ticker-track,
+.account-page .ticker-track,
+.newsletter-page .ticker-track,
+.forgot-email-page .ticker-track {
+  min-height: 34px !important;
+  display: inline-flex !important;
+  align-items: stretch !important;
+  animation-duration: 38s !important;
+  will-change: transform !important;
+}
+
+.index-page .ticker-item,
+.portal-page .ticker-item,
+.checkout-page .ticker-item,
+.premium-feed-page .ticker-item,
+.account-page .ticker-item,
+.newsletter-page .ticker-item,
+.forgot-email-page .ticker-item {
+  min-height: 34px !important;
+  height: 34px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 0 14px !important;
+  border-right: 1px solid #e2e6e1 !important;
+  background: #f7f8f6 !important;
+  color: #303632 !important;
+  box-shadow: none !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace !important;
+  font-size: 0.62rem !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.045em !important;
+  line-height: 1 !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+}
+
+.index-page .ticker-market,
+.portal-page .ticker-market,
+.checkout-page .ticker-market,
+.premium-feed-page .ticker-market,
+.account-page .ticker-market,
+.newsletter-page .ticker-market,
+.forgot-email-page .ticker-market {
+  color: #68706a !important;
+  font-size: 0.5rem !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.08em !important;
+  line-height: 1 !important;
+  text-transform: uppercase !important;
+}
+
+.index-page .ticker-item strong,
+.portal-page .ticker-item strong,
+.checkout-page .ticker-item strong,
+.premium-feed-page .ticker-item strong,
+.account-page .ticker-item strong,
+.newsletter-page .ticker-item strong,
+.forgot-email-page .ticker-item strong {
+  color: #050506 !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.index-page .ticker-item em,
+.portal-page .ticker-item em,
+.checkout-page .ticker-item em,
+.premium-feed-page .ticker-item em,
+.account-page .ticker-item em,
+.newsletter-page .ticker-item em,
+.forgot-email-page .ticker-item em {
+  min-width: 38px !important;
+  height: 18px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 6px !important;
+  border: 1px solid rgba(47, 186, 115, 0.34) !important;
+  border-radius: 4px !important;
+  background: rgba(47, 186, 115, 0.1) !important;
+  color: #1f8a53 !important;
+  box-shadow: none !important;
+  font-size: 0.56rem !important;
+  font-style: normal !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.035em !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+}
+
+.index-page .ticker-item em.odds-low,
+.portal-page .ticker-item em.odds-low,
+.checkout-page .ticker-item em.odds-low,
+.premium-feed-page .ticker-item em.odds-low,
+.account-page .ticker-item em.odds-low,
+.newsletter-page .ticker-item em.odds-low,
+.forgot-email-page .ticker-item em.odds-low,
+.index-page .ticker-item em.red,
+.portal-page .ticker-item em.red,
+.checkout-page .ticker-item em.red,
+.premium-feed-page .ticker-item em.red,
+.account-page .ticker-item em.red,
+.newsletter-page .ticker-item em.red,
+.forgot-email-page .ticker-item em.red {
+  border-color: rgba(217, 50, 69, 0.34) !important;
+  background: rgba(217, 50, 69, 0.1) !important;
+  color: #d93245 !important;
+}
+
+.index-page .ticker-item em.warn,
+.portal-page .ticker-item em.warn,
+.checkout-page .ticker-item em.warn,
+.premium-feed-page .ticker-item em.warn,
+.account-page .ticker-item em.warn,
+.newsletter-page .ticker-item em.warn,
+.forgot-email-page .ticker-item em.warn {
+  border-color: rgba(197, 154, 34, 0.34) !important;
+  background: rgba(197, 154, 34, 0.1) !important;
+  color: #9a7416 !important;
+}
+
+.index-page .edge-ticker:hover .ticker-track,
+.portal-page .edge-ticker:hover .ticker-track,
+.checkout-page .edge-ticker:hover .ticker-track,
+.premium-feed-page .edge-ticker:hover .ticker-track,
+.account-page .edge-ticker:hover .ticker-track,
+.newsletter-page .edge-ticker:hover .ticker-track,
+.forgot-email-page .edge-ticker:hover .ticker-track,
+.index-page .edge-ticker:active .ticker-track,
+.portal-page .edge-ticker:active .ticker-track,
+.checkout-page .edge-ticker:active .ticker-track,
+.premium-feed-page .edge-ticker:active .ticker-track,
+.account-page .edge-ticker:active .ticker-track,
+.newsletter-page .edge-ticker:active .ticker-track,
+.forgot-email-page .edge-ticker:active .ticker-track,
+.index-page .edge-ticker:focus-within .ticker-track,
+.portal-page .edge-ticker:focus-within .ticker-track,
+.checkout-page .edge-ticker:focus-within .ticker-track,
+.premium-feed-page .edge-ticker:focus-within .ticker-track,
+.account-page .edge-ticker:focus-within .ticker-track,
+.newsletter-page .edge-ticker:focus-within .ticker-track,
+.forgot-email-page .edge-ticker:focus-within .ticker-track,
+.index-page .edge-ticker.is-paused .ticker-track,
+.portal-page .edge-ticker.is-paused .ticker-track,
+.checkout-page .edge-ticker.is-paused .ticker-track,
+.premium-feed-page .edge-ticker.is-paused .ticker-track,
+.account-page .edge-ticker.is-paused .ticker-track,
+.newsletter-page .edge-ticker.is-paused .ticker-track,
+.forgot-email-page .edge-ticker.is-paused .ticker-track {
+  animation-play-state: paused !important;
+}
+
+@media (max-width: 680px) {
+  .index-page .edge-ticker,
+  .portal-page .edge-ticker,
+  .checkout-page .edge-ticker,
+  .premium-feed-page .edge-ticker,
+  .account-page .edge-ticker,
+  .newsletter-page .edge-ticker,
+  .forgot-email-page .edge-ticker {
+    min-height: 28px !important;
+  }
+
+  .index-page .ticker-track,
+  .portal-page .ticker-track,
+  .checkout-page .ticker-track,
+  .premium-feed-page .ticker-track,
+  .account-page .ticker-track,
+  .newsletter-page .ticker-track,
+  .forgot-email-page .ticker-track {
+    min-height: 28px !important;
+    animation-duration: 34s !important;
+  }
+
+  .index-page .ticker-item,
+  .portal-page .ticker-item,
+  .checkout-page .ticker-item,
+  .premium-feed-page .ticker-item,
+  .account-page .ticker-item,
+  .newsletter-page .ticker-item,
+  .forgot-email-page .ticker-item {
+    min-height: 28px !important;
+    height: 28px !important;
+    gap: 5px !important;
+    padding: 0 10px !important;
+    font-size: 0.54rem !important;
+    letter-spacing: 0.035em !important;
+  }
+
+  .index-page .ticker-market,
+  .portal-page .ticker-market,
+  .checkout-page .ticker-market,
+  .premium-feed-page .ticker-market,
+  .account-page .ticker-market,
+  .newsletter-page .ticker-market,
+  .forgot-email-page .ticker-market {
+    font-size: 0.45rem !important;
+  }
+
+  .index-page .ticker-item em,
+  .portal-page .ticker-item em,
+  .checkout-page .ticker-item em,
+  .premium-feed-page .ticker-item em,
+  .account-page .ticker-item em,
+  .newsletter-page .ticker-item em,
+  .forgot-email-page .ticker-item em {
+    min-width: 34px !important;
+    height: 17px !important;
+    padding: 0 4px !important;
+    font-size: 0.52rem !important;
+  }
+}
+
+/* Final light-mode safety net for pages that started life with dark local styles. */
+.portal-page,
+.checkout-page,
+.premium-feed-page,
+.account-page,
+.newsletter-page,
+.forgot-email-page,
+.thank-you-page,
+.reset-password-page {
+  background:
+    radial-gradient(circle at 16% 7%, rgba(47, 186, 115, 0.08), transparent 30%),
+    radial-gradient(circle at 88% 24%, rgba(5, 5, 6, 0.045), transparent 28%),
+    linear-gradient(180deg, #fafbf9 0%, #f6f8f5 52%, #eef2ef 100%) !important;
+  background-color: #f6f8f5 !important;
+  color: #070907 !important;
+}
+
+.portal-page::before,
+.checkout-page::before,
+.premium-feed-page::before,
+.account-page::before,
+.newsletter-page::before,
+.forgot-email-page::before,
+.thank-you-page::before,
+.reset-password-page::before {
+  background-image:
+    linear-gradient(rgba(8, 11, 8, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 11, 8, 0.035) 1px, transparent 1px) !important;
+  opacity: 0.7 !important;
+}
+
+.portal-page main,
+.checkout-page main,
+.premium-feed-page main,
+.account-page main,
+.newsletter-page main,
+.forgot-email-page main,
+.thank-you-page main,
+.reset-password-page main,
+.portal-page section,
+.checkout-page section,
+.premium-feed-page section,
+.account-page section,
+.newsletter-page section,
+.forgot-email-page section,
+.thank-you-page section,
+.reset-password-page section {
+  background-color: transparent !important;
+  color: #555d57 !important;
+}
+
+.portal-page .login-panel,
+.portal-page .preview-panel,
+.portal-page .highlight-card,
+.portal-page .create-access,
+.portal-page .event-card,
+.portal-page .account-card,
+.portal-page .feed-card,
+.portal-page .session-card,
+.portal-page .preview-item,
+.checkout-page .checkout-panel,
+.checkout-page .summary-box,
+.checkout-page .benefit-card,
+.checkout-page .compliance-card,
+.checkout-page .protocol-card,
+.checkout-page .support-card,
+.checkout-page .terms-box,
+.premium-feed-page .feed-card,
+.premium-feed-page .event-card,
+.premium-feed-page .event-shell,
+.premium-feed-page .fight-row,
+.premium-feed-page .pending-prompt,
+.premium-feed-page .modal-panel,
+.account-page .account-card,
+.account-page .account-section-wrap,
+.account-page .session-card,
+.newsletter-page .intro-panel,
+.newsletter-page .signup-card,
+.newsletter-page .premium-reminder,
+.newsletter-page .summary-card,
+.newsletter-page .chart-card,
+.newsletter-page .list-card,
+.forgot-email-page .recovery-panel,
+.forgot-email-page .secure-pill,
+.forgot-email-page .disclaimer,
+.thank-you-page .card,
+.thank-you-page .premium-box,
+.reset-password-page .panel {
+  border-color: #dce2dd !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  background-image: none !important;
+  color: #555d57 !important;
+  box-shadow: 0 14px 34px rgba(14, 18, 15, 0.06) !important;
+}
+
+.portal-page .input,
+.portal-page .textarea,
+.portal-page .select,
+.checkout-page .input,
+.checkout-page .textarea,
+.checkout-page .select,
+.premium-feed-page .input,
+.premium-feed-page .textarea,
+.premium-feed-page .select,
+.account-page .input,
+.account-page .textarea,
+.account-page .select,
+.newsletter-page .input,
+.newsletter-page .textarea,
+.newsletter-page .select,
+.forgot-email-page .input,
+.forgot-email-page .textarea,
+.forgot-email-page .select,
+.reset-password-page .input,
+.reset-password-page .textarea,
+.reset-password-page .select {
+  border-color: #dce2dd !important;
+  background: #ffffff !important;
+  color: #050506 !important;
+  box-shadow: none !important;
+}
+
+.portal-page h1,
+.portal-page h2,
+.portal-page h3,
+.portal-page strong,
+.portal-page .panel-title,
+.checkout-page h1,
+.checkout-page h2,
+.checkout-page h3,
+.checkout-page strong,
+.checkout-page .panel-title,
+.premium-feed-page h1,
+.premium-feed-page h2,
+.premium-feed-page h3,
+.premium-feed-page strong,
+.account-page h1,
+.account-page h2,
+.account-page h3,
+.account-page strong,
+.newsletter-page h1,
+.newsletter-page h2,
+.newsletter-page h3,
+.newsletter-page strong,
+.forgot-email-page h1,
+.forgot-email-page h2,
+.forgot-email-page h3,
+.forgot-email-page strong,
+.thank-you-page h1,
+.thank-you-page h2,
+.thank-you-page h3,
+.thank-you-page strong,
+.reset-password-page h1,
+.reset-password-page h2,
+.reset-password-page h3,
+.reset-password-page strong {
+  color: #050506 !important;
+  text-shadow: none !important;
+}
