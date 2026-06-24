@@ -407,6 +407,302 @@ h1 {
 }
 </style>
 <link rel="stylesheet" href="light-theme.css">
+<!-- account-premium-header-light-fix -->
+<style>
+
+
+
+:root {
+  color-scheme: light !important;
+}
+
+html {
+  background: #f6f8f5 !important;
+}
+
+/* ------------------------------------------------------------------
+   Account + Premium header repair
+   Reference: current index header pattern.
+   Keeps these subscriber pages light, compact and with actions pinned right.
+------------------------------------------------------------------- */
+.account-page,
+.premium-feed-page {
+  color-scheme: light !important;
+  background:
+    radial-gradient(circle at 16% 7%, rgba(47, 186, 115, 0.08), transparent 30%),
+    radial-gradient(circle at 88% 24%, rgba(5, 5, 6, 0.045), transparent 28%),
+    linear-gradient(180deg, #fafbf9 0%, #f6f8f5 52%, #eef2ef 100%) !important;
+  background-color: #f6f8f5 !important;
+  color: #070907 !important;
+}
+
+.account-page::before,
+.premium-feed-page::before {
+  background-image:
+    linear-gradient(rgba(8, 11, 8, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 11, 8, 0.035) 1px, transparent 1px) !important;
+  background-size: 42px 42px !important;
+  opacity: 0.7 !important;
+}
+
+.account-page .topbar,
+.premium-feed-page .topbar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 20 !important;
+  min-height: 0 !important;
+  border-bottom: 1px solid #dce2dd !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  box-shadow: 0 8px 22px rgba(14, 18, 15, 0.045) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  backdrop-filter: blur(18px) !important;
+}
+
+.account-page .topbar .container.nav,
+.premium-feed-page .topbar .container.nav {
+  width: min(100% - 36px, 1180px) !important;
+  min-height: 42px !important;
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr) !important;
+  align-items: center !important;
+  justify-content: normal !important;
+  gap: 12px !important;
+  padding: 6px 0 !important;
+  margin: 0 auto !important;
+  flex-direction: row !important;
+}
+
+.account-page .topbar .brand,
+.account-page .topbar .brand.brand-text-only,
+.premium-feed-page .topbar .brand,
+.premium-feed-page .topbar .brand.brand-text-only {
+  min-width: max-content !important;
+  width: auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  color: #050506 !important;
+  font-size: 0.96rem !important;
+  font-weight: 950 !important;
+  letter-spacing: -0.045em !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+
+.account-page .topbar .brand span,
+.premium-feed-page .topbar .brand span {
+  color: #050506 !important;
+  max-width: none !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+}
+
+.account-page .topbar .brand-mark,
+.premium-feed-page .topbar .brand-mark {
+  display: none !important;
+}
+
+.account-page .topbar .header-buttons,
+.premium-feed-page .topbar .header-buttons {
+  width: 100% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  justify-self: end !important;
+  gap: 0 !important;
+  margin-left: auto !important;
+}
+
+.account-page .topbar .top-actions,
+.premium-feed-page .topbar .top-actions {
+  width: auto !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  justify-self: end !important;
+  gap: 6px !important;
+  margin-left: auto !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  flex-wrap: nowrap !important;
+}
+
+.account-page .topbar .login-btn,
+.account-page .topbar .top-button,
+.premium-feed-page .topbar .login-btn,
+.premium-feed-page .topbar .top-button {
+  width: auto !important;
+  min-width: 0 !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  flex: 0 0 auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 10px !important;
+  border: 1px solid #dce2dd !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.82) !important;
+  color: #303632 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  font-size: 0.64rem !important;
+  font-weight: 820 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+.account-page .topbar .premium-login-link,
+.account-page .topbar .top-button.primary,
+.premium-feed-page .topbar .premium-login-link,
+.premium-feed-page .topbar .top-button.primary {
+  border-color: #050506 !important;
+  background: #050506 !important;
+  color: #ffffff !important;
+}
+
+.account-page .topbar .login-btn:hover,
+.account-page .topbar .top-button:hover,
+.premium-feed-page .topbar .login-btn:hover,
+.premium-feed-page .topbar .top-button:hover {
+  border-color: rgba(47, 186, 115, 0.45) !important;
+  background: rgba(47, 186, 115, 0.08) !important;
+  color: #1f8a53 !important;
+  transform: translateY(-1px) !important;
+}
+
+.account-page .topbar .premium-login-link:hover,
+.account-page .topbar .top-button.primary:hover,
+.premium-feed-page .topbar .premium-login-link:hover,
+.premium-feed-page .topbar .top-button.primary:hover {
+  border-color: #050506 !important;
+  background: #050506 !important;
+  color: #ffffff !important;
+}
+
+.account-page .account-hero {
+  padding: 30px 0 20px !important;
+  border-bottom: 1px solid #dce2dd !important;
+  background: transparent !important;
+}
+
+.account-page h1 {
+  color: #050506 !important;
+  font-size: clamp(2.15rem, 4.35vw, 3.95rem) !important;
+  line-height: 0.94 !important;
+  letter-spacing: -0.068em !important;
+}
+
+.account-page h2,
+.account-page h3,
+.account-page strong,
+.account-page .card h2,
+.account-page .card h3,
+.account-page .sub-row strong {
+  color: #050506 !important;
+}
+
+.account-page .hero-copy,
+.account-page .card p,
+.account-page .sub-row span,
+.account-page .account-note,
+.account-page p,
+.account-page label {
+  color: #555d57 !important;
+}
+
+.account-page .card,
+.account-page .sticky-card,
+.account-page .account-main,
+.account-page .account-section-wrap {
+  border-color: #dce2dd !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  background-image: none !important;
+  color: #555d57 !important;
+  box-shadow: 0 14px 34px rgba(14, 18, 15, 0.06) !important;
+}
+
+.account-page .account-section-wrap {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.account-page .account-input,
+.account-page input:not([type="checkbox"]):not([type="radio"]) {
+  border-color: #dce2dd !important;
+  background: #ffffff !important;
+  color: #050506 !important;
+  box-shadow: none !important;
+}
+
+.account-page .btn,
+.account-page .btn-primary {
+  border-color: #050506 !important;
+  background: #050506 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 680px) {
+  .account-page .topbar .container.nav,
+  .premium-feed-page .topbar .container.nav {
+    width: min(100% - 12px, 1180px) !important;
+    min-height: 34px !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    gap: 6px !important;
+    padding: 4px 0 !important;
+  }
+
+  .account-page .topbar .brand,
+  .account-page .topbar .brand.brand-text-only,
+  .premium-feed-page .topbar .brand,
+  .premium-feed-page .topbar .brand.brand-text-only {
+    min-width: max-content !important;
+    font-size: 0.82rem !important;
+    letter-spacing: -0.04em !important;
+  }
+
+  .account-page .topbar .top-actions,
+  .premium-feed-page .topbar .top-actions {
+    gap: 4px !important;
+  }
+
+  .account-page .topbar .login-btn,
+  .account-page .topbar .top-button,
+  .premium-feed-page .topbar .login-btn,
+  .premium-feed-page .topbar .top-button {
+    height: 24px !important;
+    min-height: 24px !important;
+    padding: 0 8px !important;
+    border-radius: 5px !important;
+    font-size: clamp(0.48rem, 2.15vw, 0.56rem) !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .account-page .account-hero {
+    padding: 22px 0 16px !important;
+  }
+
+  .account-page h1 {
+    font-size: clamp(1.85rem, 9.2vw, 2.45rem) !important;
+    line-height: 0.96 !important;
+  }
+}
+
+</style>
+<!-- /account-premium-header-light-fix -->
 </head>
 <body class="account-page">
 <header class="topbar">
@@ -415,10 +711,12 @@ h1 {
       <span>Live Picks</span>
     </a>
 
-    <div class="top-actions">
-      <a class="top-button primary" href="premium-feed.html">Premium Feed</a>
-      <button class="top-button" type="button" id="logoutButton">Logout</button>
-      <a class="top-button" href="index.html">Home</a>
+    <div class="header-buttons">
+      <div class="top-actions" aria-label="Account navigation">
+        <a class="login-btn premium-login-link" href="premium-feed.html">Premium Feed</a>
+        <button class="login-btn secondary-btn" type="button" id="logoutButton">Logout</button>
+        <a class="login-btn secondary-btn" href="index.html">Home</a>
+      </div>
     </div>
   </div>
 </header>
