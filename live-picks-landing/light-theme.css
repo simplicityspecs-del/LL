@@ -1681,3 +1681,188 @@ input[type="radio"] {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* Site-wide desktop header lockup. Mirrors the compact mobile header pattern. */
+@media (min-width: 681px) {
+  .index-page .topbar,
+  .portal-page .topbar,
+  .checkout-page .checkout-topbar,
+  .premium-feed-page .topbar,
+  .account-page .topbar,
+  .newsletter-page .topbar,
+  .thank-you-page .topbar,
+  .forgot-email-page .topbar,
+  .reset-password-page .topbar {
+    min-height: 0 !important;
+    background: rgba(255, 255, 255, 0.94) !important;
+    border-bottom: 1px solid #dce2dd !important;
+    box-shadow: 0 8px 22px rgba(14, 18, 15, 0.045) !important;
+  }
+
+  .index-page .topbar .container.nav,
+  .portal-page .topbar .container.nav,
+  .checkout-page .checkout-topbar .checkout-nav,
+  .premium-feed-page .topbar .container.nav,
+  .account-page .topbar .container.nav,
+  .newsletter-page .topbar .container.nav,
+  .thank-you-page .topbar .container.nav,
+  .forgot-email-page .topbar .container.nav,
+  .reset-password-page .topbar .container.nav {
+    width: min(100% - 36px, 1180px) !important;
+    min-height: 42px !important;
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    align-items: center !important;
+    justify-content: normal !important;
+    gap: 12px !important;
+    padding: 6px 0 !important;
+    flex-direction: row !important;
+  }
+
+  .reset-password-page .topbar .container.nav {
+    max-width: 1180px !important;
+  }
+
+  .index-page .topbar .brand,
+  .portal-page .topbar .brand,
+  .checkout-page .checkout-topbar .brand,
+  .premium-feed-page .topbar .brand,
+  .account-page .topbar .brand,
+  .newsletter-page .topbar .brand,
+  .thank-you-page .topbar .brand,
+  .forgot-email-page .topbar .brand,
+  .reset-password-page .topbar .brand {
+    min-width: max-content !important;
+    width: auto !important;
+    color: #050506 !important;
+    font-size: 0.96rem !important;
+    font-weight: 950 !important;
+    letter-spacing: -0.045em !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .index-page .topbar .brand span,
+  .portal-page .topbar .brand span,
+  .checkout-page .checkout-topbar .brand span,
+  .premium-feed-page .topbar .brand span,
+  .account-page .topbar .brand span,
+  .newsletter-page .topbar .brand span,
+  .forgot-email-page .topbar .brand span,
+  .reset-password-page .topbar .brand span {
+    max-width: none !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+  }
+
+  .index-page .topbar .header-buttons {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    justify-self: end !important;
+    gap: 0 !important;
+    margin-left: auto !important;
+  }
+
+  .index-page .topbar .desktop-nav,
+  .portal-page .portal-desktop-actions,
+  .newsletter-page .newsletter-desktop-actions {
+    display: none !important;
+  }
+
+  .index-page .topbar .top-actions,
+  .portal-page .portal-mobile-actions,
+  .checkout-page .checkout-header-actions,
+  .premium-feed-page .topbar .top-actions,
+  .account-page .topbar .top-actions,
+  .newsletter-page .newsletter-mobile-actions,
+  .forgot-email-page .topbar .nav-links {
+    width: auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    grid-template-columns: none !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    justify-self: end !important;
+    gap: 6px !important;
+    margin-left: auto !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .thank-you-page .topbar .nav-link,
+  .reset-password-page .topbar .back-link {
+    justify-self: end !important;
+    margin-left: auto !important;
+  }
+
+  .index-page .topbar .top-actions .login-btn,
+  .portal-page .portal-mobile-actions .nav-link,
+  .checkout-page .checkout-header-button,
+  .premium-feed-page .topbar .top-button,
+  .account-page .topbar .top-button,
+  .newsletter-page .newsletter-mobile-actions .nav-link,
+  .thank-you-page .topbar .nav-link,
+  .forgot-email-page .topbar .nav-links a,
+  .reset-password-page .topbar .back-link {
+    width: auto !important;
+    min-width: 0 !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    flex: 0 0 auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 10px !important;
+    border: 1px solid #dce2dd !important;
+    border-radius: 6px !important;
+    background: rgba(255, 255, 255, 0.82) !important;
+    color: #303632 !important;
+    box-shadow: none !important;
+    filter: none !important;
+    font-size: 0.64rem !important;
+    font-weight: 820 !important;
+    letter-spacing: 0.02em !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+  }
+
+  .index-page .topbar .premium-login-link,
+  .checkout-page .checkout-header-button:last-child,
+  .premium-feed-page .topbar .top-button.primary,
+  .account-page .topbar .top-button.primary {
+    border-color: #050506 !important;
+    background: #050506 !important;
+    color: #ffffff !important;
+  }
+
+  .index-page .topbar .top-actions .login-btn:hover,
+  .portal-page .portal-mobile-actions .nav-link:hover,
+  .checkout-page .checkout-header-button:hover,
+  .premium-feed-page .topbar .top-button:hover,
+  .account-page .topbar .top-button:hover,
+  .newsletter-page .newsletter-mobile-actions .nav-link:hover,
+  .thank-you-page .topbar .nav-link:hover,
+  .forgot-email-page .topbar .nav-links a:hover,
+  .reset-password-page .topbar .back-link:hover {
+    border-color: rgba(47, 186, 115, 0.45) !important;
+    background: rgba(47, 186, 115, 0.08) !important;
+    color: #1f8a53 !important;
+    transform: translateY(-1px) !important;
+  }
+
+  .index-page .topbar .premium-login-link:hover,
+  .premium-feed-page .topbar .top-button.primary:hover,
+  .account-page .topbar .top-button.primary:hover {
+    border-color: #050506 !important;
+    background: #050506 !important;
+    color: #ffffff !important;
+  }
+}
