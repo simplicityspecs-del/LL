@@ -2265,3 +2265,55 @@ input[type="radio"] {
   color: #050506 !important;
   text-shadow: none !important;
 }
+
+/* Newsletter page safety net loaded after local CSS. Keeps the large hero
+   copy from touching/clipping against the light card edges. */
+.newsletter-page .intro-panel {
+  padding: clamp(24px, 3vw, 40px) !important;
+  overflow: visible !important;
+}
+
+.newsletter-page h1,
+.newsletter-page .signup-card h2 {
+  max-width: 100% !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  text-wrap: auto !important;
+  padding-inline: 0.025em !important;
+  margin-inline: -0.025em !important;
+}
+
+.newsletter-page h1 {
+  font-size: clamp(3.25rem, 5.75vw, 5.55rem) !important;
+  line-height: 0.9 !important;
+  letter-spacing: -0.078em !important;
+}
+
+.newsletter-page .signup-card h2 {
+  font-size: clamp(2rem, 3.45vw, 3.15rem) !important;
+  line-height: 0.94 !important;
+  letter-spacing: -0.06em !important;
+}
+
+.newsletter-page .premium-reminder {
+  box-shadow: none !important;
+}
+
+@media (max-width: 680px) {
+  .newsletter-page .intro-panel,
+  .newsletter-page .signup-card {
+    padding: 16px !important;
+  }
+
+  .newsletter-page h1 {
+    font-size: clamp(2.15rem, 11.4vw, 3rem) !important;
+    line-height: 0.94 !important;
+    letter-spacing: -0.072em !important;
+  }
+
+  .newsletter-page .signup-card h2 {
+    font-size: clamp(1.55rem, 8.25vw, 2.15rem) !important;
+    line-height: 0.96 !important;
+    letter-spacing: -0.055em !important;
+  }
+}

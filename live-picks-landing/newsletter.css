@@ -683,3 +683,131 @@ input::placeholder { color: #738078; }
     line-height: 1.45;
   }
 }
+
+/* Newsletter layout repair: prevents desktop/mobile clipping and gives the
+   light-theme intro card enough internal space for the large headline. */
+.newsletter-page {
+  -webkit-text-size-adjust: 100%;
+}
+
+.newsletter-page .container {
+  width: min(100% - 38px, 1280px);
+}
+
+.newsletter-page .page {
+  min-height: auto;
+  display: block;
+  padding: clamp(38px, 5vw, 76px) 0;
+}
+
+.newsletter-page .newsletter-layout {
+  grid-template-columns: minmax(0, 1.03fr) minmax(420px, 0.97fr);
+  align-items: start;
+  gap: clamp(26px, 3.6vw, 50px);
+}
+
+.newsletter-page .newsletter-layout > * {
+  min-width: 0;
+}
+
+.newsletter-page .intro-panel {
+  width: 100%;
+  max-width: none;
+  padding: clamp(24px, 3vw, 40px);
+  overflow: visible;
+}
+
+.newsletter-page h1,
+.newsletter-page .signup-card h2 {
+  max-width: 100%;
+  overflow-wrap: normal;
+  word-break: normal;
+  text-wrap: auto;
+  padding-inline: 0.025em;
+  margin-inline: -0.025em;
+}
+
+.newsletter-page h1 {
+  font-size: clamp(3.25rem, 5.75vw, 5.55rem);
+  line-height: 0.9;
+  letter-spacing: -0.078em;
+}
+
+.newsletter-page .signup-card {
+  padding: clamp(26px, 3.4vw, 42px);
+}
+
+.newsletter-page .signup-card h2 {
+  font-size: clamp(2rem, 3.45vw, 3.15rem);
+  line-height: 0.94;
+  letter-spacing: -0.06em;
+}
+
+.newsletter-page .field-row {
+  grid-template-columns: minmax(0, 1fr) max-content;
+}
+
+.newsletter-page input[type="email"] {
+  min-width: 0;
+}
+
+.newsletter-page .premium-reminder a {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1080px) {
+  .newsletter-page .newsletter-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter-page .signup-card {
+    max-width: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .newsletter-page .container {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .newsletter-page .page {
+    padding: 24px 0 30px;
+  }
+
+  .newsletter-page .newsletter-layout {
+    gap: 16px;
+  }
+
+  .newsletter-page .intro-panel,
+  .newsletter-page .signup-card {
+    padding: 16px;
+  }
+
+  .newsletter-page h1 {
+    font-size: clamp(2.15rem, 11.4vw, 3rem);
+    line-height: 0.94;
+    letter-spacing: -0.072em;
+  }
+
+  .newsletter-page .signup-card h2 {
+    font-size: clamp(1.55rem, 8.25vw, 2.15rem);
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+  }
+
+  .newsletter-page .field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter-page .premium-reminder {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter-page .premium-reminder a {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
