@@ -2627,6 +2627,38 @@ body.premium-feed-page::before,
   overflow-wrap: anywhere;
 }
 
+.pf-odds-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid #e3e8e3;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 8px 10px;
+}
+
+.pf-odds-control span {
+  color: #747d76 !important;
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.pf-odds-control select {
+  width: 126px;
+  min-height: 34px;
+  border: 1px solid #dce2dd;
+  border-radius: 7px;
+  background: #f7f8f6;
+  color: #050506;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 850;
+  padding: 0 9px;
+}
+
 .pf-simple-actions .pf-notify-button {
   width: 100% !important;
   min-height: 40px !important;
@@ -2844,6 +2876,15 @@ body.premium-feed-page::before,
             <span>Signed in</span>
             <strong id="userEmail">Loading...</strong>
           </div>
+          <label class="pf-odds-control" for="oddsFormatSelect">
+            <span>Odds</span>
+            <select id="oddsFormatSelect">
+              <option value="auto">Auto</option>
+              <option value="decimal">Decimal</option>
+              <option value="american">American</option>
+              <option value="fractional">Fractional</option>
+            </select>
+          </label>
           <button class="pf-notify-button" id="notifyButton" type="button">Enable push alerts</button>
           <div class="pf-inline-state" id="feedState" role="status" aria-live="polite"></div>
         </div>
@@ -2901,6 +2942,7 @@ body.premium-feed-page::before,
   </div>
 </footer>
 
+<script src="odds-format.js"></script>
 <script>
   const userEmail = document.getElementById('userEmail');
   const feedState = document.getElementById('feedState');
@@ -2918,8 +2960,11 @@ body.premium-feed-page::before,
   const eventAlertChannel = document.getElementById('eventAlertChannel');
   const lockedCount = document.getElementById('lockedCount');
   const pendingCount = document.getElementById('pendingCount');
+  const oddsFormatSelect = document.getElementById('oddsFormatSelect');
   const savedEmail = localStorage.getItem('livePicksPortalEmail') || sessionStorage.getItem('livePicksPortalEmail');
   let activeEmail = savedEmail;
+
+  initOddsFormatControl();
 
   if (!activeEmail) {
     window.location.replace('portal.html');
@@ -2937,6 +2982,18 @@ body.premium-feed-page::before,
   });
 
   notifyButton.addEventListener('click', enablePushNotifications);
+
+  function initOddsFormatControl() {
+    if (!oddsFormatSelect || !window.LivePicksOdds) {
+      return;
+    }
+
+    oddsFormatSelect.value = window.LivePicksOdds.getSavedFormat?.() || 'auto';
+    oddsFormatSelect.addEventListener('change', () => {
+      window.LivePicksOdds.setFormat(oddsFormatSelect.value);
+      window.LivePicksOdds.apply(document);
+    });
+  }
 
   function showFeedState(message, isError = false) {
     feedState.classList.add('is-visible');
@@ -2989,6 +3046,7 @@ body.premium-feed-page::before,
     }
 
     fightList.innerHTML = fights.map((fight, index) => renderFightCard(fight, index)).join('');
+    window.LivePicksOdds?.apply?.(fightList);
   }
 
   function updateCounts(fights) {
@@ -3024,13 +3082,13 @@ body.premium-feed-page::before,
           <div class="pf-fighter pf-red">
             <span>Red corner</span>
             <strong>${escapeHtml(red)}</strong>
-            <em class="pf-odds-line">${escapeHtml(fight.redOdds || '-')}</em>
+            <em class="pf-odds-line"${oddsDataAttribute(fight.redOdds)}>${escapeHtml(formatOddsDisplay(fight.redOdds))}</em>
           </div>
           <div class="pf-vs">VS</div>
           <div class="pf-fighter pf-blue">
             <span>Blue corner</span>
             <strong>${escapeHtml(blue)}</strong>
-            <em class="pf-odds-line">${escapeHtml(fight.blueOdds || '-')}</em>
+            <em class="pf-odds-line"${oddsDataAttribute(fight.blueOdds)}>${escapeHtml(formatOddsDisplay(fight.blueOdds))}</em>
           </div>
         </div>
 
@@ -3056,6 +3114,15 @@ body.premium-feed-page::before,
         </div>
       </article>
     `;
+  }
+
+  function oddsDataAttribute(value) {
+    const decimal = window.LivePicksOdds?.parseDecimalOdds?.(value);
+    return decimal ? ` data-decimal-odds="${escapeHtml(decimal.toFixed(4))}"` : '';
+  }
+
+  function formatOddsDisplay(value) {
+    return window.LivePicksOdds?.formatOddsValue?.(value) || value || '-';
   }
 
   async function enablePushNotifications() {
