@@ -478,7 +478,7 @@ h1 {
         <button class="btn" id="clearSecretButton" type="button">Clear session secret</button>
       </div>
       <div class="state" id="adminState" role="status" aria-live="polite"></div>
-      <p class="muted" style="margin-top: 14px;">Required env vars: `ADMIN_SECRET`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`. Push alerts also need VAPID keys.</p>
+      <p class="muted" style="margin-top: 14px;">Required env vars: `ADMIN_SECRET`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`. Push alerts also need VAPID keys. Email alerts need `RESEND_API_KEY` and `LOCK_ALERT_FROM_EMAIL`.</p>
     </aside>
 
     <section class="panel hidden" id="boardPanel">
@@ -637,6 +637,13 @@ h1 {
     }
 
     return data;
+  }
+
+  function formatAlertStatus(label, result = {}) {
+    if (result.message) return `${label}: ${result.message}`;
+    if (result.disabled) return `${label}: not configured.`;
+    if (result.attempted) return `${label}: sent ${result.sent || 0}, failed ${result.failed || 0}.`;
+    return '';
   }
 
   async function loadBoard() {
@@ -850,13 +857,18 @@ h1 {
         fillFightCard(card, data.fight);
 
         const notification = data.notification || {};
-        if (notification.message) {
-          showState(notification.message, Boolean(notification.disabled || (notification.failed && !notification.sent)));
-        } else if (notification.disabled) {
-          showState('Pick locked. Push notifications are not configured yet.');
-        } else {
-          showState(`Pick locked. Push sent: ${notification.sent || 0}. Failed: ${notification.failed || 0}.`);
-        }
+        const email = data.email || {};
+        const messages = [
+          formatAlertStatus('Push', notification),
+          formatAlertStatus('Email', email)
+        ].filter(Boolean);
+        const hasDeliveryError = [notification, email].some((result) => (
+          result.disabled ||
+          result.error ||
+          (Number(result.failed || 0) > 0 && Number(result.sent || 0) === 0)
+        ));
+
+        showState(`Pick locked. ${messages.join(' ')}`, hasDeliveryError);
       }
 
       if (action === 'unlock') {
