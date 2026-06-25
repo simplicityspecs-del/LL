@@ -2317,3 +2317,154 @@ input[type="radio"] {
     letter-spacing: -0.055em !important;
   }
 }
+
+/* === Mobile live data text-overlap fix =====================================
+   Keeps the signal icon/label column from colliding with the heading/body copy
+   on iPhone/Safari widths. This block is intentionally loaded last. */
+@media (max-width: 680px) {
+  #signals .signal-card-modern,
+  #signals .signal-summary,
+  #signals .signal-copy,
+  #signals .signal-copy h3,
+  #signals .signal-copy p {
+    min-width: 0 !important;
+  }
+
+  #signals .signal-summary {
+    position: relative !important;
+    grid-template-columns: 76px minmax(0, 1fr) !important;
+    gap: 10px !important;
+    align-items: start !important;
+    padding: 13px 42px 13px 13px !important;
+    overflow: visible !important;
+  }
+
+  #signals .signal-summary .signal-top {
+    width: 76px !important;
+    min-width: 76px !important;
+    max-width: 76px !important;
+    display: grid !important;
+    justify-items: center !important;
+    align-self: start !important;
+    gap: 6px !important;
+    overflow: hidden !important;
+  }
+
+  #signals .signal-card-modern .signal-code {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 15px !important;
+    font-size: 0.68rem !important;
+    line-height: 1 !important;
+  }
+
+  #signals .signal-card-modern .signal-status {
+    display: block !important;
+    width: 76px !important;
+    max-width: 76px !important;
+    overflow: hidden !important;
+    text-align: center !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    font-size: 0.5rem !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0.09em !important;
+  }
+
+  #signals .signal-copy {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  #signals .signal-copy h3 {
+    max-width: 100% !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: none !important;
+    padding-right: 0 !important;
+    margin-bottom: 5px !important;
+  }
+
+  #signals .signal-copy p {
+    max-width: 100% !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+  }
+
+  #signals .signal-toggle {
+    position: absolute !important;
+    top: 13px !important;
+    right: 13px !important;
+    width: 26px !important;
+    height: 26px !important;
+    justify-self: auto !important;
+  }
+}
+
+@media (max-width: 380px) {
+  #signals .signal-summary {
+    grid-template-columns: 68px minmax(0, 1fr) !important;
+    gap: 8px !important;
+    padding: 12px 38px 12px 12px !important;
+  }
+
+  #signals .signal-summary .signal-top {
+    width: 68px !important;
+    min-width: 68px !important;
+    max-width: 68px !important;
+    gap: 5px !important;
+  }
+
+  #signals .signal-card-modern .signal-code {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 14px !important;
+    font-size: 0.64rem !important;
+  }
+
+  #signals .signal-card-modern .signal-status {
+    width: 68px !important;
+    max-width: 68px !important;
+    font-size: 0.45rem !important;
+    letter-spacing: 0.075em !important;
+  }
+
+  #signals .signal-copy h3 {
+    font-size: 0.96rem !important;
+    line-height: 1.08 !important;
+  }
+
+  #signals .signal-copy p {
+    font-size: 0.72rem !important;
+    line-height: 1.36 !important;
+  }
+
+  #signals .signal-toggle {
+    top: 12px !important;
+    right: 12px !important;
+    width: 24px !important;
+    height: 24px !important;
+  }
+}
+
+@media (max-width: 340px) {
+  #signals .signal-summary {
+    grid-template-columns: 62px minmax(0, 1fr) !important;
+    gap: 7px !important;
+    padding-right: 34px !important;
+  }
+
+  #signals .signal-summary .signal-top,
+  #signals .signal-card-modern .signal-status {
+    width: 62px !important;
+    min-width: 62px !important;
+    max-width: 62px !important;
+  }
+
+  #signals .signal-card-modern .signal-status {
+    font-size: 0.41rem !important;
+    letter-spacing: 0.055em !important;
+  }
+}
+
