@@ -139,34 +139,6 @@ button { cursor: pointer; }
   color: #d93245;
 }
 
-.hero {
-  padding: 38px 0 20px;
-}
-
-.kicker {
-  color: var(--green);
-  font-size: 0.72rem;
-  font-weight: 950;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-h1 {
-  margin: 0;
-  max-width: 760px;
-  font-size: clamp(2.4rem, 6vw, 5.2rem);
-  line-height: 0.92;
-  letter-spacing: -0.08em;
-}
-
-.hero p {
-  max-width: 720px;
-  margin: 16px 0 0;
-  color: var(--muted);
-  font-size: 1rem;
-}
-
 .panel {
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -180,6 +152,7 @@ h1 {
   grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
   gap: 16px;
   align-items: start;
+  padding-top: 34px;
   padding-bottom: 46px;
 }
 
@@ -474,8 +447,7 @@ h1 {
   .container { width: min(100% - 20px, 1180px); }
   .nav { align-items: flex-start; flex-direction: column; padding: 9px 0; }
   .nav-actions { width: 100%; overflow-x: auto; }
-  .hero { padding: 24px 0 14px; }
-  h1 { font-size: clamp(2rem, 11vw, 2.7rem); }
+  .admin-grid { padding-top: 18px; }
   .panel { padding: 13px; }
   .board-actions { align-items: stretch; flex-direction: column; }
   .board-actions .btn { width: 100%; }
@@ -494,14 +466,6 @@ h1 {
 </header>
 
 <main>
-  <section class="hero">
-    <div class="container">
-      <div class="kicker">Live pick control room</div>
-      <h1>Update the board, then lock the pick.</h1>
-      <p>Use this panel before the event to set fights and odds. On fight night, choose the side, add any final read note, and lock the pick to update the premium feed and notify subscribed devices.</p>
-    </div>
-  </section>
-
   <section class="container admin-grid is-auth-only" id="adminGrid">
     <aside class="panel">
       <h2>Admin Access</h2>
