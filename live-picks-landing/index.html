@@ -7336,8 +7336,8 @@ h1 {
 .stat-h2h .data-card-visual {
   right: 18px;
   bottom: 22px;
-  width: 130px;
-  height: 62px;
+  width: 148px;
+  height: 74px;
 }
 
 .stat-h2h > span:not(.data-card-pulse) {
@@ -7434,27 +7434,54 @@ h1 {
 
 .h2h-visual {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 38px 34px 38px;
+  grid-template-rows: 38px 18px;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 7px 9px;
 }
 
 .h2h-visual i {
+  display: block;
   width: 38px;
   height: 38px;
-  border: 1px solid rgba(8, 11, 8, 0.12);
+  border: 1px solid rgba(8, 11, 8, 0.11);
   border-radius: 14px;
-  background: #fff;
-  box-shadow: inset 0 0 0 10px rgba(47, 186, 115, 0.10);
-  animation: h2hFloat 8.2s ease-in-out infinite;
+  background:
+    linear-gradient(180deg, rgba(47, 186, 115, 0.10), rgba(47, 186, 115, 0.04)),
+    #fff;
+  box-shadow: inset 0 0 0 8px rgba(47, 186, 115, 0.06);
 }
 
-.h2h-visual i:nth-child(2) { animation-delay: 0.2s; }
 .h2h-visual b {
-  width: 26px;
-  height: 1px;
+  display: block;
+  width: 34px;
+  height: 2px;
+  border-radius: 999px;
   background: #050506;
-  opacity: 0.45;
+  opacity: 0.42;
+}
+
+.h2h-visual .h2h-round,
+.h2h-visual .h2h-method {
+  display: block;
+  width: 31px;
+  height: 16px;
+  border: 1px solid rgba(8, 11, 8, 0.08);
+  border-radius: 6px;
+  background: rgba(8, 11, 8, 0.08);
+}
+
+.h2h-visual .h2h-round {
+  grid-column: 1;
+  grid-row: 2;
+  justify-self: center;
+}
+
+.h2h-visual .h2h-method {
+  grid-column: 3;
+  grid-row: 2;
+  justify-self: center;
 }
 
 #signals.signals-section {
@@ -7887,8 +7914,8 @@ h1 {
   }
 
   .stat-h2h .data-card-visual {
-    width: 82px;
-    height: 42px;
+    width: 112px;
+    height: 62px;
   }
 
   .stat-h2h > span:not(.data-card-pulse) {
@@ -7911,7 +7938,18 @@ h1 {
   .h2h-visual i {
     width: 26px;
     height: 26px;
-    border-radius: 10px;
+    border-width: 1px;
+  }
+
+  .h2h-visual b {
+    width: 28px;
+  }
+
+  .h2h-visual .h2h-method,
+  .h2h-visual .h2h-round {
+    width: 25px;
+    height: 14px;
+    border-radius: 5px;
   }
 
   #signals.signals-section {
@@ -8291,7 +8329,7 @@ body {
   animation: h2hFloat 7.8s ease-in-out infinite !important;
 }
 .h2h-visual i:nth-child(1) { animation-delay: -1.2s !important; animation-duration: 8.4s !important; }
-.h2h-visual i:nth-child(2) { animation-delay: -4.8s !important; animation-duration: 6.7s !important; }
+.h2h-visual i:nth-of-type(2) { animation-delay: -4.8s !important; animation-duration: 6.7s !important; }
 
 .orbit-ring {
   animation: orbitBreath 5.8s ease-in-out infinite !important;
@@ -8712,34 +8750,34 @@ body {
 
 <div class="edge-ticker odds-ticker" aria-label="Upcoming fight odds ticker">
   <div class="ticker-track">
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Shane Collins</strong><em class="odds-low">1.48</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Otari Tanzilovi</strong><em>2.67</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Connor McGregor</strong><em>3.30</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Max Holloway</strong><em class="odds-low">1.32</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Ion Cutelaba</strong><em>3.62</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Navajo Stirling</strong><em class="odds-low">1.29</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Hyder Amil</strong><em>2.51</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Christian Rodriguez</strong><em class="odds-low">1.53</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Melsik Baghdasaryan</strong><em>3.54</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Murtazali Magomedo</strong><em class="odds-low">1.30</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Andre Fili</strong><em>3.30</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Vinicius Oliveria</strong><em class="odds-low">1.34</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Andre Lima</strong><em class="odds-low">1.15</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Kevin Borjas</strong><em>5.50</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Shane Collins</strong><em class="odds-low">1.48</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Otari Tanzilovi</strong><em>2.67</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Connor McGregor</strong><em>3.30</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Max Holloway</strong><em class="odds-low">1.32</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Ion Cutelaba</strong><em>3.62</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Navajo Stirling</strong><em class="odds-low">1.29</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Hyder Amil</strong><em>2.51</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Christian Rodriguez</strong><em class="odds-low">1.53</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Melsik Baghdasaryan</strong><em>3.54</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Murtazali Magomedo</strong><em class="odds-low">1.30</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Andre Fili</strong><em>3.30</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Vinicius Oliveria</strong><em class="odds-low">1.34</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Andre Lima</strong><em class="odds-low">1.15</em></div>
-    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Kevin Borjas</strong><em>5.50</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Shane Collins</strong><em class="odds-low" data-decimal-odds="1.48">1.48</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Otari Tanzilovi</strong><em data-decimal-odds="2.67">2.67</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Connor McGregor</strong><em data-decimal-odds="3.30">3.30</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Max Holloway</strong><em class="odds-low" data-decimal-odds="1.32">1.32</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Ion Cutelaba</strong><em data-decimal-odds="3.62">3.62</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Navajo Stirling</strong><em class="odds-low" data-decimal-odds="1.29">1.29</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Hyder Amil</strong><em data-decimal-odds="2.51">2.51</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Christian Rodriguez</strong><em class="odds-low" data-decimal-odds="1.53">1.53</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Melsik Baghdasaryan</strong><em data-decimal-odds="3.54">3.54</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Murtazali Magomedo</strong><em class="odds-low" data-decimal-odds="1.30">1.30</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Andre Fili</strong><em data-decimal-odds="3.30">3.30</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Vinicius Oliveria</strong><em class="odds-low" data-decimal-odds="1.34">1.34</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Andre Lima</strong><em class="odds-low" data-decimal-odds="1.15">1.15</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Kevin Borjas</strong><em data-decimal-odds="5.50">5.50</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Shane Collins</strong><em class="odds-low" data-decimal-odds="1.48">1.48</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Otari Tanzilovi</strong><em data-decimal-odds="2.67">2.67</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Connor McGregor</strong><em data-decimal-odds="3.30">3.30</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Max Holloway</strong><em class="odds-low" data-decimal-odds="1.32">1.32</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Ion Cutelaba</strong><em data-decimal-odds="3.62">3.62</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Navajo Stirling</strong><em class="odds-low" data-decimal-odds="1.29">1.29</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Hyder Amil</strong><em data-decimal-odds="2.51">2.51</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Christian Rodriguez</strong><em class="odds-low" data-decimal-odds="1.53">1.53</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Melsik Baghdasaryan</strong><em data-decimal-odds="3.54">3.54</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Murtazali Magomedo</strong><em class="odds-low" data-decimal-odds="1.30">1.30</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Andre Fili</strong><em data-decimal-odds="3.30">3.30</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Vinicius Oliveria</strong><em class="odds-low" data-decimal-odds="1.34">1.34</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Andre Lima</strong><em class="odds-low" data-decimal-odds="1.15">1.15</em></div>
+    <div class="ticker-item odds-ticker-item"><span class="ticker-market">H2H</span><strong>Kevin Borjas</strong><em data-decimal-odds="5.50">5.50</em></div>
   </div>
 </div>
 
@@ -9130,7 +9168,10 @@ body {
       <div class="data-card live-data-card stat-h2h">
         <div class="data-card-top"><strong>H2H ONLY</strong><span class="data-card-pulse" aria-hidden="true"></span></div>
         <span>no round or method picks</span>
-        <div class="data-card-visual h2h-visual" aria-hidden="true"><i></i><i></i><b></b></div>
+        <div class="data-card-visual h2h-visual" aria-hidden="true">
+          <i></i><b></b><i></i>
+          <span class="h2h-round"></span><span class="h2h-method"></span>
+        </div>
       </div>
     </div>
   </section>
@@ -9543,6 +9584,7 @@ body {
 </footer>
 
 
+<script src="odds-format.js"></script>
 <script>
   document.querySelectorAll('.subscribe-cta').forEach((button) => {
     button.addEventListener('pointerdown', () => {
