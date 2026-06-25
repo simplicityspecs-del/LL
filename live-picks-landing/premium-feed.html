@@ -2549,6 +2549,267 @@ html {
   }
 }
 
+/* Premium feed simplification pass: status, board, alerts. */
+body.premium-feed-page {
+  background: #f6f8f5 !important;
+}
+
+body.premium-feed-page::before,
+.premium-feed-page .edge-ticker,
+.pf-hero,
+.pf-overview,
+.pf-workflow,
+.pf-side-panel {
+  display: none !important;
+}
+
+.pf-feed-top {
+  padding: 18px 0 10px !important;
+}
+
+.pf-simple-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.42fr);
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #dce2dd !important;
+  border-radius: 10px;
+  background: #ffffff !important;
+  box-shadow: 0 8px 22px rgba(14, 18, 15, 0.045) !important;
+  padding: 16px;
+}
+
+.pf-simple-main h1 {
+  margin: 7px 0 0;
+  color: #050506 !important;
+  font-size: clamp(1.75rem, 3.5vw, 3.35rem);
+  line-height: 0.96;
+  letter-spacing: -0.065em;
+}
+
+.pf-simple-main p {
+  max-width: 680px;
+  margin: 9px 0 0;
+  color: #555d57 !important;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.pf-simple-actions {
+  display: grid;
+  gap: 9px;
+}
+
+.pf-simple-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid #e3e8e3;
+  border-radius: 8px;
+  background: #f7f8f6;
+  padding: 10px 11px;
+}
+
+.pf-simple-meta span {
+  color: #747d76 !important;
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.pf-simple-meta strong {
+  min-width: 0;
+  color: #050506 !important;
+  font-size: 0.8rem;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.pf-simple-actions .pf-notify-button {
+  width: 100% !important;
+  min-height: 40px !important;
+  border-radius: 8px !important;
+}
+
+.pf-simple-actions .pf-inline-state {
+  margin-top: 0 !important;
+  border-radius: 8px !important;
+  padding: 9px 10px !important;
+  font-size: 0.76rem !important;
+}
+
+.pf-board {
+  padding: 8px 0 42px !important;
+}
+
+.pf-board-layout {
+  display: block !important;
+}
+
+.pf-panel {
+  border-radius: 10px !important;
+  box-shadow: 0 10px 26px rgba(14, 18, 15, 0.055) !important;
+}
+
+.pf-panel-head {
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  gap: 14px !important;
+  padding: 18px !important;
+  background: #ffffff !important;
+}
+
+.pf-panel-head h2 {
+  margin-top: 8px !important;
+  font-size: clamp(1.55rem, 3vw, 2.55rem) !important;
+  line-height: 1 !important;
+  letter-spacing: -0.06em !important;
+}
+
+.pf-panel-head p {
+  max-width: 720px;
+  font-size: 0.88rem !important;
+  line-height: 1.42 !important;
+}
+
+.pf-status-pill {
+  border-radius: 8px !important;
+}
+
+.pf-meta-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+.pf-meta {
+  min-height: 76px !important;
+  padding: 13px 14px !important;
+}
+
+.pf-fight-toolbar {
+  padding: 16px 18px 0 !important;
+}
+
+.pf-fight-toolbar h3 {
+  font-size: 1.15rem !important;
+}
+
+.pf-fight-toolbar p {
+  max-width: 560px;
+}
+
+.pf-fight-list {
+  padding: 14px 18px 18px !important;
+  gap: 10px !important;
+}
+
+.pf-fight-card {
+  border-radius: 9px !important;
+  box-shadow: none !important;
+}
+
+.pf-fight-top {
+  min-height: 38px !important;
+  padding: 9px 12px !important;
+}
+
+.pf-matchup {
+  min-height: 0 !important;
+}
+
+.pf-fighter {
+  padding: 14px !important;
+}
+
+.pf-fighter strong {
+  font-size: clamp(1.25rem, 3vw, 2.1rem) !important;
+  line-height: 0.96 !important;
+}
+
+.pf-pick-callout {
+  padding: 10px 12px 12px !important;
+}
+
+.pf-pick-inner,
+.pf-pending-read {
+  border-radius: 8px !important;
+}
+
+@media (max-width: 760px) {
+  .pf-feed-top {
+    padding: 10px 0 8px !important;
+  }
+
+  .pf-simple-card {
+    grid-template-columns: 1fr !important;
+    gap: 11px !important;
+    border-radius: 9px !important;
+    padding: 12px !important;
+  }
+
+  .pf-simple-main h1 {
+    font-size: clamp(1.65rem, 9vw, 2.35rem) !important;
+    letter-spacing: -0.058em !important;
+  }
+
+  .pf-simple-main p {
+    font-size: 0.8rem !important;
+  }
+
+  .pf-board {
+    padding: 4px 0 28px !important;
+  }
+
+  .pf-panel-head {
+    grid-template-columns: 1fr !important;
+    padding: 14px !important;
+  }
+
+  .pf-status-pill {
+    width: fit-content !important;
+  }
+
+  .pf-meta-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .pf-meta {
+    min-height: 68px !important;
+    border-right: 1px solid var(--pf-line) !important;
+    border-bottom: 1px solid var(--pf-line) !important;
+  }
+
+  .pf-meta:nth-child(2n) {
+    border-right: 0 !important;
+  }
+
+  .pf-meta:nth-last-child(-n + 2) {
+    border-bottom: 0 !important;
+  }
+
+  .pf-fight-toolbar {
+    padding: 14px 13px 0 !important;
+  }
+
+  .pf-fight-list {
+    padding: 12px !important;
+  }
+
+  .pf-matchup {
+    grid-template-columns: 1fr !important;
+  }
+
+  .pf-vs {
+    min-height: 30px !important;
+    border-block: 1px solid var(--pf-line) !important;
+    border-inline: 0 !important;
+  }
+
+  .pf-fighter + .pf-fighter {
+    border-left: 0 !important;
+  }
+}
+
 </style>
 <!-- /account-premium-header-light-fix -->
 </head>
@@ -2569,76 +2830,22 @@ html {
   </div>
 </header>
 
-<div class="edge-ticker" aria-label="Premium feed ticker">
-  <div class="ticker-track">
-    <div class="ticker-item"><span class="ticker-market">PREMIUM</span><strong>Clear fight board</strong><em>LIVE</em></div>
-    <div class="ticker-item"><span class="ticker-market">STATUS</span><strong>Locked picks appear first</strong><em>READY</em></div>
-    <div class="ticker-item"><span class="ticker-market">WATCH</span><strong>Odds and release windows</strong><em>H2H</em></div>
-    <div class="ticker-item"><span class="ticker-market">ACCESS</span><strong>Subscriber dashboard</strong><em class="warn">18+</em></div>
-    <div class="ticker-item"><span class="ticker-market">PREMIUM</span><strong>Clear fight board</strong><em>LIVE</em></div>
-    <div class="ticker-item"><span class="ticker-market">STATUS</span><strong>Locked picks appear first</strong><em>READY</em></div>
-    <div class="ticker-item"><span class="ticker-market">WATCH</span><strong>Odds and release windows</strong><em>H2H</em></div>
-    <div class="ticker-item"><span class="ticker-market">ACCESS</span><strong>Subscriber dashboard</strong><em class="warn">18+</em></div>
-  </div>
-</div>
-
 <main id="feed">
-  <section class="pf-hero" aria-label="Premium feed overview">
-    <div class="container pf-hero-grid">
-      <div class="pf-hero-main">
-        <span class="pf-eyebrow">Premium dashboard</span>
-        <h1 class="pf-title" id="feedHeadline">Premium picks, <span class="accent">without the noise.</span></h1>
-        <p class="pf-copy" id="feedHeroCopy"><strong>Your subscriber feed is now organised like a fight-night dashboard.</strong> The current event, pick status, fight list and notification setup are grouped so you know exactly what matters first.</p>
-        <div class="pf-hero-actions" aria-label="Feed highlights">
-          <span class="pf-pill">Current event first</span>
-          <span class="pf-pill">Locked picks highlighted</span>
-          <span class="pf-pill">Clean mobile layout</span>
-        </div>
-      </div>
-
-      <aside class="pf-access-card" aria-label="Subscriber session">
-        <div class="pf-access-head">
-          <strong>Subscriber access</strong>
-          <span class="pf-access-badge">Active</span>
-        </div>
-        <div class="pf-session-list">
-          <div class="pf-session-row"><span>Signed in</span><strong id="userEmail">Loading...</strong></div>
-          <div class="pf-session-row"><span>Current card</span><strong id="sessionEventName">Loading...</strong></div>
-          <div class="pf-session-row"><span>Access level</span><strong>Premium feed</strong></div>
-        </div>
-      </aside>
-    </div>
-  </section>
-
-  <section class="pf-overview" aria-label="Premium feed summary">
-    <div class="container pf-overview-grid">
-      <div class="pf-stat-card"><span>Current event</span><strong id="dashEventName">Loading...</strong><small>The card currently being monitored.</small></div>
-      <div class="pf-stat-card"><span>Release status</span><strong id="dashReleaseStatus">Loading</strong><small>Where the live read stands right now.</small></div>
-      <div class="pf-stat-card"><span>Official picks</span><strong id="dashPickCount">0 locked</strong><small>Locked calls are highlighted in green.</small></div>
-      <div class="pf-stat-card"><span>Alert channel</span><strong id="dashAlertChannel">Push + feed</strong><small>Use push for the fastest release alert.</small></div>
-    </div>
-  </section>
-
-  <section class="pf-workflow" aria-label="Premium feed status guide">
+  <section class="pf-feed-top" aria-label="Premium feed status">
     <div class="container">
-      <div class="pf-feed-guide">
-        <div class="pf-guide-head">
-          <span class="pf-label">Board status</span>
-          <h2>Know what is live.</h2>
+      <div class="pf-simple-card">
+        <div class="pf-simple-main">
+          <span class="pf-label">Premium feed</span>
+          <h1 id="feedHeadline">Loading board.</h1>
+          <p id="feedHeroCopy">Current event, live status and subscriber alerts in one place.</p>
         </div>
-        <div class="pf-guide-grid">
-          <div class="pf-guide-card">
-            <strong>Pending fights</strong>
-            <span>Matchups and odds are posted, but there is no official premium pick yet.</span>
+        <div class="pf-simple-actions">
+          <div class="pf-simple-meta">
+            <span>Signed in</span>
+            <strong id="userEmail">Loading...</strong>
           </div>
-          <div class="pf-guide-card is-locked">
-            <strong>Locked picks</strong>
-            <span>The official call is live with the selected side, confidence and final note.</span>
-          </div>
-          <div class="pf-guide-card is-alert">
-            <strong>Push alerts</strong>
-            <span>Turn alerts on once so fight-night locks reach you without refreshing the board.</span>
-          </div>
+          <button class="pf-notify-button" id="notifyButton" type="button">Enable push alerts</button>
+          <div class="pf-inline-state" id="feedState" role="status" aria-live="polite"></div>
         </div>
       </div>
     </div>
@@ -2666,7 +2873,7 @@ html {
         <div class="pf-fight-toolbar">
           <div>
             <h3>Fight board</h3>
-            <p>Each card is either pending or locked. Only locked cards are official premium picks.</p>
+            <p>Locked means official. Pending means wait.</p>
           </div>
           <div class="pf-counts" aria-label="Fight counts">
             <span class="pf-chip green" id="lockedCount">0 locked</span>
@@ -2678,29 +2885,6 @@ html {
           <div class="pf-loading">Loading current fights...</div>
         </div>
       </article>
-
-      <aside class="pf-side-panel" aria-label="Premium feed help and notifications">
-        <div class="pf-side-section">
-          <h3>How to read this</h3>
-          <p>Pending fights show odds. Locked fights show the official premium call.</p>
-          <div class="pf-read-list">
-            <div class="pf-read-item"><span class="pf-read-mark is-pending" aria-hidden="true"></span><div><strong>Pending</strong><span>Odds are being monitored. No official call yet.</span></div></div>
-            <div class="pf-read-item"><span class="pf-read-mark is-locked" aria-hidden="true"></span><div><strong>Locked</strong><span>The official premium pick is visible with confidence and notes.</span></div></div>
-            <div class="pf-read-item"><span class="pf-read-mark is-alerts" aria-hidden="true"></span><div><strong>Alerts</strong><span>Push tells you when the board updates during the release window.</span></div></div>
-          </div>
-        </div>
-
-        <div class="pf-side-section">
-          <h3>Pick delivery</h3>
-          <p>Delivery and alerts sit directly under subscriber access on mobile.</p>
-          <div class="pf-notify-box">
-            <strong>Pick delivery</strong>
-            <span>Enable push alerts so you know when premium picks lock. iPhone users may need the <a href="/push-guide.html">Home Screen setup guide</a>.</span>
-            <button class="pf-notify-button" id="notifyButton" type="button">Enable push notifications</button>
-          </div>
-          <div class="pf-inline-state" id="feedState" role="status" aria-live="polite"></div>
-        </div>
-      </aside>
     </div>
   </section>
 </main>
@@ -2725,7 +2909,6 @@ html {
   const notifyButton = document.getElementById('notifyButton');
   const feedHeadline = document.getElementById('feedHeadline');
   const feedHeroCopy = document.getElementById('feedHeroCopy');
-  const sessionEventName = document.getElementById('sessionEventName');
   const eventTitle = document.getElementById('eventTitle');
   const eventCopy = document.getElementById('eventCopy');
   const releaseStatusPill = document.getElementById('releaseStatusPill');
@@ -2733,10 +2916,6 @@ html {
   const eventMarket = document.getElementById('eventMarket');
   const eventVenue = document.getElementById('eventVenue');
   const eventAlertChannel = document.getElementById('eventAlertChannel');
-  const dashEventName = document.getElementById('dashEventName');
-  const dashReleaseStatus = document.getElementById('dashReleaseStatus');
-  const dashPickCount = document.getElementById('dashPickCount');
-  const dashAlertChannel = document.getElementById('dashAlertChannel');
   const lockedCount = document.getElementById('lockedCount');
   const pendingCount = document.getElementById('pendingCount');
   const savedEmail = localStorage.getItem('livePicksPortalEmail') || sessionStorage.getItem('livePicksPortalEmail');
@@ -2758,15 +2937,6 @@ html {
   });
 
   notifyButton.addEventListener('click', enablePushNotifications);
-
-  document.querySelectorAll('.edge-ticker').forEach((ticker) => {
-    const pause = () => ticker.classList.add('is-paused');
-    const resume = () => ticker.classList.remove('is-paused');
-    ticker.addEventListener('pointerdown', pause, { passive: true });
-    ticker.addEventListener('pointerup', resume, { passive: true });
-    ticker.addEventListener('pointercancel', resume, { passive: true });
-    ticker.addEventListener('pointerleave', resume, { passive: true });
-  });
 
   function showFeedState(message, isError = false) {
     feedState.classList.add('is-visible');
@@ -2799,14 +2969,10 @@ html {
     const market = event.market || 'Head to head';
     const alertChannel = event.alertChannel || 'Push + feed';
 
-    feedHeadline.innerHTML = `${escapeHtml(name)} <span class="accent">premium dashboard.</span>`;
-    feedHeroCopy.innerHTML = `<strong>Current board for ${escapeHtml(name)}.</strong> Odds, locked picks and release updates stay organised here as the live read develops.`;
-    sessionEventName.textContent = name;
-    dashEventName.textContent = name;
-    dashReleaseStatus.textContent = releaseStatus;
-    dashAlertChannel.textContent = alertChannel;
+    feedHeadline.textContent = name;
+    feedHeroCopy.textContent = `${releaseStatus}. ${alertChannel} alerts are available for locked picks.`;
     eventTitle.textContent = headline;
-    eventCopy.textContent = `Fight list and current market odds for ${name}. Locked picks appear first with the official call, confidence and short note.`;
+    eventCopy.textContent = `Pending means no official pick yet. Locked means the premium call is live.`;
     releaseStatusPill.textContent = releaseStatus;
     eventDate.textContent = event.eventDate || 'TBA';
     eventMarket.textContent = market;
@@ -2831,7 +2997,6 @@ html {
     const lockedText = `${locked} locked`;
     const pendingText = `${pending} pending`;
 
-    dashPickCount.textContent = lockedText;
     lockedCount.textContent = lockedText;
     pendingCount.textContent = pendingText;
   }
@@ -2851,7 +3016,7 @@ html {
     return `
       <article class="pf-fight-card${locked ? ' is-locked' : ' is-pending'}" id="fight-${escapeHtml(fight.id || index + 1)}">
         <div class="pf-fight-top">
-          <span class="pf-fight-status">${locked ? 'Official pick locked' : 'Pending read'}</span>
+          <span class="pf-fight-status">${locked ? 'Locked' : 'Pending'}</span>
           <span class="pf-fight-index">Fight ${String(index + 1).padStart(2, '0')}</span>
         </div>
 
@@ -2873,7 +3038,7 @@ html {
           ${locked ? `
             <div class="pf-pick-inner">
               <div>
-                <span class="pf-pick-label">Live pick locked</span>
+                <span class="pf-pick-label">Official pick</span>
                 <strong>${escapeHtml(pickName || 'Pick locked')}</strong>
                 ${fight.note ? `<p>${escapeHtml(fight.note)}</p>` : ''}
               </div>
