@@ -60,7 +60,7 @@ export default async function handler(req, res) {
     }
 
     if (action === "lockPick") {
-      const result = await lockPick(supabase, body.fight || body);
+      const result = await lockPick(supabase, body.fight || body, getOrigin(req));
       return res.status(200).json({ ok: true, ...result });
     }
 
@@ -150,7 +150,7 @@ async function saveFight(supabase, eventId, fightBody) {
   return serializeFight(data);
 }
 
-async function lockPick(supabase, fightBody) {
+async function lockPick(supabase, fightBody, origin) {
   const event = await ensureCurrentEvent(supabase);
   const fightId = cleanText(fightBody.id || fightBody.fightId, 80);
 
@@ -178,12 +178,32 @@ async function lockPick(supabase, fightBody) {
 
   if (lockError) throw lockError;
 
-  const notificationResult = await sendPickNotification(supabase, event, lockedFight);
+  const [notificationResult, emailResult] = await Promise.all([
+    sendAlertSafely("push", () => sendPickNotification(supabase, event, lockedFight)),
+    sendAlertSafely("email", () => sendPickLockEmails(supabase, event, lockedFight, origin))
+  ]);
 
   return {
     fight: serializeFight(lockedFight),
-    notification: notificationResult
+    notification: notificationResult,
+    email: emailResult
   };
+}
+
+async function sendAlertSafely(channel, task) {
+  try {
+    return await task();
+  } catch (error) {
+    console.error(`${channel} lock alert failed:`, error);
+
+    return {
+      attempted: true,
+      sent: 0,
+      failed: 0,
+      error: true,
+      message: `${titleCase(channel)} alerts failed after the pick was locked.`
+    };
+  }
 }
 
 async function sendPickNotification(supabase, event, fight) {
@@ -243,7 +263,7 @@ async function sendPickNotification(supabase, event, fight) {
       failed: 0,
       inactive: 0,
       total: 0,
-      message: "Pick locked. No active push subscriptions were found."
+      message: "No active push subscriptions were found."
     };
   }
 
@@ -293,8 +313,180 @@ async function sendPickNotification(supabase, event, fight) {
     failed,
     inactive: inactiveIds.length,
     total: subscriptions.length,
-    message: `Pick locked. Push sent: ${sent}. Failed: ${failed}.`
+    message: `Push sent: ${sent}. Failed: ${failed}.`
   };
+}
+
+async function sendPickLockEmails(supabase, event, fight, origin) {
+  const apiKey = String(process.env.RESEND_API_KEY || "").trim();
+  const from = cleanEmailSender(
+    process.env.LOCK_ALERT_FROM_EMAIL ||
+    process.env.RESEND_FROM_EMAIL ||
+    process.env.EMAIL_FROM
+  );
+
+  if (!apiKey || !from) {
+    return {
+      attempted: false,
+      sent: 0,
+      failed: 0,
+      disabled: true,
+      message: "Email lock alerts are not configured yet."
+    };
+  }
+
+  const { data: subscribers, error: subscribersError } = await supabase
+    .from("subscribers")
+    .select("id, email, access_status, stripe_subscription_status")
+    .or("access_status.eq.active,stripe_subscription_status.in.(active,trialing)");
+
+  if (subscribersError) throw subscribersError;
+
+  const recipients = uniqueEmails((subscribers || [])
+    .filter(isActiveSubscriber)
+    .map((subscriber) => subscriber.email));
+
+  if (!recipients.length) {
+    return {
+      attempted: true,
+      sent: 0,
+      failed: 0,
+      total: 0,
+      message: "No active subscriber emails were found."
+    };
+  }
+
+  const email = buildPickLockEmail(event, fight, origin);
+  const replyTo = cleanEmailSender(process.env.LOCK_ALERT_REPLY_TO || process.env.ADMIN_EMAIL);
+  let sent = 0;
+  let failed = 0;
+
+  await Promise.all(recipients.map(async (recipient) => {
+    try {
+      const response = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          from,
+          to: recipient,
+          subject: email.subject,
+          html: email.html,
+          text: email.text,
+          ...(replyTo ? { reply_to: replyTo } : {})
+        })
+      });
+
+      if (!response.ok) {
+        failed += 1;
+        const text = await response.text().catch(() => "");
+        console.warn("Lock email failed:", {
+          recipient,
+          status: response.status,
+          body: text.slice(0, 500)
+        });
+        return;
+      }
+
+      sent += 1;
+    } catch (error) {
+      failed += 1;
+      console.warn("Lock email failed:", {
+        recipient,
+        message: error.message
+      });
+    }
+  }));
+
+  return {
+    attempted: true,
+    sent,
+    failed,
+    total: recipients.length,
+    message: `Email sent: ${sent}. Failed: ${failed}.`
+  };
+}
+
+function buildPickLockEmail(event, fight, origin) {
+  const pickName = pickNameForFight(fight);
+  const matchup = `${fight.red_corner || "Red corner"} vs ${fight.blue_corner || "Blue corner"}`;
+  const lockedAt = formatLockTime(fight.locked_at);
+  const feedUrl = `${origin}/premium-feed.html#fight-${encodeURIComponent(fight.id)}`;
+  const confidence = cleanText(fight.confidence, 80) || "Official lock";
+  const note = cleanText(fight.note, 900);
+  const subject = `Live Pick Locked: ${pickName}`;
+  const preview = `${pickName} has locked for ${matchup}.`;
+
+  const html = `<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>${escapeHtml(subject)}</title>
+  </head>
+  <body style="margin:0;padding:0;background:#f3f6f1;color:#111511;font-family:Arial,Helvetica,sans-serif;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${escapeHtml(preview)}</div>
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f3f6f1;margin:0;padding:24px 12px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border:1px solid #dfe7dc;border-radius:14px;overflow:hidden;">
+            <tr>
+              <td style="padding:18px 22px;background:#071008;color:#ffffff;">
+                <div style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#9df2bd;font-weight:800;">Premium lock alert</div>
+                <h1 style="margin:8px 0 0;font-size:26px;line-height:1.15;color:#ffffff;">${escapeHtml(pickName)}</h1>
+                <p style="margin:8px 0 0;font-size:14px;line-height:1.5;color:#d9e8dc;">${escapeHtml(matchup)}</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:22px;">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                  ${emailRow("Event", event.name || "Current event")}
+                  ${emailRow("Status", "Official pick locked")}
+                  ${emailRow("Confidence", confidence)}
+                  ${emailRow("Locked", lockedAt)}
+                </table>
+                ${note ? `<div style="margin-top:18px;padding:16px;background:#f7faf5;border:1px solid #e1eadf;border-radius:10px;">
+                  <div style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:#60705f;font-weight:800;">Final read note</div>
+                  <p style="margin:8px 0 0;font-size:15px;line-height:1.55;color:#1d251f;">${escapeHtml(note)}</p>
+                </div>` : ""}
+                <div style="margin-top:22px;">
+                  <a href="${escapeHtml(feedUrl)}" style="display:inline-block;background:#25c26e;color:#061009;text-decoration:none;font-weight:900;font-size:14px;padding:13px 18px;border-radius:999px;">Open premium feed</a>
+                </div>
+                <p style="margin:20px 0 0;font-size:12px;line-height:1.55;color:#6a756b;">Live Picks is independent analytics and commentary. It does not operate as a bookmaker, accept wagers, place wagers for customers, or guarantee outcomes.</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
+
+  const text = [
+    "Live Picks premium lock alert",
+    "",
+    `Pick: ${pickName}`,
+    `Matchup: ${matchup}`,
+    `Event: ${event.name || "Current event"}`,
+    `Confidence: ${confidence}`,
+    `Locked: ${lockedAt}`,
+    note ? `Final read note: ${note}` : "",
+    "",
+    `Open premium feed: ${feedUrl}`,
+    "",
+    "Live Picks is independent analytics and commentary. It does not operate as a bookmaker, accept wagers, place wagers for customers, or guarantee outcomes."
+  ].filter(Boolean).join("\n");
+
+  return { subject, html, text };
+}
+
+function emailRow(label, value) {
+  return `<tr>
+    <td style="padding:11px 0;border-bottom:1px solid #edf2ea;font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:#667267;font-weight:800;width:34%;">${escapeHtml(label)}</td>
+    <td style="padding:11px 0;border-bottom:1px solid #edf2ea;font-size:15px;line-height:1.45;color:#111511;font-weight:800;">${escapeHtml(value)}</td>
+  </tr>`;
 }
 
 function normalizeVapidSubject(value) {
@@ -317,4 +509,62 @@ function parseStoredSubscription(subscription) {
   }
 
   return parsed;
+}
+
+function isActiveSubscriber(subscriber) {
+  return (
+    subscriber?.access_status === "active" ||
+    subscriber?.stripe_subscription_status === "active" ||
+    subscriber?.stripe_subscription_status === "trialing"
+  );
+}
+
+function uniqueEmails(values) {
+  return [...new Set(values
+    .map((value) => String(value || "").trim().toLowerCase())
+    .filter((value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)))];
+}
+
+function cleanEmailSender(value) {
+  const sender = String(value || "").trim().replace(/^mailto:/i, "");
+  return sender && sender.includes("@") ? sender : "";
+}
+
+function formatLockTime(value) {
+  if (!value) return "Just now";
+
+  try {
+    return new Intl.DateTimeFormat("en-AU", {
+      dateStyle: "medium",
+      timeStyle: "short",
+      timeZone: process.env.LOCK_ALERT_TIME_ZONE || "Australia/Perth"
+    }).format(new Date(value));
+  } catch (_) {
+    return new Date(value).toUTCString();
+  }
+}
+
+function escapeHtml(value) {
+  return String(value || "").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#039;"
+  }[character]));
+}
+
+function titleCase(value) {
+  const text = String(value || "");
+  return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
+}
+
+function getOrigin(req) {
+  const configuredUrl = process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL;
+  if (configuredUrl) return configuredUrl.replace(/\/$/, "");
+
+  const host = req.headers["x-forwarded-host"] || req.headers.host;
+  const proto = req.headers["x-forwarded-proto"] || "https";
+
+  return `${proto}://${host}`;
 }
