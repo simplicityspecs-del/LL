@@ -19,21 +19,895 @@
 <meta property="og:site_name" content="Live Picks">
 <meta property="og:title" content="Live Picks - Manage Account">
 <meta property="og:description" content="Manage your Live Picks premium account, billing and subscription settings.">
-<meta property="og:image" content="https://live-picks.app/lp-share.png">
-<meta property="og:image:secure_url" content="https://live-picks.app/lp-share.png">
+<meta property="og:image" content="https://livepicks.app/lp-share.png">
+<meta property="og:image:secure_url" content="https://livepicks.app/lp-share.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Live Picks LP logo">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Live Picks - Manage Account">
 <meta name="twitter:description" content="Manage your Live Picks premium account, billing and subscription settings.">
-<meta name="twitter:image" content="https://live-picks.app/lp-share.png">
+<meta name="twitter:image" content="https://livepicks.app/lp-share.png">
 <meta name="twitter:image:alt" content="Live Picks LP logo">
 <link rel="stylesheet" href="light-theme.css">
 <style>
 :root {
   color-scheme: light;
   --page-bg: #f6f8f5;
+  --surface: #ffffff;
+  --surface-soft: #f7f8f6;
+  --ink: #050506;
+  --muted: #555d57;
+  --faint: #747d76;
+  --line: #dce2dd;
+  --line-strong: #cfd8d0;
+  --green: #2fba73;
+  --green-dark: #1f8a53;
+  --red: #d93245;
+  --shadow: 0 14px 34px rgba(14, 18, 15, 0.06);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  min-height: 100%;
+  background: var(--page-bg) !important;
+  scroll-behavior: smooth;
+}
+
+body.account-page {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 16% 7%, rgba(47, 186, 115, 0.08), transparent 30%),
+    radial-gradient(circle at 88% 24%, rgba(5, 5, 6, 0.045), transparent 28%),
+    linear-gradient(180deg, #fafbf9 0%, #f6f8f5 52%, #eef2ef 100%) !important;
+  color: var(--ink) !important;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.account-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(8, 11, 8, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 11, 8, 0.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.56), transparent 72%);
+  opacity: 0.7;
+}
+
+body.account-page > header.topbar ~ header.topbar,
+body.account-page > main ~ main,
+body.account-page > footer ~ footer {
+  display: none !important;
+}
+
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+img { display: block; max-width: 100%; }
+
+.container {
+  width: min(1180px, calc(100% - 36px));
+  margin: 0 auto;
+  position: relative;
+}
+
+.account-page .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  border-bottom: 1px solid var(--line) !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  box-shadow: 0 8px 22px rgba(14, 18, 15, 0.045) !important;
+  backdrop-filter: blur(16px);
+}
+
+.account-page .nav {
+  min-height: 42px !important;
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 6px 0 !important;
+}
+
+.account-page .brand {
+  min-width: max-content;
+  color: var(--ink) !important;
+  font-size: 0.96rem !important;
+  font-weight: 950 !important;
+  letter-spacing: -0.045em !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.account-page .top-actions {
+  min-width: 0;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.account-page .top-button {
+  width: auto !important;
+  min-width: 0 !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  flex: 0 0 auto;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.84) !important;
+  color: #303632 !important;
+  box-shadow: none !important;
+  font-size: 0.64rem !important;
+  font-weight: 820 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1 !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.account-page .top-button.primary {
+  border-color: var(--ink) !important;
+  background: var(--ink) !important;
+  color: #ffffff !important;
+}
+
+.account-page .top-button:hover {
+  border-color: rgba(47, 186, 115, 0.45) !important;
+  background: rgba(47, 186, 115, 0.08) !important;
+  color: var(--green-dark) !important;
+  transform: translateY(-1px);
+}
+
+.account-page .top-button.primary:hover {
+  border-color: var(--ink) !important;
+  background: var(--ink) !important;
+  color: #ffffff !important;
+}
+
+.account-hero {
+  padding: clamp(24px, 4vw, 46px) 0 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--green-dark) !important;
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--green);
+  box-shadow: 0 0 0 5px rgba(47, 186, 115, 0.12);
+}
+
+.account-title {
+  margin: 0;
+  max-width: 760px;
+  color: var(--ink) !important;
+  font-size: clamp(2.25rem, 5.3vw, 4.9rem);
+  line-height: 0.93;
+  letter-spacing: -0.078em;
+  text-wrap: balance;
+}
+
+.hero-copy {
+  max-width: 720px;
+  margin: 16px 0 0;
+  color: var(--muted) !important;
+  font-size: clamp(0.94rem, 1.25vw, 1.08rem);
+  line-height: 1.54;
+}
+
+.account-section-wrap {
+  padding: 22px 0 38px;
+}
+
+.account-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.account-main {
+  display: grid;
+  gap: 14px;
+}
+
+.card {
+  border: 1px solid var(--line) !important;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94) !important;
+  box-shadow: var(--shadow) !important;
+  padding: 16px;
+}
+
+.sticky-card {
+  position: sticky;
+  top: 64px;
+}
+
+.card h2,
+.card h3 {
+  margin: 0 0 8px;
+  color: var(--ink) !important;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.card h2 { font-size: 1.34rem; }
+.card h3 { font-size: 1.08rem; }
+
+.card p {
+  margin: 0 0 13px;
+  color: var(--muted) !important;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.sub-row {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.sub-row:last-child { border-bottom: 0; padding-bottom: 0; }
+
+.sub-row span {
+  color: var(--faint) !important;
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.sub-row strong {
+  color: var(--ink) !important;
+  text-align: right;
+  word-break: break-word;
+  font-size: 0.84rem;
+  line-height: 1.25;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.account-form {
+  display: grid;
+  gap: 10px;
+}
+
+.account-field {
+  display: grid;
+  gap: 6px;
+}
+
+.account-field.full { grid-column: 1 / -1; }
+
+.account-field label {
+  color: var(--faint) !important;
+  font-size: 0.64rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.account-input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--line) !important;
+  border-radius: 6px;
+  background: #ffffff !important;
+  color: var(--ink) !important;
+  outline: none;
+  padding: 0 12px;
+  font-weight: 720;
+  box-shadow: none !important;
+}
+
+.account-input::placeholder { color: #8a928c !important; }
+
+.account-input:focus {
+  border-color: rgba(47, 186, 115, 0.56) !important;
+  box-shadow: 0 0 0 4px rgba(47, 186, 115, 0.10) !important;
+}
+
+.account-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.btn {
+  min-height: 44px;
+  border: 1px solid var(--line) !important;
+  border-radius: 6px;
+  background: #ffffff !important;
+  color: var(--ink) !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 13px;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  box-shadow: none !important;
+  transition: 0.18s ease;
+}
+
+.btn:hover {
+  border-color: rgba(47, 186, 115, 0.45) !important;
+  color: var(--green-dark) !important;
+  background: rgba(47, 186, 115, 0.08) !important;
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  border-color: var(--ink) !important;
+  background: var(--ink) !important;
+  color: #ffffff !important;
+}
+
+.btn-primary:hover {
+  border-color: var(--ink) !important;
+  background: var(--ink) !important;
+  color: #ffffff !important;
+}
+
+.btn-danger {
+  border-color: rgba(217, 50, 69, 0.34) !important;
+  background: rgba(255, 77, 95, 0.08) !important;
+  color: var(--red) !important;
+}
+
+.account-note {
+  color: var(--faint) !important;
+  font-size: 0.72rem;
+  line-height: 1.42;
+}
+
+.inline-state {
+  display: none;
+  margin: 0;
+  border: 1px solid var(--line) !important;
+  border-radius: 8px;
+  background: #f7f8f6 !important;
+  color: var(--muted) !important;
+  padding: 12px;
+  font-size: 0.82rem;
+  line-height: 1.42;
+}
+
+.inline-state.is-visible { display: block; }
+
+.inline-state.is-error {
+  border-color: rgba(255, 77, 95, 0.30) !important;
+  background: rgba(255, 77, 95, 0.08) !important;
+  color: var(--red) !important;
+}
+
+.billing-lock {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.billing-lock .account-field {
+  max-width: 380px;
+}
+
+.clean-footer {
+  padding: 0 0 32px;
+}
+
+.legal-disclaimer {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.84);
+  box-shadow: none;
+  padding: 0;
+}
+
+.legal-disclaimer summary {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  color: var(--faint);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.legal-disclaimer p {
+  margin: 0;
+  padding: 0 14px 14px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 860px) {
+  .account-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sticky-card {
+    position: static;
+  }
+
+  .account-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .container {
+    width: min(100% - 20px, 1180px);
+  }
+
+  .account-page .nav {
+    min-height: 34px !important;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 6px !important;
+    padding: 4px 0 !important;
+  }
+
+  .account-page .brand {
+    font-size: 0.82rem !important;
+    letter-spacing: -0.04em !important;
+  }
+
+  .account-page .top-actions {
+    gap: 4px;
+    overflow: hidden;
+  }
+
+  .account-page .top-button {
+    height: 24px !important;
+    min-height: 24px !important;
+    padding: 0 7px !important;
+    border-radius: 5px !important;
+    font-size: clamp(0.48rem, 2.15vw, 0.56rem) !important;
+    font-weight: 800 !important;
+  }
+
+  .account-hero {
+    padding: 18px 0 13px;
+  }
+
+  .eyebrow {
+    font-size: 0.56rem;
+    margin-bottom: 8px;
+    letter-spacing: 0.12em;
+  }
+
+  .account-title {
+    font-size: clamp(1.86rem, 9.6vw, 2.44rem);
+    line-height: 0.96;
+    letter-spacing: -0.065em;
+  }
+
+  .hero-copy {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    line-height: 1.38;
+  }
+
+  .account-section-wrap {
+    padding: 12px 0 24px;
+  }
+
+  .account-main {
+    gap: 10px;
+  }
+
+  .card {
+    padding: 11px;
+    border-radius: 7px;
+  }
+
+  .card h2 {
+    font-size: 1.06rem;
+  }
+
+  .card h3 {
+    font-size: 0.96rem;
+  }
+
+  .card p {
+    font-size: 0.76rem;
+    line-height: 1.36;
+    margin-bottom: 10px;
+  }
+
+  .sub-row {
+    padding: 9px 0;
+  }
+
+  .sub-row span,
+  .sub-row strong {
+    font-size: 0.68rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .account-field.full {
+    grid-column: auto;
+  }
+
+  .account-input {
+    min-height: 38px;
+    font-size: 0.84rem;
+  }
+
+  .btn {
+    min-height: 40px;
+    width: 100%;
+    font-size: 0.72rem;
+  }
+
+  .billing-lock {
+    padding: 10px;
+  }
+
+  .clean-footer {
+    padding-bottom: 20px;
+  }
+
+  .legal-disclaimer summary {
+    min-height: 38px;
+    font-size: 0.62rem;
+  }
+}
+</style>
+</head>
+<body class="account-page">
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand brand-text-only" href="index.html" aria-label="Live Picks home">Live Picks</a>
+    <nav class="top-actions" aria-label="Account navigation">
+      <a class="top-button primary" href="premium-feed.html">Premium Feed</a>
+      <button class="top-button" type="button" id="logoutButton">Logout</button>
+      <a class="top-button" href="index.html">Home</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="account-hero">
+    <div class="container">
+      <span class="eyebrow">Subscriber account</span>
+      <h1 class="account-title">Manage your account.</h1>
+      <p class="hero-copy">Update your login details, billing settings, plan changes and subscription status from one clean account page.</p>
+    </div>
+  </section>
+
+  <section class="account-section-wrap">
+    <div class="container account-layout">
+      <aside class="card sticky-card" aria-label="Current account details">
+        <h2>Account details</h2>
+        <p>These details are tied to your premium access.</p>
+        <div class="sub-row"><span>Signed in as</span><strong id="accountEmail">Loading...</strong></div>
+        <div class="sub-row"><span>Plan</span><strong id="planLabel">Live Picks Premium</strong></div>
+        <div class="sub-row"><span>Billing</span><strong>Managed by Stripe</strong></div>
+        <div class="sub-row"><span>Access</span><strong>Premium active</strong></div>
+      </aside>
+
+      <div class="account-main">
+        <section class="card" aria-label="Billing and subscription">
+          <h3>Billing and subscription</h3>
+          <p>Use these buttons for card details, invoices, plan changes and cancellation. Confirm your current password first.</p>
+
+          <div class="billing-lock">
+            <div class="account-field">
+              <label for="billingCurrentPassword">Current password</label>
+              <input class="account-input" id="billingCurrentPassword" type="password" placeholder="Required for billing changes" autocomplete="current-password">
+            </div>
+          </div>
+
+          <div class="account-actions">
+            <button class="btn account-action" type="button" data-flow="billing">Billing settings</button>
+            <button class="btn account-action" type="button" data-flow="change_plan">Change plan</button>
+            <button class="btn btn-danger account-action" type="button" data-flow="cancel">Cancel subscription</button>
+          </div>
+        </section>
+
+        <section class="card" aria-label="Change login email">
+          <h3>Change login email</h3>
+          <p>This updates your Live Picks login email. Use an inbox you can access for account notices and password resets.</p>
+          <form class="account-form" id="emailChangeForm" novalidate>
+            <div class="form-grid">
+              <div class="account-field">
+                <label for="newEmail">New email</label>
+                <input class="account-input" id="newEmail" type="email" placeholder="new@email.com" autocomplete="email">
+              </div>
+              <div class="account-field">
+                <label for="emailCurrentPassword">Current password</label>
+                <input class="account-input" id="emailCurrentPassword" type="password" placeholder="Confirm current password" autocomplete="current-password">
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Update email</button>
+            <span class="account-note">Changing email requires your current password.</span>
+          </form>
+        </section>
+
+        <section class="card" aria-label="Change password">
+          <h3>Change password</h3>
+          <p>Update your password while you are signed in. For protection, this requires your current password.</p>
+          <form class="account-form" id="passwordChangeForm" novalidate>
+            <div class="form-grid">
+              <div class="account-field full">
+                <label for="passwordCurrentPassword">Current password</label>
+                <input class="account-input" id="passwordCurrentPassword" type="password" placeholder="Current password" autocomplete="current-password">
+              </div>
+              <div class="account-field">
+                <label for="newPassword">New password</label>
+                <input class="account-input" id="newPassword" type="password" placeholder="At least 6 characters" autocomplete="new-password">
+              </div>
+              <div class="account-field">
+                <label for="confirmNewPassword">Confirm new password</label>
+                <input class="account-input" id="confirmNewPassword" type="password" placeholder="Repeat new password" autocomplete="new-password">
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Update password</button>
+          </form>
+        </section>
+
+        <div class="inline-state" id="accountState" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="clean-footer">
+  <div class="container">
+    <details class="legal-disclaimer">
+      <summary>Responsible use and legal info</summary>
+      <p>Live Picks is an independent analytics and commentary service. It is not a bookmaker and does not guarantee outcomes, profits or returns. Betting involves risk. Only bet what you can afford to lose. For free and confidential support in Australia, call 1800 858 858 or visit Gambling Help Online.</p>
+    </details>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+
+  const accountEmail = $('accountEmail');
+  const accountState = $('accountState');
+  const logoutButton = $('logoutButton');
+  const emailChangeForm = $('emailChangeForm');
+  const passwordChangeForm = $('passwordChangeForm');
+  const billingPasswordInput = $('billingCurrentPassword');
+
+  const emailCurrentPasswordInput = $('emailCurrentPassword');
+  const newEmailInput = $('newEmail');
+  const passwordCurrentPasswordInput = $('passwordCurrentPassword');
+  const newPasswordInput = $('newPassword');
+  const confirmNewPasswordInput = $('confirmNewPassword');
+
+  const savedEmail = localStorage.getItem('livePicksPortalEmail') || sessionStorage.getItem('livePicksPortalEmail');
+  let activeEmail = savedEmail ? savedEmail.trim().toLowerCase() : '';
+
+  function showAccountState(message, isError = false) {
+    if (!accountState) return;
+    accountState.textContent = message;
+    accountState.classList.toggle('is-error', Boolean(isError));
+    accountState.classList.add('is-visible');
+  }
+
+  function setButtonLoading(button, isLoading, loadingLabel) {
+    if (!button) return;
+    if (isLoading) {
+      button.dataset.originalLabel = button.textContent;
+      button.textContent = loadingLabel || 'Working...';
+      button.disabled = true;
+    } else {
+      button.textContent = button.dataset.originalLabel || button.textContent;
+      button.disabled = false;
+    }
+  }
+
+  async function readJson(response) {
+    try { return await response.json(); }
+    catch (_) { return {}; }
+  }
+
+  if (!activeEmail) {
+    window.location.replace('portal.html');
+    return;
+  }
+
+  accountEmail.textContent = activeEmail;
+
+  logoutButton?.addEventListener('click', () => {
+    localStorage.removeItem('livePicksPortalEmail');
+    sessionStorage.removeItem('livePicksPortalEmail');
+    window.location.href = 'portal.html';
+  });
+
+  document.querySelectorAll('.account-action').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const currentPassword = billingPasswordInput.value.trim();
+      const flow = button.dataset.flow || 'billing';
+
+      if (!currentPassword) {
+        billingPasswordInput.focus();
+        showAccountState('Enter your current password first, then choose a billing action.', true);
+        return;
+      }
+
+      try {
+        setButtonLoading(button, true, 'Opening Stripe...');
+        showAccountState('Opening secure Stripe billing portal...');
+
+        const response = await fetch('/api/create-billing-portal-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: activeEmail, currentPassword, flow })
+        });
+
+        const data = await readJson(response);
+        if (!response.ok || !data.ok || !data.url) {
+          throw new Error(data.error || 'Could not open Stripe billing portal.');
+        }
+
+        window.location.href = data.url;
+      } catch (error) {
+        showAccountState(error.message || 'Could not open billing settings.', true);
+        setButtonLoading(button, false);
+      }
+    });
+  });
+
+  emailChangeForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const newEmail = newEmailInput.value.trim().toLowerCase();
+    const currentPassword = emailCurrentPasswordInput.value.trim();
+    const submitButton = emailChangeForm.querySelector('button[type="submit"]');
+
+    if (!newEmail || !newEmail.includes('@')) {
+      newEmailInput.focus();
+      showAccountState('Enter a valid new email address.', true);
+      return;
+    }
+
+    if (!currentPassword) {
+      emailCurrentPasswordInput.focus();
+      showAccountState('Enter your current password to change email.', true);
+      return;
+    }
+
+    try {
+      setButtonLoading(submitButton, true, 'Updating email...');
+      showAccountState('Checking your password and saving the new email...');
+
+      const response = await fetch('/api/update-account-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ currentEmail: activeEmail, newEmail, currentPassword })
+      });
+
+      const data = await readJson(response);
+      if (!response.ok || !data.ok) {
+        throw new Error(data.error || 'Email update failed.');
+      }
+
+      activeEmail = newEmail;
+      localStorage.setItem('livePicksPortalEmail', newEmail);
+      sessionStorage.setItem('livePicksPortalEmail', newEmail);
+      accountEmail.textContent = newEmail;
+      emailChangeForm.reset();
+      showAccountState('Email updated. Use the new email next time you log in.');
+    } catch (error) {
+      showAccountState(error.message || 'Email update failed.', true);
+    } finally {
+      setButtonLoading(submitButton, false);
+    }
+  });
+
+  passwordChangeForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const currentPassword = passwordCurrentPasswordInput.value.trim();
+    const newPassword = newPasswordInput.value;
+    const confirmNewPassword = confirmNewPasswordInput.value;
+    const submitButton = passwordChangeForm.querySelector('button[type="submit"]');
+
+    if (!currentPassword) {
+      passwordCurrentPasswordInput.focus();
+      showAccountState('Enter your current password first.', true);
+      return;
+    }
+
+    if (!newPassword || newPassword.length < 6) {
+      newPasswordInput.focus();
+      showAccountState('Enter a new password with at least 6 characters.', true);
+      return;
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      confirmNewPasswordInput.focus();
+      showAccountState('The new password confirmation does not match.', true);
+      return;
+    }
+
+    try {
+      setButtonLoading(submitButton, true, 'Updating password...');
+      showAccountState('Checking your current password and saving the new one...');
+
+      const response = await fetch('/api/update-account-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: activeEmail, currentPassword, newPassword })
+      });
+
+      const data = await readJson(response);
+      if (!response.ok || !data.ok) {
+        throw new Error(data.error || 'Password update failed.');
+      }
+
+      passwordChangeForm.reset();
+      showAccountState('Password updated. Use the new password next time you log in.');
+    } catch (error) {
+      showAccountState(error.message || 'Password update failed.', true);
+    } finally {
+      setButtonLoading(submitButton, false);
+    }
+  });
+
+  const returnedBilling = new URLSearchParams(window.location.search).get('billing');
+  if (returnedBilling === 'return') {
+    window.history.replaceState({}, document.title, window.location.pathname);
+    showAccountState('Returned from Stripe. Any confirmed billing changes will update shortly.');
+  }
+})();
+</script>
+</body>
+</html>
   --surface: #ffffff;
   --surface-soft: #f7f8f6;
   --ink: #050506;
