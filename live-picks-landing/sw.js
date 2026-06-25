@@ -13,8 +13,8 @@ self.addEventListener("push", (event) => {
   const title = data.title || "Live Pick Locked";
   const options = {
     body: data.body || "A Live Picks play has been locked.",
-    badge: "/lp-logo.png",
-    icon: "/lp-logo.png",
+    badge: "/icon-192.png",
+    icon: "/icon-512.png",
     tag: data.fightId ? `live-picks-${data.fightId}` : "live-picks-lock",
     data: {
       url: data.url || "/premium-feed.html"
