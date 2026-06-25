@@ -12,7 +12,8 @@ function parseBody(req) {
 
 function json(res, statusCode, payload) {
   res.statusCode = statusCode;
-  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-store');
   res.end(JSON.stringify(payload));
 }
 
@@ -34,15 +35,16 @@ function getOrigin(req) {
 
 async function stripeRequest(method, path, params) {
   if (!process.env.STRIPE_SECRET_KEY) {
-    throw makeError('Missing STRIPE_SECRET_KEY on the server.', 500);
+    throw makeError('Missing STRIPE_SECRET_KEY in Vercel Environment Variables.', 500);
   }
 
-  const isGet = method.toUpperCase() === 'GET';
+  const upperMethod = method.toUpperCase();
+  const isGet = upperMethod === 'GET';
   const query = params ? params.toString() : '';
   const url = `${STRIPE_API_BASE}${path}${isGet && query ? `?${query}` : ''}`;
 
   const response = await fetch(url, {
-    method,
+    method: upperMethod,
     headers: {
       Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}`,
       ...(isGet ? {} : { 'Content-Type': 'application/x-www-form-urlencoded' })
@@ -53,7 +55,8 @@ async function stripeRequest(method, path, params) {
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    throw makeError(data?.error?.message || 'Stripe request failed.', response.status);
+    const message = data && data.error && data.error.message ? data.error.message : 'Stripe request failed.';
+    throw makeError(message, response.status);
   }
 
   return data;
@@ -61,7 +64,7 @@ async function stripeRequest(method, path, params) {
 
 async function verifySupabasePassword(email, password) {
   if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
-    throw makeError('Missing SUPABASE_URL or SUPABASE_ANON_KEY on the server.', 500);
+    throw makeError('Missing SUPABASE_URL or SUPABASE_ANON_KEY in Vercel Environment Variables.', 500);
   }
 
   const url = `${process.env.SUPABASE_URL.replace(/\/$/, '')}/auth/v1/token?grant_type=password`;
@@ -111,7 +114,7 @@ async function findCustomerAndSubscription(email) {
   const matchingCustomers = customers.data || [];
 
   if (!matchingCustomers.length) {
-    throw makeError('No Stripe customer was found for this email.', 404);
+    throw makeError('No Stripe customer was found for this email. The login email must match the Stripe customer email.', 404);
   }
 
   let fallbackCustomer = matchingCustomers[0];
@@ -175,10 +178,19 @@ function buildPortalParams({ customerId, subscriptionId, flow, returnUrl }) {
   return params;
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
+  // Browser test. This should show JSON, not a Vercel crash screen.
+  if (req.method === 'GET') {
+    return json(res, 200, {
+      ok: true,
+      route: '/api/create-billing-portal-session',
+      message: 'Billing portal endpoint is alive. Use the account page buttons to send a POST request.'
+    });
+  }
+
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return json(res, 405, { ok: false, error: 'Method not allowed.' });
+    res.setHeader('Allow', 'GET, POST');
+    return json(res, 405, { ok: false, error: 'Method not allowed. Use POST.' });
   }
 
   try {
@@ -202,7 +214,7 @@ module.exports = async function handler(req, res) {
     const returnUrl = `${getOrigin(req)}/account.html?billing=return&flow=${encodeURIComponent(flow)}`;
     const params = buildPortalParams({
       customerId: customer.id,
-      subscriptionId: subscription?.id,
+      subscriptionId: subscription ? subscription.id : null,
       flow,
       returnUrl
     });
@@ -213,7 +225,7 @@ module.exports = async function handler(req, res) {
       ok: true,
       url: session.url,
       customerId: customer.id,
-      subscriptionStatus: subscription?.status || null
+      subscriptionStatus: subscription ? subscription.status : null
     });
   } catch (error) {
     console.error('create-billing-portal-session error:', error);
@@ -223,4 +235,4 @@ module.exports = async function handler(req, res) {
       error: error.message || 'Could not create billing portal session.'
     });
   }
-};
+}
