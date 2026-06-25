@@ -177,10 +177,19 @@ h1 {
 
 .admin-grid {
   display: grid;
-  grid-template-columns: minmax(280px, 0.36fr) minmax(0, 1fr);
+  grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
   gap: 16px;
   align-items: start;
   padding-bottom: 46px;
+}
+
+.admin-grid.is-auth-only {
+  grid-template-columns: minmax(320px, 560px);
+  justify-content: center;
+}
+
+.admin-grid.is-auth-only .panel {
+  padding: 22px;
 }
 
 .panel h2 {
@@ -360,6 +369,31 @@ h1 {
   font-size: 0.78rem;
 }
 
+.admin-egg {
+  margin-top: 14px !important;
+  border: 1px dashed rgba(47,186,115,0.45);
+  border-radius: 8px;
+  background: rgba(47,186,115,0.06);
+  color: #38413b !important;
+  padding: 12px;
+  font-size: 0.82rem;
+}
+
+.admin-egg strong {
+  display: block;
+  color: #050506;
+  font-size: 0.92rem;
+  line-height: 1.2;
+  margin-bottom: 5px;
+}
+
+.admin-egg a {
+  color: #1f8a53;
+  font-weight: 900;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 @media (min-width: 681px) {
   .admin-page .topbar {
     min-height: 0;
@@ -426,10 +460,13 @@ h1 {
 }
 
 @media (max-width: 900px) {
-  .admin-grid,
   .event-grid,
   .fight-fields {
     grid-template-columns: 1fr;
+  }
+
+  .admin-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -465,20 +502,20 @@ h1 {
     </div>
   </section>
 
-  <section class="container admin-grid">
+  <section class="container admin-grid is-auth-only" id="adminGrid">
     <aside class="panel">
       <h2>Admin Access</h2>
-      <p>Enter the admin secret from your hosting environment. It is kept in this browser session only.</p>
+      <p>Enter the admin secret. If you do not know it, that is probably the page doing its job.</p>
       <div class="form-grid">
         <div class="field">
           <label for="adminSecret">Admin secret</label>
-          <input class="input" id="adminSecret" type="password" autocomplete="current-password" placeholder="ADMIN_SECRET">
+          <input class="input" id="adminSecret" type="password" autocomplete="current-password" placeholder="Not for wandering explorers">
         </div>
         <button class="btn btn-primary" id="connectButton" type="button">Open admin panel</button>
         <button class="btn" id="clearSecretButton" type="button">Clear session secret</button>
       </div>
       <div class="state" id="adminState" role="status" aria-live="polite"></div>
-      <p class="muted" style="margin-top: 14px;">Required env vars: `ADMIN_SECRET`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`. Push alerts also need VAPID keys. Email alerts need `RESEND_API_KEY` and `LOCK_ALERT_FROM_EMAIL`.</p>
+      <p class="admin-egg"><strong>You were not supposed to see this. This is embarrassing.</strong> Take your clever little butt back to the <a href="index.html">home page</a>; let the adults do their work.</p>
     </aside>
 
     <section class="panel hidden" id="boardPanel">
@@ -586,6 +623,7 @@ h1 {
   const connectButton = document.getElementById('connectButton');
   const clearSecretButton = document.getElementById('clearSecretButton');
   const adminState = document.getElementById('adminState');
+  const adminGrid = document.getElementById('adminGrid');
   const boardPanel = document.getElementById('boardPanel');
   const fightList = document.getElementById('fightList');
   const fightTemplate = document.getElementById('fightTemplate');
@@ -659,11 +697,13 @@ h1 {
 
     try {
       const data = await apiRequest();
+      adminGrid.classList.remove('is-auth-only');
       boardPanel.classList.remove('hidden');
       renderEvent(data.event);
       renderFights(data.fights || []);
       showState('Admin board loaded.');
     } catch (error) {
+      adminGrid.classList.add('is-auth-only');
       boardPanel.classList.add('hidden');
       showState(error.message, true);
     }
@@ -779,6 +819,7 @@ h1 {
     sessionStorage.removeItem('livePicksAdminSecret');
     adminToken = '';
     adminSecretInput.value = '';
+    adminGrid.classList.add('is-auth-only');
     boardPanel.classList.add('hidden');
     showState('Admin secret cleared for this browser session.');
   });
