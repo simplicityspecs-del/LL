@@ -367,6 +367,21 @@ button { cursor: pointer; }
   text-underline-offset: 3px;
 }
 
+.admin-tool-panel {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.admin-tool-panel h2 {
+  font-size: 1.12rem;
+}
+
+.admin-tool-panel .muted {
+  margin-top: 9px;
+  margin-bottom: 0;
+}
+
 @media (min-width: 681px) {
   .admin-page .topbar {
     min-height: 0;
@@ -479,6 +494,18 @@ button { cursor: pointer; }
         <button class="btn" id="clearSecretButton" type="button">Clear session secret</button>
       </div>
       <div class="state" id="adminState" role="status" aria-live="polite"></div>
+      <div class="admin-tool-panel hidden" id="subscriberAccessPanel">
+        <h2>Grant Lifetime Access</h2>
+        <p>Add a subscriber by email. They will receive their login email, a temporary password and push notification setup instructions.</p>
+        <div class="form-grid">
+          <div class="field">
+            <label for="lifetimeAccessEmail">Subscriber email</label>
+            <input class="input" id="lifetimeAccessEmail" type="email" autocomplete="email" placeholder="subscriber@example.com">
+          </div>
+          <button class="btn btn-primary" id="grantAccessButton" type="button">Send lifetime access</button>
+        </div>
+        <p class="muted">This creates free lifetime premium access. They can log in and change their password/details from Manage Account.</p>
+      </div>
       <p class="admin-egg"><strong>You were not supposed to see this. This is embarrassing.</strong> Take your clever little butt back to the <a href="index.html">home page</a>; let the adults do their work.</p>
     </aside>
 
@@ -594,6 +621,9 @@ button { cursor: pointer; }
   const saveEventButton = document.getElementById('saveEventButton');
   const addFightButton = document.getElementById('addFightButton');
   const refreshButton = document.getElementById('refreshButton');
+  const subscriberAccessPanel = document.getElementById('subscriberAccessPanel');
+  const lifetimeAccessEmail = document.getElementById('lifetimeAccessEmail');
+  const grantAccessButton = document.getElementById('grantAccessButton');
 
   const eventFields = {
     name: document.getElementById('eventName'),
@@ -663,12 +693,14 @@ button { cursor: pointer; }
       const data = await apiRequest();
       adminGrid.classList.remove('is-auth-only');
       boardPanel.classList.remove('hidden');
+      subscriberAccessPanel.classList.remove('hidden');
       renderEvent(data.event);
       renderFights(data.fights || []);
       showState('Admin board loaded.');
     } catch (error) {
       adminGrid.classList.add('is-auth-only');
       boardPanel.classList.add('hidden');
+      subscriberAccessPanel.classList.add('hidden');
       showState(error.message, true);
     }
   }
@@ -785,7 +817,58 @@ button { cursor: pointer; }
     adminSecretInput.value = '';
     adminGrid.classList.add('is-auth-only');
     boardPanel.classList.add('hidden');
+    subscriberAccessPanel.classList.add('hidden');
     showState('Admin secret cleared for this browser session.');
+  });
+
+  grantAccessButton.addEventListener('click', async () => {
+    const email = lifetimeAccessEmail.value.trim().toLowerCase();
+
+    if (!email || !email.includes('@')) {
+      lifetimeAccessEmail.focus();
+      showState('Enter a valid subscriber email first.', true);
+      return;
+    }
+
+    const confirmed = window.confirm(`Create lifetime free access and email login details to ${email}?`);
+    if (!confirmed) return;
+
+    const originalLabel = grantAccessButton.textContent;
+    grantAccessButton.disabled = true;
+    grantAccessButton.textContent = 'Sending access...';
+    showState(`Creating lifetime access for ${email}...`);
+
+    try {
+      const data = await apiRequest({
+        method: 'POST',
+        body: {
+          action: 'grantLifetimeAccess',
+          subscriber: { email }
+        }
+      });
+
+      const emailResult = data.email || {};
+      const hasDeliveryError = (
+        emailResult.disabled ||
+        emailResult.error ||
+        Number(emailResult.failed || 0) > 0 ||
+        Number(emailResult.sent || 0) === 0
+      );
+
+      if (!hasDeliveryError) {
+        lifetimeAccessEmail.value = '';
+      }
+
+      showState(
+        `Lifetime access active for ${data.subscriber?.email || email}. ${formatAlertStatus('Email', emailResult)}`,
+        hasDeliveryError
+      );
+    } catch (error) {
+      showState(error.message, true);
+    } finally {
+      grantAccessButton.disabled = false;
+      grantAccessButton.textContent = originalLabel;
+    }
   });
 
   saveEventButton.addEventListener('click', async () => {
