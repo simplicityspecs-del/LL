@@ -13,8 +13,8 @@ self.addEventListener("push", (event) => {
   const title = data.title || "Live Pick Locked";
   const options = {
     body: data.body || "A Live Picks play has been locked.",
-    badge: "/icon-192.png",
-    icon: "/icon-512.png",
+    badge: "/icon-192.png?v=2",
+    icon: "/icon-512.png?v=2",
     tag: data.fightId ? `live-picks-${data.fightId}` : "live-picks-lock",
     data: {
       url: data.url || "/premium-feed.html"
@@ -34,6 +34,13 @@ self.addEventListener("notificationclick", (event) => {
     const existingClient = clientList.find((client) => client.url.startsWith(self.location.origin));
 
     if (existingClient) {
+      await existingClient.focus();
+      return existingClient.navigate(targetUrl);
+    }
+
+    return clients.openWindow(targetUrl);
+  })());
+});
       await existingClient.focus();
       return existingClient.navigate(targetUrl);
     }
