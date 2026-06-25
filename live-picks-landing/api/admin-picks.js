@@ -187,9 +187,9 @@ async function lockPick(supabase, fightBody) {
 }
 
 async function sendPickNotification(supabase, event, fight) {
-  const publicKey = process.env.VAPID_PUBLIC_KEY;
-  const privateKey = process.env.VAPID_PRIVATE_KEY;
-  const subject = process.env.VAPID_SUBJECT || process.env.ADMIN_EMAIL || "mailto:admin@livepicks.local";
+  const publicKey = String(process.env.VAPID_PUBLIC_KEY || "").trim();
+  const privateKey = String(process.env.VAPID_PRIVATE_KEY || "").trim();
+  const subject = normalizeVapidSubject(process.env.VAPID_SUBJECT || process.env.ADMIN_EMAIL);
 
   if (!publicKey || !privateKey) {
     return {
@@ -215,7 +215,19 @@ async function sendPickNotification(supabase, event, fight) {
     };
   }
 
-  webpush.setVapidDetails(subject, publicKey, privateKey);
+  try {
+    webpush.setVapidDetails(subject, publicKey, privateKey);
+  } catch (error) {
+    console.error("Push VAPID configuration error:", error);
+
+    return {
+      attempted: false,
+      sent: 0,
+      failed: 0,
+      disabled: true,
+      message: "VAPID push settings are invalid, so the pick was locked without push notifications."
+    };
+  }
 
   const { data: subscriptions, error: subscriptionError } = await supabase
     .from("push_subscriptions")
@@ -223,6 +235,17 @@ async function sendPickNotification(supabase, event, fight) {
     .eq("active", true);
 
   if (subscriptionError) throw subscriptionError;
+
+  if (!subscriptions?.length) {
+    return {
+      attempted: true,
+      sent: 0,
+      failed: 0,
+      inactive: 0,
+      total: 0,
+      message: "Pick locked. No active push subscriptions were found."
+    };
+  }
 
   const pickName = pickNameForFight(fight);
   const title = "Live Pick Locked";
@@ -241,10 +264,16 @@ async function sendPickNotification(supabase, event, fight) {
 
   await Promise.all((subscriptions || []).map(async (record) => {
     try {
-      await webpush.sendNotification(record.subscription, payload);
+      await webpush.sendNotification(parseStoredSubscription(record.subscription), payload);
       sent += 1;
     } catch (error) {
       failed += 1;
+      console.warn("Push notification failed:", {
+        id: record.id,
+        statusCode: error.statusCode || null,
+        message: error.message
+      });
+
       if (error.statusCode === 404 || error.statusCode === 410) {
         inactiveIds.push(record.id);
       }
@@ -262,6 +291,30 @@ async function sendPickNotification(supabase, event, fight) {
     attempted: true,
     sent,
     failed,
-    inactive: inactiveIds.length
+    inactive: inactiveIds.length,
+    total: subscriptions.length,
+    message: `Pick locked. Push sent: ${sent}. Failed: ${failed}.`
   };
+}
+
+function normalizeVapidSubject(value) {
+  const subject = String(value || "").trim();
+
+  if (!subject) return "mailto:admin@livepicks.local";
+  if (/^(mailto:|https:\/\/)/i.test(subject)) return subject;
+  if (subject.includes("@")) return `mailto:${subject}`;
+
+  return "mailto:admin@livepicks.local";
+}
+
+function parseStoredSubscription(subscription) {
+  const parsed = typeof subscription === "string" ? JSON.parse(subscription) : subscription;
+
+  if (!parsed?.endpoint || !parsed?.keys?.p256dh || !parsed?.keys?.auth) {
+    const error = new Error("Stored push subscription is invalid.");
+    error.statusCode = 410;
+    throw error;
+  }
+
+  return parsed;
 }
