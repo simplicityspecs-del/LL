@@ -1,8 +1,0 @@
-{
-  "type": "module",
-  "dependencies": {
-    "@supabase/supabase-js": "^2.49.4",
-    "stripe": "^18.0.0",
-    "web-push": "^3.6.7"
-  }
-}
