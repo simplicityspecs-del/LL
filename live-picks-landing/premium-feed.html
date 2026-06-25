@@ -396,39 +396,79 @@ button { cursor: pointer; }
 }
 
 .pf-workflow { padding: 8px 0 18px; }
-.pf-workflow-card {
+.pf-feed-guide {
   border: 1px solid var(--pf-line) !important;
   border-radius: var(--pf-radius);
-  background: rgba(255, 255, 255, 0.82) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
   box-shadow: var(--pf-shadow-soft) !important;
-  padding: 12px;
+  padding: 14px;
+  display: grid;
+  grid-template-columns: minmax(230px, 0.42fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: stretch;
+}
+.pf-guide-head {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  border: 1px solid rgba(223, 229, 223, 0.88);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 92% 10%, rgba(47, 186, 115, 0.16), transparent 38%),
+    #ffffff;
+  padding: 16px;
+}
+.pf-guide-head h2 {
+  margin: 0;
+  color: var(--pf-ink) !important;
+  font-size: clamp(1.35rem, 2.3vw, 2.15rem);
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+.pf-guide-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
-.pf-step {
-  display: grid;
-  grid-template-columns: 36px minmax(0, 1fr);
-  gap: 11px;
-  align-items: start;
+.pf-guide-card {
+  min-width: 0;
   border: 1px solid rgba(223, 229, 223, 0.88);
   border-radius: 14px;
   background: #ffffff;
-  padding: 13px;
+  padding: 14px;
 }
-.pf-step-number {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
+.pf-guide-card strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--pf-ink) !important;
+  font-size: 0.92rem;
+  line-height: 1.15;
+}
+.pf-guide-card strong::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
   border-radius: 999px;
-  background: #050506;
-  color: #ffffff !important;
-  font-size: 0.78rem;
-  font-weight: 950;
+  background: #cfd8d0;
 }
-.pf-step strong { display: block; color: var(--pf-ink) !important; line-height: 1.1; }
-.pf-step span { display: block; margin-top: 4px; color: var(--pf-muted) !important; font-size: 0.78rem; line-height: 1.35; }
+.pf-guide-card.is-locked strong::before {
+  background: var(--pf-green);
+  box-shadow: 0 0 0 5px rgba(47, 186, 115, 0.12);
+}
+.pf-guide-card.is-alert strong::before {
+  background: #9a7416;
+  box-shadow: 0 0 0 5px rgba(154, 116, 22, 0.10);
+}
+.pf-guide-card span {
+  display: block;
+  margin-top: 8px;
+  color: var(--pf-muted) !important;
+  font-size: 0.78rem;
+  line-height: 1.38;
+}
 
 .pf-board { padding: 12px 0 58px; }
 .pf-board-layout {
@@ -817,7 +857,8 @@ button { cursor: pointer; }
   .pf-board-layout,
   .pf-footer-grid { grid-template-columns: 1fr; }
   .pf-overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .pf-workflow-card { grid-template-columns: 1fr; }
+  .pf-feed-guide { grid-template-columns: 1fr; }
+  .pf-guide-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .pf-side-panel { position: static; }
   .pf-meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pf-meta:nth-child(2) { border-right: 0; }
@@ -852,9 +893,10 @@ button { cursor: pointer; }
   .pf-overview-grid { grid-template-columns: 1fr; gap: 9px; }
   .pf-stat-card { min-height: 98px; padding: 14px; }
   .pf-stat-card strong { font-size: 1.38rem; }
-  .pf-workflow-card { padding: 9px; gap: 8px; border-radius: 14px; }
-  .pf-step { grid-template-columns: 31px minmax(0, 1fr); padding: 11px; border-radius: 12px; }
-  .pf-step-number { width: 31px; height: 31px; }
+  .pf-feed-guide { padding: 9px; gap: 8px; border-radius: 14px; }
+  .pf-guide-head,
+  .pf-guide-card { padding: 12px; border-radius: 12px; }
+  .pf-guide-grid { grid-template-columns: 1fr; gap: 8px; }
   .pf-board { padding-bottom: 36px; }
   .pf-panel-head { grid-template-columns: 1fr; gap: 12px; padding: 16px; }
   .pf-panel-head h2 { font-size: clamp(1.65rem, 8.5vw, 2.25rem); }
@@ -1099,36 +1141,34 @@ button { cursor: pointer; }
     padding: 6px 0 10px !important;
   }
 
-  .pf-workflow-card {
+  .pf-feed-guide {
     grid-template-columns: 1fr !important;
     gap: 7px !important;
     padding: 8px !important;
     border-radius: 14px !important;
   }
 
-  .pf-step {
-    grid-template-columns: 4px minmax(0, 1fr) !important;
-    gap: 10px !important;
+  .pf-guide-head,
+  .pf-guide-card {
     border-radius: 11px !important;
     padding: 10px !important;
   }
 
-  .pf-step-number {
-    width: 4px !important;
-    min-height: 38px !important;
-    height: 100% !important;
-    border-radius: 999px !important;
-    background: var(--pf-green) !important;
-    color: transparent !important;
-    font-size: 0 !important;
-    box-shadow: none !important;
+  .pf-guide-grid {
+    grid-template-columns: 1fr !important;
+    gap: 7px !important;
   }
 
-  .pf-step strong {
+  .pf-guide-head h2 {
+    font-size: 1.12rem !important;
+    letter-spacing: -0.045em !important;
+  }
+
+  .pf-guide-card strong {
     font-size: 0.86rem !important;
   }
 
-  .pf-step span {
+  .pf-guide-card span {
     font-size: 0.72rem !important;
     line-height: 1.32 !important;
   }
@@ -2579,12 +2619,27 @@ html {
     </div>
   </section>
 
-  <section class="pf-workflow" aria-label="How the premium feed works">
+  <section class="pf-workflow" aria-label="Premium feed status guide">
     <div class="container">
-      <div class="pf-workflow-card">
-        <div class="pf-step"><span class="pf-step-number">1</span><div><strong>Scan the event status</strong><span>Start with the release badge and event details before reading individual fights.</span></div></div>
-        <div class="pf-step"><span class="pf-step-number">2</span><div><strong>Check each fight card</strong><span>Pending fights show odds. Locked fights show the official pick and note.</span></div></div>
-        <div class="pf-step"><span class="pf-step-number">3</span><div><strong>Use alerts on fight night</strong><span>Enable push so you are told when the board changes instead of refreshing.</span></div></div>
+      <div class="pf-feed-guide">
+        <div class="pf-guide-head">
+          <span class="pf-label">Board status</span>
+          <h2>Know what is live.</h2>
+        </div>
+        <div class="pf-guide-grid">
+          <div class="pf-guide-card">
+            <strong>Pending fights</strong>
+            <span>Matchups and odds are posted, but there is no official premium pick yet.</span>
+          </div>
+          <div class="pf-guide-card is-locked">
+            <strong>Locked picks</strong>
+            <span>The official call is live with the selected side, confidence and final note.</span>
+          </div>
+          <div class="pf-guide-card is-alert">
+            <strong>Push alerts</strong>
+            <span>Turn alerts on once so fight-night locks reach you without refreshing the board.</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
