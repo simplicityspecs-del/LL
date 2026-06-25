@@ -1,3 +1,5 @@
+import crypto from "node:crypto";
+
 import {
   CURRENT_EVENT_SLUG,
   cleanText,
@@ -81,6 +83,11 @@ export default async function handler(req, res) {
 
       if (error) throw error;
       return res.status(200).json({ ok: true, fight: serializeFight(data) });
+    }
+
+    if (action === "grantLifetimeAccess") {
+      const result = await grantLifetimeAccess(supabase, body.subscriber || body, getOrigin(req));
+      return res.status(200).json({ ok: true, ...result });
     }
 
     return res.status(400).json({ ok: false, error: "Unknown admin action." });
@@ -188,6 +195,300 @@ async function lockPick(supabase, fightBody, origin) {
     notification: notificationResult,
     email: emailResult
   };
+}
+
+async function grantLifetimeAccess(supabase, subscriberBody, origin) {
+  const email = normalizeEmail(subscriberBody.email);
+
+  if (!email) {
+    throw new Error("Enter a valid subscriber email.");
+  }
+
+  const temporaryPassword = generateTemporaryPassword();
+  const now = new Date().toISOString();
+
+  const { data: existingSubscriber, error: existingSubscriberError } = await supabase
+    .from("subscribers")
+    .select("id, email, auth_user_id, stripe_customer_id, stripe_subscription_id, stripe_subscription_status, access_status")
+    .eq("email", email)
+    .maybeSingle();
+
+  if (existingSubscriberError) throw existingSubscriberError;
+
+  const authUser = await ensureSubscriberAuthUser(
+    supabase,
+    email,
+    temporaryPassword,
+    existingSubscriber?.auth_user_id
+  );
+
+  const { data: subscriber, error: subscriberError } = await supabase
+    .from("subscribers")
+    .upsert({
+      email,
+      auth_user_id: authUser.id,
+      plan_name: "lifetime",
+      access_status: "active",
+      current_period_start: now,
+      current_period_end: null,
+      cancel_at_period_end: false
+    }, { onConflict: "email" })
+    .select("id, email, auth_user_id, plan_name, access_status")
+    .single();
+
+  if (subscriberError) throw subscriberError;
+
+  const emailResult = await sendLifetimeAccessEmail({
+    email,
+    temporaryPassword,
+    origin
+  });
+
+  return {
+    subscriber: {
+      email: subscriber.email,
+      accessStatus: subscriber.access_status,
+      planName: subscriber.plan_name,
+      authUserId: subscriber.auth_user_id,
+      authUserCreated: authUser.created
+    },
+    email: emailResult
+  };
+}
+
+async function ensureSubscriberAuthUser(supabase, email, temporaryPassword, existingAuthUserId) {
+  const metadata = {
+    source: "live-picks-admin-lifetime",
+    access_type: "lifetime",
+    temporary_password_issued_at: new Date().toISOString()
+  };
+
+  if (existingAuthUserId) {
+    const { data, error } = await supabase.auth.admin.updateUserById(existingAuthUserId, {
+      password: temporaryPassword,
+      user_metadata: metadata
+    });
+
+    if (error) throw error;
+
+    return {
+      id: data?.user?.id || existingAuthUserId,
+      created: false
+    };
+  }
+
+  const { data: createdUserData, error: createUserError } = await supabase.auth.admin.createUser({
+    email,
+    password: temporaryPassword,
+    email_confirm: true,
+    user_metadata: metadata
+  });
+
+  if (!createUserError && createdUserData?.user?.id) {
+    return {
+      id: createdUserData.user.id,
+      created: true
+    };
+  }
+
+  const message = createUserError?.message || "Could not create Supabase user.";
+  const lowerMessage = message.toLowerCase();
+
+  if (!lowerMessage.includes("already") && !lowerMessage.includes("registered") && !lowerMessage.includes("duplicate")) {
+    throw new Error(message);
+  }
+
+  const existingAuthUser = await findAuthUserByEmail(supabase, email);
+
+  if (!existingAuthUser?.id) {
+    throw new Error("An auth account already exists for this email, but it could not be linked automatically.");
+  }
+
+  const { data, error } = await supabase.auth.admin.updateUserById(existingAuthUser.id, {
+    password: temporaryPassword,
+    user_metadata: metadata
+  });
+
+  if (error) throw error;
+
+  return {
+    id: data?.user?.id || existingAuthUser.id,
+    created: false
+  };
+}
+
+async function findAuthUserByEmail(supabase, email) {
+  const target = normalizeEmail(email);
+  const perPage = 1000;
+
+  for (let page = 1; page <= 10; page += 1) {
+    const { data, error } = await supabase.auth.admin.listUsers({ page, perPage });
+    if (error) throw error;
+
+    const user = (data?.users || []).find((candidate) => normalizeEmail(candidate.email) === target);
+    if (user) return user;
+
+    if (!data?.users?.length || data.users.length < perPage) break;
+  }
+
+  return null;
+}
+
+async function sendLifetimeAccessEmail({ email, temporaryPassword, origin }) {
+  const apiKey = String(process.env.RESEND_API_KEY || "").trim();
+  const from = cleanEmailSender(
+    process.env.ACCESS_EMAIL_FROM ||
+    process.env.RESEND_FROM_EMAIL ||
+    process.env.EMAIL_FROM ||
+    process.env.LOCK_ALERT_FROM_EMAIL
+  );
+
+  if (!apiKey || !from) {
+    return {
+      attempted: false,
+      sent: 0,
+      failed: 0,
+      disabled: true,
+      message: "Access email is not configured yet."
+    };
+  }
+
+  const emailContent = buildLifetimeAccessEmail({ email, temporaryPassword, origin });
+  const replyTo = cleanEmailSender(process.env.ACCESS_EMAIL_REPLY_TO || process.env.LOCK_ALERT_REPLY_TO || process.env.ADMIN_EMAIL);
+
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        from,
+        to: email,
+        subject: emailContent.subject,
+        html: emailContent.html,
+        text: emailContent.text,
+        ...(replyTo ? { reply_to: replyTo } : {})
+      })
+    });
+
+    if (!response.ok) {
+      const text = await response.text().catch(() => "");
+      console.warn("Lifetime access email failed:", {
+        recipient: email,
+        status: response.status,
+        body: text.slice(0, 500)
+      });
+
+      return {
+        attempted: true,
+        sent: 0,
+        failed: 1,
+        total: 1,
+        message: "Lifetime access was created, but the email did not send."
+      };
+    }
+
+    return {
+      attempted: true,
+      sent: 1,
+      failed: 0,
+      total: 1,
+      message: "Access email sent."
+    };
+  } catch (error) {
+    console.warn("Lifetime access email failed:", {
+      recipient: email,
+      message: error.message
+    });
+
+    return {
+      attempted: true,
+      sent: 0,
+      failed: 1,
+      total: 1,
+      message: "Lifetime access was created, but the email did not send."
+    };
+  }
+}
+
+function buildLifetimeAccessEmail({ email, temporaryPassword, origin }) {
+  const loginUrl = `${origin}/portal.html`;
+  const accountUrl = `${origin}/account.html`;
+  const feedUrl = `${origin}/premium-feed.html`;
+  const pushGuideUrl = `${origin}/push-guide.html`;
+  const subject = "Your Live Picks lifetime access is ready";
+  const preview = "Congratulations, your Live Picks premium access is ready.";
+
+  const html = `<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>${escapeHtml(subject)}</title>
+  </head>
+  <body style="margin:0;padding:0;background:#f3f6f1;color:#111511;font-family:Arial,Helvetica,sans-serif;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${escapeHtml(preview)}</div>
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f3f6f1;margin:0;padding:24px 12px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;background:#ffffff;border:1px solid #dfe7dc;border-radius:14px;overflow:hidden;">
+            <tr>
+              <td style="padding:20px 24px;background:#071008;color:#ffffff;">
+                <div style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#9df2bd;font-weight:800;">Lifetime premium access</div>
+                <h1 style="margin:8px 0 0;font-size:28px;line-height:1.15;color:#ffffff;">Congratulations, you are in.</h1>
+                <p style="margin:9px 0 0;font-size:14px;line-height:1.5;color:#d9e8dc;">Your Live Picks premium account has been activated with lifetime free access.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:24px;">
+                <p style="margin:0 0 16px;font-size:15px;line-height:1.55;color:#243027;">Use these details to log in, then update your password from the account page.</p>
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#f7faf5;border:1px solid #e1eadf;border-radius:10px;overflow:hidden;">
+                  ${emailRow("Login email", email)}
+                  ${emailRow("Temporary password", temporaryPassword)}
+                </table>
+                <div style="margin-top:22px;">
+                  <a href="${escapeHtml(loginUrl)}" style="display:inline-block;background:#25c26e;color:#061009;text-decoration:none;font-weight:900;font-size:14px;padding:13px 18px;border-radius:999px;">Log in to Live Picks</a>
+                </div>
+                <div style="margin-top:22px;padding:16px;background:#f7faf5;border:1px solid #e1eadf;border-radius:10px;">
+                  <div style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:#60705f;font-weight:800;">Next steps</div>
+                  <ol style="margin:10px 0 0;padding-left:20px;color:#243027;font-size:14px;line-height:1.65;">
+                    <li>Log in with your email and temporary password.</li>
+                    <li>Open <a href="${escapeHtml(accountUrl)}" style="color:#1f8a53;font-weight:800;">Manage Account</a> and set your own password/details.</li>
+                    <li>Open the <a href="${escapeHtml(feedUrl)}" style="color:#1f8a53;font-weight:800;">Premium Feed</a> and follow the push notification instructions so you receive live alerts.</li>
+                  </ol>
+                </div>
+                <p style="margin:18px 0 0;font-size:13px;line-height:1.55;color:#59665c;">On iPhone, push alerts may need the Home Screen setup first. Use the <a href="${escapeHtml(pushGuideUrl)}" style="color:#1f8a53;font-weight:800;">push notification guide</a> if Safari says notifications are unsupported.</p>
+                <p style="margin:18px 0 0;font-size:12px;line-height:1.55;color:#6a756b;">Live Picks is independent analytics and commentary. It does not operate as a bookmaker, accept wagers, place wagers for customers, or guarantee outcomes.</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
+
+  const text = [
+    "Congratulations, you are in.",
+    "",
+    "Your Live Picks premium account has been activated with lifetime free access.",
+    "",
+    `Login email: ${email}`,
+    `Temporary password: ${temporaryPassword}`,
+    "",
+    `Log in: ${loginUrl}`,
+    `Manage account and set your details: ${accountUrl}`,
+    `Premium feed: ${feedUrl}`,
+    "",
+    "Please follow the push notification instructions so you receive live alerts.",
+    `Push notification guide: ${pushGuideUrl}`,
+    "",
+    "Live Picks is independent analytics and commentary. It does not operate as a bookmaker, accept wagers, place wagers for customers, or guarantee outcomes."
+  ].join("\n");
+
+  return { subject, html, text };
 }
 
 async function sendAlertSafely(channel, task) {
@@ -525,9 +826,26 @@ function uniqueEmails(values) {
     .filter((value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)))];
 }
 
+function normalizeEmail(value) {
+  const email = String(value || "").trim().toLowerCase();
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : "";
+}
+
 function cleanEmailSender(value) {
   const sender = String(value || "").trim().replace(/^mailto:/i, "");
   return sender && sender.includes("@") ? sender : "";
+}
+
+function generateTemporaryPassword() {
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%";
+  const bytes = crypto.randomBytes(18);
+  let password = "";
+
+  for (const byte of bytes) {
+    password += alphabet[byte % alphabet.length];
+  }
+
+  return password;
 }
 
 function formatLockTime(value) {
