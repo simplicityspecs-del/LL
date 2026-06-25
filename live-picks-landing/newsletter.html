@@ -48,6 +48,144 @@
 
   <div class="edge-ticker" aria-label="Live fight odds ticker">
     <div class="ticker-track">
+      <span class="ticker-item"><span class="ticker-market">Moneyline</span><strong>Pantoja</strong><em data-decimal-odds="1.58">1.58</em></span>
+      <span class="ticker-item"><span class="ticker-market">Market</span><strong>Model Edge</strong><em>+8.4%</em></span>
+      <span class="ticker-item"><span class="ticker-market">Live Read</span><strong>Crowd Energy</strong><em>High</em></span>
+      <span class="ticker-item"><span class="ticker-market">Condition</span><strong>Walkout</strong><em>Pending</em></span>
+      <span class="ticker-item"><span class="ticker-market">Alert</span><strong>Steam Move</strong><em class="odds-low">Watch</em></span>
+      <span class="ticker-item"><span class="ticker-market">Premium</span><strong>Fight Night Edge</strong><em>Live</em></span>
+      <span class="ticker-item"><span class="ticker-market">Moneyline</span><strong>Pantoja</strong><em data-decimal-odds="1.58">1.58</em></span>
+      <span class="ticker-item"><span class="ticker-market">Market</span><strong>Model Edge</strong><em>+8.4%</em></span>
+      <span class="ticker-item"><span class="ticker-market">Live Read</span><strong>Crowd Energy</strong><em>High</em></span>
+      <span class="ticker-item"><span class="ticker-market">Condition</span><strong>Walkout</strong><em>Pending</em></span>
+      <span class="ticker-item"><span class="ticker-market">Alert</span><strong>Steam Move</strong><em class="odds-low">Watch</em></span>
+      <span class="ticker-item"><span class="ticker-market">Premium</span><strong>Fight Night Edge</strong><em>Live</em></span>
+    </div>
+  </div>
+
+  <main class="page">
+    <section class="container newsletter-layout">
+      <div class="intro-panel">
+        <div class="kicker">Free fight-night updates</div>
+        <h1>Get the free newsletter.</h1>
+        <p class="copy"><strong>Get the notes before the picks move.</strong> We’ll send fight-night reminders, model updates and the signals we’re watching before premium live picks are released.</p>
+      </div>
+
+      <div class="signup-card">
+        <div class="card-label">
+          <span>Newsletter access</span>
+          <span class="live-dot">Free</span>
+        </div>
+
+        <h2>Type your email here for updates.</h2>
+        <p class="card-copy">Join the free list and we’ll keep you posted when fight-night notes, model changes and release windows are ready.</p>
+
+        <form class="form" id="newsletterForm" action="/api/subscribe" method="POST" novalidate>
+          <input type="hidden" name="source" value="free-newsletter-page">
+          <div class="hp-field" aria-hidden="true">
+            <label for="company">Company</label>
+            <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div>
+            <label for="email">Email address</label>
+            <div class="field-row">
+              <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+              <button class="btn" type="submit">Join Free</button>
+            </div>
+          </div>
+
+          <p class="fine-print">No spam. Just Live Picks updates. You can remove yourself from the list any time.</p>
+          <p class="message" id="formMessage" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="newsletter-points" aria-label="Newsletter benefits">
+          <div class="point">
+            <strong>Market notes</strong>
+            <span>Early reads on odds movement, value gaps and steam.</span>
+          </div>
+          <div class="point">
+            <strong>Live signals</strong>
+            <span>Walkout, crowd and condition markers worth watching.</span>
+          </div>
+          <div class="point">
+            <strong>Release alerts</strong>
+            <span>Know when the premium model is close to going live.</span>
+          </div>
+        </div>
+
+        <div class="premium-reminder">
+          <span>Want the full model?</span>
+          <a href="checkout.html">Go premium</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="responsible-footer">
+    <div class="container disclaimer-card">
+      <strong>Gamble responsibly</strong>
+      <p>Live Picks is for informational and entertainment purposes only. Nothing on this site guarantees an outcome or should be treated as financial advice. Only bet what you can afford to lose, never chase losses, and step away if betting stops being enjoyable. You must be 18+ to participate in wagering.</p>
+    </div>
+  </footer>
+
+  <script src="odds-format.js"></script>
+  <script>
+    const form = document.getElementById('newsletterForm');
+    const message = document.getElementById('formMessage');
+    const button = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      message.textContent = '';
+      message.classList.remove('error');
+
+      if (!form.email.value.trim()) {
+        message.textContent = 'Add your email first.';
+        message.classList.add('error');
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = 'Joining...';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form)))
+        });
+
+        if (!response.ok) {
+          throw new Error('Signup failed');
+        }
+
+        const email = encodeURIComponent(form.email.value.trim());
+        window.location.href = `thank-you.html?email=${email}`;
+      } catch (error) {
+        message.textContent = 'Could not save that email yet. Check your Vercel webhook setup and try again.';
+        message.classList.add('error');
+        button.disabled = false;
+        button.textContent = 'Join Free';
+      }
+    });
+  </script>
+</body>
+</html>
+      <div class="nav-actions newsletter-desktop-actions">
+        <a class="nav-link" href="index.html#model">Back to model</a>
+        <a class="nav-link" href="portal.html">Premium Login</a>
+        <a class="nav-link" href="checkout.html">Subscribe</a>
+      </div>
+      <div class="nav-actions newsletter-mobile-actions" aria-label="Mobile navigation">
+        <a class="nav-link" href="portal.html">Login</a>
+        <a class="nav-link" href="index.html">Home</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="edge-ticker" aria-label="Live fight odds ticker">
+    <div class="ticker-track">
       <span class="ticker-item"><span class="ticker-market">Moneyline</span><strong>Pantoja</strong><em>1.58</em></span>
       <span class="ticker-item"><span class="ticker-market">Market</span><strong>Model Edge</strong><em>+8.4%</em></span>
       <span class="ticker-item"><span class="ticker-market">Live Read</span><strong>Crowd Energy</strong><em>High</em></span>
