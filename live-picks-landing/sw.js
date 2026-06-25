@@ -1,3 +1,11 @@
+self.addEventListener("install", (event) => {
+  event.waitUntil(self.skipWaiting());
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
 self.addEventListener("push", (event) => {
   let data = {};
 
@@ -34,13 +42,6 @@ self.addEventListener("notificationclick", (event) => {
     const existingClient = clientList.find((client) => client.url.startsWith(self.location.origin));
 
     if (existingClient) {
-      await existingClient.focus();
-      return existingClient.navigate(targetUrl);
-    }
-
-    return clients.openWindow(targetUrl);
-  })());
-});
       await existingClient.focus();
       return existingClient.navigate(targetUrl);
     }
