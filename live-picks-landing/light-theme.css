@@ -2299,6 +2299,48 @@ input[type="radio"] {
   box-shadow: none !important;
 }
 
+/* Subscriber portal CTA polish: keeps the start button clear of card edges and
+   restores the green premium action treatment after the global light reset. */
+.portal-page .create-access {
+  align-items: center !important;
+  gap: 16px !important;
+  overflow: visible !important;
+  margin-top: 18px !important;
+  padding: 18px 0 10px !important;
+  border-top-color: #dce2dd !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.portal-page .create-access span {
+  min-width: 0;
+  color: #6d786f !important;
+}
+
+.portal-page .create-access .start-premium-btn {
+  min-width: 190px;
+  min-height: 54px;
+  flex: 0 0 auto;
+  border-color: rgba(47, 186, 115, 0.72) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.98), rgba(239,250,243,0.96)) !important;
+  color: #050506 !important;
+  box-shadow:
+    0 0 0 1px rgba(47, 186, 115, 0.12),
+    0 0 28px rgba(47, 186, 115, 0.26),
+    0 14px 28px rgba(47, 186, 115, 0.16) !important;
+  white-space: nowrap;
+}
+
+.portal-page .create-access .start-premium-btn:hover {
+  border-color: rgba(47, 186, 115, 0.92) !important;
+  color: #0c5f38 !important;
+  box-shadow:
+    0 0 0 1px rgba(47, 186, 115, 0.16),
+    0 0 36px rgba(47, 186, 115, 0.34),
+    0 16px 32px rgba(47, 186, 115, 0.2) !important;
+}
+
 @media (max-width: 680px) {
   .newsletter-page .intro-panel,
   .newsletter-page .signup-card {
@@ -2315,5 +2357,16 @@ input[type="radio"] {
     font-size: clamp(1.55rem, 8.25vw, 2.15rem) !important;
     line-height: 0.96 !important;
     letter-spacing: -0.055em !important;
+  }
+
+  .portal-page .create-access {
+    align-items: stretch !important;
+    gap: 10px !important;
+    padding-top: 14px !important;
+  }
+
+  .portal-page .create-access .start-premium-btn {
+    width: 100%;
+    min-width: 0;
   }
 }
