@@ -8632,8 +8632,9 @@ body {
   }
 
   #signals .signal-summary {
-    grid-template-columns: 44px minmax(0, 1fr) 32px !important;
+    grid-template-columns: 72px minmax(0, 1fr) 32px !important;
     align-items: start !important;
+    column-gap: 10px !important;
   }
 
   #signals .signal-summary .signal-top,
@@ -8644,7 +8645,18 @@ body {
   }
 
   #signals .signal-summary .signal-top {
-    width: 44px;
+    width: 72px;
+    justify-items: center;
+    overflow: hidden;
+  }
+
+  #signals .signal-card-modern .signal-status {
+    max-width: 72px;
+    font-size: 0.44rem !important;
+    letter-spacing: 0.055em !important;
+    line-height: 1.05 !important;
+    text-align: center;
+    white-space: nowrap;
   }
 
   #signals .signal-toggle {
