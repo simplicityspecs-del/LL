@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/push-guide",
+      "destination": "/push-guide/index.html"
+    },
+    {
+      "source": "/push-guide/",
+      "destination": "/push-guide/index.html"
+    }
+  ]
+}
