@@ -5486,7 +5486,7 @@ h1 {
 
   .desktop-proof-grid {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 14px;
   }
 
@@ -5542,6 +5542,16 @@ h1 {
     height: 100%;
     object-fit: cover;
     object-position: center top;
+  }
+
+  .proof-face.proof-initials {
+    display: grid;
+    place-items: center;
+    color: #18201a;
+    font-size: 0.84rem;
+    font-weight: 920;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
   .proof-fighter.winner .proof-face::after {
@@ -6827,6 +6837,16 @@ h1 {
     height: 100%;
     object-fit: cover;
     object-position: center top;
+  }
+
+  #proof .proof-face.proof-initials {
+    display: grid;
+    place-items: center;
+    color: #18201a;
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
   #proof .proof-fighter.winner .proof-face::after {
@@ -9683,7 +9703,7 @@ body {
 
       <div class="desktop-proof-grid" aria-label="Verified past wins">
         <article class="proof-win-card">
-          <div class="proof-date">Jun 14, 2026 • UFC Freedom 250</div>
+          <div class="proof-date">Jun 15, 2026 • H2H read</div>
           <div class="proof-fight">
             <div class="proof-fighter winner">
               <div class="proof-face"><img src="justin.png" alt="Justin Gaethje"></div>
@@ -9697,11 +9717,11 @@ body {
               <span>Champion side</span>
             </div>
           </div>
-          <div class="proof-result"><span>TKO</span><strong>R4</strong></div>
+          <div class="proof-result"><span>@ 4.75</span><strong>+3.75u</strong></div>
         </article>
 
         <article class="proof-win-card">
-          <div class="proof-date">Mar 28, 2026 • UFC Seattle</div>
+          <div class="proof-date">Mar 29, 2026 • H2H read</div>
           <div class="proof-fight">
             <div class="proof-fighter">
               <div class="proof-face"><img src="adesanya.png" alt="Israel Adesanya"></div>
@@ -9715,11 +9735,11 @@ body {
               <span>Verified winner</span>
             </div>
           </div>
-          <div class="proof-result"><span>TKO</span><strong>R2</strong></div>
+          <div class="proof-result"><span>@ 2.20</span><strong>+1.20u</strong></div>
         </article>
 
         <article class="proof-win-card">
-          <div class="proof-date">Feb 28, 2026 • UFC Mexico</div>
+          <div class="proof-date">Mar 1, 2026 • H2H read</div>
           <div class="proof-fight">
             <div class="proof-fighter winner">
               <div class="proof-face"><img src="green.png" alt="Bobby Green"></div>
@@ -9733,11 +9753,11 @@ body {
               <span>Prospect side</span>
             </div>
           </div>
-          <div class="proof-result"><span>TKO</span><strong>R2</strong></div>
+          <div class="proof-result"><span>@ 3.90</span><strong>+2.90u</strong></div>
         </article>
 
         <article class="proof-win-card">
-          <div class="proof-date">Feb 21, 2026 • UFC Houston</div>
+          <div class="proof-date">Feb 22, 2026 • H2H read</div>
           <div class="proof-fight">
             <div class="proof-fighter winner">
               <div class="proof-face"><img src="strickland.png" alt="Sean Strickland"></div>
@@ -9751,11 +9771,11 @@ body {
               <span>Streak side</span>
             </div>
           </div>
-          <div class="proof-result"><span>TKO</span><strong>R3</strong></div>
+          <div class="proof-result"><span>@ 3.02</span><strong>+2.02u</strong></div>
         </article>
 
         <article class="proof-win-card">
-          <div class="proof-date">Feb 21, 2026 • UFC Houston</div>
+          <div class="proof-date">Feb 22, 2026 • H2H read</div>
           <div class="proof-fight">
             <div class="proof-fighter">
               <div class="proof-face"><img src="neal.png" alt="Geoff Neal"></div>
@@ -9769,7 +9789,97 @@ body {
               <span>Verified winner</span>
             </div>
           </div>
-          <div class="proof-result"><span>KO</span><strong>R1</strong></div>
+          <div class="proof-result"><span>@ 2.78</span><strong>+1.78u</strong></div>
+        </article>
+
+        <article class="proof-win-card">
+          <div class="proof-date">Aug 18, 2024 • H2H read</div>
+          <div class="proof-fight">
+            <div class="proof-fighter winner">
+              <div class="proof-face proof-initials" aria-label="Dan Hooker portrait placeholder">DH</div>
+              <strong>Hooker</strong>
+              <span>Verified winner</span>
+            </div>
+            <div class="proof-vs">vs</div>
+            <div class="proof-fighter">
+              <div class="proof-face proof-initials" aria-label="Mateusz Gamrot portrait placeholder">MG</div>
+              <strong>Gamrot</strong>
+              <span>Ranked side</span>
+            </div>
+          </div>
+          <div class="proof-result"><span>@ 4.10</span><strong>+3.10u</strong></div>
+        </article>
+
+        <article class="proof-win-card">
+          <div class="proof-date">Aug 18, 2024 • H2H read</div>
+          <div class="proof-fight">
+            <div class="proof-fighter winner">
+              <div class="proof-face proof-initials" aria-label="Kai Kara-France portrait placeholder">KK</div>
+              <strong>Kara-France</strong>
+              <span>Verified winner</span>
+            </div>
+            <div class="proof-vs">vs</div>
+            <div class="proof-fighter">
+              <div class="proof-face proof-initials" aria-label="Steve Erceg portrait placeholder">SE</div>
+              <strong>Erceg</strong>
+              <span>Market side</span>
+            </div>
+          </div>
+          <div class="proof-result"><span>@ 2.54</span><strong>+1.54u</strong></div>
+        </article>
+
+        <article class="proof-win-card">
+          <div class="proof-date">Aug 18, 2024 • H2H read</div>
+          <div class="proof-fight">
+            <div class="proof-fighter winner">
+              <div class="proof-face proof-initials" aria-label="Dricus Du Plessis portrait placeholder">DP</div>
+              <strong>Du Plessis</strong>
+              <span>Verified winner</span>
+            </div>
+            <div class="proof-vs">vs</div>
+            <div class="proof-fighter">
+              <div class="proof-face"><img src="adesanya.png" alt="Israel Adesanya"></div>
+              <strong>Adesanya</strong>
+              <span>Market name</span>
+            </div>
+          </div>
+          <div class="proof-result"><span>@ 1.97</span><strong>+0.97u</strong></div>
+        </article>
+
+        <article class="proof-win-card">
+          <div class="proof-date">Nov 16, 2025 • H2H read</div>
+          <div class="proof-fight">
+            <div class="proof-fighter">
+              <div class="proof-face proof-initials" aria-label="Sean Brady portrait placeholder">SB</div>
+              <strong>Brady</strong>
+              <span>Favourite side</span>
+            </div>
+            <div class="proof-vs">vs</div>
+            <div class="proof-fighter winner">
+              <div class="proof-face proof-initials" aria-label="Michael Morales portrait placeholder">MM</div>
+              <strong>Morales</strong>
+              <span>Verified winner</span>
+            </div>
+          </div>
+          <div class="proof-result"><span>@ 2.25</span><strong>+1.25u</strong></div>
+        </article>
+
+        <article class="proof-win-card">
+          <div class="proof-date">Apr 12, 2026 • H2H read</div>
+          <div class="proof-fight">
+            <div class="proof-fighter">
+              <div class="proof-face proof-initials" aria-label="Jiri Prochazka portrait placeholder">JP</div>
+              <strong>Prochazka</strong>
+              <span>Market name</span>
+            </div>
+            <div class="proof-vs">vs</div>
+            <div class="proof-fighter winner">
+              <div class="proof-face proof-initials" aria-label="Carlos Ulberg portrait placeholder">CU</div>
+              <strong>Ulberg</strong>
+              <span>Verified winner</span>
+            </div>
+          </div>
+          <div class="proof-result"><span>@ 1.86</span><strong>+0.86u</strong></div>
         </article>
       </div>
 
