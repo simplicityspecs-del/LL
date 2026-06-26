@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
     const email = String(body.email || "").trim().toLowerCase();
     const source = String(body.source || "unknown").trim();
-    const honeypot = String(body.company || "").trim();
+    const honeypot = String(body.website || body.company || "").trim();
 
     // Quietly accept obvious bot submissions without storing them.
     if (honeypot) {

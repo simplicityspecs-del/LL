@@ -39,7 +39,7 @@
       <circle cx="24" cy="24" r="24" fill="#fff" stroke="#dce2dd"/>
       <path d="M28 13 L17 24 L28 35" fill="none" stroke="#050506" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
       <rect x="58" y="0" width="278" height="50" rx="25" fill="#fff" stroke="#dce2dd"/>
-      <text x="172" y="31" text-anchor="middle" font-size="15" font-weight="900" fill="#050506">live-picks.app</text>
+      <text x="172" y="31" text-anchor="middle" font-size="15" font-weight="900" fill="#050506">livepicks.app</text>
       <circle cx="370" cy="24" r="24" fill="#fff" stroke="#9edfc2"/>
       <circle cx="370" cy="24" r="31" fill="none" stroke="#2fba73" stroke-opacity="0.18" stroke-width="7"/>
       <path d="M363 24 v13 h14 V24" fill="none" stroke="#050506" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>

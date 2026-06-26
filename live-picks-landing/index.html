@@ -7,8 +7,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="msapplication-TileColor" content="#fafbf9">
 <meta name="color-scheme" content="light">
-<title>Live Picks • Fight Night Edge Model</title>
-<meta name="description" content="Live Picks analyses fight-night market holes by combining model probabilities with walkout reads, crowd energy, fighter condition, media pressure and live bookmaker movement.">
+<title>Live Picks MMA. Fight-night reads for UFC H2H markets</title>
+<meta name="description" content="Live Picks MMA tracks fight-night reads for UFC head-to-head markets, combining model probabilities with walkout signals, crowd energy, fighter condition and late bookmaker movement.">
+<link rel="canonical" href="https://livepicks.app/">
 <link rel="manifest" href="/manifest.json?v=2">
 <link rel="icon" href="/favicon.ico?v=2" sizes="any">
 <link rel="shortcut icon" href="/favicon.ico?v=2">
@@ -19,16 +20,16 @@
 <meta name="msapplication-TileImage" content="/icon-192.png?v=2">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Live Picks">
-<meta property="og:title" content="Live Picks • Fight Night Edge Model">
-<meta property="og:description" content="Live Picks analyses fight-night market holes by combining model probabilities with walkout reads, crowd energy, fighter condition, media pressure and live bookmaker movement.">
+<meta property="og:title" content="Live Picks MMA. Fight-night reads for UFC H2H markets">
+<meta property="og:description" content="Live Picks MMA tracks fight-night reads for UFC head-to-head markets, combining model probabilities with walkout signals, crowd energy, fighter condition and late bookmaker movement.">
 <meta property="og:image" content="https://livepicks.app/lp-share.png?v=2">
 <meta property="og:image:secure_url" content="https://livepicks.app/lp-share.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Live Picks LP logo">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Live Picks • Fight Night Edge Model">
-<meta name="twitter:description" content="Live Picks analyses fight-night market holes by combining model probabilities with walkout reads, crowd energy, fighter condition, media pressure and live bookmaker movement.">
+<meta name="twitter:title" content="Live Picks MMA. Fight-night reads for UFC H2H markets">
+<meta name="twitter:description" content="Live Picks MMA tracks fight-night reads for UFC head-to-head markets, combining model probabilities with walkout signals, crowd energy, fighter condition and late bookmaker movement.">
 <meta name="twitter:image" content="https://livepicks.app/lp-share.png?v=2">
 <meta name="twitter:image:alt" content="Live Picks LP logo">
 <style>
@@ -5366,6 +5367,25 @@ h1 {
     line-height: 1;
     text-align: center;
   }
+
+  .proof-record-link {
+    margin: 16px 0 0;
+    text-align: right;
+  }
+
+  .proof-record-link a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    border: 1px solid #dce2dd;
+    border-radius: 8px;
+    background: #fff;
+    color: #050506;
+    padding: 0 14px;
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 850;
+  }
 }
 
 /* Desktop light scheme extension: carry the reference white/black system through the rest of the page. */
@@ -8735,9 +8755,9 @@ body {
       <nav class="nav-links desktop-nav" aria-label="Primary navigation">
         <a href="#model">Model</a>
         <a href="#proof">Past wins</a>
+        <a href="record.html">Record</a>
         <a href="#signals">Live data</a>
         <a href="checkout.html">Pricing</a>
-        <a href="#model">About</a>
       </nav>
 
       <div class="top-actions">
@@ -8867,7 +8887,7 @@ body {
 
         <div class="hero-actions">
           <a class="btn btn-ghost" href="#model">How the model works</a>
-          <a class="btn btn-ghost" href="#proof">View past wins</a>
+          <a class="btn btn-ghost" href="record.html">View record</a>
         </div>
       </div>
 
@@ -8956,7 +8976,7 @@ body {
 
       <div class="snapshot-stat-grid">
         <div class="snapshot-stat"><strong>10k</strong><span>Simulations per fight</span></div>
-        <div class="snapshot-stat"><strong>28W - 14L</strong><span>Model record</span></div>
+        <div class="snapshot-stat"><strong>5 verified</strong><span>Public record rows</span></div>
         <div class="snapshot-stat"><strong>30s</strong><span>Final lock before fight</span></div>
         <div class="snapshot-stat"><strong>H2H</strong><span>Head-to-head context only</span></div>
       </div>
@@ -9420,153 +9440,136 @@ body {
         <p>Examples of underdogs and live fight-night reads that exposed potential holes in bookmaker pricing.</p>
       </div>
 
-      <div class="desktop-proof-grid" aria-label="Past wins desktop cards">
+      <div class="desktop-proof-grid" aria-label="Verified past wins">
         <article class="proof-win-card">
-          <div class="proof-date">Jun 28, 2025 • Freedom 250</div>
+          <div class="proof-date">Jun 14, 2026 • UFC Freedom 250</div>
           <div class="proof-fight">
             <div class="proof-fighter winner">
               <div class="proof-face"><img src="justin.png" alt="Justin Gaethje"></div>
               <strong>Gaethje</strong>
-              <span>Model pick</span>
+              <span>Verified winner</span>
             </div>
             <div class="proof-vs">vs</div>
             <div class="proof-fighter">
               <div class="proof-face"><img src="illa.png" alt="Ilia Topuria"></div>
               <strong>Topuria</strong>
-              <span>Market side</span>
+              <span>Champion side</span>
             </div>
           </div>
-          <div class="proof-result"><span>Winner</span><strong>+340</strong></div>
+          <div class="proof-result"><span>TKO</span><strong>R4</strong></div>
         </article>
 
         <article class="proof-win-card">
-          <div class="proof-date">Nov 2, 2024 • Fight Night</div>
-          <div class="proof-fight">
-            <div class="proof-fighter winner">
-              <div class="proof-face"><img src="green.png" alt="Bobby Green"></div>
-              <strong>Green</strong>
-              <span>Model pick</span>
-            </div>
-            <div class="proof-vs">vs</div>
-            <div class="proof-fighter">
-              <div class="proof-face"><img src="zellhuber.png" alt="Daniel Zellhuber"></div>
-              <strong>Zellhuber</strong>
-              <span>Paper edge</span>
-            </div>
-          </div>
-          <div class="proof-result"><span>Winner</span><strong>+290</strong></div>
-        </article>
-
-        <article class="proof-win-card">
-          <div class="proof-date">Oct 12, 2024 • UFC 304</div>
-          <div class="proof-fight">
-            <div class="proof-fighter winner">
-              <div class="proof-face"><img src="strickland.png" alt="Sean Strickland"></div>
-              <strong>Strickland</strong>
-              <span>Model pick</span>
-            </div>
-            <div class="proof-vs">vs</div>
-            <div class="proof-fighter">
-              <div class="proof-face"><img src="fluffy.png" alt="Anthony Hernandez"></div>
-              <strong>Hernandez</strong>
-              <span>Public side</span>
-            </div>
-          </div>
-          <div class="proof-result"><span>Winner</span><strong>+202</strong></div>
-        </article>
-
-        <article class="proof-win-card">
-          <div class="proof-date">Sep 14, 2024 • UFC 303</div>
+          <div class="proof-date">Mar 28, 2026 • UFC Seattle</div>
           <div class="proof-fight">
             <div class="proof-fighter">
               <div class="proof-face"><img src="adesanya.png" alt="Israel Adesanya"></div>
               <strong>Adesanya</strong>
-              <span>Market side</span>
+              <span>Market name</span>
             </div>
             <div class="proof-vs">vs</div>
             <div class="proof-fighter winner">
               <div class="proof-face"><img src="pyfer.png" alt="Joe Pyfer"></div>
               <strong>Pyfer</strong>
-              <span>Model pick</span>
+              <span>Verified winner</span>
             </div>
           </div>
-          <div class="proof-result"><span>Winner</span><strong>+270</strong></div>
+          <div class="proof-result"><span>TKO</span><strong>R2</strong></div>
         </article>
 
         <article class="proof-win-card">
-          <div class="proof-date">Aug 31, 2024 • Main Card</div>
+          <div class="proof-date">Feb 28, 2026 • UFC Mexico</div>
           <div class="proof-fight">
             <div class="proof-fighter winner">
-              <div class="proof-face"><img src="neal.png" alt="Geoff Neal"></div>
-              <strong>Neal</strong>
-              <span>Model pick</span>
+              <div class="proof-face"><img src="green.png" alt="Bobby Green"></div>
+              <strong>Green</strong>
+              <span>Verified winner</span>
             </div>
             <div class="proof-vs">vs</div>
             <div class="proof-fighter">
-              <div class="proof-face"><img src="medic.png" alt="Uros Medic"></div>
-              <strong>Medic</strong>
-              <span>Late steam</span>
+              <div class="proof-face"><img src="zellhuber.png" alt="Daniel Zellhuber"></div>
+              <strong>Zellhuber</strong>
+              <span>Prospect side</span>
             </div>
           </div>
-          <div class="proof-result"><span>Winner</span><strong>+118</strong></div>
+          <div class="proof-result"><span>TKO</span><strong>R2</strong></div>
         </article>
 
         <article class="proof-win-card">
-          <div class="proof-date">Jul 20, 2024 • Live Edge</div>
+          <div class="proof-date">Feb 21, 2026 • UFC Houston</div>
           <div class="proof-fight">
-            <div class="proof-fighter">
-              <div class="proof-face"><img src="fluffy.png" alt="Anthony Hernandez"></div>
-              <strong>Hernandez</strong>
-              <span>Paper edge</span>
-            </div>
-            <div class="proof-vs">vs</div>
             <div class="proof-fighter winner">
               <div class="proof-face"><img src="strickland.png" alt="Sean Strickland"></div>
               <strong>Strickland</strong>
-              <span>Model pick</span>
+              <span>Verified winner</span>
+            </div>
+            <div class="proof-vs">vs</div>
+            <div class="proof-fighter">
+              <div class="proof-face"><img src="fluffy.png" alt="Anthony Hernandez"></div>
+              <strong>Hernandez</strong>
+              <span>Streak side</span>
             </div>
           </div>
-          <div class="proof-result"><span>Winner</span><strong>+132</strong></div>
+          <div class="proof-result"><span>TKO</span><strong>R3</strong></div>
+        </article>
+
+        <article class="proof-win-card">
+          <div class="proof-date">Feb 21, 2026 • UFC Houston</div>
+          <div class="proof-fight">
+            <div class="proof-fighter">
+              <div class="proof-face"><img src="neal.png" alt="Geoff Neal"></div>
+              <strong>Neal</strong>
+              <span>Ranked side</span>
+            </div>
+            <div class="proof-vs">vs</div>
+            <div class="proof-fighter winner">
+              <div class="proof-face"><img src="medic.png" alt="Uros Medic"></div>
+              <strong>Medic</strong>
+              <span>Verified winner</span>
+            </div>
+          </div>
+          <div class="proof-result"><span>KO</span><strong>R1</strong></div>
         </article>
       </div>
 
       <div class="picks-grid">
         <article class="pick-card">
-          <div class="pick-card-top">FREEDOM 250 • Main Event</div>
+          <div class="pick-card-top">UFC FREEDOM 250 • MAIN EVENT</div>
           <div class="pick-body">
             <div class="mini-fighter winner"><div class="mini-face"><img src="justin.png" alt="Justin Gaethje"></div><strong>Gaethje</strong></div>
-            <div class="odds">$4.40</div>
+            <div class="odds">R4 TKO</div>
             <div class="mini-fighter"><div class="mini-face"><img src="illa.png" alt="Ilia Topuria"></div><strong>Ilia</strong></div>
           </div>
         </article>
 
         <article class="pick-card">
-          <div class="pick-card-top">UFC 304 • Main Event</div>
+          <div class="pick-card-top">UFC SEATTLE • MAIN EVENT</div>
           <div class="pick-body">
-            <div class="mini-fighter winner"><div class="mini-face"><img src="strickland.png" alt="Strickland" onerror="this.style.display='none'"></div><strong>Strickland</strong></div>
-            <div class="odds">$3.02</div>
-            <div class="mini-fighter"><div class="mini-face"><img src="fluffy.png" alt="Hernandez" onerror="this.style.display='none'"></div><strong>Hernandez</strong></div>
+            <div class="mini-fighter"><div class="mini-face"><img src="adesanya.png" alt="Adesanya" onerror="this.style.display='none'"></div><strong>Adesanya</strong></div>
+            <div class="odds">R2 TKO</div>
+            <div class="mini-fighter winner"><div class="mini-face"><img src="pyfer.png" alt="Pyfer" onerror="this.style.display='none'"></div><strong>Pyfer</strong></div>
           </div>
         </article>
 
         <article class="pick-card">
-          <div class="pick-card-top">UFC 303 • Main Card</div>
+          <div class="pick-card-top">UFC MEXICO • LIGHTWEIGHT</div>
           <div class="pick-body">
             <div class="mini-fighter winner"><div class="mini-face"><img src="green.png" alt="Green" onerror="this.style.display='none'"></div><strong>Green</strong></div>
-            <div class="odds">$3.90</div>
+            <div class="odds">R2 TKO</div>
             <div class="mini-fighter"><div class="mini-face"><img src="zellhuber.png" alt="Daniel Zellhuber" onerror="this.style.display='none'"></div><strong>Daniel Zellhuber</strong></div>
           </div>
         </article>
 
         <article class="pick-card">
-          <div class="pick-card-top">UFC 302 • Main Card</div>
+          <div class="pick-card-top">UFC HOUSTON • CO-MAIN</div>
           <div class="pick-body">
-            <div class="mini-fighter"><div class="mini-face"><img src="adesanya.png" alt="Adesanya" onerror="this.style.display='none'"></div><strong>Adesanya</strong></div>
-            <div class="odds">$3.70</div>
-            <div class="mini-fighter winner"><div class="mini-face"><img src="pyfer.png" alt="Pyfer" onerror="this.style.display='none'"></div><strong>Pyfer</strong></div>
+            <div class="mini-fighter"><div class="mini-face"><img src="neal.png" alt="Geoff Neal" onerror="this.style.display='none'"></div><strong>Neal</strong></div>
+            <div class="odds">R1 KO</div>
+            <div class="mini-fighter winner"><div class="mini-face"><img src="medic.png" alt="Uros Medic" onerror="this.style.display='none'"></div><strong>Medic</strong></div>
           </div>
         </article>
       </div>
+      <p class="proof-record-link"><a href="record.html">Open the public verified record</a></p>
     </div>
   </section>
 </main>
@@ -9576,6 +9579,14 @@ body {
     <div>
       <div class="footer-brand">Live Picks</div>
       <p>Fight-night predictions and premium live plays</p>
+      <nav class="footer-links" aria-label="Footer links">
+        <a href="record.html">Verified record</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="refunds.html">Refunds</a>
+        <a href="responsible-gambling.html">Responsible gambling</a>
+        <a href="contact.html">Contact</a>
+      </nav>
     </div>
     <div class="disclaimer">
       Live Picks is an independent analytics concept and is not affiliated with, endorsed by or licensed by UFC or any sporting organisation. Live Picks only assesses head-to-head winners and does not provide round selections or method-of-victory picks. Betting involves risk. Use this product for information only and only wager what you can afford to lose. If gambling is causing harm, seek confidential support in your region.

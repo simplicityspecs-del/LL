@@ -35,6 +35,21 @@ body::before {
   opacity: 0.7 !important;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 12px;
+}
+
+.footer-links a {
+  color: inherit;
+  font-size: 0.76rem;
+  font-weight: 850;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 body,
 p,
 li,

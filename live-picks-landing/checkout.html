@@ -7,8 +7,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="msapplication-TileColor" content="#fafbf9">
 <meta name="color-scheme" content="light">
-<title>Live Picks • Secure Checkout</title>
-<meta name="description" content="Subscribe to Live Picks premium fight-night analysis. 18+ only. Betting involves risk. No guaranteed outcomes.">
+<title>Live Picks MMA Checkout</title>
+<meta name="description" content="Subscribe to Live Picks MMA premium fight-night reads for UFC head-to-head markets. 18+ only. Betting involves risk. No guaranteed outcomes.">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -17,16 +17,16 @@
 <meta name="msapplication-TileImage" content="/icon-192.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Live Picks">
-<meta property="og:title" content="Live Picks • Secure Checkout">
-<meta property="og:description" content="Subscribe to Live Picks premium fight-night analysis. 18+ only. Betting involves risk. No guaranteed outcomes.">
+<meta property="og:title" content="Live Picks MMA Checkout">
+<meta property="og:description" content="Subscribe to Live Picks MMA premium fight-night reads for UFC head-to-head markets. 18+ only. Betting involves risk. No guaranteed outcomes.">
 <meta property="og:image" content="https://livepicks.app/lp-share.png">
 <meta property="og:image:secure_url" content="https://livepicks.app/lp-share.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Live Picks LP logo">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Live Picks • Secure Checkout">
-<meta name="twitter:description" content="Subscribe to Live Picks premium fight-night analysis. 18+ only. Betting involves risk. No guaranteed outcomes.">
+<meta name="twitter:title" content="Live Picks MMA Checkout">
+<meta name="twitter:description" content="Subscribe to Live Picks MMA premium fight-night reads for UFC head-to-head markets. 18+ only. Betting involves risk. No guaranteed outcomes.">
 <meta name="twitter:image" content="https://livepicks.app/lp-share.png">
 <meta name="twitter:image:alt" content="Live Picks LP logo">
 <style>
@@ -1041,6 +1041,21 @@ h1 {
   font-size: 0.76rem;
 }
 .wallet-fallback-button.is-visible { display: inline-flex; }
+.payment-element-shell {
+  display: none;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid rgba(8,11,8,0.12);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.84);
+}
+.payment-element-shell.is-visible {
+  display: grid;
+}
+.payment-submit-button {
+  width: 100%;
+}
 .plan-option[disabled] {
   opacity: 0.48;
   cursor: not-allowed;
@@ -1095,17 +1110,17 @@ h1 {
           <article class="benefit-card">
             <span>01</span>
             <strong>Email and password access</strong>
-            <p>Your email and password are saved after a successful on-site Stripe payment for the demo portal.</p>
+            <p>Your subscriber account is created after a successful Stripe payment. Use the same email and password to log in.</p>
           </article>
           <article class="benefit-card">
             <span>02</span>
             <strong>Fast checkout path</strong>
-            <p>Stripe Express Checkout renders the real Apple Pay button directly on this page.</p>
+            <p>Apple Pay, Google Pay or card options appear when supported by your device and browser.</p>
           </article>
           <article class="benefit-card">
             <span>03</span>
             <strong>Clear risk warnings</strong>
-            <p>Weekly access is wired to your Stripe subscription price with clear risk disclosure.</p>
+            <p>Weekly access is billed through Stripe with clear risk disclosure and account management.</p>
           </article>
         </div>
 
@@ -1158,22 +1173,22 @@ h1 {
                 <input class="email-input" id="accessPassword" type="password" placeholder="Create a password" autocomplete="new-password">
               </div>
             </div>
-            <p class="access-setup-note"><strong>Portal access is created here for the demo.</strong> After subscribing, use this email and password on Premium Login.</p>
+            <p class="access-setup-note"><strong>This becomes your Premium Login.</strong> After subscribing, use this email and password to access the feed.</p>
           </div>
 
           <div class="terms-box terms-box--wallet">
             <label class="check-row">
               <input id="ageCheck" type="checkbox">
-              <span><strong>I am 18+</strong> and legally permitted to access this content.</span>
+              <span><strong>I am 18+</strong> and legally permitted to access this content. I accept the <a href="terms.html">Terms</a>.</span>
             </label>
             <label class="check-row">
               <input id="riskCheck" type="checkbox">
-              <span>I understand Live Picks is <strong>analysis only</strong> with no guaranteed outcomes.</span>
+              <span>I understand Live Picks is <strong>analysis only</strong> with no guaranteed outcomes. I have read the <a href="refunds.html">Refund Policy</a> and <a href="responsible-gambling.html">Responsible Gambling</a> page.</span>
             </label>
           </div>
 
           <div id="express-checkout-element" class="express-checkout-element" aria-label="Stripe Express Checkout"></div>
-          <button class="wallet-button wallet-fallback-button" type="button" id="stripeFallbackButton">Open hosted checkout fallback →</button>
+          <button class="wallet-button wallet-fallback-button" type="button" id="stripeFallbackButton">Use card instead →</button>
           <p class="wallet-microcopy">Select weekly, confirm the disclosures, then choose the available secure payment option.</p>
         </div>
 
@@ -1183,8 +1198,8 @@ h1 {
         </div>
 
         <div class="processor-state" id="processorState" role="status" aria-live="polite">
-          <strong>Payment processor connection required.</strong>
-          <p>This front-end is ready for Stripe or another approved provider. Connect live payment processing before accepting subscriptions.</p>
+          <strong>Secure checkout status.</strong>
+          <p>Confirm your details and choose an available Stripe payment option.</p>
         </div>
 
         <div class="divider">or pay by card</div>
@@ -1192,12 +1207,16 @@ h1 {
         <div class="card-payment-box" aria-label="Pay by card checkout">
           <div class="card-payment-head">
             <div>
-              <span class="card-kicker">Separate fallback box</span>
+              <span class="card-kicker">Card checkout</span>
               <strong class="card-payment-title">Pay by card</strong>
-              <p class="card-payment-copy">Use hosted Stripe checkout if express checkout is unavailable.</p>
+              <p class="card-payment-copy">Use the secure card form if wallet checkout is unavailable.</p>
             </div>
           </div>
-          <button class="card-button" type="button" id="cardButton">Continue to secure card checkout →</button>
+          <button class="card-button" type="button" id="cardButton">Enter card details →</button>
+          <div class="payment-element-shell" id="paymentElementShell" hidden>
+            <div id="payment-element"></div>
+            <button class="card-button payment-submit-button" type="button" id="paymentSubmitButton">Pay $9.90 / week</button>
+          </div>
         </div>
       </aside>
     </div>
@@ -1210,6 +1229,14 @@ h1 {
     <div>
       <div class="footer-brand">Live Picks</div>
       <p>Premium fight-night analysis • 18+ only</p>
+      <nav class="footer-links" aria-label="Footer links">
+        <a href="record.html">Verified record</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="refunds.html">Refunds</a>
+        <a href="responsible-gambling.html">Responsible gambling</a>
+        <a href="contact.html">Contact</a>
+      </nav>
     </div>
     <div class="disclaimer">
       Live Picks is an independent analytics and commentary service. It is not affiliated with, endorsed by or licensed by UFC or any sporting organisation. Live Picks does not operate as a bookmaker, does not accept wagers, does not place wagers for customers, and does not guarantee outcomes, profits or returns. Betting involves risk. Chances are you’re about to lose. For free and confidential support call 1800 858 858 or visit gamblinghelponline.org.au.
@@ -1218,7 +1245,6 @@ h1 {
 </footer>
 
 <script>
-  const STRIPE_FALLBACK_LINK = 'https://buy.stripe.com/00w5kC0UR0FAcuOf27fMA00';
   const STRIPE_WEEKLY_AMOUNT_CENTS = 990;
   const STRIPE_CURRENCY = 'aud';
 
@@ -1233,10 +1259,16 @@ h1 {
   const cardButton = document.getElementById('cardButton');
   const stripeFallbackButton = document.getElementById('stripeFallbackButton');
   const expressCheckoutNode = document.getElementById('express-checkout-element');
+  const paymentElementShell = document.getElementById('paymentElementShell');
+  const paymentSubmitButton = document.getElementById('paymentSubmitButton');
 
-  let stripe;
-  let elements;
+  let stripeClient;
+  let expressElements;
   let expressCheckoutElement;
+  let paymentElements;
+  let paymentElement;
+  let paymentClientSecret = '';
+  let paymentSubscriptionId = '';
 
   function showProcessorState(title, message) {
     processorState.classList.add('is-visible');
@@ -1262,28 +1294,25 @@ h1 {
     window.setTimeout(() => input.style.borderColor = '', 900);
   }
 
-  function hashCredential(value) {
-    let hash = 2166136261;
-    for (let index = 0; index < value.length; index += 1) {
-      hash ^= value.charCodeAt(index);
-      hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
-    }
-    return (hash >>> 0).toString(16);
-  }
-
   function validateAccessForm() {
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
 
     if (!email || !email.includes('@')) {
       flagInput(emailInput);
-      showProcessorState('Enter a valid email first.', 'Your email is needed for the Stripe customer record and premium access handoff.');
+      showProcessorState('Enter a valid email first.', 'Your email is needed for your Stripe customer record and Premium Login.');
       return false;
     }
 
     if (!password) {
       flagInput(passwordInput);
-      showProcessorState('Create a password first.', 'This password is used for the current demo Premium Login flow after payment succeeds.');
+      showProcessorState('Create a password first.', 'This password is used for Premium Login after payment succeeds.');
+      return false;
+    }
+
+    if (password.length < 6) {
+      flagInput(passwordInput);
+      showProcessorState('Use at least 6 characters.', 'Your Premium Login password needs to be at least 6 characters.');
       return false;
     }
 
@@ -1297,18 +1326,107 @@ h1 {
     return true;
   }
 
-  function saveDemoAccess() {
-    const email = emailInput.value.trim();
-    const password = passwordInput.value.trim();
-    const normalizedEmail = email.toLowerCase();
-    const subscriber = {
-      email,
-      passwordHash: hashCredential(`${normalizedEmail}:${password}`),
-      plan: summaryPlan.textContent,
-      price: summaryPrice.textContent,
-      createdAt: new Date().toISOString()
+  function getReturnUrl() {
+    return `${window.location.origin}/portal.html?checkout=success`;
+  }
+
+  function stripeAppearance() {
+    return {
+      theme: 'stripe',
+      variables: {
+        colorPrimary: '#2fba73',
+        colorBackground: '#ffffff',
+        colorText: '#050506',
+        colorDanger: '#ff4d5f',
+        borderRadius: '10px',
+        fontFamily: 'Inter, system-ui, sans-serif'
+      }
     };
-    localStorage.setItem('livePicksSubscriber', JSON.stringify(subscriber));
+  }
+
+  async function getStripeClient() {
+    if (stripeClient) {
+      return stripeClient;
+    }
+
+    if (!window.Stripe) {
+      throw new Error('Stripe could not load in this browser. Please refresh and try again.');
+    }
+
+    const response = await fetch('/api/config', { cache: 'no-store' });
+    const config = await response.json().catch(() => ({}));
+
+    if (!response.ok || !config.ok || !config.publishableKey) {
+      throw new Error(config.error || 'Stripe publishable key is not configured.');
+    }
+
+    stripeClient = Stripe(config.publishableKey);
+    return stripeClient;
+  }
+
+  async function createLiveSubscription() {
+    const response = await fetch('/api/create-subscription', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: emailInput.value.trim(),
+        password: passwordInput.value.trim(),
+        plan: 'weekly'
+      })
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok || data.error || !data.clientSecret || !data.subscriptionId) {
+      throw new Error(data.error || 'The subscription could not be created.');
+    }
+
+    return data;
+  }
+
+  async function finalizeSubscription(subscriptionId) {
+    const response = await fetch('/api/finalize-subscription', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subscriptionId })
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok || !data.ok) {
+      throw new Error(data.error || 'Payment completed, but subscriber access could not be finalized.');
+    }
+
+    return data;
+  }
+
+  function completeCheckout() {
+    const email = emailInput.value.trim().toLowerCase();
+    sessionStorage.setItem('livePicksPortalEmail', email);
+    localStorage.setItem('livePicksPortalEmail', email);
+    showProcessorState('Payment complete. Premium access activated.', 'Your subscriber record is active. Redirecting you to Premium Login.');
+    window.setTimeout(() => {
+      window.location.href = 'portal.html';
+    }, 900);
+  }
+
+  function resetPreparedCardPayment() {
+    if (paymentElement) {
+      try {
+        paymentElement.destroy();
+      } catch (error) {
+        // The element may already be gone if Stripe reloaded the iframe.
+      }
+    }
+
+    paymentElements = null;
+    paymentElement = null;
+    paymentClientSecret = '';
+    paymentSubscriptionId = '';
+    paymentElementShell.hidden = true;
+    paymentElementShell.classList.remove('is-visible');
+    cardButton.hidden = false;
+    paymentSubmitButton.disabled = false;
   }
 
   planButtons.forEach((button) => {
@@ -1321,6 +1439,7 @@ h1 {
       button.classList.add('active');
       summaryPlan.textContent = button.dataset.plan;
       summaryPrice.textContent = `${button.dataset.price} / ${button.dataset.period}`;
+      resetPreparedCardPayment();
       hideProcessorState();
     });
   });
@@ -1331,71 +1450,121 @@ h1 {
     try {
       showProcessorState('Opening secure Stripe payment.', 'Confirm the payment in Apple Pay or the wallet option shown by Stripe.');
 
-      const { error: submitError } = await elements.submit();
+      const { error: submitError } = await expressElements.submit();
       if (submitError) {
         showProcessorState('Payment details need attention.', submitError.message || 'Please check your wallet details and try again.');
         return;
       }
 
-      const response = await fetch('/api/create-subscription', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: emailInput.value.trim(),
-          password: passwordInput.value.trim(),
-          plan: 'weekly'
-        })
-      });
+      const currentStripe = await getStripeClient();
+      const subscriptionData = await createLiveSubscription();
 
-      const subscriptionData = await response.json();
-      if (!response.ok || subscriptionData.error || !subscriptionData.clientSecret) {
-        throw new Error(subscriptionData.error || 'The subscription could not be created.');
-      }
-
-      const { error } = await stripe.confirmPayment({
-        elements,
+      const { error } = await currentStripe.confirmPayment({
+        elements: expressElements,
         clientSecret: subscriptionData.clientSecret,
         confirmParams: {
-          return_url: `${window.location.origin}/portal.html`
+          return_url: getReturnUrl()
         },
         redirect: 'if_required'
       });
 
       if (error) {
-        showProcessorState('Payment was not completed.', error.message || 'Please try again or use the hosted checkout fallback.');
+        showProcessorState('Payment was not completed.', error.message || 'Please try again or use card checkout.');
         showFallbackButton();
         return;
       }
 
-      const finalizeResponse = await fetch('/api/finalize-subscription', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          subscriptionId: subscriptionData.subscriptionId
-        })
-      });
-
-      const finalizeData = await finalizeResponse.json();
-
-      if (!finalizeResponse.ok || !finalizeData.ok) {
-        throw new Error(finalizeData.error || 'Payment completed, but subscriber access could not be finalized.');
-      }
-
-      saveDemoAccess();
-
-      showProcessorState('Payment complete. Premium access activated.', 'Your subscriber record is now active. Redirecting you to Premium Login.');
-      window.setTimeout(() => {
-        window.location.href = 'portal.html';
-      }, 900);
+      await finalizeSubscription(subscriptionData.subscriptionId);
+      completeCheckout();
     } catch (error) {
-      showProcessorState('Stripe checkout error.', error.message || 'Use the hosted checkout fallback while this is being checked.');
+      showProcessorState('Stripe checkout error.', error.message || 'Use card checkout while this is being checked.');
       showFallbackButton();
     }
   }
 
-  function openHostedCheckoutFallback() {
+  async function prepareCardPayment() {
     if (!validateAccessForm()) return;
-    window.location.href = STRIPE_FALLBACK_LINK;
+
+    if (paymentElement && paymentClientSecret) {
+      paymentElementShell.hidden = false;
+      paymentElementShell.classList.add('is-visible');
+      cardButton.hidden = true;
+      return;
+    }
+
+    cardButton.disabled = true;
+    showProcessorState('Preparing secure card checkout.', 'Creating your Stripe subscription and loading the card form.');
+
+    try {
+      const currentStripe = await getStripeClient();
+      const subscriptionData = await createLiveSubscription();
+      paymentClientSecret = subscriptionData.clientSecret;
+      paymentSubscriptionId = subscriptionData.subscriptionId;
+      paymentElements = currentStripe.elements({
+        clientSecret: paymentClientSecret,
+        appearance: stripeAppearance()
+      });
+      paymentElement = paymentElements.create('payment', {
+        defaultValues: {
+          billingDetails: {
+            email: emailInput.value.trim()
+          }
+        }
+      });
+
+      paymentElement.mount('#payment-element');
+      paymentElementShell.hidden = false;
+      paymentElementShell.classList.add('is-visible');
+      cardButton.hidden = true;
+      hideProcessorState();
+    } catch (error) {
+      showProcessorState('Card checkout could not load.', error.message || 'Please refresh and try again.');
+    } finally {
+      cardButton.disabled = false;
+    }
+  }
+
+  async function confirmCardPayment() {
+    if (!paymentElements || !paymentClientSecret || !paymentSubscriptionId) {
+      await prepareCardPayment();
+      if (!paymentElements || !paymentClientSecret || !paymentSubscriptionId) return;
+    }
+
+    if (!validateAccessForm()) return;
+
+    paymentSubmitButton.disabled = true;
+    showProcessorState('Processing secure card payment.', 'Do not close this page while Stripe confirms your payment.');
+
+    try {
+      const { error: submitError } = await paymentElements.submit();
+      if (submitError) {
+        showProcessorState('Payment details need attention.', submitError.message || 'Please check your card details and try again.');
+        paymentSubmitButton.disabled = false;
+        return;
+      }
+
+      const currentStripe = await getStripeClient();
+      const { error } = await currentStripe.confirmPayment({
+        elements: paymentElements,
+        clientSecret: paymentClientSecret,
+        confirmParams: {
+          return_url: getReturnUrl()
+        },
+        redirect: 'if_required'
+      });
+
+      if (error) {
+        showProcessorState('Payment was not completed.', error.message || 'Please try again.');
+        paymentSubmitButton.disabled = false;
+        return;
+      }
+
+      await finalizeSubscription(paymentSubscriptionId);
+      completeCheckout();
+    } catch (error) {
+      showProcessorState('Stripe checkout error.', error.message || 'Please refresh and try again.');
+      paymentSubmitButton.disabled = false;
+    }
   }
 
   async function initialiseStripeExpressCheckout() {
@@ -1414,33 +1583,15 @@ h1 {
     }
 
     try {
-      const response = await fetch('/api/config');
-      const config = await response.json();
-
-      if (!response.ok || !config.publishableKey) {
-        throw new Error('Missing STRIPE_PUBLISHABLE_KEY from /api/config.');
-      }
-
-      stripe = Stripe(config.publishableKey);
-      elements = stripe.elements({
+      const currentStripe = await getStripeClient();
+      expressElements = currentStripe.elements({
         mode: 'subscription',
         amount: STRIPE_WEEKLY_AMOUNT_CENTS,
         currency: STRIPE_CURRENCY,
-        paymentMethodTypes: ['card', 'link'],
-        appearance: {
-          theme: 'stripe',
-          variables: {
-            colorPrimary: '#2fba73',
-            colorBackground: '#ffffff',
-            colorText: '#050506',
-            colorDanger: '#ff4d5f',
-            borderRadius: '10px',
-            fontFamily: 'Inter, system-ui, sans-serif'
-          }
-        }
+        appearance: stripeAppearance()
       });
 
-      expressCheckoutElement = elements.create('expressCheckout', {
+      expressCheckoutElement = expressElements.create('expressCheckout', {
         emailRequired: true,
         buttonHeight: 55,
         business: {
@@ -1455,16 +1606,16 @@ h1 {
         paymentMethods: {
           applePay: 'always',
           googlePay: 'auto',
-          link: 'auto'
+          link: 'never'
         },
-        paymentMethodOrder: ['applePay', 'googlePay', 'link'],
+        paymentMethodOrder: ['applePay', 'googlePay'],
         buttonTheme: {
           applePay: 'black',
           googlePay: 'black'
         },
         layout: {
           maxColumns: 1,
-          maxRows: 0,
+          maxRows: 1,
           overflow: 'auto'
         }
       });
@@ -1473,13 +1624,15 @@ h1 {
       expressCheckoutElement.mount('#express-checkout-element');
 
       expressCheckoutElement.on('availablepaymentmethodschange', ({ paymentMethods }) => {
-        if (paymentMethods) {
+        const hasWallet = paymentMethods && Object.values(paymentMethods).some(Boolean);
+
+        if (hasWallet) {
           expressCheckoutNode.style.visibility = 'initial';
           hideFallbackButton();
           hideProcessorState();
         } else {
           expressCheckoutNode.classList.add('is-hidden');
-          hideFallbackButton();
+          showFallbackButton();
           hideProcessorState();
         }
       });
@@ -1487,13 +1640,17 @@ h1 {
       expressCheckoutElement.on('confirm', handleExpressConfirm);
     } catch (error) {
       expressCheckoutNode.classList.add('is-hidden');
-      hideFallbackButton();
-      hideProcessorState();
+      showFallbackButton();
+      showProcessorState('Stripe checkout is not ready.', error.message || 'Card checkout will appear when Stripe is configured.');
     }
   }
 
-  cardButton.addEventListener('click', openHostedCheckoutFallback);
-  stripeFallbackButton.addEventListener('click', openHostedCheckoutFallback);
+  cardButton.addEventListener('click', prepareCardPayment);
+  stripeFallbackButton.addEventListener('click', prepareCardPayment);
+  paymentSubmitButton.addEventListener('click', confirmCardPayment);
+
+  emailInput.addEventListener('input', resetPreparedCardPayment);
+  passwordInput.addEventListener('input', resetPreparedCardPayment);
 
   document.querySelectorAll('.edge-ticker').forEach((ticker) => {
     const pause = () => ticker.classList.add('is-paused');
