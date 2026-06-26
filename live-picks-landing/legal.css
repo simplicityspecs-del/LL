@@ -159,6 +159,114 @@ h1 {
   font-size: 0.72rem;
   font-weight: 900;
 }
+.record-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0 20px;
+}
+.record-stat {
+  min-height: 112px;
+  display: grid;
+  align-content: space-between;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #f8faf7;
+  padding: 13px;
+}
+.record-stat span {
+  color: var(--faint);
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+.record-stat strong {
+  color: var(--ink);
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+.record-stat small {
+  color: var(--muted);
+  font-size: 0.74rem;
+  line-height: 1.25;
+}
+.record-analysis-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 18px 0 22px;
+}
+.record-analysis-card {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+  padding: 15px;
+}
+.record-analysis-card h3 {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+.record-analysis-card ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.record-analysis-card li {
+  margin: 0 0 7px;
+}
+.record-subtitle {
+  margin: 24px 0 9px;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+.record-table-wrap {
+  margin: 10px 0 20px;
+}
+.record-table.is-full {
+  min-width: 1080px;
+}
+.record-table.is-breakdown {
+  min-width: 680px;
+}
+.record-table tr.is-loss {
+  background: #fffafa;
+}
+.record-table .positive {
+  color: #1f8a53;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.record-table .negative {
+  color: #c83343;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.record-table td:nth-child(4),
+.record-table td:nth-child(6) {
+  white-space: nowrap;
+}
+.record-pill {
+  white-space: nowrap;
+}
+.record-pill.is-loss {
+  background: #ffe6e9;
+  color: #c83343;
+}
+@media (max-width: 640px) {
+  .record-summary-grid,
+  .record-analysis-grid {
+    grid-template-columns: 1fr;
+  }
+  .record-stat {
+    min-height: 92px;
+  }
+}
+
 .footer {
   border-top: 1px solid var(--line);
   padding: 22px 0 32px;
