@@ -122,10 +122,33 @@ h1 {
 .legal-card p { margin: 0 0 12px; }
 .legal-card ul { margin: 0 0 16px; padding-left: 20px; }
 .legal-card strong { color: var(--ink); }
+.record-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.record-section-head > .record-pill {
+  align-self: flex-start;
+  justify-self: flex-start;
+}
+.record-section-head h2,
+.record-chart-head h2 {
+  margin: 0 0 5px;
+}
+.record-section-head p,
+.record-chart-head p,
+.record-projection-note {
+  max-width: 660px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
 .record-table-wrap {
+  margin: 10px 0 20px;
   overflow-x: auto;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 8px;
   background: #fff;
 }
 .record-table {
@@ -135,15 +158,15 @@ h1 {
 }
 .record-table th,
 .record-table td {
-  padding: 12px 13px;
+  padding: 11px 12px;
   border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 .record-table th {
   color: var(--faint);
-  font-size: 0.68rem;
+  font-size: 0.67rem;
   font-weight: 950;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -156,86 +179,175 @@ h1 {
   background: #dcf4e7;
   color: #24774b;
   padding: 4px 9px;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 900;
+  white-space: nowrap;
 }
 .record-summary-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin: 18px 0 20px;
+  gap: 8px;
+  margin: 14px 0 18px;
 }
 .record-stat {
-  min-height: 112px;
+  min-height: 76px;
   display: grid;
-  align-content: space-between;
-  gap: 8px;
+  align-content: start;
+  gap: 4px;
   border: 1px solid var(--line);
-  border-radius: 9px;
+  border-radius: 8px;
   background: #f8faf7;
-  padding: 13px;
+  padding: 10px 11px;
 }
 .record-stat span {
   color: var(--faint);
-  font-size: 0.66rem;
+  font-size: 0.62rem;
   font-weight: 950;
-  letter-spacing: 0.11em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 .record-stat strong {
   color: var(--ink);
-  font-size: clamp(1.35rem, 2.5vw, 2rem);
-  line-height: 0.95;
-  letter-spacing: -0.045em;
+  font-size: clamp(1.05rem, 2vw, 1.45rem);
+  line-height: 1;
+  letter-spacing: 0;
 }
 .record-stat small {
   color: var(--muted);
+  font-size: 0.7rem;
+  line-height: 1.2;
+}
+.record-performance {
+  margin: 18px 0 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.record-chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 12px;
+}
+.record-chart-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+  min-width: 230px;
+}
+.record-chart-meta span {
+  display: inline-flex;
+  gap: 5px;
+  align-items: baseline;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  padding: 5px 9px;
+  color: var(--muted);
   font-size: 0.74rem;
-  line-height: 1.25;
+  font-weight: 800;
+}
+.record-chart-meta strong { color: var(--ink); }
+.record-chart {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+.record-chart svg {
+  display: block;
+  width: 100%;
+  min-width: 720px;
+  height: auto;
+}
+.record-chart-bg { fill: #fbfcfb; }
+.record-chart-gridline line {
+  stroke: #e4e9e4;
+  stroke-width: 1;
+}
+.record-chart-gridline text,
+.record-chart-x {
+  fill: var(--faint);
+  font-size: 11px;
+  font-weight: 800;
+}
+.record-chart-axis {
+  stroke: #aeb8b1;
+  stroke-width: 1.2;
+}
+.record-chart-line {
+  fill: none;
+  stroke: #0a0b0a;
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.record-chart-projection {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 2.2;
+  stroke-dasharray: 7 7;
+  stroke-linecap: round;
+}
+.record-chart-dot {
+  fill: var(--green);
+  stroke: #fff;
+  stroke-width: 1.2;
+}
+.record-chart-dot.is-negative {
+  fill: #c83343;
+}
+.record-chart-end {
+  fill: #0a0b0a;
+  stroke: #fff;
+  stroke-width: 2;
+}
+.record-chart-projected-dot {
+  fill: #fff;
+  stroke: var(--green);
+  stroke-width: 2.4;
+}
+.record-chart-label {
+  fill: #0a0b0a;
+  font-size: 12px;
+  font-weight: 900;
+}
+.record-chart-label.is-projected { fill: #24774b; }
+.record-projection-note {
+  margin: 9px 0 0;
+  font-size: 0.78rem;
 }
 .record-analysis-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 12px;
   margin: 18px 0 22px;
 }
 .record-analysis-card {
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  background: #fff;
-  padding: 15px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
 }
 .record-analysis-card h3 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: var(--ink);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
 }
 .record-analysis-card ul {
   margin: 0;
   padding-left: 18px;
 }
-.record-analysis-card li {
-  margin: 0 0 7px;
-}
+.record-analysis-card li { margin: 0 0 7px; }
 .record-subtitle {
   margin: 24px 0 9px;
   color: var(--ink);
   font-size: 0.95rem;
   font-weight: 900;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
-.record-table-wrap {
-  margin: 10px 0 20px;
-}
-.record-table.is-full {
-  min-width: 1080px;
-}
-.record-table.is-breakdown {
-  min-width: 680px;
-}
-.record-table tr.is-loss {
-  background: #fffafa;
-}
+.record-table.is-full { min-width: 1080px; }
+.record-table.is-breakdown { min-width: 680px; }
+.record-table tr.is-loss { background: #fffafa; }
 .record-table .positive {
   color: #1f8a53;
   font-weight: 900;
@@ -247,23 +359,25 @@ h1 {
   white-space: nowrap;
 }
 .record-table td:nth-child(4),
-.record-table td:nth-child(6) {
-  white-space: nowrap;
-}
-.record-pill {
-  white-space: nowrap;
-}
+.record-table td:nth-child(6) { white-space: nowrap; }
 .record-pill.is-loss {
   background: #ffe6e9;
   color: #c83343;
 }
-@media (max-width: 640px) {
-  .record-summary-grid,
+@media (max-width: 760px) {
+  .record-section-head,
+  .record-chart-head {
+    display: grid;
+  }
+  .record-chart-meta {
+    justify-content: flex-start;
+    min-width: 0;
+  }
+  .record-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .record-analysis-grid {
     grid-template-columns: 1fr;
-  }
-  .record-stat {
-    min-height: 92px;
   }
 }
 
