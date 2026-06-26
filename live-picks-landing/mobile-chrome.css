@@ -139,6 +139,20 @@ html {
   color: #ffffff;
 }
 
+.topbar .site-menu-panel a.is-primary[href="checkout.html"],
+.checkout-topbar .site-menu-panel a.is-primary[href="checkout.html"] {
+  background: transparent;
+  color: #303632;
+  box-shadow: none;
+}
+
+.topbar .site-menu-panel a.is-primary[href="checkout.html"]:hover,
+.checkout-topbar .site-menu-panel a.is-primary[href="checkout.html"]:hover {
+  background: rgba(47, 186, 115, 0.08);
+  color: #1f8a53;
+  box-shadow: none;
+}
+
 .topbar .site-menu-panel .is-muted,
 .checkout-topbar .site-menu-panel .is-muted {
   color: #6c746e;
