@@ -3,21 +3,133 @@
 }
 
 html {
+  background: #ffffff !important;
   background-color: #ffffff;
 }
 
 .topbar,
-.checkout-topbar {
+.checkout-topbar,
+.index-page .topbar,
+.portal-page .topbar,
+.checkout-page .checkout-topbar,
+.premium-feed-page .topbar,
+.account-page .topbar,
+.newsletter-page .topbar,
+.thank-you-page .topbar,
+.forgot-email-page .topbar,
+.reset-password-page .topbar,
+.record-page .topbar {
   background: #ffffff !important;
   background-image: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }
 
 @media (max-width: 760px) {
   .topbar,
-  .checkout-topbar {
+  .checkout-topbar,
+  .index-page .topbar,
+  .portal-page .topbar,
+  .checkout-page .checkout-topbar,
+  .premium-feed-page .topbar,
+  .account-page .topbar,
+  .newsletter-page .topbar,
+  .thank-you-page .topbar,
+  .forgot-email-page .topbar,
+  .reset-password-page .topbar,
+  .record-page .topbar {
     background: #ffffff !important;
     background-image: none !important;
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
+  }
+
+  body.premium-feed-page {
+    background-color: #ffffff !important;
+  }
+
+  .index-page .topbar {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+  }
+
+  .topbar .container.nav,
+  .topbar .nav,
+  .checkout-topbar .checkout-nav {
+    min-height: 42px !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 6px 0 !important;
+  }
+
+  .topbar .brand,
+  .topbar .brand.brand-text-only,
+  .checkout-topbar .brand {
+    font-size: clamp(0.9rem, 3vw, 1rem) !important;
+    font-weight: 950 !important;
+    letter-spacing: -0.045em !important;
+    line-height: 1 !important;
+  }
+
+  .topbar .header-buttons .top-actions,
+  .topbar .top-actions,
+  .topbar .record-mobile-actions,
+  .portal-page .portal-mobile-actions,
+  .newsletter-page .newsletter-mobile-actions,
+  .checkout-page .checkout-header-actions {
+    gap: 6px !important;
+  }
+
+  .topbar .login-btn,
+  .topbar .top-button,
+  .topbar .nav-link,
+  .topbar .nav-links a,
+  .topbar .back-link,
+  .checkout-page .checkout-header-button {
+    height: 30px !important;
+    min-height: 30px !important;
+    padding: 0 10px !important;
+    border-radius: 6px !important;
+    font-size: clamp(0.56rem, 2.35vw, 0.66rem) !important;
+    font-weight: 850 !important;
+    line-height: 1 !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .topbar .container.nav,
+  .topbar .nav,
+  .checkout-topbar .checkout-nav {
+    min-height: 40px !important;
+    gap: 5px !important;
+    padding: 5px 0 !important;
+  }
+
+  .topbar .brand,
+  .topbar .brand.brand-text-only,
+  .checkout-topbar .brand {
+    font-size: 0.86rem !important;
+  }
+
+  .topbar .header-buttons .top-actions,
+  .topbar .top-actions,
+  .topbar .record-mobile-actions,
+  .portal-page .portal-mobile-actions,
+  .newsletter-page .newsletter-mobile-actions,
+  .checkout-page .checkout-header-actions {
+    gap: 4px !important;
+  }
+
+  .topbar .login-btn,
+  .topbar .top-button,
+  .topbar .nav-link,
+  .topbar .nav-links a,
+  .topbar .back-link,
+  .checkout-page .checkout-header-button {
+    height: 28px !important;
+    min-height: 28px !important;
+    padding-inline: 7px !important;
+    font-size: clamp(0.52rem, 2.45vw, 0.6rem) !important;
   }
 }
