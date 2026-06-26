@@ -421,80 +421,25 @@ h1 {
     grid-template-columns: 1fr;
   }
   .record-table-wrap {
-    overflow-x: hidden;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-  }
-  .record-table,
-  .record-table.is-full,
-  .record-table.is-breakdown {
-    min-width: 0;
-  }
-  .record-table,
-  .record-table thead,
-  .record-table tbody,
-  .record-table tr,
-  .record-table th,
-  .record-table td {
-    display: block;
-    width: 100%;
-  }
-  .record-table thead {
-    display: none;
-  }
-  .record-table tr {
-    margin: 0 0 10px;
+    overflow-x: auto;
     border: 1px solid var(--line);
     border-radius: 8px;
     background: #fff;
-    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
   }
-  .record-table tr.is-loss {
-    background: #fffafa;
-  }
+  .record-table th,
   .record-table td {
-    display: flex;
-    justify-content: space-between;
-    gap: 14px;
-    padding: 8px 10px;
-    border-bottom: 1px solid var(--line);
-    font-size: 0.82rem;
+    padding: 9px 10px;
+    font-size: 0.8rem;
   }
-  .record-table td::before {
-    flex: 0 0 auto;
-    color: var(--faint);
-    font-size: 0.62rem;
-    font-weight: 950;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .record-table th {
+    font-size: 0.6rem;
   }
-  .record-table td:last-child {
-    border-bottom: 0;
+  .record-table.is-breakdown {
+    min-width: 560px;
   }
-  .record-table.is-full td:nth-child(1)::before { content: "Date"; }
-  .record-table.is-full td:nth-child(2)::before { content: "Pick"; }
-  .record-table.is-full td:nth-child(3)::before { content: "Fight"; }
-  .record-table.is-full td:nth-child(4)::before { content: "Odds"; }
-  .record-table.is-full td:nth-child(5)::before { content: "Result"; }
-  .record-table.is-full td:nth-child(6)::before { content: "Net"; }
-  .record-table.is-breakdown td:nth-child(1)::before { content: "Group"; }
-  .record-table.is-breakdown td:nth-child(2)::before { content: "Picks"; }
-  .record-table.is-breakdown td:nth-child(3)::before { content: "W-L"; }
-  .record-table.is-breakdown td:nth-child(4)::before { content: "Win rate"; }
-  .record-table.is-breakdown td:nth-child(5)::before { content: "Net"; }
-  .record-table.is-breakdown td:nth-child(6)::before { content: "ROI"; }
-  .record-table.is-breakdown td:nth-child(7)::before { content: "Avg odds"; }
-  .record-table.is-full td:nth-child(3) {
-    display: grid;
-    gap: 3px;
-  }
-  .record-table.is-full td:nth-child(3)::before {
-    margin-bottom: 1px;
-  }
-  .record-table td:nth-child(4),
-  .record-table td:nth-child(6) {
-    white-space: normal;
+  .record-table.is-full {
+    min-width: 820px;
   }
 }
 
