@@ -7638,6 +7638,51 @@ h1 {
     text-align: center;
   }
 
+  #proof .proof-record-link {
+    margin: 14px 0 0;
+    padding: 14px;
+    border: 1px solid #dde2dd;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.92);
+    box-shadow: 0 12px 28px rgba(14,18,15,0.055);
+    text-align: left;
+  }
+
+  #proof .proof-record-link::before {
+    content: "Full record";
+    display: block;
+    margin-bottom: 9px;
+    color: #68706a;
+    font-size: 0.56rem;
+    font-weight: 950;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  #proof .proof-record-link a {
+    width: 100%;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #050506;
+    border-radius: 0;
+    background: #050506;
+    color: #ffffff;
+    padding: 0 14px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 850;
+    line-height: 1;
+  }
+
+  #proof .proof-record-link a::after {
+    content: "→";
+    font-size: 1rem;
+    line-height: 1;
+  }
+
   .odds {
     color: #050506 !important;
   }
@@ -9894,7 +9939,7 @@ html,
 
         <div class="hero-actions">
           <a class="btn btn-ghost" href="#model">How the model works</a>
-          <a class="btn btn-ghost" href="/record">View record</a>
+          <a class="btn btn-ghost" href="record.html">View record</a>
         </div>
       </div>
 
@@ -10023,7 +10068,7 @@ html,
                 <div class="fighter-meta">
                   <span class="tag green">Winning Pick</span>
                   <span class="tag red">Paper Underdog</span>
-                  <span class="tag">$4.75</span>
+                  <span class="tag" data-decimal-odds="4.75">4.75</span>
                 </div>
                 <div class="form-line">
                   <div class="form-label">Past Five</div>
@@ -10066,7 +10111,7 @@ html,
             </div>
             <div class="edge-box">
               <div class="label">Bookmaker Price</div>
-              <div class="value">$4.75</div>
+              <div class="value" data-decimal-odds="4.75">4.75</div>
               <small>Live Picks flagged a genuine market hole</small>
             </div>
             <div class="edge-box">
@@ -10154,7 +10199,7 @@ html,
             </div>
             <div class="edge-box">
               <div class="label">Bookmaker Price</div>
-              <div class="value">$3.90</div>
+              <div class="value" data-decimal-odds="3.90">3.90</div>
               <small>Daniel Zellhuber was the heavy favourite on paper with a 2 inch height edge and 7 inch reach advantage</small>
             </div>
             <div class="edge-box">
@@ -10663,7 +10708,7 @@ html,
           </div>
         </article>
       </div>
-      <p class="proof-record-link"><a href="/record">Open the public verified record</a></p>
+      <p class="proof-record-link"><a href="record.html">Open the public verified record</a></p>
     </div>
   </section>
 </main>
@@ -10681,7 +10726,7 @@ html,
       <a href="/ufc-picks">UFC picks</a>
       <a href="/mma-betting-model">MMA betting model</a>
       <a href="/how-it-works">How it works</a>
-      <a href="/record">Verified record</a>
+      <a href="record.html">Verified record</a>
       <a href="/free-ufc-newsletter">Free UFC newsletter</a>
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
