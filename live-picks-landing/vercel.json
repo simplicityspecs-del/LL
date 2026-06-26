@@ -1,6 +1,54 @@
 {
   "rewrites": [
     {
+      "source": "/ufc-picks",
+      "destination": "/ufc-picks.html"
+    },
+    {
+      "source": "/ufc-picks/",
+      "destination": "/ufc-picks.html"
+    },
+    {
+      "source": "/mma-betting-model",
+      "destination": "/mma-betting-model.html"
+    },
+    {
+      "source": "/mma-betting-model/",
+      "destination": "/mma-betting-model.html"
+    },
+    {
+      "source": "/record",
+      "destination": "/record.html"
+    },
+    {
+      "source": "/record/",
+      "destination": "/record.html"
+    },
+    {
+      "source": "/free-ufc-newsletter",
+      "destination": "/free-ufc-newsletter.html"
+    },
+    {
+      "source": "/free-ufc-newsletter/",
+      "destination": "/free-ufc-newsletter.html"
+    },
+    {
+      "source": "/responsible-gambling",
+      "destination": "/responsible-gambling.html"
+    },
+    {
+      "source": "/responsible-gambling/",
+      "destination": "/responsible-gambling.html"
+    },
+    {
+      "source": "/how-it-works",
+      "destination": "/how-it-works.html"
+    },
+    {
+      "source": "/how-it-works/",
+      "destination": "/how-it-works.html"
+    },
+    {
       "source": "/push-guide",
       "destination": "/push-guide/index.html"
     },
