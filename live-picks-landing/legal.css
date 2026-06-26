@@ -27,55 +27,68 @@ body {
 a { color: inherit; }
 .container { width: min(980px, calc(100% - 38px)); margin: 0 auto; }
 .topbar {
-  border-bottom: 1px solid rgba(8,11,8,0.1);
-  background: rgba(250,251,249,0.9);
-  box-shadow: 0 10px 28px rgba(14,18,15,0.08);
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,0.94);
+  box-shadow: 0 8px 22px rgba(14,18,15,0.045);
   position: sticky;
   top: 0;
   z-index: 10;
-  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 .nav {
-  width: min(1180px, calc(100% - 38px));
-  min-height: 66px;
+  width: min(1180px, calc(100% - 36px));
+  min-height: 42px;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  column-gap: 28px;
+  gap: 12px;
+  padding: 6px 0;
 }
 .brand {
   color: var(--ink);
   text-decoration: none;
-  font-size: 1.02rem;
-  font-weight: 900;
-  letter-spacing: -0.035em;
+  font-size: 0.96rem;
+  font-weight: 950;
+  letter-spacing: -0.045em;
+  line-height: 1;
   white-space: nowrap;
 }
 .nav-links {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: flex-end;
   align-items: center;
-  gap: clamp(14px, 2vw, 28px);
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
 }
 .nav-links a {
-  min-height: 0;
+  height: 30px;
+  min-height: 30px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   border: 0;
   background: transparent;
   color: #131713;
-  padding: 8px 2px;
+  padding: 0 10px;
   text-decoration: none;
-  font-size: 0.86rem;
-  font-weight: 720;
+  font-size: 0.64rem;
+  font-weight: 820;
+  letter-spacing: 0.02em;
   line-height: 1;
+  white-space: nowrap;
+  border-radius: 6px;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease, transform 0.18s ease;
 }
 .nav-links a:hover {
-  color: #000;
+  background: rgba(47, 186, 115, 0.08);
+  color: #1f8a53;
+  transform: translateY(-1px);
 }
 .legal-hero {
-  padding: 42px 0 20px;
+  padding: 34px 0 18px;
   text-align: left;
 }
 .label {
@@ -103,7 +116,7 @@ h1 {
 .legal-card {
   margin: 20px auto 48px;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 8px;
   background: rgba(255,255,255,0.92);
   box-shadow: var(--shadow);
   padding: clamp(18px, 3vw, 30px);
@@ -130,7 +143,7 @@ h1 {
 }
 .seo-quick-card {
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.9);
   box-shadow: var(--shadow);
   padding: 16px;
@@ -173,7 +186,7 @@ h1 {
 .seo-faq details,
 .seo-form-card {
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 8px;
   background: rgba(255,255,255,0.94);
   box-shadow: var(--shadow);
   padding: clamp(16px, 2.4vw, 24px);
@@ -387,10 +400,14 @@ h1 {
 }
 .record-table-wrap {
   margin: 10px 0 20px;
+  max-width: 100%;
   overflow-x: auto;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fff;
+  overscroll-behavior-x: contain;
+  scrollbar-color: #cbd5ce #f7f8f6;
+  -webkit-overflow-scrolling: touch;
 }
 .record-table {
   width: 100%;
@@ -880,29 +897,110 @@ h1 {
   }
 
   .nav {
-    min-height: 0;
-    grid-template-columns: 1fr;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 10px 0;
+    min-height: 40px;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0;
+  }
+
+  .brand {
+    min-width: max-content;
+    font-size: 0.82rem;
   }
 
   .nav-links {
-    justify-content: flex-start;
+    min-width: 0;
+    justify-content: flex-end;
     gap: 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
 
+  .nav-links::-webkit-scrollbar { display: none; }
+
   .nav-links a {
-    min-height: 30px;
+    flex: 0 0 auto;
+    height: 28px;
+    min-height: 28px;
     border: 1px solid var(--line);
-    border-radius: 7px;
+    border-radius: 5px;
     background: #fff;
-    padding: 0 9px;
-    font-size: 0.68rem;
+    padding: 0 8px;
+    font-size: clamp(0.52rem, 2.35vw, 0.62rem);
     font-weight: 800;
   }
 
-  .legal-hero { padding-top: 30px; }
+  .legal-hero { padding-top: 28px; }
+}
+
+/* Shared legal/SEO polish lock: keeps standalone pages aligned with the app header. */
+body:not(.record-page) .topbar {
+  min-height: 0;
+}
+
+body:not(.record-page) .topbar .container.nav {
+  min-height: 42px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+body:not(.record-page) .topbar .brand {
+  min-width: max-content;
+  font-size: 0.96rem;
+  font-weight: 950;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+body:not(.record-page) .topbar .nav-links {
+  min-width: 0;
+  justify-content: flex-end;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+body:not(.record-page) .topbar .nav-links::-webkit-scrollbar {
+  display: none;
+}
+
+body:not(.record-page) .topbar .nav-links a {
+  height: 30px;
+  min-height: 30px;
+  border-radius: 6px;
+}
+
+@media (max-width: 640px) {
+  body:not(.record-page) .topbar .container.nav {
+    width: min(100% - 12px, 980px);
+    min-height: 40px;
+    gap: 6px;
+    padding: 4px 0;
+  }
+
+  body:not(.record-page) .topbar .brand {
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  body:not(.record-page) .topbar .nav-links {
+    gap: 5px;
+  }
+
+  body:not(.record-page) .topbar .nav-links a {
+    height: 28px;
+    min-height: 28px;
+    padding: 0 7px;
+    font-size: clamp(0.52rem, 2.35vw, 0.6rem);
+    line-height: 1;
+  }
 }
 
 /* Record page header: match the compact button logic used on the index page. */

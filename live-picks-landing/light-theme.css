@@ -1515,6 +1515,66 @@ input[type="radio"] {
   content: none !important;
 }
 
+.premium-preview-page .preview-hero {
+  padding: clamp(24px, 4vw, 46px) 0 34px !important;
+}
+
+.premium-preview-page .preview-layout {
+  gap: clamp(18px, 3vw, 30px) !important;
+}
+
+.premium-preview-page .kicker {
+  margin-bottom: 12px !important;
+}
+
+.premium-preview-page h1 {
+  max-width: 760px !important;
+  font-size: clamp(2.55rem, 6.2vw, 5.5rem) !important;
+  line-height: 0.9 !important;
+}
+
+.premium-preview-page .hero-copy {
+  max-width: 650px !important;
+  margin-top: 16px !important;
+}
+
+.premium-preview-page .preview-note {
+  margin-top: 14px !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+.premium-preview-page .preview-feed-card,
+.premium-preview-page .preview-fight-card,
+.premium-preview-page .preview-pick-inner,
+.premium-preview-page .preview-pending-read,
+.premium-preview-page .explain-card {
+  border-radius: 8px !important;
+  box-shadow: 0 12px 28px rgba(14, 18, 15, 0.055) !important;
+}
+
+.premium-preview-page .preview-feed-head,
+.premium-preview-page .preview-board-toolbar {
+  padding-inline: clamp(14px, 2vw, 20px) !important;
+}
+
+.premium-preview-page .preview-fight-list {
+  gap: 10px !important;
+}
+
+.premium-preview-page .preview-pick-inner,
+.premium-preview-page .preview-pending-read {
+  border-left-width: 4px !important;
+}
+
+.premium-preview-page .explain-section {
+  padding: 28px 0 38px !important;
+}
+
+.premium-preview-page .explain-grid {
+  gap: 10px !important;
+}
+
 @media (max-width: 680px) {
   .topbar {
     background: rgba(255, 255, 255, 0.94) !important;
@@ -1615,9 +1675,61 @@ input[type="radio"] {
     font-size: 0.68rem !important;
   }
 
+  .premium-preview-page .preview-hero {
+    padding: 20px 0 24px !important;
+  }
+
+  .premium-preview-page h1 {
+    font-size: clamp(2.15rem, 11.5vw, 3.2rem) !important;
+    letter-spacing: -0.065em !important;
+  }
+
+  .premium-preview-page .hero-copy {
+    margin-top: 12px !important;
+    font-size: 0.88rem !important;
+    line-height: 1.42 !important;
+  }
+
+  .premium-preview-page .preview-feed-head,
+  .premium-preview-page .preview-board-toolbar {
+    padding: 14px 12px !important;
+  }
+
+  .premium-preview-page .preview-meta-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .premium-preview-page .preview-meta {
+    min-height: 64px !important;
+    padding: 10px !important;
+  }
+
+  .premium-preview-page .preview-fight-list {
+    gap: 10px !important;
+    padding: 10px !important;
+  }
+
+  .premium-preview-page .preview-fighter {
+    grid-template-columns: 64px minmax(0, 1fr) !important;
+    padding: 10px !important;
+  }
+
+  .premium-preview-page .preview-fighter-portrait {
+    width: 62px !important;
+    height: 62px !important;
+  }
+
+  .premium-preview-page .preview-pick-callout {
+    padding: 10px !important;
+  }
+
+  .premium-preview-page .explain-section {
+    padding: 22px 0 30px !important;
+  }
+
   .newsletter-page .topbar .container.nav {
     width: min(100% - 12px, 1180px) !important;
-    min-height: 34px !important;
+    min-height: 40px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
@@ -1651,8 +1763,8 @@ input[type="radio"] {
   .newsletter-page .newsletter-mobile-actions .nav-link {
     width: auto !important;
     min-width: 0 !important;
-    height: 24px !important;
-    min-height: 24px !important;
+    height: 28px !important;
+    min-height: 28px !important;
     padding: 0 8px !important;
     border-radius: 5px !important;
     font-size: clamp(0.48rem, 2.15vw, 0.56rem) !important;
@@ -1719,7 +1831,7 @@ input[type="radio"] {
 
   .portal-page .topbar .container.nav {
     width: min(100% - 12px, 1180px) !important;
-    min-height: 34px !important;
+    min-height: 40px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
@@ -1753,8 +1865,8 @@ input[type="radio"] {
   .portal-page .portal-mobile-actions .nav-link {
     width: auto !important;
     min-width: 0 !important;
-    height: 24px !important;
-    min-height: 24px !important;
+    height: 28px !important;
+    min-height: 28px !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -2616,7 +2728,7 @@ input[type="radio"] {
 @media (max-width: 680px) {
   .premium-preview-page .topbar .container.nav {
     width: min(100% - 12px, 1180px) !important;
-    min-height: 34px !important;
+    min-height: 40px !important;
     display: grid !important;
     grid-template-columns: auto minmax(0, 1fr) !important;
     align-items: center !important;
@@ -2665,8 +2777,8 @@ input[type="radio"] {
   .premium-preview-page .topbar .top-actions .login-btn {
     width: auto !important;
     min-width: 0 !important;
-    height: 24px !important;
-    min-height: 24px !important;
+    height: 28px !important;
+    min-height: 28px !important;
     flex: 0 1 auto !important;
     padding: 0 6px !important;
     border-radius: 5px !important;

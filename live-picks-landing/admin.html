@@ -461,15 +461,44 @@ button { cursor: pointer; }
 
 @media (max-width: 640px) {
   .container { width: min(100% - 20px, 1180px); }
-  .nav { align-items: flex-start; flex-direction: column; padding: 9px 0; }
-  .nav-actions { width: 100%; overflow-x: auto; }
+  .nav {
+    width: min(100% - 12px, 1180px);
+    min-height: 40px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0;
+  }
+  .brand {
+    min-width: max-content;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .nav-actions {
+    width: auto;
+    min-width: 0;
+    justify-content: flex-end;
+    gap: 4px;
+    margin-left: auto;
+    overflow: visible;
+    flex-wrap: nowrap;
+  }
+  .nav-actions a {
+    height: 28px;
+    min-height: 28px;
+    padding: 0 7px;
+    border-radius: 6px;
+    font-size: clamp(0.52rem, 2.35vw, 0.6rem);
+    line-height: 1;
+  }
   .admin-grid { padding-top: 18px; }
   .panel { padding: 13px; }
   .board-actions { align-items: stretch; flex-direction: column; }
   .board-actions .btn { width: 100%; }
 }
 </style>
-<link rel="stylesheet" href="mobile-chrome.css?v=3">
+<link rel="stylesheet" href="mobile-chrome.css?v=4">
 </head>
 <body class="admin-page">
 <header class="topbar">

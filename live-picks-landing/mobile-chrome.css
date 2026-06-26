@@ -85,6 +85,7 @@ html {
   .topbar .top-button,
   .topbar .nav-link,
   .topbar .nav-links a,
+  .admin-page .topbar .nav-actions a,
   .topbar .back-link,
   .checkout-page .checkout-header-button {
     height: 30px !important;
@@ -94,6 +95,35 @@ html {
     font-size: clamp(0.56rem, 2.35vw, 0.66rem) !important;
     font-weight: 850 !important;
     line-height: 1 !important;
+  }
+
+  .admin-page .topbar .container.nav {
+    width: min(100% - 12px, 1180px) !important;
+    min-height: 40px !important;
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 4px 0 !important;
+    flex-direction: row !important;
+  }
+
+  .admin-page .topbar .brand {
+    min-width: max-content !important;
+    font-size: 0.9rem !important;
+    white-space: nowrap !important;
+  }
+
+  .admin-page .topbar .nav-actions {
+    width: auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 4px !important;
+    margin-left: auto !important;
+    overflow: visible !important;
+    flex-wrap: nowrap !important;
   }
 }
 
@@ -125,6 +155,7 @@ html {
   .topbar .top-button,
   .topbar .nav-link,
   .topbar .nav-links a,
+  .admin-page .topbar .nav-actions a,
   .topbar .back-link,
   .checkout-page .checkout-header-button {
     height: 28px !important;
