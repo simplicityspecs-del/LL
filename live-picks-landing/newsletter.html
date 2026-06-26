@@ -29,8 +29,114 @@
 <meta name="twitter:image" content="https://livepicks.app/lp-share.png">
 <meta name="twitter:image:alt" content="Live Picks LP logo">
   <link rel="stylesheet" href="newsletter.css">
-  <link rel="stylesheet" href="light-theme.css?v=4">
+  <link rel="stylesheet" href="light-theme.css?v=5">
 <link rel="stylesheet" href="mobile-chrome.css?v=5">
+<style>
+.newsletter-page .page {
+  min-height: auto;
+  display: block;
+  padding: clamp(26px, 4vw, 48px) 0;
+}
+
+.newsletter-page .newsletter-layout {
+  display: block;
+  max-width: 600px;
+}
+
+.newsletter-page .signup-card {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: clamp(26px, 3vw, 38px) !important;
+}
+
+.newsletter-page .signup-card h1 {
+  margin: 0;
+  color: #050506 !important;
+  font-size: clamp(2rem, 3.4vw, 2.85rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  text-transform: none;
+}
+
+.newsletter-page .newsletter-note {
+  max-width: 500px;
+  margin: 12px 0 0;
+  color: #555d57 !important;
+  font-size: 0.94rem;
+  line-height: 1.45;
+  font-weight: 680;
+}
+
+.newsletter-page .form {
+  margin-top: 22px;
+}
+
+.newsletter-page .fine-print {
+  max-width: 410px;
+}
+
+.newsletter-page .premium-preview-link {
+  width: 100%;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+  border: 1px solid #050506 !important;
+  border-radius: 0;
+  background: #050506 !important;
+  color: #fff !important;
+  padding: 0 18px;
+  font-size: 0.78rem;
+  font-weight: 850;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.newsletter-page .premium-preview-link:hover {
+  background: #171917 !important;
+}
+
+.newsletter-page .message:empty {
+  min-height: 0 !important;
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+@media (min-width: 681px) {
+  .newsletter-page .responsible-footer .disclaimer-card {
+    width: min(100% - 38px, 860px) !important;
+    max-width: 860px !important;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 16px 22px;
+    margin: 0 auto !important;
+    padding: 18px 20px !important;
+  }
+
+  .newsletter-page .responsible-footer .footer-links {
+    grid-column: 2;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 680px) {
+  .newsletter-page .page {
+    min-height: auto;
+    padding: 24px 0 30px;
+  }
+
+  .newsletter-page .signup-card {
+    padding: 18px !important;
+  }
+
+  .newsletter-page .signup-card h1 {
+    font-size: clamp(1.65rem, 8vw, 2.15rem);
+  }
+}
+</style>
 </head>
 <body class="newsletter-page">
   <header class="topbar">
@@ -73,20 +179,14 @@
 
   <main class="page">
     <section class="container newsletter-layout">
-      <div class="intro-panel">
-        <div class="kicker">Free fight-night updates</div>
-        <h1>Get the free newsletter.</h1>
-        <p class="copy"><strong>Get the notes before the picks move.</strong> We’ll send fight-night reminders, model updates and the signals we’re watching before premium live picks are released.</p>
-      </div>
-
       <div class="signup-card">
         <div class="card-label">
           <span>Newsletter access</span>
           <span class="live-dot">Free</span>
         </div>
 
-        <h2>Type your email here for updates.</h2>
-        <p class="card-copy">Join the free list and we’ll keep you posted when fight-night notes, model changes and release windows are ready.</p>
+        <h1>Free newsletter</h1>
+        <p class="newsletter-note">We send weekly post-event analysis, model adjustments, what we got right and what we got wrong.</p>
 
         <form class="form" id="newsletterForm" action="/api/subscribe" method="POST" novalidate>
           <input type="hidden" name="source" value="free-newsletter-page">
@@ -104,28 +204,9 @@
           </div>
 
           <p class="fine-print">No spam. Just Live Picks updates. You can remove yourself from the list any time.</p>
+          <a class="premium-preview-link" href="premium-preview.html">Premium Preview</a>
           <p class="message" id="formMessage" role="status" aria-live="polite"></p>
         </form>
-
-        <div class="newsletter-points" aria-label="Newsletter benefits">
-          <div class="point">
-            <strong>Market notes</strong>
-            <span>Early reads on odds movement, value gaps and steam.</span>
-          </div>
-          <div class="point">
-            <strong>Live signals</strong>
-            <span>Walkout, crowd and condition markers worth watching.</span>
-          </div>
-          <div class="point">
-            <strong>Release alerts</strong>
-            <span>Know when the premium model is close to going live.</span>
-          </div>
-        </div>
-
-        <div class="premium-reminder">
-          <span>Want the full model?</span>
-          <a href="checkout.html">Go premium</a>
-        </div>
       </div>
     </section>
   </main>

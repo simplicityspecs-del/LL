@@ -1533,8 +1533,299 @@ h1,
   }
 }
 </style>
-<link rel="stylesheet" href="light-theme.css?v=4">
+<link rel="stylesheet" href="light-theme.css?v=5">
 <link rel="stylesheet" href="mobile-chrome.css?v=5">
+<style>
+.premium-preview-page {
+  --green: #3f7a58;
+  --green-2: #315f45;
+  --border-soft: rgba(5, 5, 6, 0.12);
+}
+
+.premium-preview-page {
+  background:
+    radial-gradient(circle at 14% 8%, rgba(5, 5, 6, 0.045), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #f7f8f6 52%, #eef1ee 100%) !important;
+}
+
+.premium-preview-page .kicker {
+  color: #68706a !important;
+}
+
+.premium-preview-page .kicker::before {
+  background: #050506 !important;
+  box-shadow: none !important;
+}
+
+.premium-preview-page .edge-ticker {
+  min-height: 34px !important;
+  border-top: 1px solid #dce2dd !important;
+  border-bottom: 1px solid #dce2dd !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  line-height: 1 !important;
+}
+
+.premium-preview-page .ticker-track {
+  min-height: 34px !important;
+  align-items: stretch !important;
+  animation-duration: 38s !important;
+}
+
+.premium-preview-page .ticker-item {
+  min-height: 34px !important;
+  height: 34px !important;
+  gap: 6px !important;
+  padding: 0 14px !important;
+  border-right: 1px solid #e2e6e1 !important;
+  background: #f7f8f6 !important;
+  color: #303632 !important;
+  font-size: 0.62rem !important;
+  line-height: 1 !important;
+}
+
+.premium-preview-page .ticker-market {
+  color: #68706a !important;
+  font-size: 0.5rem !important;
+  line-height: 1 !important;
+}
+
+.premium-preview-page .ticker-item strong {
+  color: #050506 !important;
+  line-height: 1 !important;
+}
+
+.premium-preview-page .ticker-item em {
+  min-width: 38px !important;
+  height: 18px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 6px !important;
+  border-radius: 4px !important;
+  font-size: 0.56rem !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+}
+
+.premium-preview-page .preview-board-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  align-items: center;
+}
+
+.premium-preview-page .preview-odds-control {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #dce2dd;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0 8px;
+}
+
+.premium-preview-page .preview-odds-control span {
+  color: #68706a !important;
+  font-size: 0.56rem;
+  font-weight: 950;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.premium-preview-page .preview-odds-control select {
+  width: 112px;
+  min-height: 26px;
+  border: 1px solid #dce2dd;
+  border-radius: 6px;
+  background: #f7f8f6;
+  color: #050506;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 850;
+  padding: 0 7px;
+}
+
+.premium-preview-page .preview-note,
+.premium-preview-page .preview-feed-card,
+.premium-preview-page .preview-fight-card,
+.premium-preview-page .preview-fighter,
+.premium-preview-page .preview-pick-inner,
+.premium-preview-page .preview-pending-read,
+.premium-preview-page .explain-card {
+  box-shadow: 0 12px 28px rgba(14, 18, 15, 0.055) !important;
+}
+
+.premium-preview-page .preview-feed-card {
+  border-color: #dce2dd !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+}
+
+.premium-preview-page .preview-note {
+  background: #ffffff !important;
+}
+
+.premium-preview-page .preview-feed-head {
+  border-bottom-color: #e3e7e3 !important;
+  background: #ffffff !important;
+}
+
+.premium-preview-page .preview-event-strip {
+  display: none !important;
+}
+
+.premium-preview-page .preview-status-pill,
+.premium-preview-page .preview-chip,
+.premium-preview-page .preview-pick-meta em,
+.premium-preview-page .preview-odds,
+.premium-preview-page .explain-card span {
+  border-color: #dce2dd !important;
+  background: #f7f8f6 !important;
+  color: #303632 !important;
+  box-shadow: none !important;
+}
+
+.premium-preview-page .preview-board-toolbar {
+  padding-top: 14px !important;
+}
+
+.premium-preview-page .preview-fight-card,
+.premium-preview-page .preview-fight-card.is-locked {
+  border-color: #d7ded8 !important;
+  background: #ffffff !important;
+  box-shadow: 0 14px 30px rgba(14, 18, 15, 0.06) !important;
+}
+
+.premium-preview-page .preview-fight-card.is-locked {
+  border-color: rgba(47, 186, 115, 0.32) !important;
+  box-shadow:
+    0 16px 34px rgba(14, 18, 15, 0.06),
+    0 0 0 4px rgba(47, 186, 115, 0.055),
+    0 0 28px rgba(47, 186, 115, 0.10) !important;
+}
+
+.premium-preview-page .preview-fight-card::before,
+.premium-preview-page .preview-fight-card.is-locked::before {
+  background: #8f9a93 !important;
+}
+
+.premium-preview-page .preview-fight-card.is-locked::before {
+  background: #2f8d59 !important;
+}
+
+.premium-preview-page .preview-fight-top,
+.premium-preview-page .preview-fight-card.is-locked .preview-fight-top {
+  background: #f7f8f6 !important;
+}
+
+.premium-preview-page .preview-fight-card.is-locked .preview-fight-status {
+  border-color: #cfd8d0 !important;
+  background: #ffffff !important;
+  color: #303632 !important;
+}
+
+.premium-preview-page .preview-fight-card.is-locked .preview-fight-status::before {
+  background: #2f8d59 !important;
+  box-shadow: 0 0 0 4px rgba(47, 186, 115, 0.08) !important;
+}
+
+.premium-preview-page .preview-matchup,
+.premium-preview-page .preview-pick-callout {
+  background: #ffffff !important;
+}
+
+.premium-preview-page .preview-pick-callout {
+  padding: 14px 16px 16px 24px !important;
+}
+
+.premium-preview-page .preview-fighter.is-red,
+.premium-preview-page .preview-fighter.is-blue {
+  background: #ffffff !important;
+}
+
+.premium-preview-page .preview-fighter-portrait {
+  background: #f2f4f2 !important;
+}
+
+.premium-preview-page .preview-fighter-portrait.is-placeholder {
+  color: #4b544e !important;
+}
+
+.premium-preview-page .preview-pick-inner {
+  border-color: #dce2dd !important;
+  border-left-width: 1px !important;
+  border-left-color: #dce2dd !important;
+  border-radius: 8px !important;
+  background: #f7f8f6 !important;
+  padding: 22px 24px !important;
+  min-height: 132px;
+}
+
+.premium-preview-page .preview-pick-label {
+  color: #68706a !important;
+}
+
+.premium-preview-page .preview-pending-read {
+  border-color: #dce2dd !important;
+  border-left-width: 1px !important;
+  border-left-color: #9ca6a0 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+}
+
+.premium-preview-page .ticker-item em:not(.warn) {
+  border-color: #dce2dd !important;
+  background: #f7f8f6 !important;
+  color: #303632 !important;
+}
+
+.premium-preview-page .footer-links a:hover {
+  color: #303632 !important;
+}
+
+@media (max-width: 680px) {
+  .premium-preview-page .preview-board-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .premium-preview-page .preview-odds-control {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .premium-preview-page .preview-odds-control select {
+    width: 126px;
+  }
+
+  .premium-preview-page .edge-ticker,
+  .premium-preview-page .ticker-track {
+    min-height: 28px !important;
+  }
+
+  .premium-preview-page .ticker-item {
+    min-height: 28px !important;
+    height: 28px !important;
+    gap: 5px !important;
+    padding: 0 10px !important;
+    font-size: 0.54rem !important;
+    letter-spacing: 0.035em !important;
+  }
+
+  .premium-preview-page .ticker-market {
+    font-size: 0.45rem !important;
+  }
+
+  .premium-preview-page .ticker-item em {
+    min-width: 34px !important;
+    height: 17px !important;
+    padding: 0 5px !important;
+    font-size: 0.52rem !important;
+  }
+}
+</style>
 </head>
 <body class="premium-preview-page">
 <header class="topbar">
@@ -1614,9 +1905,20 @@ h1,
           <div>
             <h3>Fight board</h3>
           </div>
-          <div class="preview-counts" aria-label="Preview fight counts">
-            <span class="preview-chip">1 locked</span>
-            <span class="preview-chip is-muted">2 pending</span>
+          <div class="preview-board-actions">
+            <label class="preview-odds-control" for="previewOddsFormatSelect">
+              <span>Odds</span>
+              <select id="previewOddsFormatSelect">
+                <option value="auto">Auto</option>
+                <option value="decimal">Decimal</option>
+                <option value="american">American</option>
+                <option value="fractional">Fractional</option>
+              </select>
+            </label>
+            <div class="preview-counts" aria-label="Preview fight counts">
+              <span class="preview-chip">1 locked</span>
+              <span class="preview-chip is-muted">2 pending</span>
+            </div>
           </div>
         </div>
 
@@ -1671,20 +1973,24 @@ h1,
             </div>
             <div class="preview-matchup">
               <div class="preview-fighter is-red">
-                <div class="preview-fighter-portrait is-placeholder" aria-hidden="true">SC</div>
+                <div class="preview-fighter-portrait">
+                  <img src="Dennis.png" alt="Benoit Saint-Denis portrait">
+                </div>
                 <div class="preview-fighter-copy">
                   <span>Red corner</span>
-                  <strong>Shane Collins</strong>
-                  <em class="preview-odds" data-decimal-odds="1.48">1.48</em>
+                  <strong>Benoit Saint-Denis</strong>
+                  <em class="preview-odds" data-decimal-odds="1.55">1.55</em>
                 </div>
               </div>
               <div class="preview-vs">VS</div>
               <div class="preview-fighter is-blue">
-                <div class="preview-fighter-portrait is-placeholder" aria-hidden="true">OT</div>
+                <div class="preview-fighter-portrait">
+                  <img src="Pimbett.png" alt="Paddy Pimblett portrait">
+                </div>
                 <div class="preview-fighter-copy">
                   <span>Blue corner</span>
-                  <strong>Otari Tanzilovi</strong>
-                  <em class="preview-odds" data-decimal-odds="2.67">2.67</em>
+                  <strong>Paddy Pimblett</strong>
+                  <em class="preview-odds" data-decimal-odds="2.40">2.40</em>
                 </div>
               </div>
             </div>
@@ -1703,20 +2009,24 @@ h1,
             </div>
             <div class="preview-matchup">
               <div class="preview-fighter is-red">
-                <div class="preview-fighter-portrait is-placeholder" aria-hidden="true">IC</div>
+                <div class="preview-fighter-portrait">
+                  <img src="Corey.png" alt="Cory Sandhagen portrait">
+                </div>
                 <div class="preview-fighter-copy">
                   <span>Red corner</span>
-                  <strong>Ion Cutelaba</strong>
-                  <em class="preview-odds" data-decimal-odds="3.62">3.62</em>
+                  <strong>Cory Sandhagen</strong>
+                  <em class="preview-odds" data-decimal-odds="1.61">1.61</em>
                 </div>
               </div>
               <div class="preview-vs">VS</div>
               <div class="preview-fighter is-blue">
-                <div class="preview-fighter-portrait is-placeholder" aria-hidden="true">NS</div>
+                <div class="preview-fighter-portrait">
+                  <img src="Mario.png" alt="Mario Bautista portrait">
+                </div>
                 <div class="preview-fighter-copy">
                   <span>Blue corner</span>
-                  <strong>Navajo Stirling</strong>
-                  <em class="preview-odds" data-decimal-odds="1.29">1.29</em>
+                  <strong>Mario Bautista</strong>
+                  <em class="preview-odds" data-decimal-odds="2.27">2.27</em>
                 </div>
               </div>
             </div>
@@ -1780,5 +2090,18 @@ h1,
     </div>
   </div>
 </footer>
+<script src="odds-format.js"></script>
+<script>
+  const previewOddsFormatSelect = document.getElementById('previewOddsFormatSelect');
+
+  if (previewOddsFormatSelect && window.LivePicksOdds) {
+    previewOddsFormatSelect.value = window.LivePicksOdds.getSavedFormat?.() || 'auto';
+    previewOddsFormatSelect.addEventListener('change', () => {
+      window.LivePicksOdds.setFormat(previewOddsFormatSelect.value);
+      window.LivePicksOdds.apply(document);
+    });
+    window.LivePicksOdds.apply(document);
+  }
+</script>
 </body>
 </html>

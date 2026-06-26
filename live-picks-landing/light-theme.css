@@ -21,7 +21,7 @@ html {
 
 body {
   background:
-    radial-gradient(circle at 16% 7%, rgba(47, 186, 115, 0.08), transparent 30%),
+    radial-gradient(circle at 16% 7%, rgba(5, 5, 6, 0.05), transparent 30%),
     radial-gradient(circle at 88% 24%, rgba(5, 5, 6, 0.045), transparent 28%),
     linear-gradient(180deg, #fafbf9 0%, #f6f8f5 52%, #eef2ef 100%) !important;
   background-color: #f6f8f5 !important;
