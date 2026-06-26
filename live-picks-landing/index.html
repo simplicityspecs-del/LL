@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#fafbf9">
+<meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="msapplication-TileColor" content="#fafbf9">
+<meta name="msapplication-TileColor" content="#ffffff">
 <meta name="color-scheme" content="light">
 <title>Live Picks MMA. Fight-night reads for UFC H2H markets</title>
 <meta name="description" content="Live Picks MMA tracks fight-night reads for UFC head-to-head markets, combining model probabilities with walkout signals, crowd energy, fighter condition and late bookmaker movement.">
@@ -2872,14 +2872,6 @@ h1 {
 }
 
 /* Quick H2H simplification: clearer two-side market read, less decorative motion. */
-.model-record-button {
-  display: none;
-}
-
-.model-record-button-wrap {
-  display: none;
-}
-
 .index-page .live-data-strip .stat-h2h .data-card-visual {
   right: 16px !important;
   bottom: 18px !important;
@@ -2999,39 +2991,6 @@ h1 {
 }
 
 @media (max-width: 680px) {
-  .model-record-button-wrap {
-    display: flex;
-    justify-content: center;
-    margin: 18px 0 4px;
-  }
-
-  .model-record-button {
-    width: fit-content;
-    min-height: 30px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    border: 1px solid #050506;
-    border-radius: 6px;
-    background: #050506;
-    color: #ffffff;
-    padding: 0 11px;
-    text-decoration: none;
-    font-size: 0.68rem;
-    font-weight: 850;
-    line-height: 1;
-    transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease, transform 0.18s ease;
-  }
-
-  .model-record-button:hover {
-    transform: translateY(-1px);
-  }
-
-  .model-record-button:active {
-    transform: translateY(0);
-  }
-
   .index-page .live-data-strip .stat-h2h .data-card-visual {
     right: 8px !important;
     bottom: 36px !important;
@@ -9000,6 +8959,7 @@ body {
 
 </style>
 <link rel="stylesheet" href="light-theme.css">
+<link rel="stylesheet" href="mobile-chrome.css">
 </head>
 <body class="index-page">
 
@@ -9508,9 +9468,6 @@ body {
             </div>
           </div>
         </article>
-      </div>
-      <div class="model-record-button-wrap">
-        <a class="model-record-button" href="record.html">Verified record</a>
       </div>
     </div>
   </section>
