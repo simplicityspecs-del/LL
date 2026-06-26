@@ -3095,7 +3095,7 @@ body.premium-feed-page::before,
 
 </style>
 <!-- /account-premium-header-light-fix -->
-<link rel="stylesheet" href="mobile-chrome.css?v=4">
+<link rel="stylesheet" href="mobile-chrome.css?v=5">
 </head>
 <body class="premium-feed-page">
 <header class="topbar">
@@ -3104,13 +3104,16 @@ body.premium-feed-page::before,
       <span>Live Picks</span>
     </a>
 
-    <div class="header-buttons">
-      <div class="top-actions" aria-label="Premium feed navigation">
-        <a class="login-btn premium-login-link" id="manageButton" href="account.html">Manage Account</a>
-        <button class="login-btn secondary-btn" type="button" id="logoutButton">Logout</button>
-        <a class="login-btn secondary-btn" href="index.html">Home</a>
+    <details class="site-menu">
+      <summary><span>Menu</span></summary>
+      <div class="site-menu-panel" aria-label="Premium feed menu">
+        <a class="is-primary" id="manageButton" href="account.html">Manage account</a>
+        <a href="push-guide.html">Push setup</a>
+        <a href="index.html">Home</a>
+        <span class="site-menu-divider" aria-hidden="true"></span>
+        <button type="button" id="logoutButton">Logout</button>
       </div>
-    </div>
+    </details>
   </div>
 </header>
 

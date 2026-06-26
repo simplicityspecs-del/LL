@@ -376,7 +376,7 @@ h1 { margin: 0; max-width: 820px; font-size: clamp(3rem, 6.8vw, 6rem); line-heig
 }
 </style>
 <link rel="stylesheet" href="light-theme.css?v=4">
-<link rel="stylesheet" href="mobile-chrome.css?v=4">
+<link rel="stylesheet" href="mobile-chrome.css?v=5">
 </head>
 <body class="forgot-email-page">
 <header class="topbar">
@@ -385,11 +385,17 @@ h1 { margin: 0; max-width: 820px; font-size: clamp(3rem, 6.8vw, 6rem); line-heig
       <span>Live Picks</span>
     </a>
 
-    <nav class="nav-links" aria-label="Account recovery navigation">
-      <a href="index.html">Home</a>
-      <a href="checkout.html">Subscribe</a>
-      <a class="active" href="portal.html">Premium Login</a>
-    </nav>
+    <details class="site-menu">
+      <summary><span>Menu</span></summary>
+      <nav class="site-menu-panel" aria-label="Site menu">
+        <a href="index.html">Home</a>
+        <a class="is-primary" href="checkout.html">Subscribe</a>
+        <a href="portal.html">Premium login</a>
+        <a href="reset-password.html">Reset password</a>
+        <span class="site-menu-divider" aria-hidden="true"></span>
+        <a class="is-muted" href="contact.html">Contact</a>
+      </nav>
+    </details>
   </div>
 </header>
 

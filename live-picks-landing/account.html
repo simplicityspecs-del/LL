@@ -605,17 +605,22 @@ img { display: block; max-width: 100%; }
   }
 }
 </style>
-<link rel="stylesheet" href="mobile-chrome.css?v=4">
+<link rel="stylesheet" href="mobile-chrome.css?v=5">
 </head>
 <body class="account-page">
 <header class="topbar">
   <div class="container nav">
     <a class="brand brand-text-only" href="index.html" aria-label="Live Picks home">Live Picks</a>
-    <nav class="top-actions" aria-label="Account navigation">
-      <a class="top-button primary" href="premium-feed.html">Premium Feed</a>
-      <button class="top-button" type="button" id="logoutButton">Logout</button>
-      <a class="top-button" href="index.html">Home</a>
-    </nav>
+    <details class="site-menu">
+      <summary><span>Menu</span></summary>
+      <div class="site-menu-panel" aria-label="Account menu">
+        <a class="is-primary" href="premium-feed.html">Premium feed</a>
+        <a href="push-guide.html">Push setup</a>
+        <a href="index.html">Home</a>
+        <span class="site-menu-divider" aria-hidden="true"></span>
+        <button type="button" id="logoutButton">Logout</button>
+      </div>
+    </details>
   </div>
 </header>
 

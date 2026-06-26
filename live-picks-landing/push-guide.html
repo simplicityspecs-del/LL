@@ -444,7 +444,7 @@ h1 {
 }
 </style>
 <link rel="stylesheet" href="light-theme.css?v=4">
-<link rel="stylesheet" href="mobile-chrome.css?v=4">
+<link rel="stylesheet" href="mobile-chrome.css?v=5">
 </head>
 <body class="portal-page push-guide-page">
 <header class="topbar">
@@ -453,15 +453,17 @@ h1 {
       <span>Live Picks</span>
     </a>
 
-    <nav class="nav-links portal-desktop-actions" aria-label="Push setup navigation">
-      <a href="premium-feed.html">Premium Feed</a>
-      <a href="portal.html">Login</a>
-      <a href="index.html">Home</a>
-    </nav>
-    <div class="portal-mobile-actions" aria-label="Mobile navigation">
-      <a class="nav-link" href="premium-feed.html">Feed</a>
-      <a class="nav-link" href="index.html">Home</a>
-    </div>
+    <details class="site-menu">
+      <summary><span>Menu</span></summary>
+      <nav class="site-menu-panel" aria-label="Site menu">
+        <a class="is-primary" href="premium-feed.html">Premium feed</a>
+        <a href="portal.html">Premium login</a>
+        <a href="account.html">Manage account</a>
+        <a href="index.html">Home</a>
+        <span class="site-menu-divider" aria-hidden="true"></span>
+        <a class="is-muted" href="contact.html">Contact</a>
+      </nav>
+    </details>
   </div>
 </header>
 

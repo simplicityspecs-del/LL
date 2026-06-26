@@ -1323,7 +1323,7 @@ h1 {
 </style>
 <script src="https://js.stripe.com/v3/"></script>
 <link rel="stylesheet" href="light-theme.css?v=4">
-<link rel="stylesheet" href="mobile-chrome.css?v=4">
+<link rel="stylesheet" href="mobile-chrome.css?v=5">
 </head>
 <body class="checkout-page">
 <header class="topbar checkout-topbar">
@@ -1332,10 +1332,22 @@ h1 {
       <span>Live Picks</span>
     </a>
 
-    <div class="checkout-header-actions" aria-label="Checkout navigation">
-      <a class="checkout-header-button" href="portal.html">Login</a>
-      <a class="checkout-header-button" href="index.html">Home</a>
-    </div>
+    <details class="site-menu">
+      <summary><span>Menu</span></summary>
+      <nav class="site-menu-panel" aria-label="Site menu">
+        <a href="index.html">Home</a>
+        <a href="record.html">Verified record</a>
+        <a href="premium-preview.html">Premium preview</a>
+        <a href="newsletter.html">Free newsletter</a>
+        <a class="is-primary" href="checkout.html">Subscribe</a>
+        <a href="portal.html">Premium login</a>
+        <span class="site-menu-divider" aria-hidden="true"></span>
+        <a class="is-muted" href="terms.html">Terms</a>
+        <a class="is-muted" href="privacy.html">Privacy</a>
+        <a class="is-muted" href="responsible-gambling.html">Responsible gambling</a>
+        <a class="is-muted" href="contact.html">Contact</a>
+      </nav>
+    </details>
   </div>
 </header>
 

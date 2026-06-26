@@ -7,6 +7,150 @@ html {
   background-color: #ffffff;
 }
 
+.topbar .site-menu,
+.checkout-topbar .site-menu {
+  position: relative;
+  z-index: 1002;
+  justify-self: end;
+  margin-left: auto;
+}
+
+.topbar .site-menu summary,
+.checkout-topbar .site-menu summary {
+  height: 30px;
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid #dce2dd;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #303632;
+  padding: 0 10px;
+  box-shadow: none;
+  cursor: pointer;
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  list-style: none;
+  text-decoration: none;
+  text-transform: none;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.topbar .site-menu summary::-webkit-details-marker,
+.checkout-topbar .site-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.topbar .site-menu summary::after,
+.checkout-topbar .site-menu summary::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.18s ease;
+}
+
+.topbar .site-menu summary:hover,
+.checkout-topbar .site-menu summary:hover {
+  border-color: rgba(47, 186, 115, 0.45);
+  background: rgba(47, 186, 115, 0.08);
+  color: #1f8a53;
+  transform: translateY(-1px);
+}
+
+.topbar .site-menu[open] summary,
+.checkout-topbar .site-menu[open] summary {
+  border-color: #050506;
+  background: #050506;
+  color: #ffffff;
+}
+
+.topbar .site-menu[open] summary::after,
+.checkout-topbar .site-menu[open] summary::after {
+  transform: translateY(1px) rotate(225deg);
+}
+
+.topbar .site-menu-panel,
+.checkout-topbar .site-menu-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(260px, calc(100vw - 24px));
+  display: grid;
+  gap: 4px;
+  border: 1px solid #dce2dd;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 6px;
+  box-shadow: 0 18px 42px rgba(14, 18, 15, 0.14);
+}
+
+.topbar .site-menu-panel a,
+.topbar .site-menu-panel button,
+.checkout-topbar .site-menu-panel a,
+.checkout-topbar .site-menu-panel button {
+  width: 100%;
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #303632;
+  padding: 0 10px;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 820;
+  letter-spacing: 0;
+  line-height: 1.1;
+  text-align: left;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease;
+}
+
+.topbar .site-menu-panel a:hover,
+.topbar .site-menu-panel button:hover,
+.checkout-topbar .site-menu-panel a:hover,
+.checkout-topbar .site-menu-panel button:hover {
+  background: rgba(47, 186, 115, 0.08);
+  color: #1f8a53;
+}
+
+.topbar .site-menu-panel .is-primary,
+.checkout-topbar .site-menu-panel .is-primary {
+  background: #050506;
+  color: #ffffff;
+}
+
+.topbar .site-menu-panel .is-primary:hover,
+.checkout-topbar .site-menu-panel .is-primary:hover {
+  background: #050506;
+  color: #ffffff;
+}
+
+.topbar .site-menu-panel .is-muted,
+.checkout-topbar .site-menu-panel .is-muted {
+  color: #6c746e;
+}
+
+.topbar .site-menu-panel .site-menu-divider,
+.checkout-topbar .site-menu-panel .site-menu-divider {
+  height: 1px;
+  margin: 4px 2px;
+  background: #e3e8e4;
+}
+
 .topbar,
 .checkout-topbar,
 .index-page .topbar,
@@ -85,8 +229,10 @@ html {
   .topbar .top-button,
   .topbar .nav-link,
   .topbar .nav-links a,
+  .topbar .site-menu summary,
   .admin-page .topbar .nav-actions a,
   .topbar .back-link,
+  .checkout-topbar .site-menu summary,
   .checkout-page .checkout-header-button {
     height: 30px !important;
     min-height: 30px !important;
@@ -155,8 +301,10 @@ html {
   .topbar .top-button,
   .topbar .nav-link,
   .topbar .nav-links a,
+  .topbar .site-menu summary,
   .admin-page .topbar .nav-actions a,
   .topbar .back-link,
+  .checkout-topbar .site-menu summary,
   .checkout-page .checkout-header-button {
     height: 28px !important;
     min-height: 28px !important;

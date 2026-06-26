@@ -498,16 +498,19 @@ button { cursor: pointer; }
   .board-actions .btn { width: 100%; }
 }
 </style>
-<link rel="stylesheet" href="mobile-chrome.css?v=4">
+<link rel="stylesheet" href="mobile-chrome.css?v=5">
 </head>
 <body class="admin-page">
 <header class="topbar">
   <div class="container nav">
     <a class="brand" href="index.html">Live Picks Admin</a>
-    <div class="nav-actions">
-      <a href="premium-feed.html">Premium Feed</a>
-      <a href="index.html">Home</a>
-    </div>
+    <details class="site-menu">
+      <summary><span>Menu</span></summary>
+      <nav class="site-menu-panel" aria-label="Admin menu">
+        <a class="is-primary" href="premium-feed.html">Premium feed</a>
+        <a href="index.html">Home</a>
+      </nav>
+    </details>
   </div>
 </header>
 
