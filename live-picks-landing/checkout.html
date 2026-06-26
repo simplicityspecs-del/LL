@@ -301,6 +301,46 @@ h1 {
 }
 .hero-copy strong { color: #f2fff6; }
 
+.preview-access-link {
+  width: fit-content;
+  max-width: 100%;
+  min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  border: 1px solid var(--border-soft);
+  background: rgba(34,255,136,0.065);
+  color: #f4fff7;
+  padding: 10px 14px;
+  transition: 0.18s ease;
+}
+.preview-access-link:hover {
+  border-color: var(--green);
+  background: rgba(34,255,136,0.1);
+  transform: translateY(-1px);
+}
+.preview-access-link span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 76px;
+  min-height: 28px;
+  border: 1px solid rgba(34,255,136,0.28);
+  background: rgba(3, 6, 4, 0.58);
+  color: var(--green);
+  font-size: 0.64rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.preview-access-link strong {
+  color: #f6fff8;
+  font-size: 0.92rem;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
 .checkout-benefits {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -947,6 +987,21 @@ h1 {
   .kicker::before { width: 6px; height: 6px; }
   h1 { font-size: clamp(2rem, 12vw, 2.75rem); line-height: 0.93; letter-spacing: -0.065em; }
   .hero-copy { margin-top: 13px; font-size: 0.86rem; line-height: 1.42; }
+  .preview-access-link {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 12px;
+    padding: 8px 10px;
+    gap: 9px;
+  }
+  .preview-access-link span {
+    min-width: 64px;
+    min-height: 24px;
+    font-size: 0.52rem;
+  }
+  .preview-access-link strong {
+    font-size: 0.78rem;
+  }
   .checkout-benefits { gap: 8px; margin-top: 14px; }
   .benefit-card { padding: 10px; min-height: 0; }
   .benefit-card span, .marker { min-width: 30px; height: 24px; margin-bottom: 8px; font-size: 0.52rem; }
@@ -1063,6 +1118,208 @@ h1 {
 }
 .plan-option[disabled]:hover { transform: none; }
 
+/* Checkout cleanup: public header, checkout first, compact preview action. */
+.checkout-page .topbar {
+  border-bottom: 1px solid #dce2dd;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 24px rgba(14, 18, 15, 0.06);
+}
+
+.checkout-page .checkout-nav {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.checkout-page .brand.brand-text-only {
+  color: #050506;
+  font-size: 1.18rem;
+  font-weight: 950;
+  letter-spacing: -0.055em;
+}
+
+.checkout-page .brand.brand-text-only span {
+  color: #050506;
+}
+
+.checkout-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.checkout-header-button {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d7ddd8;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.9);
+  color: #050506;
+  padding: 0 14px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  transition: 0.16s ease;
+}
+
+.checkout-header-button:hover {
+  border-color: rgba(47,186,115,0.34);
+  background: rgba(47,186,115,0.08);
+  color: #1f8a53;
+  transform: translateY(-1px);
+}
+
+.checkout-header-button:first-child {
+  border-color: #050506;
+  background: #050506;
+  color: #ffffff;
+}
+
+.checkout-header-button:first-child:hover {
+  border-color: #050506;
+  background: #111411;
+  color: #ffffff;
+}
+
+.checkout-hero {
+  padding: clamp(22px, 4vw, 42px) 0 44px;
+}
+
+.checkout-grid {
+  grid-template-columns: minmax(0, 620px);
+  justify-content: center;
+  gap: 10px;
+  align-items: start;
+}
+
+.checkout-panel {
+  order: 1;
+  width: 100%;
+  position: static;
+}
+
+.checkout-copy {
+  display: none;
+}
+
+.checkout-panel-footer {
+  order: 2;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.preview-access-link {
+  width: fit-content;
+  max-width: 100%;
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  border: 1px solid #dce2dd;
+  border-radius: 7px;
+  background: rgba(255,255,255,0.82);
+  color: #303632;
+  padding: 0 11px;
+  box-shadow: none;
+  text-decoration: none;
+}
+
+.preview-access-link:hover {
+  border-color: rgba(47,186,115,0.45);
+  background: rgba(47,186,115,0.08);
+  color: #1f8a53;
+  transform: translateY(-1px);
+  box-shadow: none;
+}
+
+.preview-access-link span {
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #68706a;
+  padding: 0;
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+}
+
+.preview-access-link strong {
+  color: #050506;
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.preview-access-link::after {
+  content: none;
+}
+
+.checkout-benefits,
+.compliance-message {
+  display: none;
+}
+
+@media (max-width: 980px) {
+  .checkout-grid {
+    grid-template-columns: 1fr;
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 680px) {
+  .checkout-page .checkout-nav {
+    min-height: 56px;
+  }
+
+  .checkout-page .brand.brand-text-only {
+    font-size: 1.02rem;
+  }
+
+  .checkout-header-actions {
+    gap: 6px;
+  }
+
+  .checkout-header-button {
+    min-height: 34px;
+    padding-inline: 10px;
+    border-radius: 7px;
+    font-size: 0.72rem;
+  }
+
+  .checkout-hero {
+    padding: 14px 0 24px;
+  }
+
+  .checkout-grid {
+    gap: 8px;
+  }
+
+  .preview-access-link {
+    width: fit-content;
+    min-height: 32px;
+    margin: 0 auto;
+    padding: 0 9px;
+    border-radius: 6px;
+  }
+
+  .preview-access-link span {
+    min-height: 0;
+    font-size: 0.46rem;
+  }
+
+  .preview-access-link strong {
+    font-size: 0.68rem;
+  }
+}
+
 </style>
 <script src="https://js.stripe.com/v3/"></script>
 <link rel="stylesheet" href="light-theme.css">
@@ -1082,63 +1339,14 @@ h1 {
   </div>
 </header>
 
-<div class="edge-ticker" aria-label="Responsible access ticker">
-  <div class="ticker-track">
-    <div class="ticker-item"><span class="ticker-market">ACCESS</span><strong>18+ only</strong><em class="warn">AGE</em></div>
-    <div class="ticker-item"><span class="ticker-market">RISK</span><strong>No guaranteed outcomes</strong><em class="red">RISK</em></div>
-    <div class="ticker-item"><span class="ticker-market">SERVICE</span><strong>Information only</strong><em>INFO</em></div>
-    <div class="ticker-item"><span class="ticker-market">WAGERING</span><strong>We do not place bets</strong><em>NO BETS</em></div>
-    <div class="ticker-item"><span class="ticker-market">SUPPORT</span><strong>1800 858 858</strong><em class="warn">HELP</em></div>
-    <div class="ticker-item"><span class="ticker-market">BETSTOP</span><strong>Self-exclusion available</strong><em>TOOLS</em></div>
-    <div class="ticker-item"><span class="ticker-market">ACCESS</span><strong>18+ only</strong><em class="warn">AGE</em></div>
-    <div class="ticker-item"><span class="ticker-market">RISK</span><strong>No guaranteed outcomes</strong><em class="red">RISK</em></div>
-    <div class="ticker-item"><span class="ticker-market">SERVICE</span><strong>Information only</strong><em>INFO</em></div>
-    <div class="ticker-item"><span class="ticker-market">WAGERING</span><strong>We do not place bets</strong><em>NO BETS</em></div>
-    <div class="ticker-item"><span class="ticker-market">SUPPORT</span><strong>1800 858 858</strong><em class="warn">HELP</em></div>
-    <div class="ticker-item"><span class="ticker-market">BETSTOP</span><strong>Self-exclusion available</strong><em>TOOLS</em></div>
-  </div>
-</div>
-
 <main id="checkout">
   <section class="checkout-hero">
     <div class="container checkout-grid">
-      <div class="checkout-copy">
-        <div class="kicker">Premium fight-night analysis</div>
-        <h1>Complete your Live Picks access.</h1>
-        <p class="hero-copy">Get premium <strong>fight-night analysis and timing-based reads</strong> delivered to your email. Live Picks provides independent sports analytics only. We do not accept wagers, place bets, guarantee outcomes or operate as a bookmaker.</p>
-
-        <div class="checkout-benefits">
-          <article class="benefit-card">
-            <span>01</span>
-            <strong>Email and password access</strong>
-            <p>Your subscriber account is created after a successful Stripe payment. Use the same email and password to log in.</p>
-          </article>
-          <article class="benefit-card">
-            <span>02</span>
-            <strong>Fast checkout path</strong>
-            <p>Apple Pay, Google Pay or card options appear when supported by your device and browser.</p>
-          </article>
-          <article class="benefit-card">
-            <span>03</span>
-            <strong>Clear risk warnings</strong>
-            <p>Weekly access is billed through Stripe with clear risk disclosure and account management.</p>
-          </article>
-        </div>
-
-        <div class="compliance-message" role="note" aria-label="Gambling warning">
-          <span class="badge">18+</span>
-          <div>
-            <strong>Chances are you’re about to lose.</strong>
-            <p>For free and confidential support call 1800 858 858 or visit gamblinghelponline.org.au. Only subscribe if you are 18+ and legally permitted to access wagering-related content in your location.</p>
-          </div>
-        </div>
-      </div>
-
       <aside class="checkout-panel" aria-label="Checkout form">
         <div class="checkout-head">
           <div>
             <span class="eyebrow">Secure checkout</span>
-            <strong class="checkout-title">Live Picks Premium</strong>
+            <h1 class="checkout-title">Live Picks Premium</h1>
           </div>
           <span class="secure-status">18+</span>
         </div>
@@ -1220,6 +1428,13 @@ h1 {
           </div>
         </div>
       </aside>
+
+      <div class="checkout-panel-footer">
+        <a class="preview-access-link" href="premium-preview.html">
+          <span>Preview</span>
+          <strong>View feed preview</strong>
+        </a>
+      </div>
     </div>
   </section>
 

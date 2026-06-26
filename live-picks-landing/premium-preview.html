@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f7faf7">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-TileColor" content="#f7faf7">
+<meta name="color-scheme" content="light">
+<title>Premium Feed Preview | Live Picks MMA</title>
+<meta name="description" content="Preview the Live Picks MMA premium feed layout before subscribing. See how H2H cards, pending reads, locked calls and push plus email alerts work.">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#22ff88">
+<meta name="msapplication-TileImage" content="/icon-192.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Live Picks">
+<meta property="og:title" content="Premium Feed Preview | Live Picks MMA">
+<meta property="og:description" content="Preview how the Live Picks premium feed shows pending reads, locked calls and alert delivery.">
+<meta property="og:image" content="https://livepicks.app/lp-share.png">
+<meta property="og:image:secure_url" content="https://livepicks.app/lp-share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Live Picks LP logo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Premium Feed Preview | Live Picks MMA">
+<meta name="twitter:description" content="Preview how the Live Picks premium feed shows pending reads, locked calls and alert delivery.">
+<meta name="twitter:image" content="https://livepicks.app/lp-share.png">
+<meta name="twitter:image:alt" content="Live Picks LP logo">
+<style>
+:root {
+  --bg: #f7faf7;
+  --surface: #ffffff;
+  --surface-2: #f7f9f7;
+  --border: #dce2dd;
+  --border-soft: rgba(47, 186, 115, 0.28);
+  --text: #050506;
+  --muted: #58635c;
+  --faint: #6a746d;
+  --green: #2fba73;
+  --green-2: #1f8a53;
+  --red: #ff4d5f;
+  --warning: #9a7300;
+  --shadow: rgba(15, 22, 17, 0.12);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(34, 255, 136, 0.12), transparent 28%),
+    radial-gradient(circle at 88% 38%, rgba(34, 255, 136, 0.08), transparent 32%),
+    linear-gradient(180deg, var(--bg) 0%, #060806 45%, #020302 100%);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.48;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.72), transparent 72%);
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+.container { width: min(1180px, calc(100% - 38px)); margin: 0 auto; position: relative; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--border);
+  background: rgba(5, 8, 6, 0.9);
+  backdrop-filter: blur(18px);
+}
+
+.nav {
+  min-height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #f8fff9;
+  font-size: 1.1rem;
+  font-weight: 950;
+  letter-spacing: -0.04em;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(34,255,136,0.22), rgba(34,255,136,0.03)),
+    #08100b;
+  color: var(--green);
+  box-shadow: 0 0 25px rgba(34, 255, 136, 0.16);
+  font-weight: 950;
+  letter-spacing: -0.06em;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.nav-button,
+.btn {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.035);
+  color: #d7ded9;
+  padding: 0 15px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.nav-button:hover,
+.btn:hover {
+  border-color: var(--border-soft);
+  background: rgba(34,255,136,0.07);
+  color: var(--green);
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  border-color: var(--green);
+  background: var(--green);
+  color: #031006;
+  box-shadow: 0 0 22px rgba(34,255,136,0.18);
+}
+
+.btn-primary:hover {
+  background: #49ff9d;
+  color: #031006;
+}
+
+.edge-ticker {
+  overflow: hidden;
+  border-bottom: 1px solid rgba(34,255,136,0.16);
+  background: linear-gradient(180deg, #07100a, #030604);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.ticker-track {
+  display: inline-flex;
+  align-items: center;
+  animation: ticker 34s linear infinite;
+  will-change: transform;
+}
+
+.edge-ticker:hover .ticker-track,
+.edge-ticker:active .ticker-track,
+.edge-ticker:focus-within .ticker-track {
+  animation-play-state: paused;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-right: 1px solid rgba(255,255,255,0.075);
+  color: #c5cec8;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.ticker-market {
+  color: #657269;
+  font-size: 0.56rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.ticker-item strong { color: #f6fff8; font-weight: 950; }
+
+.ticker-item em {
+  min-width: 42px;
+  border: 1px solid var(--border-soft);
+  background: rgba(34,255,136,0.065);
+  color: var(--green);
+  padding: 2px 6px;
+  text-align: center;
+  font-style: normal;
+  font-weight: 950;
+}
+
+.ticker-item em.warn {
+  border-color: rgba(255,230,109,0.42);
+  background: rgba(255,230,109,0.08);
+  color: var(--warning);
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.preview-hero {
+  padding: clamp(36px, 6vw, 72px) 0 44px;
+  border-bottom: 1px solid var(--border);
+}
+
+.preview-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(24px, 3.6vw, 42px);
+  align-items: stretch;
+}
+
+.preview-layout > div:first-child {
+  max-width: 920px;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.kicker::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--green);
+  box-shadow: 0 0 16px var(--green);
+}
+
+h1 {
+  max-width: 790px;
+  margin: 0;
+  color: white;
+  font-size: clamp(3.1rem, 7vw, 6.4rem);
+  line-height: 0.88;
+  letter-spacing: -0.08em;
+  text-wrap: balance;
+}
+
+.hero-copy {
+  max-width: 690px;
+  margin: 24px 0 0;
+  color: #aeb9b1;
+  font-size: clamp(1.02rem, 1.55vw, 1.2rem);
+}
+
+.hero-copy strong { color: #f2fff6; }
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.preview-note {
+  margin-top: 18px;
+  border: 1px solid rgba(255,255,255,0.86);
+  background: #f6fff8;
+  color: #061009;
+  padding: 13px 14px;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.28);
+}
+
+.preview-note strong {
+  display: block;
+  color: #061009;
+  margin-bottom: 4px;
+  font-size: 1rem;
+}
+
+.preview-note p {
+  margin: 0;
+  color: #18241d;
+  font-size: 0.84rem;
+  line-height: 1.42;
+  font-weight: 780;
+}
+
+.preview-feed-card {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(circle at 82% 12%, rgba(34,255,136,0.12), transparent 24%),
+    rgba(13, 19, 15, 0.88);
+  box-shadow: 0 22px 70px var(--shadow);
+}
+
+.preview-feed-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.preview-feed-label,
+.preview-fight-status,
+.preview-meta span,
+.preview-chip,
+.preview-pick-label {
+  color: #7c8a80;
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.preview-feed-head h2 {
+  margin: 6px 0 0;
+  color: white;
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+  line-height: 0.98;
+  letter-spacing: -0.058em;
+}
+
+.preview-feed-head p {
+  max-width: 520px;
+  margin: 8px 0 0;
+  color: #a5b1a9;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.preview-status-pill,
+.preview-chip,
+.preview-pick-meta em {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-soft);
+  background: rgba(34,255,136,0.065);
+  color: var(--green);
+}
+
+.preview-status-pill {
+  min-height: 30px;
+  padding: 0 10px;
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.preview-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-bottom: 1px solid var(--border);
+}
+
+.preview-meta {
+  min-width: 0;
+  min-height: 78px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 14px;
+  border-right: 1px solid var(--border);
+}
+
+.preview-meta:last-child { border-right: 0; }
+
+.preview-meta strong {
+  color: white;
+  font-size: 0.92rem;
+  line-height: 1.1;
+}
+
+.preview-board-toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 20px 0;
+}
+
+.preview-board-toolbar h3 {
+  margin: 0;
+  color: white;
+  font-size: 1.16rem;
+  letter-spacing: -0.035em;
+}
+
+.preview-board-toolbar p {
+  margin: 5px 0 0;
+  color: #97a49c;
+  font-size: 0.82rem;
+}
+
+.preview-counts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.preview-chip {
+  min-height: 26px;
+  padding: 0 8px;
+}
+
+.preview-chip.is-muted {
+  border-color: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.035);
+  color: #98a49c;
+}
+
+.preview-fight-list {
+  display: grid;
+  gap: 12px;
+  padding: 16px 20px 20px;
+}
+
+.preview-fight-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: rgba(5, 8, 6, 0.72);
+}
+
+.preview-fight-card.is-locked {
+  border-color: rgba(34,255,136,0.34);
+  background: linear-gradient(180deg, rgba(34,255,136,0.08), rgba(5,8,6,0.72) 44%);
+}
+
+.preview-fight-top {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.preview-fight-card.is-locked .preview-fight-status { color: var(--green); }
+
+.preview-fight-index {
+  color: #7e887f;
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.preview-matchup {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 54px minmax(0, 1fr);
+  min-height: 118px;
+}
+
+.preview-fighter {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  padding: 16px;
+}
+
+.preview-fighter span {
+  color: #7e887f;
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.preview-fighter strong {
+  color: white;
+  font-size: clamp(1.3rem, 2.6vw, 2rem);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+}
+
+.preview-odds {
+  width: fit-content;
+  border: 1px solid var(--border-soft);
+  background: rgba(34,255,136,0.065);
+  color: var(--green);
+  padding: 4px 7px;
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 950;
+}
+
+.preview-vs {
+  display: grid;
+  place-items: center;
+  border-inline: 1px solid var(--border);
+  color: #7e887f;
+  font-size: 0.72rem;
+  font-weight: 950;
+}
+
+.preview-pick-callout {
+  border-top: 1px solid var(--border);
+  padding: 12px;
+}
+
+.preview-pick-inner,
+.preview-pending-read {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.025);
+}
+
+.preview-pick-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 13px;
+}
+
+.preview-pick-label { color: var(--green); }
+
+.preview-pick-inner strong {
+  display: block;
+  margin-top: 4px;
+  color: white;
+  font-size: 1rem;
+}
+
+.preview-pick-inner p {
+  margin: 6px 0 0;
+  color: #9fa9a2;
+  font-size: 0.82rem;
+  line-height: 1.38;
+}
+
+.preview-pick-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.preview-pick-meta em {
+  min-height: 24px;
+  padding: 0 7px;
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.preview-pending-read {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 13px;
+}
+
+.preview-pending-read strong {
+  color: white;
+  font-size: 0.9rem;
+}
+
+.preview-pending-read span {
+  color: #9fa9a2;
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.explain-section {
+  padding: 34px 0 46px;
+}
+
+.explain-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.explain-card {
+  min-height: 128px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(16,24,17,0.96), rgba(8,12,9,0.96));
+  padding: 14px;
+}
+
+.explain-card span {
+  display: inline-grid;
+  place-items: center;
+  min-width: 36px;
+  height: 28px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border-soft);
+  background: rgba(34,255,136,0.055);
+  color: var(--green);
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+}
+
+.explain-card strong {
+  display: block;
+  margin-bottom: 6px;
+  color: white;
+  font-size: 0.98rem;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.explain-card p {
+  margin: 0;
+  color: #92a098;
+  font-size: 0.84rem;
+  line-height: 1.42;
+  font-weight: 700;
+}
+
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 0 34px;
+  color: #849089;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 22px;
+}
+
+.footer-brand {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 950;
+  letter-spacing: -0.04em;
+}
+
+.footer p,
+.disclaimer {
+  margin: 7px 0 0;
+  color: #849089;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin-top: 12px;
+}
+
+.footer-links a {
+  color: #b7c1ba;
+  font-size: 0.76rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer-links a:hover { color: var(--green); }
+
+@media (max-width: 980px) {
+  .preview-layout,
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-layout {
+    align-items: stretch;
+  }
+
+  .explain-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .container {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .nav {
+    min-height: 62px;
+    gap: 10px;
+  }
+
+  .brand {
+    font-size: 1rem;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+  }
+
+  .nav-actions {
+    gap: 6px;
+  }
+
+  .nav-button {
+    min-height: 36px;
+    padding-inline: 10px;
+    font-size: 0.72rem;
+  }
+
+  .preview-hero {
+    padding: 30px 0 30px;
+  }
+
+  h1 {
+    font-size: clamp(2.45rem, 14vw, 4.2rem);
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .preview-feed-head,
+  .preview-board-toolbar,
+  .preview-pick-inner,
+  .preview-pending-read {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .preview-feed-head {
+    padding: 16px;
+  }
+
+  .preview-status-pill {
+    width: fit-content;
+  }
+
+  .preview-meta-grid,
+  .explain-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-meta {
+    min-height: 64px;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .preview-meta:last-child {
+    border-bottom: 0;
+  }
+
+  .preview-board-toolbar {
+    align-items: start;
+    padding: 16px 16px 0;
+  }
+
+  .preview-counts {
+    justify-content: flex-start;
+  }
+
+  .preview-fight-list {
+    padding: 14px 16px 16px;
+  }
+
+  .preview-matchup {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .preview-vs {
+    min-height: 34px;
+    border-inline: 0;
+    border-block: 1px solid var(--border);
+  }
+
+  .preview-fighter {
+    padding: 14px;
+  }
+
+  .preview-fighter strong {
+    font-size: clamp(1.35rem, 7vw, 1.9rem);
+  }
+
+  .preview-pick-meta {
+    justify-content: flex-start;
+  }
+
+  .preview-pending-read span {
+    text-align: left;
+  }
+}
+
+/* Public preview uses the light site theme. Dark styling is reserved for subscriber-only tools. */
+html {
+  background: #f7faf7;
+}
+
+body {
+  background:
+    radial-gradient(circle at 14% 8%, rgba(47, 186, 115, 0.11), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #f7faf7 48%, #eef5ef 100%);
+  color: #050506;
+}
+
+body::before {
+  background-image:
+    linear-gradient(rgba(8,11,8,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8,11,8,0.035) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.3), transparent 72%);
+}
+
+.topbar {
+  border-bottom-color: #dce2dd;
+  background: rgba(250,252,250,0.94);
+}
+
+.brand {
+  color: #050506;
+}
+
+.brand-mark {
+  border-color: rgba(47,186,115,0.26);
+  background:
+    linear-gradient(135deg, rgba(47,186,115,0.14), rgba(47,186,115,0.02)),
+    #ffffff;
+  color: #1f8a53;
+  box-shadow: none;
+}
+
+.nav-button,
+.btn {
+  border-color: #d7ddd8;
+  background: rgba(255,255,255,0.9);
+  color: #050506;
+}
+
+.nav-button:hover,
+.btn:hover {
+  border-color: rgba(47,186,115,0.34);
+  background: rgba(47,186,115,0.08);
+  color: #1f8a53;
+}
+
+.btn-primary {
+  border-color: #050506;
+  background: #050506;
+  color: #ffffff;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.14);
+}
+
+.btn-primary:hover {
+  border-color: #050506;
+  background: #111411;
+  color: #ffffff;
+}
+
+.edge-ticker {
+  border-bottom-color: #dce2dd;
+  background: rgba(255,255,255,0.9);
+}
+
+.ticker-item {
+  border-right-color: #dce2dd;
+  color: #050506;
+}
+
+.ticker-market {
+  color: #68706a;
+}
+
+.ticker-item strong {
+  color: #050506;
+}
+
+.ticker-item em {
+  border-color: rgba(47,186,115,0.3);
+  background: rgba(47,186,115,0.08);
+  color: #1f8a53;
+}
+
+.ticker-item em.warn {
+  border-color: rgba(154,115,0,0.28);
+  background: rgba(255,230,109,0.22);
+  color: #8d6d00;
+}
+
+.preview-hero,
+.footer {
+  border-color: #dce2dd;
+}
+
+.kicker {
+  color: #2f8d59;
+}
+
+.kicker::before {
+  background: #2fba73;
+  box-shadow: 0 0 14px rgba(47,186,115,0.34);
+}
+
+h1,
+.preview-feed-head h2,
+.preview-meta strong,
+.preview-board-toolbar h3,
+.preview-fighter strong,
+.preview-pick-inner strong,
+.preview-pending-read strong,
+.explain-card strong,
+.footer-brand {
+  color: #050506;
+}
+
+.hero-copy,
+.preview-feed-head p,
+.preview-board-toolbar p,
+.preview-pick-inner p,
+.preview-pending-read span,
+.explain-card p,
+.footer p,
+.disclaimer {
+  color: #58635c;
+}
+
+.hero-copy strong {
+  color: #050506;
+}
+
+.preview-note {
+  border-color: #dce2dd;
+  background: #fffef2;
+  color: #050506;
+  box-shadow: 0 14px 36px rgba(15,22,17,0.08);
+}
+
+.preview-note strong {
+  color: #050506;
+}
+
+.preview-note p {
+  color: #4f594f;
+}
+
+.preview-feed-card {
+  border-color: #dce2dd;
+  background:
+    radial-gradient(circle at 82% 12%, rgba(47,186,115,0.08), transparent 24%),
+    rgba(255,255,255,0.96);
+  box-shadow: 0 24px 62px rgba(15,22,17,0.1);
+}
+
+.preview-feed-head,
+.preview-meta-grid,
+.preview-fight-top,
+.preview-pick-callout {
+  border-color: #dce2dd;
+}
+
+.preview-feed-label,
+.preview-fight-status,
+.preview-meta span,
+.preview-chip,
+.preview-pick-label,
+.preview-fight-index,
+.preview-fighter span,
+.preview-vs {
+  color: #68706a;
+}
+
+.preview-status-pill,
+.preview-chip,
+.preview-pick-meta em {
+  border-color: rgba(47,186,115,0.3);
+  background: rgba(47,186,115,0.08);
+  color: #1f8a53;
+}
+
+.preview-chip.is-muted {
+  border-color: #dce2dd;
+  background: #f7f8f6;
+  color: #68706a;
+}
+
+.preview-meta,
+.preview-vs {
+  border-color: #dce2dd;
+}
+
+.preview-fight-card {
+  border-color: #dce2dd;
+  background: #ffffff;
+}
+
+.preview-fight-card.is-locked {
+  border-color: rgba(47,186,115,0.34);
+  background: linear-gradient(180deg, rgba(47,186,115,0.08), #ffffff 44%);
+}
+
+.preview-fight-card.is-locked .preview-fight-status,
+.preview-pick-label {
+  color: #1f8a53;
+}
+
+.preview-odds {
+  border-color: rgba(47,186,115,0.3);
+  background: rgba(47,186,115,0.08);
+  color: #1f8a53;
+}
+
+.preview-pick-inner,
+.preview-pending-read {
+  border-color: #dce2dd;
+  background: #f8faf7;
+}
+
+.explain-card {
+  border-color: #dce2dd;
+  background: rgba(255,255,255,0.94);
+  box-shadow: 0 14px 34px rgba(15,22,17,0.06);
+}
+
+.explain-card span {
+  border-color: rgba(47,186,115,0.3);
+  background: rgba(47,186,115,0.08);
+  color: #1f8a53;
+}
+
+.footer-links a {
+  color: #050506;
+}
+
+.footer-links a:hover {
+  color: #1f8a53;
+}
+
+.explain-section {
+  padding: 16px 0 30px;
+}
+
+.explain-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.explain-card {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 5px 9px;
+  align-items: start;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.explain-card span {
+  grid-row: 1 / span 2;
+  min-width: 28px;
+  height: 24px;
+  margin: 0;
+  font-size: 0.54rem;
+}
+
+.explain-card strong {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.08;
+}
+
+.explain-card p {
+  font-size: 0.72rem;
+  line-height: 1.28;
+}
+
+@media (max-width: 980px) {
+  .explain-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .explain-section {
+    padding: 12px 0 24px;
+  }
+
+  .explain-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Preview feed clarity pass: mirror the subscriber event-board hierarchy. */
+.preview-feed-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  padding: 18px 20px 14px;
+}
+
+.preview-feed-head h2 {
+  max-width: 880px;
+  margin-top: 7px;
+  font-size: clamp(2.15rem, 4.8vw, 4.1rem);
+  line-height: 0.92;
+}
+
+.preview-feed-head p {
+  max-width: 620px;
+  margin-top: 8px;
+  font-size: 0.86rem;
+}
+
+.preview-event-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.preview-event-strip span {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #dce2dd;
+  border-radius: 999px;
+  background: #f7f9f7;
+  color: #111611;
+  padding: 0 10px;
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.preview-event-strip b {
+  color: #68706a;
+  font-size: 0.58rem;
+  font-weight: 950;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.preview-board-toolbar {
+  align-items: center;
+  padding: 12px 20px 0;
+}
+
+.preview-board-toolbar h3 {
+  font-size: 1.02rem;
+}
+
+.preview-fight-list {
+  gap: 16px;
+  padding: 12px 18px 18px;
+}
+
+.preview-fight-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 2px solid #d7ded8;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 16px 36px rgba(14, 18, 15, 0.08);
+}
+
+.preview-fight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 2;
+  width: 8px;
+  background: #aeb9b1;
+}
+
+.preview-fight-card.is-locked {
+  border-color: rgba(47, 186, 115, 0.58);
+  background: #ffffff;
+  box-shadow: 0 18px 42px rgba(47, 186, 115, 0.14);
+}
+
+.preview-fight-card.is-locked::before {
+  background: #2fba73;
+}
+
+.preview-fight-top {
+  min-height: 54px;
+  padding: 12px 16px 12px 24px;
+  border-bottom: 1px solid #d7ded8;
+  background: #f1f4f1;
+}
+
+.preview-fight-card.is-locked .preview-fight-top {
+  background: linear-gradient(90deg, rgba(47, 186, 115, 0.18), #f6fbf7 70%);
+}
+
+.preview-fight-status,
+.preview-fight-index {
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+.preview-fight-status {
+  gap: 8px;
+  border: 1px solid #cfd8d0;
+  background: #ffffff;
+  color: #4f594f;
+  padding: 0 11px;
+  font-size: 0.68rem;
+}
+
+.preview-fight-status::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #aeb9b1;
+}
+
+.preview-fight-card.is-locked .preview-fight-status {
+  border-color: rgba(47, 186, 115, 0.36);
+  background: rgba(47, 186, 115, 0.1);
+  color: #1f8a53;
+}
+
+.preview-fight-card.is-locked .preview-fight-status::before {
+  background: #2fba73;
+  box-shadow: 0 0 0 5px rgba(47, 186, 115, 0.12);
+}
+
+.preview-fight-index {
+  border: 1px solid #d7ded8;
+  background: #ffffff;
+  color: #050506;
+  padding: 0 10px;
+  font-size: 0.66rem;
+}
+
+.preview-matchup {
+  grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1fr);
+  gap: 12px;
+  min-height: 0;
+  padding: 14px 16px 16px 24px;
+  background: #f7f9f7;
+}
+
+.preview-fighter {
+  position: relative;
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  align-items: center;
+  align-content: start;
+  column-gap: 15px;
+  gap: 9px;
+  min-height: 132px;
+  border: 1px solid #dce2dd;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 14px;
+}
+
+.preview-fighter::before {
+  content: "";
+  position: absolute;
+  inset: 12px auto 12px 0;
+  display: block;
+  width: 4px;
+  border-radius: 999px;
+  background: #d93245;
+}
+
+.preview-fighter.is-blue::before {
+  background: #2869d8;
+}
+
+.preview-fighter.is-red {
+  background:
+    linear-gradient(90deg, rgba(217, 50, 69, 0.08), transparent 42%),
+    #ffffff;
+}
+
+.preview-fighter.is-blue {
+  background:
+    linear-gradient(90deg, rgba(40, 105, 216, 0.08), transparent 42%),
+    #ffffff;
+}
+
+.preview-fighter-portrait {
+  width: 88px;
+  height: 88px;
+  display: grid;
+  place-items: end center;
+  align-self: center;
+  overflow: hidden;
+  border: 1px solid #dce2dd;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(47,186,115,0.14), transparent 48%),
+    #f2f6f2;
+}
+
+.preview-fighter.is-red .preview-fighter-portrait {
+  border-color: rgba(217, 50, 69, 0.28);
+  background:
+    radial-gradient(circle at 50% 18%, rgba(217, 50, 69, 0.12), transparent 48%),
+    #fff7f8;
+}
+
+.preview-fighter.is-blue .preview-fighter-portrait {
+  border-color: rgba(40, 105, 216, 0.28);
+  background:
+    radial-gradient(circle at 50% 18%, rgba(40, 105, 216, 0.12), transparent 48%),
+    #f5f8ff;
+}
+
+.preview-fighter-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.preview-fighter-portrait.is-placeholder {
+  place-items: center;
+  color: #1f8a53;
+  font-size: 1.25rem;
+  font-weight: 950;
+  letter-spacing: -0.045em;
+}
+
+.preview-fighter-copy {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+  align-content: center;
+}
+
+.preview-fighter span {
+  width: fit-content;
+  border: 1px solid #e1e7e1;
+  border-radius: 999px;
+  background: #f7f8f6;
+  color: #5f6962;
+  padding: 5px 8px;
+  font-size: 0.58rem;
+  line-height: 1;
+}
+
+.preview-fighter.is-red span {
+  border-color: rgba(217, 50, 69, 0.24);
+  background: rgba(217, 50, 69, 0.08);
+  color: #9c1f2c;
+}
+
+.preview-fighter.is-blue span {
+  border-color: rgba(40, 105, 216, 0.24);
+  background: rgba(40, 105, 216, 0.08);
+  color: #1f4e9a;
+}
+
+.preview-fighter strong {
+  margin-top: 2px;
+  font-size: clamp(1.45rem, 3.2vw, 2.35rem);
+  line-height: 0.95;
+}
+
+.preview-odds {
+  min-height: 30px;
+  border-radius: 8px;
+  padding: 0 9px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.84rem;
+}
+
+.preview-odds::before {
+  content: "Odds";
+  margin-right: 7px;
+  color: #6b756e;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.preview-vs {
+  width: 44px;
+  height: 44px;
+  align-self: center;
+  justify-self: center;
+  border: 0;
+  border-radius: 999px;
+  background: #050506;
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(5, 5, 6, 0.16);
+}
+
+.preview-pick-callout {
+  border-top: 1px solid #d7ded8;
+  background: #f7f9f7;
+  padding: 14px 16px 16px 24px;
+}
+
+.preview-pick-inner {
+  border: 1px solid rgba(47, 186, 115, 0.34);
+  border-left: 6px solid #2fba73;
+  border-radius: 12px;
+  background: #effaf4;
+  padding: 15px;
+}
+
+.preview-pending-read {
+  border: 1px dashed #bfc8c0;
+  border-left: 6px solid #aeb9b1;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 15px;
+}
+
+@media (max-width: 680px) {
+  .preview-fight-list {
+    gap: 14px;
+    padding: 12px;
+  }
+
+  .preview-fight-card::before {
+    width: 6px;
+  }
+
+  .preview-fight-top {
+    min-height: 50px;
+    padding: 11px 12px 11px 18px;
+  }
+
+  .preview-fight-status,
+  .preview-fight-index {
+    min-height: 26px;
+    font-size: 0.58rem;
+  }
+
+  .preview-matchup {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 12px 12px 18px;
+  }
+
+  .preview-fighter {
+    grid-template-columns: 74px minmax(0, 1fr);
+    min-height: 0;
+    border: 1px solid #dce2dd;
+    padding: 12px;
+  }
+
+  .preview-fighter-portrait {
+    width: 72px;
+    height: 72px;
+  }
+
+  .preview-vs {
+    width: 42px;
+    height: 30px;
+    min-height: 30px;
+    border-block: 0;
+  }
+
+  .preview-pick-callout {
+    padding: 12px 12px 12px 18px;
+  }
+
+  .preview-pick-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-pick-meta {
+    justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+</style>
+<link rel="stylesheet" href="light-theme.css">
+<link rel="stylesheet" href="mobile-chrome.css?v=3">
+</head>
+<body class="premium-preview-page">
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand brand-text-only" href="index.html" aria-label="Live Picks home">
+      <span>Live Picks</span>
+    </a>
+
+    <div class="header-buttons">
+      <nav class="nav-links desktop-nav" aria-label="Primary navigation">
+        <a href="index.html#model">Model</a>
+        <a href="index.html#proof">Past wins</a>
+        <a href="/record">Record</a>
+        <a href="index.html#signals">Live data</a>
+        <a href="checkout.html">Pricing</a>
+      </nav>
+
+      <div class="top-actions">
+        <a href="newsletter.html" class="login-btn secondary-btn newsletter-btn">Free Newsletter</a>
+        <a href="portal.html" class="login-btn premium-login-link">Premium Login</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="edge-ticker" aria-label="Premium feed preview notes">
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="ticker-market">Preview</span><strong>Locked calls hidden publicly</strong><em>SAFE</em></div>
+    <div class="ticker-item"><span class="ticker-market">Market</span><strong>H2H only</strong><em>H2H</em></div>
+    <div class="ticker-item"><span class="ticker-market">Alerts</span><strong>Push plus email</strong><em>LIVE</em></div>
+    <div class="ticker-item"><span class="ticker-market">Access</span><strong>Subscribers see official picks</strong><em class="warn">18+</em></div>
+    <div class="ticker-item"><span class="ticker-market">Preview</span><strong>Locked calls hidden publicly</strong><em>SAFE</em></div>
+    <div class="ticker-item"><span class="ticker-market">Market</span><strong>H2H only</strong><em>H2H</em></div>
+    <div class="ticker-item"><span class="ticker-market">Alerts</span><strong>Push plus email</strong><em>LIVE</em></div>
+    <div class="ticker-item"><span class="ticker-market">Access</span><strong>Subscribers see official picks</strong><em class="warn">18+</em></div>
+  </div>
+</div>
+
+<main>
+  <section class="preview-hero">
+    <div class="container preview-layout">
+      <div>
+        <div class="kicker">Public premium feed preview</div>
+        <h1>See how the locked feed works.</h1>
+        <p class="hero-copy">This is a public sample of the subscriber feed. It shows the board structure, H2H odds, pending reads, locked states and alert delivery, while keeping the actual paid pick hidden.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="checkout.html">Start premium</a>
+          <a class="btn" href="portal.html">Subscriber login</a>
+        </div>
+        <div class="preview-note" role="note">
+          <strong>Preview only.</strong>
+          <p>The real feed shows the official side, odds, timing note and lock status once a pick is released to subscribers.</p>
+        </div>
+      </div>
+
+      <article class="preview-feed-card" aria-label="Public premium feed preview">
+        <header class="preview-feed-head">
+          <div>
+            <span class="preview-feed-label">Current premium event</span>
+            <h2>UFC 329 preview board.</h2>
+            <p>Pending means wait. Locked means the subscriber call is live.</p>
+            <div class="preview-event-strip" aria-label="Preview event details">
+              <span><b>Date</b> Fight night</span>
+              <span><b>Market</b> H2H only</span>
+              <span><b>Alerts</b> Push + email</span>
+              <span><b>Odds</b> Auto format</span>
+            </div>
+          </div>
+          <span class="preview-status-pill">Preview only</span>
+        </header>
+
+        <div class="preview-board-toolbar">
+          <div>
+            <h3>Fight board</h3>
+          </div>
+          <div class="preview-counts" aria-label="Preview fight counts">
+            <span class="preview-chip">1 locked</span>
+            <span class="preview-chip is-muted">2 pending</span>
+          </div>
+        </div>
+
+        <div class="preview-fight-list">
+          <article class="preview-fight-card is-locked">
+            <div class="preview-fight-top">
+              <span class="preview-fight-status">Locked</span>
+              <span class="preview-fight-index">Fight 01</span>
+            </div>
+            <div class="preview-matchup">
+              <div class="preview-fighter is-red">
+                <div class="preview-fighter-portrait">
+                  <img src="mcgregor.png" alt="Connor McGregor portrait">
+                </div>
+                <div class="preview-fighter-copy">
+                  <span>Red corner</span>
+                  <strong>Connor McGregor</strong>
+                  <em class="preview-odds" data-decimal-odds="3.30">3.30</em>
+                </div>
+              </div>
+              <div class="preview-vs">VS</div>
+              <div class="preview-fighter is-blue">
+                <div class="preview-fighter-portrait">
+                  <img src="max.png" alt="Max Holloway portrait">
+                </div>
+                <div class="preview-fighter-copy">
+                  <span>Blue corner</span>
+                  <strong>Max Holloway</strong>
+                  <em class="preview-odds" data-decimal-odds="1.32">1.32</em>
+                </div>
+              </div>
+            </div>
+            <div class="preview-pick-callout">
+              <div class="preview-pick-inner">
+                <div>
+                  <span class="preview-pick-label">Official pick</span>
+                  <strong>Hidden in public preview</strong>
+                  <p>Subscribers see the locked side, odds, timing and final note here.</p>
+                </div>
+                <div class="preview-pick-meta">
+                  <em>Push sent</em>
+                  <em>Email sent</em>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="preview-fight-card">
+            <div class="preview-fight-top">
+              <span class="preview-fight-status">Pending</span>
+              <span class="preview-fight-index">Fight 02</span>
+            </div>
+            <div class="preview-matchup">
+              <div class="preview-fighter is-red">
+                <div class="preview-fighter-portrait is-placeholder" aria-hidden="true">SC</div>
+                <div class="preview-fighter-copy">
+                  <span>Red corner</span>
+                  <strong>Shane Collins</strong>
+                  <em class="preview-odds" data-decimal-odds="1.48">1.48</em>
+                </div>
+              </div>
+              <div class="preview-vs">VS</div>
+              <div class="preview-fighter is-blue">
+                <div class="preview-fighter-portrait is-placeholder" aria-hidden="true">OT</div>
+                <div class="preview-fighter-copy">
+                  <span>Blue corner</span>
+                  <strong>Otari Tanzilovi</strong>
+                  <em class="preview-odds" data-decimal-odds="2.67">2.67</em>
+                </div>
+              </div>
+            </div>
+            <div class="preview-pick-callout">
+              <div class="preview-pending-read">
+                <strong>Read pending</strong>
+                <span>Waiting for the final fight-night signal.</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="preview-fight-card">
+            <div class="preview-fight-top">
+              <span class="preview-fight-status">Pending</span>
+              <span class="preview-fight-index">Fight 03</span>
+            </div>
+            <div class="preview-matchup">
+              <div class="preview-fighter is-red">
+                <div class="preview-fighter-portrait is-placeholder" aria-hidden="true">IC</div>
+                <div class="preview-fighter-copy">
+                  <span>Red corner</span>
+                  <strong>Ion Cutelaba</strong>
+                  <em class="preview-odds" data-decimal-odds="3.62">3.62</em>
+                </div>
+              </div>
+              <div class="preview-vs">VS</div>
+              <div class="preview-fighter is-blue">
+                <div class="preview-fighter-portrait is-placeholder" aria-hidden="true">NS</div>
+                <div class="preview-fighter-copy">
+                  <span>Blue corner</span>
+                  <strong>Navajo Stirling</strong>
+                  <em class="preview-odds" data-decimal-odds="1.29">1.29</em>
+                </div>
+              </div>
+            </div>
+            <div class="preview-pick-callout">
+              <div class="preview-pending-read">
+                <strong>Read pending</strong>
+                <span>Subscribers see updates as the board changes.</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="explain-section" aria-label="How the preview works">
+    <div class="container">
+      <div class="explain-grid">
+        <article class="explain-card">
+          <span>01</span>
+          <strong>Pending means wait.</strong>
+          <p>No official read has been released yet. The board still shows the matchup and current H2H prices.</p>
+        </article>
+        <article class="explain-card">
+          <span>02</span>
+          <strong>Locked means live.</strong>
+          <p>Subscribers see the selected side, the lock timing and the final note inside the card.</p>
+        </article>
+        <article class="explain-card">
+          <span>03</span>
+          <strong>Alerts confirm changes.</strong>
+          <p>When a pick locks, subscribers receive push notifications and an email fallback.</p>
+        </article>
+        <article class="explain-card">
+          <span>04</span>
+          <strong>H2H only.</strong>
+          <p>The premium feed is built for head-to-head reads, not parlays, round props or method props.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-brand">Live Picks</div>
+      <p>Premium fight-night analysis, 18+ only</p>
+      <nav class="footer-links" aria-label="Footer links">
+        <a href="checkout.html">Checkout</a>
+        <a href="record.html">Verified record</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="refunds.html">Refunds</a>
+        <a href="responsible-gambling.html">Responsible gambling</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="disclaimer">
+      Live Picks is an independent analytics and commentary service. It is not affiliated with, endorsed by or licensed by UFC or any sporting organisation. Live Picks does not operate as a bookmaker, does not accept wagers, does not place wagers for customers, and does not guarantee outcomes, profits or returns. Betting involves risk. Chances are you're about to lose. For free and confidential support call 1800 858 858 or visit gamblinghelponline.org.au.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

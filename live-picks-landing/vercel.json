@@ -25,6 +25,14 @@
       "destination": "/record.html"
     },
     {
+      "source": "/premium-preview",
+      "destination": "/premium-preview.html"
+    },
+    {
+      "source": "/premium-preview/",
+      "destination": "/premium-preview.html"
+    },
+    {
       "source": "/free-ufc-newsletter",
       "destination": "/free-ufc-newsletter.html"
     },

@@ -2842,6 +2842,257 @@ body.premium-feed-page::before,
   }
 }
 
+/* Subscriber feed clarity pass: stronger fight separation and clearer read states. */
+.pf-fight-list {
+  gap: 18px !important;
+  padding: 18px !important;
+}
+
+.pf-fight-card {
+  position: relative !important;
+  border: 2px solid #d7ded8 !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  box-shadow: 0 16px 36px rgba(14, 18, 15, 0.08) !important;
+  isolation: isolate;
+}
+
+.pf-fight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 2;
+  width: 8px;
+  background: #aeb9b1;
+}
+
+.pf-fight-card.is-locked {
+  border-color: rgba(47, 186, 115, 0.58) !important;
+  box-shadow: 0 18px 42px rgba(47, 186, 115, 0.14) !important;
+}
+
+.pf-fight-card.is-locked::before {
+  background: var(--pf-green) !important;
+}
+
+.pf-fight-top {
+  min-height: 54px !important;
+  padding: 12px 16px 12px 24px !important;
+  border-bottom: 1px solid #d7ded8 !important;
+  background: #f1f4f1 !important;
+}
+
+.pf-fight-card.is-locked .pf-fight-top {
+  background: linear-gradient(90deg, rgba(47, 186, 115, 0.18), #f6fbf7 70%) !important;
+}
+
+.pf-fight-status,
+.pf-fight-index {
+  min-height: 28px;
+  display: inline-flex !important;
+  align-items: center;
+  border-radius: 999px;
+  line-height: 1 !important;
+}
+
+.pf-fight-status {
+  gap: 8px !important;
+  border: 1px solid #cfd8d0;
+  background: #ffffff;
+  color: #4f594f !important;
+  padding: 0 11px !important;
+  font-size: 0.68rem !important;
+}
+
+.pf-fight-card.is-locked .pf-fight-status {
+  border-color: rgba(47, 186, 115, 0.36);
+  background: rgba(47, 186, 115, 0.1);
+  color: var(--pf-green-dark) !important;
+}
+
+.pf-fight-index {
+  border: 1px solid #d7ded8;
+  background: #ffffff;
+  color: #050506 !important;
+  padding: 0 10px;
+  font-size: 0.66rem !important;
+}
+
+.pf-matchup {
+  grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1fr) !important;
+  gap: 12px;
+  min-height: 0 !important;
+  padding: 14px 16px 16px 24px;
+  background: #f7f9f7;
+}
+
+.pf-fighter {
+  position: relative;
+  display: grid !important;
+  align-content: start !important;
+  gap: 9px !important;
+  min-height: 132px;
+  border: 1px solid #dce2dd !important;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 16px 16px 16px 18px !important;
+}
+
+.pf-fighter + .pf-fighter {
+  border-left: 1px solid #dce2dd !important;
+}
+
+.pf-fighter::before {
+  content: "";
+  position: absolute;
+  inset: 12px auto 12px 0;
+  width: 4px;
+  border-radius: 999px;
+  background: #d93245;
+}
+
+.pf-blue::before {
+  background: #2869d8;
+}
+
+.pf-fighter span {
+  width: fit-content;
+  border: 1px solid #e1e7e1;
+  border-radius: 999px;
+  background: #f7f8f6;
+  color: #5f6962 !important;
+  padding: 5px 8px;
+  font-size: 0.58rem !important;
+  line-height: 1 !important;
+}
+
+.pf-fighter strong {
+  margin-top: 2px;
+  font-size: clamp(1.45rem, 3.2vw, 2.35rem) !important;
+  line-height: 0.95 !important;
+}
+
+.pf-odds-line {
+  width: fit-content;
+  min-height: 30px;
+  border: 1px solid rgba(47, 186, 115, 0.34);
+  border-radius: 8px;
+  background: rgba(47, 186, 115, 0.09);
+  color: var(--pf-green-dark) !important;
+  padding: 0 9px;
+  font-size: 0.84rem !important;
+}
+
+.pf-odds-line::before {
+  color: #6b756e !important;
+}
+
+.pf-vs {
+  width: 44px;
+  height: 44px;
+  align-self: center;
+  justify-self: center;
+  border: 0 !important;
+  border-radius: 999px;
+  background: #050506 !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 22px rgba(5, 5, 6, 0.16);
+}
+
+.pf-pick-callout {
+  border-top: 1px solid #d7ded8 !important;
+  background: #f7f9f7 !important;
+  padding: 14px 16px 16px 24px !important;
+}
+
+.pf-pick-inner {
+  border: 1px solid rgba(47, 186, 115, 0.34) !important;
+  border-left: 6px solid var(--pf-green) !important;
+  border-radius: 12px !important;
+  background: #effaf4 !important;
+  padding: 15px !important;
+}
+
+.pf-pick-label {
+  color: var(--pf-green-dark) !important;
+  font-size: 0.66rem !important;
+}
+
+.pf-pick-inner strong {
+  font-size: clamp(1.35rem, 2.4vw, 2rem) !important;
+}
+
+.pf-pick-meta em {
+  border-radius: 7px !important;
+  background: #ffffff !important;
+}
+
+.pf-pending-read {
+  border: 1px dashed #bfc8c0 !important;
+  border-left: 6px solid #aeb9b1 !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  padding: 15px !important;
+}
+
+.pf-pending-read strong {
+  font-size: 1rem !important;
+}
+
+@media (max-width: 760px) {
+  .pf-fight-list {
+    gap: 14px !important;
+    padding: 12px !important;
+  }
+
+  .pf-fight-card::before {
+    width: 6px;
+  }
+
+  .pf-fight-top {
+    min-height: 50px !important;
+    padding: 11px 12px 11px 18px !important;
+  }
+
+  .pf-fight-status,
+  .pf-fight-index {
+    min-height: 26px;
+    font-size: 0.58rem !important;
+  }
+
+  .pf-matchup {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+    padding: 12px 12px 12px 18px;
+  }
+
+  .pf-fighter,
+  .pf-fighter + .pf-fighter {
+    min-height: 0;
+    border: 1px solid #dce2dd !important;
+    padding: 14px 14px 14px 16px !important;
+  }
+
+  .pf-vs {
+    width: 42px;
+    height: 30px;
+    min-height: 30px !important;
+    border-block: 0 !important;
+  }
+
+  .pf-pick-callout {
+    padding: 12px 12px 12px 18px !important;
+  }
+
+  .pf-pick-inner {
+    grid-template-columns: 1fr !important;
+  }
+
+  .pf-pick-meta {
+    justify-content: flex-start !important;
+  }
+}
+
 </style>
 <!-- /account-premium-header-light-fix -->
 <link rel="stylesheet" href="mobile-chrome.css?v=3">
