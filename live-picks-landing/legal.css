@@ -217,6 +217,36 @@ h1 {
   font-size: 0.7rem;
   line-height: 1.2;
 }
+.record-dummies {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.4fr) minmax(0, 1fr);
+  gap: 14px;
+  margin: 12px 0 20px;
+  border: 1px solid #eadf9a;
+  border-radius: 8px;
+  background: #fff9d8;
+  padding: 14px;
+}
+.record-dummies span {
+  display: block;
+  margin-bottom: 5px;
+  color: #8c6d12;
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+.record-dummies h2 {
+  margin: 0;
+  color: #1d1a0a;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+.record-dummies p {
+  margin: 0;
+  color: #4f4315;
+  font-size: 0.88rem;
+}
 .record-performance {
   margin: 18px 0 22px;
   padding-top: 18px;
@@ -369,8 +399,19 @@ h1 {
   .record-chart-head {
     display: grid;
   }
+  .record-dummies {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px;
+  }
   .record-chart-meta {
     justify-content: flex-start;
+    min-width: 0;
+  }
+  .record-chart {
+    overflow-x: hidden;
+  }
+  .record-chart svg {
     min-width: 0;
   }
   .record-summary-grid {
@@ -378,6 +419,82 @@ h1 {
   }
   .record-analysis-grid {
     grid-template-columns: 1fr;
+  }
+  .record-table-wrap {
+    overflow-x: hidden;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  .record-table,
+  .record-table.is-full,
+  .record-table.is-breakdown {
+    min-width: 0;
+  }
+  .record-table,
+  .record-table thead,
+  .record-table tbody,
+  .record-table tr,
+  .record-table th,
+  .record-table td {
+    display: block;
+    width: 100%;
+  }
+  .record-table thead {
+    display: none;
+  }
+  .record-table tr {
+    margin: 0 0 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .record-table tr.is-loss {
+    background: #fffafa;
+  }
+  .record-table td {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.82rem;
+  }
+  .record-table td::before {
+    flex: 0 0 auto;
+    color: var(--faint);
+    font-size: 0.62rem;
+    font-weight: 950;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .record-table td:last-child {
+    border-bottom: 0;
+  }
+  .record-table.is-full td:nth-child(1)::before { content: "Date"; }
+  .record-table.is-full td:nth-child(2)::before { content: "Pick"; }
+  .record-table.is-full td:nth-child(3)::before { content: "Fight"; }
+  .record-table.is-full td:nth-child(4)::before { content: "Odds"; }
+  .record-table.is-full td:nth-child(5)::before { content: "Result"; }
+  .record-table.is-full td:nth-child(6)::before { content: "Net"; }
+  .record-table.is-breakdown td:nth-child(1)::before { content: "Group"; }
+  .record-table.is-breakdown td:nth-child(2)::before { content: "Picks"; }
+  .record-table.is-breakdown td:nth-child(3)::before { content: "W-L"; }
+  .record-table.is-breakdown td:nth-child(4)::before { content: "Win rate"; }
+  .record-table.is-breakdown td:nth-child(5)::before { content: "Net"; }
+  .record-table.is-breakdown td:nth-child(6)::before { content: "ROI"; }
+  .record-table.is-breakdown td:nth-child(7)::before { content: "Avg odds"; }
+  .record-table.is-full td:nth-child(3) {
+    display: grid;
+    gap: 3px;
+  }
+  .record-table.is-full td:nth-child(3)::before {
+    margin-bottom: 1px;
+  }
+  .record-table td:nth-child(4),
+  .record-table td:nth-child(6) {
+    white-space: normal;
   }
 }
 
