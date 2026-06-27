@@ -9901,6 +9901,230 @@ html,
     color: #050506;
     box-shadow: 0 12px 32px rgba(14, 18, 15, 0.12);
   }
+
+  .index-page .market-thesis-graphic {
+    position: relative;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+    min-height: 390px;
+    padding: 16px;
+    overflow: hidden;
+    border: 1px solid #dce2dd;
+    border-radius: 12px;
+    background:
+      radial-gradient(circle at 14% 12%, rgba(47, 186, 115, 0.08), transparent 30%),
+      radial-gradient(circle at 88% 16%, rgba(255, 77, 95, 0.08), transparent 28%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 248, 246, 0.96));
+    box-shadow: 0 20px 52px rgba(14, 18, 15, 0.1);
+  }
+
+  .index-page .market-thesis-graphic::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(rgba(8, 11, 8, 0.026) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(8, 11, 8, 0.026) 1px, transparent 1px);
+    background-size: 26px 26px;
+    opacity: 0.78;
+  }
+
+  .index-page .market-thesis-graphic > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .index-page .market-thesis-head {
+    display: grid;
+    gap: 10px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e3e8e4;
+  }
+
+  .index-page .market-thesis-head span,
+  .index-page .market-thesis-kicker,
+  .index-page .market-thesis-verdict span {
+    color: #67716b;
+    font-size: 0.62rem;
+    font-weight: 950;
+    letter-spacing: 0.14em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .index-page .market-thesis-head strong {
+    max-width: 620px;
+    color: #050506;
+    font-size: clamp(1.45rem, 2.3vw, 2.3rem);
+    font-weight: 950;
+    letter-spacing: -0.065em;
+    line-height: 0.98;
+  }
+
+  .index-page .market-thesis-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 58px minmax(0, 1fr);
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .index-page .market-thesis-panel {
+    display: grid;
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+    align-content: start;
+    gap: 10px;
+    min-height: 218px;
+    padding: 14px;
+    border: 1px solid #dce2dd;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.72);
+  }
+
+  .index-page .market-paper-panel {
+    border-left: 4px solid rgba(5, 5, 6, 0.34);
+  }
+
+  .index-page .market-night-panel {
+    border-left: 4px solid rgba(255, 77, 95, 0.42);
+    background:
+      linear-gradient(180deg, rgba(255, 77, 95, 0.045), rgba(255, 255, 255, 0.76));
+  }
+
+  .index-page .market-thesis-panel h2 {
+    margin: 0;
+    color: #050506;
+    font-size: clamp(1.3rem, 2vw, 1.95rem);
+    font-weight: 950;
+    letter-spacing: -0.06em;
+    line-height: 0.98;
+  }
+
+  .index-page .market-thesis-panel p {
+    margin: 0;
+    color: #56605a;
+    font-size: 0.78rem;
+    font-weight: 560;
+    line-height: 1.42;
+  }
+
+  .index-page .market-thesis-data {
+    display: grid;
+    grid-row: 5;
+    align-self: end;
+    gap: 0;
+    margin: auto 0 0;
+    padding: 0;
+    border-top: 1px solid #e3e8e4;
+  }
+
+  .index-page .market-thesis-data div {
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+    gap: 12px;
+    align-items: center;
+    min-height: 34px;
+    border-bottom: 1px solid rgba(8, 11, 8, 0.055);
+  }
+
+  .index-page .market-thesis-data div:last-child {
+    border-bottom: 0;
+  }
+
+  .index-page .market-thesis-data dt,
+  .index-page .market-thesis-data dd {
+    margin: 0;
+  }
+
+  .index-page .market-thesis-data dt {
+    color: #6f7872;
+    font-size: 0.6rem;
+    font-weight: 950;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .index-page .market-thesis-data dd {
+    justify-self: start;
+    color: #050506;
+    font-size: 0.78rem;
+    font-weight: 900;
+    line-height: 1;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .index-page .market-thesis-shift {
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 7px;
+    min-width: 0;
+    border: 1px dashed #d7ddd8;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.58);
+    color: #6f7872;
+    text-align: center;
+  }
+
+  .index-page .market-thesis-shift span {
+    writing-mode: vertical-rl;
+    color: #7c8580;
+    font-size: 0.5rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .index-page .market-thesis-shift strong {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #050506;
+    color: #ffffff;
+    font-size: 1.22rem;
+    line-height: 1;
+  }
+
+  .index-page .market-thesis-verdict {
+    display: grid;
+    gap: 6px;
+    padding: 13px 15px;
+    border: 1px solid #dce2dd;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  .index-page .market-thesis-verdict strong {
+    color: #050506;
+    font-size: clamp(1.05rem, 1.55vw, 1.42rem);
+    font-weight: 950;
+    letter-spacing: -0.045em;
+    line-height: 1.02;
+  }
+}
+
+@media (min-width: 681px) and (max-width: 1120px) {
+  .index-page .market-thesis-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .index-page .market-thesis-shift {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    min-height: 42px;
+    border-radius: 999px;
+  }
+
+  .index-page .market-thesis-shift span {
+    writing-mode: horizontal-tb;
+  }
 }
 </style>
 </head>
@@ -10056,41 +10280,46 @@ html,
         </div>
       </div>
 
-      <aside class="desktop-fight-visual hero-panel" aria-label="On paper versus fight night reality">
-        <article class="desktop-fighter-panel paper-panel">
-          <div class="desktop-fighter-heading">
-            <strong>On paper</strong>
-            <span>What the market prices</span>
-          </div>
-          <div class="desktop-fighter-art paper-art">
-            <img src="on-paper-fighter-black.png" alt="On paper fighter icon">
-          </div>
-          <ul class="desktop-fighter-list">
-            <li>Clean record</li>
-            <li>Strong camp</li>
-            <li>Market favourite</li>
-            <li>Physical Advantages</li>
-          </ul>
-        </article>
+      <aside class="desktop-fight-visual hero-panel market-thesis-graphic" aria-label="On paper versus fight night market read">
+        <div class="market-thesis-head">
+          <span>On paper vs fight night</span>
+          <strong>Same fighter.  Different data window.</strong>
+        </div>
 
-        <div class="desktop-shift-arrow" aria-hidden="true">→</div>
+        <div class="market-thesis-grid">
+          <article class="market-thesis-panel market-paper-panel">
+            <span class="market-thesis-kicker">Bookmaker price</span>
+            <h2>Recorded profile</h2>
+            <p>Market price starts with the clean record, public money, camp form and physical advantages already on the page.</p>
+            <dl class="market-thesis-data">
+              <div><dt>Price source</dt><dd>Past data</dd></div>
+              <div><dt>Market view</dt><dd>Favourite</dd></div>
+              <div><dt>Read quality</dt><dd>Early</dd></div>
+            </dl>
+          </article>
 
-        <article class="desktop-fighter-panel reality-panel">
-          <div class="desktop-fighter-heading">
-            <strong>Fight night</strong>
-            <span>What Live Picks reads</span>
+          <div class="market-thesis-shift" aria-hidden="true">
+            <span>market sets</span>
+            <strong>→</strong>
+            <span>reality updates</span>
           </div>
-          <div class="desktop-fighter-art reality-art">
-            <img src="fight-night-fighter.png" alt="Fight night fighter icon">
-          </div>
-          <ul class="desktop-fighter-list">
-            <li>Bad reception</li>
-            <li>Humiliated</li>
-            <li>Dehydrated</li>
-            <li>Sick</li>
-            <li>Impaired</li>
-          </ul>
-        </article>
+
+          <article class="market-thesis-panel market-night-panel">
+            <span class="market-thesis-kicker">Live Picks read</span>
+            <h2>Current condition</h2>
+            <p>Fight night adds what the opener cannot see: walkout, composure, reception, condition and late pressure.</p>
+            <dl class="market-thesis-data">
+              <div><dt>New signal</dt><dd>Public humiliation</dd></div>
+              <div><dt>Room read</dt><dd>Hostile</dd></div>
+              <div><dt>Read quality</dt><dd>Live</dd></div>
+            </dl>
+          </article>
+        </div>
+
+        <div class="market-thesis-verdict">
+          <span>The edge appears when</span>
+          <strong>The fighter in the price no longer matches the fighter in front of us.</strong>
+        </div>
       </aside>
     </div>
   </section>
