@@ -10126,6 +10126,42 @@ html,
     writing-mode: horizontal-tb;
   }
 }
+
+@media (min-width: 981px) {
+  .index-page #model .how-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    align-items: stretch;
+    gap: 18px !important;
+  }
+
+  .index-page #model .how-card {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    min-width: 0 !important;
+    min-height: 430px !important;
+  }
+
+  .index-page #model .infographic {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  .index-page #model .sentiment-map {
+    grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 981px) and (max-width: 1240px) {
+  .index-page #model .how-grid {
+    grid-template-columns: 1fr !important;
+    max-width: 760px;
+    margin-inline: auto;
+  }
+
+  .index-page #model .how-card {
+    min-height: 0 !important;
+  }
+}
 </style>
 </head>
 <body class="index-page">
